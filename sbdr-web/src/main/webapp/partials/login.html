@@ -1,0 +1,57 @@
+<div class="row inlog">
+<div id="page-login" class="col-xs-12 col-sm-7 col-md-6 col-lg-4 autocenter">
+        <div class="box no minw autocenter">
+            <div class="box-content border">
+			    <div class="text-center">
+                    <div id="mylivicon" class="autocenter" data-options="name: servers.svg; size:56px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;repeat:80;tryToSharpen: true"></div>
+                    <span class="legend b">Centraal Register<br>Zakelijke Betalingsachterstanden (CRZB)</span>
+                </div>
+                <div class="row box-context mobpad">
+                    <div class="col-sm-12">
+                        <div class="box-content" id="inlogscherm">
+                            <form data-ng-submit="login()" name="formcredentials" id="form-credentials" class="form-horizontal" novalidate>
+                                <div class="form-group" data-ng-class="{'has-error' : isInvalid(formcredentials, 'username')}">
+                                    <label class="control-label">E-mailadres</label>
+                                    <input data-ng-paste="checkFieldMaxLength($event, username, maxFieldLengths.gebruikersnaam)" data-wm-block name="username" id="username" data-ng-model="username" type="text" onkeydown="if (event.keyCode == 13) loginbtn.click()" placeholder="&#xf0f0; E-mailadres" class="form-control" data-wm-block-length="maxFieldLengths.gebruikersnaam" required>
+                                    <small class="help-block" data-ng-show="isInvalid(formcredentials, 'username')"><span>Geef uw gebruikersnaam (e-mailadres)</span></small>
+                                </div>
+                                <div class="form-group" data-ng-class="{'has-error' : isInvalid(formcredentials, 'password')}">
+                                    <label class="control-label">Wachtwoord</label>
+                                    <input data-ng-paste="checkFieldMaxLength($event, password, maxFieldLengths.wachtwoord)" data-wm-block name="password" id="password" data-ng-model="password" type="password" onkeydown="if (event.keyCode == 13) loginbtn.click()" placeholder="&#xf023; Wachtwoord" class="form-control" data-wm-block-length="maxFieldLengths.wachtwoord" required>
+                                    <small class="help-block" data-ng-show="isInvalid(formcredentials, 'password')"><span>Geef uw wachtwoord</span></small>
+                                </div>
+                                <div class="form-group">
+                                    <button id="loginbtn" name="loginbtn" type="button" class="btn btn-primary fontb btn-lg-mob btn-lg w100 margin15" data-ng-click="login()">Inloggen</button>
+                                    <div id="password_forgot" class="center">
+                                        <a href="" data-ng-click="forgotPass()">Wachtwoord vergeten?</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-show="error">
+                    <div class="box-content fout-smal text-center">
+                    <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">     					
+                        <span id="alert" class="fouttext-smal">{{error}}</span>
+                    </div>
+                </div>
+                <div data-ng-show="activateAccount">
+                    <div class="box-content prima-smal">
+                        <img class="fixt-checked-icon" src="img/icons/svg/checked.svg" width="12" height="12">
+                        <span id="information" class="primatext-smal">&nbsp;Uw account is geactiveerd. U kunt nu inloggen.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+angular.element(document).ready(function() {
+        setTimeout(function(){
+$(function() {
+            jQuery("#mylivicon").addLiviconEvo()
+        })
+}, 500)
+    });
+</script>

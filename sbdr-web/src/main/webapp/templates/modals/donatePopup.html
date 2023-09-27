@@ -1,0 +1,71 @@
+<script type="text/ng-template" id="donationPopup.html"
+	class="reveal-modal">
+	<div class="modal-header">
+		<h3 class="modal-title"> <i class="modal-icon-fix fa fa-check" aria-hidden="true"></i>Vordering voldaan</h3>
+	</div>
+	<div class="modal-body">
+		<form id="form-donation" name="form.formdonation" class="form-horizontal" novalidate>
+		<fieldset>
+        <div data-ng-show="success">
+        <div class="primaw text-center">
+            <span class="donatie-font">Hartelijk dank voor uw donatie!</span>
+        </div>
+    </div>
+		<div class="row form-group" ng-show="!success">
+			<div class="col-sm-12 col-lg-10">
+				<div class="donatie">
+					<div class="form-group col-sm-12">
+						<span class="legend">Wij zijn blij dat uw vordering inmiddels is voldaan.</span>
+						<p>Mocht u in de toekomst weer met een niet-betalende debiteur te maken krijgen? Vermeld deze dan bij het CRZB. Op deze wijze kan ondernemend Nederland elkaar op de hoogte houden van niet-betalende ondernemingen.<p/>
+						<br/>
+						<b>Bent u tevreden met onze diensten en wilt u een donatie doen?</b>
+						<br/>
+						<p>Uw donatie zal dienen ter verbetering van de diensten, versterking van de daadkracht en waarborgt onze duurzaamheid.</p>
+						<br/>
+						<p>Hieronder kunt u het gewenste bedrag kiezen/invoeren:</p>	
+					</div>				
+					<ul class="form-group col-sm-12 bedrag eenmaligBedrag">
+						<li class="fixedbedrag">
+							<input type="radio" name="eenmaligBedrag" id="eenmaligBedrag5.00" value="5" ng-model="donationAmount" ng-click="showInput=false; focusInput=false">
+							<label for="eenmaligBedrag5.00">&euro;5</label>
+						</li>
+						<li class="fixedbedrag">
+							<input type="radio" name="eenmaligBedrag" id="eenmaligBedrag10.00" value="10" ng-model="donationAmount" ng-click="showInput=false; focusInput=false">
+							<label for="eenmaligBedrag10.00">&euro;10</label>
+						</li>
+						<li class="fixedbedrag">
+							<input type="radio" name="eenmaligBedrag" id="eenmaligBedrag20.00" value="20" ng-model="donationAmount" ng-click="showInput=false; focusInput=false">
+							<label for="eenmaligBedrag20.00">&euro;20</label>
+						</li>
+						<li class="fixedbedrag">
+							<input type="radio" name="eenmaligBedrag" id="eenmaligBedrag50.00" value="50" ng-model="donationAmount" ng-click="showInput=false; focusInput=false">
+							<label for="eenmaligBedrag50.00">&euro;50</label>
+						</li>
+						<li>
+							<input type="radio" class="flexbedrag" name="eenmaligBedrag" id="donationAmount" value="..." ng-model="donatievalue" ng-click="showInput=true; focusInput=true">
+							<label for="donationAmount" class="eenmaligBedragAndersId" ng-hide="showInput">...</label>
+
+							<div class="eenmaligBedragAndersId" ng-class="{'has-error' : donationIsInvalid(donationAmount)}" ng-show="showInput" ng-form="donationform">
+								<input focus-me="focusInput" type="text" name="donationAmount" id="donationAmount" class="eenmaligBedragAndersValueId" ng-model="donationAmount"/>
+								<small class="help-block" ng-show="donationIsInvalid(donationAmount)">
+									<span>Voer minimaal bedrag vanaf &euro;5 in hele Euro's in a.u.b.</span></small>
+							</div>
+						</li>
+					</ul>
+					<div class="form-group col-sm-12">
+					<p><i>Dit bedrag zal eenmalig aan uw eerstvolgende factuur worden toegevoegd.</i></p>
+					</div>
+				</div>
+			</div> 
+		</div>
+		<div id="alert" class="alert alert-danger" ng-show="error">{{error}}</div>
+		<div class="alert alert-info" ng-show="noDonationInfo">{{noDonationInfo}}</div> 
+		<div class="modal-footer">
+			<button class="btn btnlgw2 btn-lg-mob w100mob btn-primary " ng-show="success==true" ng-click="cancel()">Sluiten</button>		
+<button type="button" class="btn btnlgw2 btn-lg-mob w100mob btn-primary" ng-hide="success==true" ng-click="initiateDonation(donationAmount)" ng-disabled="donateDisabled(donationAmount)">Doneren</button>
+<button class="btn btnlgw2 btn-lg-mob w100mob btn-primary" ng-click="cancel()" ng-hide="success==true">Ga verder</button>
+		</div>
+		</fieldset>
+		</form>
+	</div>
+</script>

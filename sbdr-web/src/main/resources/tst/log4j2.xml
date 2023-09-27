@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="ConsoleAppender">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %c{5}:%L - %m%n"/>
+		</Console>
+		<RollingFile name="sbdr.file" fileName="${catalina.base}/logs/sbdr.log" filePattern="${catalina.base}/logs/sbdr_%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="[%p] %d{dd MMM yyyy HH:mm:ss,SSS} [%t] %x %c %M - %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="15 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="10"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.springframework" additivity="false">
+			<Level value="INFO"/>
+			<AppenderRef ref="sbdr.file"/>
+		</Logger>
+		
+		<Logger name="nl.devoorkant" additivity="false">
+			<Level value="INFO"/>
+			<AppenderRef ref="sbdr.file"/>
+		</Logger>		
+
+		<logger name="nl.devoorkant" additivity="false">
+			<level value="INFO"/>
+			<appender-ref ref="sbdr.file"/>
+		</logger>
+		
+		<Root level="info">
+			<AppenderRef ref="ConsoleAppender"/>
+			<AppenderRef ref="sbdr.file"/>
+		</Root>		
+	</Loggers>
+</Configuration>

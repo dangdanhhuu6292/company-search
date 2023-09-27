@@ -1,0 +1,31 @@
+<legend>Reageren</legend>
+<form id="formsupportsbdrreaction" name="formsupportsbdrreaction" class="form-horizontal" novalidate>
+	<div>
+		<div class="form-group">
+			<label class="col-md-9 col-md-offset-3">
+				Hieronder kunt u een toelichting of antwoord geven op een support ticket van gebruikers.
+			</label>
+		</div>
+		<div class="form-group" ng-class="{'has-error' : isInvalid(formsupportsbdrreaction, 'bericht')}">
+			<label class="col-md-3 control-label">Toelichting/antwoord</label>
+
+			<div class="col-md-9">
+				<textarea ng-paste="checkFieldMaxLength($event, reaction.bericht, maxFieldLengths.supportBericht)" wm-block class="form-control" cols="80" rows="5" name="bericht" id="bericht" ng-model="reaction.bericht" wm-block-length="maxFieldLengths.supportBericht" required></textarea>
+				<small class="help-block" ng-show="isInvalid(formsupportsbdrreaction, 'bericht')">
+					<span>Vul uw toelichting/antwoord a.u.b. in</span>
+				</small>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-7 col-md-offset-3">
+			<button type="button" class="btn btn-primary" ng-disabled="formsupportsbdrreaction.$invalid"
+			        ng-click="submitSupportSbdrReaction()">
+				Opslaan
+			</button>
+			<button type="button" class="btn btn-primary" ng-click="gotoSupport()">
+				Terug
+			</button>
+		</div>
+	</div>
+</form>

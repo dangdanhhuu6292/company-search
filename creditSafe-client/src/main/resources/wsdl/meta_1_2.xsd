@@ -1,0 +1,1523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.creditsafe.com/globaldata/datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mstns="http://www.creditsafe.com/globaldata/datatypes" xmlns="http://www.creditsafe.com/globaldata/datatypes">
+  <xs:complexType name="ServiceResponse" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Messages">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Message" type="Message"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompaniesList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Companies">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Company" type="Company"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="ChargeReference" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CompanyChangesList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Companies">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Company" type="MonitoredCompany"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="MoreResults" type="xs:boolean" use="required"/>
+        <xs:attribute name="NextIterationToken" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CompanyReferences">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Companies">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Company">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="key" type="xs:string" use="required"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="Creditsafe.GlobalData.CompanyReferences-Companies">
+          <xs:selector xpath="mstns:Company"/>
+          <xs:field xpath="@key"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeEventsBasicParamsList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Events">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Event" type="ChangeEventBasicParams"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="Country" type="CountryCode"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MonitoringRules">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Rule" type="MonitoringRule"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CurrentPortfolioMonitoringRules">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Rules">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Rule" type="MonitoringRule"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="PortfolioId" type="xs:unsignedInt"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomDataSchema">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CustomData">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="CustomDataEntrySchema"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Country" type="CountryCode"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CountriesList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Countries">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Country" type="Country"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CountriesListingFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Code" type="CountryCode"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="OnlineReports" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Monitoring" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CurrentPortfolioSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Settings" type="PortfolioSettings"/>
+        </xs:sequence>
+        <xs:attribute name="PortfolioId" type="xs:unsignedInt"/>
+        <xs:attribute name="CreationDate" type="xs:dateTime" use="required"/>
+        <xs:attribute name="LastSettingsChangeDate" type="xs:dateTime" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Entries">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="key" type="xs:string" use="required"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="Creditsafe.GlobalData.CustomData-Entries">
+          <xs:selector xpath="mstns:Entry"/>
+          <xs:field xpath="@key"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PortfolioCompanyRemovalResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Portfolios">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Portfolio" type="PortfolioCompanyIds"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MonitoredCompaniesList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Portfolios">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Portfolio" type="PortfolioCompanies"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="Results" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="FirstPosition" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="TotalResults" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="PageSize" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PortfolioRemovalResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Portfolios">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Portfolio" type="PortfolioActionResult"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PortfolioSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NotificationSettings">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Setting" type="NotificationSettings"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="PortfoliosList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Portfolios">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Portfolio" type="Portfolio"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReportboxContents">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Entries">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="ReportboxEntry"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReportboxListingFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:unsignedInt"/>
+      <xs:element minOccurs="0" name="OrderNumber" type="xs:unsignedLong"/>
+      <xs:element minOccurs="0" name="CompanyId" type="xs:string"/>
+      <xs:element minOccurs="0" name="ReportType" type="CompanyReportType"/>
+      <xs:element minOccurs="0" name="OrderedAfter" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="OrderedBefore" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="CompanyName" type="xs:string"/>
+      <xs:element minOccurs="0" name="Country" type="CountryCode"/>
+      <xs:element minOccurs="0" name="Realised" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" type="xs:string"/>
+          <xs:element minOccurs="0" name="ReportType" type="CompanyReportType"/>
+          <xs:element minOccurs="0" name="Language" type="Language"/>
+          <xs:element minOccurs="0" name="PlacementDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="ApproxWaitingTime" type="xs:duration"/>
+        </xs:sequence>
+        <xs:attribute name="OrderNumber" type="xs:unsignedLong"/>
+        <xs:attribute name="ChargeReference" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PortfolioCompanyAdditionResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:attribute name="TotalCompanies" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="SuccessfullyAddedCompanies" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="NewCompanies" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteria">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:string"/>
+      <xs:element minOccurs="0" name="SafeNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="Name" type="QueryString"/>
+      <xs:element minOccurs="0" name="Type" type="CompanyType"/>
+      <xs:element minOccurs="0" name="OfficeType" type="OfficeType"/>
+      <xs:element minOccurs="0" name="Status" type="CompanyStatus"/>
+      <xs:element minOccurs="0" name="RegistrationNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="VatNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="Address" type="AddressCriteria"/>
+      <xs:element minOccurs="0" name="PhoneNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaSchemaSet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Schemas">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Schema" type="SearchCriteriaSchema"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="CustomData">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="CustomDataEntrySchema"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Countries">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Country" type="CountryCode"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SimpleResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SupportedChangeEventsList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Events">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Event" type="ChangeEventDescription"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="Country" type="CountryCode"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Message">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Type" type="MessageType" use="required"/>
+        <xs:attribute name="Code" type="MessageCode" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="Company">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CompanyData">
+        <xs:sequence>
+          <xs:element name="AvailableReportTypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="AvailableReportType" type="CompanyReportType"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="AvailableLanguages">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="AvailableLanguage" type="Language"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="AdditionalData">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="AdditionalDataItem">
+                  <xs:complexType>
+                    <xs:simpleContent>
+                      <xs:extension base="xs:string">
+                        <xs:attribute name="key" type="xs:string" use="required"/>
+                      </xs:extension>
+                    </xs:simpleContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+            <xs:unique name="Creditsafe.GlobalData.Company-AdditionalData">
+              <xs:selector xpath="mstns:AdditionalDataItem"/>
+              <xs:field xpath="@key"/>
+            </xs:unique>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DateOfLatestAccounts" type="xs:dateTime"/>
+        <xs:attribute name="OnlineReports" type="xs:boolean" use="required"/>
+        <xs:attribute name="Monitoring" type="xs:boolean" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MonitoredCompany">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CompanyData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Reference" type="xs:string"/>
+          <xs:element minOccurs="0" name="Changes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Change" type="ChangeEvent"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="HasChanged" type="xs:boolean" use="required"/>
+        <xs:attribute name="LastChangeDate" type="xs:dateTime"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CountryCode">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="AF"/>
+      <xs:enumeration value="AX"/>
+      <xs:enumeration value="AL"/>
+      <xs:enumeration value="DZ"/>
+      <xs:enumeration value="AS"/>
+      <xs:enumeration value="AD"/>
+      <xs:enumeration value="AO"/>
+      <xs:enumeration value="AI"/>
+      <xs:enumeration value="AQ"/>
+      <xs:enumeration value="AG"/>
+      <xs:enumeration value="AR"/>
+      <xs:enumeration value="AM"/>
+      <xs:enumeration value="AW"/>
+      <xs:enumeration value="AU"/>
+      <xs:enumeration value="AT"/>
+      <xs:enumeration value="AZ"/>
+      <xs:enumeration value="BS"/>
+      <xs:enumeration value="BH"/>
+      <xs:enumeration value="BD"/>
+      <xs:enumeration value="BB"/>
+      <xs:enumeration value="BY"/>
+      <xs:enumeration value="BE"/>
+      <xs:enumeration value="BZ"/>
+      <xs:enumeration value="BJ"/>
+      <xs:enumeration value="BM"/>
+      <xs:enumeration value="BT"/>
+      <xs:enumeration value="BO"/>
+      <xs:enumeration value="BA"/>
+      <xs:enumeration value="BW"/>
+      <xs:enumeration value="BV"/>
+      <xs:enumeration value="BR"/>
+      <xs:enumeration value="IO"/>
+      <xs:enumeration value="BN"/>
+      <xs:enumeration value="BG"/>
+      <xs:enumeration value="BF"/>
+      <xs:enumeration value="BI"/>
+      <xs:enumeration value="KH"/>
+      <xs:enumeration value="CM"/>
+      <xs:enumeration value="CA"/>
+      <xs:enumeration value="CV"/>
+      <xs:enumeration value="KY"/>
+      <xs:enumeration value="CF"/>
+      <xs:enumeration value="TD"/>
+      <xs:enumeration value="CL"/>
+      <xs:enumeration value="CN"/>
+      <xs:enumeration value="CX"/>
+      <xs:enumeration value="CC"/>
+      <xs:enumeration value="CO"/>
+      <xs:enumeration value="KM"/>
+      <xs:enumeration value="CG"/>
+      <xs:enumeration value="CD"/>
+      <xs:enumeration value="CK"/>
+      <xs:enumeration value="CR"/>
+      <xs:enumeration value="CI"/>
+      <xs:enumeration value="HR"/>
+      <xs:enumeration value="CU"/>
+      <xs:enumeration value="CY"/>
+      <xs:enumeration value="CZ"/>
+      <xs:enumeration value="DK"/>
+      <xs:enumeration value="DJ"/>
+      <xs:enumeration value="DM"/>
+      <xs:enumeration value="DO"/>
+      <xs:enumeration value="EC"/>
+      <xs:enumeration value="EG"/>
+      <xs:enumeration value="SV"/>
+      <xs:enumeration value="GQ"/>
+      <xs:enumeration value="ER"/>
+      <xs:enumeration value="EE"/>
+      <xs:enumeration value="ET"/>
+      <xs:enumeration value="FK"/>
+      <xs:enumeration value="FO"/>
+      <xs:enumeration value="FJ"/>
+      <xs:enumeration value="FI"/>
+      <xs:enumeration value="FR"/>
+      <xs:enumeration value="GF"/>
+      <xs:enumeration value="PF"/>
+      <xs:enumeration value="TF"/>
+      <xs:enumeration value="GA"/>
+      <xs:enumeration value="GM"/>
+      <xs:enumeration value="GE"/>
+      <xs:enumeration value="DE"/>
+      <xs:enumeration value="GH"/>
+      <xs:enumeration value="GI"/>
+      <xs:enumeration value="GR"/>
+      <xs:enumeration value="GL"/>
+      <xs:enumeration value="GD"/>
+      <xs:enumeration value="GP"/>
+      <xs:enumeration value="GU"/>
+      <xs:enumeration value="GT"/>
+      <xs:enumeration value="GG"/>
+      <xs:enumeration value="GN"/>
+      <xs:enumeration value="GW"/>
+      <xs:enumeration value="GY"/>
+      <xs:enumeration value="HT"/>
+      <xs:enumeration value="HM"/>
+      <xs:enumeration value="HN"/>
+      <xs:enumeration value="HK"/>
+      <xs:enumeration value="HU"/>
+      <xs:enumeration value="IS"/>
+      <xs:enumeration value="IN"/>
+      <xs:enumeration value="ID"/>
+      <xs:enumeration value="IR"/>
+      <xs:enumeration value="IQ"/>
+      <xs:enumeration value="IE"/>
+      <xs:enumeration value="IM"/>
+      <xs:enumeration value="IL"/>
+      <xs:enumeration value="IT"/>
+      <xs:enumeration value="JM"/>
+      <xs:enumeration value="JP"/>
+      <xs:enumeration value="JE"/>
+      <xs:enumeration value="JO"/>
+      <xs:enumeration value="KZ"/>
+      <xs:enumeration value="KE"/>
+      <xs:enumeration value="KI"/>
+      <xs:enumeration value="KP"/>
+      <xs:enumeration value="KR"/>
+      <xs:enumeration value="KW"/>
+      <xs:enumeration value="KG"/>
+      <xs:enumeration value="LA"/>
+      <xs:enumeration value="LV"/>
+      <xs:enumeration value="LB"/>
+      <xs:enumeration value="LS"/>
+      <xs:enumeration value="LR"/>
+      <xs:enumeration value="LY"/>
+      <xs:enumeration value="LI"/>
+      <xs:enumeration value="LT"/>
+      <xs:enumeration value="LU"/>
+      <xs:enumeration value="MO"/>
+      <xs:enumeration value="MK"/>
+      <xs:enumeration value="MG"/>
+      <xs:enumeration value="MW"/>
+      <xs:enumeration value="MY"/>
+      <xs:enumeration value="MV"/>
+      <xs:enumeration value="ML"/>
+      <xs:enumeration value="MT"/>
+      <xs:enumeration value="MH"/>
+      <xs:enumeration value="MQ"/>
+      <xs:enumeration value="MR"/>
+      <xs:enumeration value="MU"/>
+      <xs:enumeration value="YT"/>
+      <xs:enumeration value="MX"/>
+      <xs:enumeration value="FM"/>
+      <xs:enumeration value="MD"/>
+      <xs:enumeration value="MC"/>
+      <xs:enumeration value="MN"/>
+      <xs:enumeration value="ME"/>
+      <xs:enumeration value="MS"/>
+      <xs:enumeration value="MA"/>
+      <xs:enumeration value="MZ"/>
+      <xs:enumeration value="MM"/>
+      <xs:enumeration value="NA"/>
+      <xs:enumeration value="NR"/>
+      <xs:enumeration value="NP"/>
+      <xs:enumeration value="NL"/>
+      <xs:enumeration value="AN"/>
+      <xs:enumeration value="NC"/>
+      <xs:enumeration value="NZ"/>
+      <xs:enumeration value="NI"/>
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="NG"/>
+      <xs:enumeration value="NU"/>
+      <xs:enumeration value="NF"/>
+      <xs:enumeration value="MP"/>
+      <xs:enumeration value="NO"/>
+      <xs:enumeration value="OM"/>
+      <xs:enumeration value="PK"/>
+      <xs:enumeration value="PW"/>
+      <xs:enumeration value="PS"/>
+      <xs:enumeration value="PA"/>
+      <xs:enumeration value="PG"/>
+      <xs:enumeration value="PY"/>
+      <xs:enumeration value="PE"/>
+      <xs:enumeration value="PH"/>
+      <xs:enumeration value="PN"/>
+      <xs:enumeration value="PL"/>
+      <xs:enumeration value="PT"/>
+      <xs:enumeration value="PR"/>
+      <xs:enumeration value="QA"/>
+      <xs:enumeration value="RE"/>
+      <xs:enumeration value="RO"/>
+      <xs:enumeration value="RU"/>
+      <xs:enumeration value="RW"/>
+      <xs:enumeration value="BL"/>
+      <xs:enumeration value="SH"/>
+      <xs:enumeration value="KN"/>
+      <xs:enumeration value="LC"/>
+      <xs:enumeration value="MF"/>
+      <xs:enumeration value="PM"/>
+      <xs:enumeration value="VC"/>
+      <xs:enumeration value="WS"/>
+      <xs:enumeration value="SM"/>
+      <xs:enumeration value="ST"/>
+      <xs:enumeration value="SA"/>
+      <xs:enumeration value="SN"/>
+      <xs:enumeration value="RS"/>
+      <xs:enumeration value="SC"/>
+      <xs:enumeration value="SL"/>
+      <xs:enumeration value="SG"/>
+      <xs:enumeration value="SK"/>
+      <xs:enumeration value="SI"/>
+      <xs:enumeration value="SB"/>
+      <xs:enumeration value="SO"/>
+      <xs:enumeration value="ZA"/>
+      <xs:enumeration value="GS"/>
+      <xs:enumeration value="ES"/>
+      <xs:enumeration value="LK"/>
+      <xs:enumeration value="SD"/>
+      <xs:enumeration value="SR"/>
+      <xs:enumeration value="SJ"/>
+      <xs:enumeration value="SZ"/>
+      <xs:enumeration value="SE"/>
+      <xs:enumeration value="CH"/>
+      <xs:enumeration value="SY"/>
+      <xs:enumeration value="TW"/>
+      <xs:enumeration value="TJ"/>
+      <xs:enumeration value="TZ"/>
+      <xs:enumeration value="TH"/>
+      <xs:enumeration value="TL"/>
+      <xs:enumeration value="TG"/>
+      <xs:enumeration value="TK"/>
+      <xs:enumeration value="TO"/>
+      <xs:enumeration value="TT"/>
+      <xs:enumeration value="TN"/>
+      <xs:enumeration value="TR"/>
+      <xs:enumeration value="TM"/>
+      <xs:enumeration value="TC"/>
+      <xs:enumeration value="TV"/>
+      <xs:enumeration value="UG"/>
+      <xs:enumeration value="UA"/>
+      <xs:enumeration value="AE"/>
+      <xs:enumeration value="GB"/>
+      <xs:enumeration value="US"/>
+      <xs:enumeration value="UM"/>
+      <xs:enumeration value="UY"/>
+      <xs:enumeration value="UZ"/>
+      <xs:enumeration value="VU"/>
+      <xs:enumeration value="VA"/>
+      <xs:enumeration value="VE"/>
+      <xs:enumeration value="VN"/>
+      <xs:enumeration value="VG"/>
+      <xs:enumeration value="VI"/>
+      <xs:enumeration value="WF"/>
+      <xs:enumeration value="EH"/>
+      <xs:enumeration value="YE"/>
+      <xs:enumeration value="ZM"/>
+      <xs:enumeration value="ZW"/>
+      <xs:enumeration value="PLC"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ChangeEventBasicParams">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MinValue" type="xs:string"/>
+      <xs:element minOccurs="0" name="MaxValue" type="xs:string"/>
+      <xs:element minOccurs="0" name="PossibleValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Value" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Code" type="xs:string" use="required"/>
+    <xs:attribute name="CarriesValues" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="MonitoringRule">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Conditions">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Condition" type="ValueBasedCondition"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="EventCode" type="xs:string" use="required"/>
+    <xs:attribute name="MatchAllConditions" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="CustomDataEntrySchema">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowedValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AllowedValue" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Description" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Key" type="xs:string" use="required"/>
+    <xs:attribute name="Optional" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="Country">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvailableReportTypes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AvailableReportType" type="CompanyReportType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="AvailableLanguages">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AvailableLanguage" type="Language"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Code" type="CountryCode" use="required"/>
+    <xs:attribute name="OnlineReports" type="xs:boolean" use="required"/>
+    <xs:attribute name="Monitoring" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="PortfolioCompanyIds">
+    <xs:complexContent mixed="false">
+      <xs:extension base="PortfolioRelatedData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyIds">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Id" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PortfolioCompanies">
+    <xs:complexContent mixed="false">
+      <xs:extension base="PortfolioRelatedData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Companies">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Company" type="MonitoredCompany"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PortfolioActionResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="PortfolioRelatedData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AdditionalInfo" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Success" type="xs:boolean" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NotificationSettings" abstract="true">
+    <xs:attribute name="NotificationIntervalDays" type="xs:unsignedInt"/>
+    <xs:attribute name="LastNotificationDate" type="xs:dateTime"/>
+  </xs:complexType>
+  <xs:complexType name="Portfolio">
+    <xs:sequence>
+      <xs:element name="ChangedCompanies" type="xs:unsignedInt"/>
+      <xs:element name="MonitoredCompanies" type="xs:unsignedInt"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="Name" type="xs:string"/>
+    <xs:attribute name="CreationDate" type="xs:dateTime" use="required"/>
+    <xs:attribute name="LastSettingsChangeDate" type="xs:dateTime" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ReportboxEntry">
+    <xs:sequence>
+      <xs:element name="ReportType" type="CompanyReportType"/>
+      <xs:element name="OrderedOn" type="xs:dateTime"/>
+      <xs:element name="Company" type="CompanyData"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="OrderNumber" type="xs:unsignedLong" use="required"/>
+    <xs:attribute name="Realised" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:simpleType name="CompanyReportType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Basic"/>
+      <xs:enumeration value="Full"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Language">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="OM"/>
+      <xs:enumeration value="AB"/>
+      <xs:enumeration value="AA"/>
+      <xs:enumeration value="AF"/>
+      <xs:enumeration value="SQ"/>
+      <xs:enumeration value="AM"/>
+      <xs:enumeration value="AR"/>
+      <xs:enumeration value="HY"/>
+      <xs:enumeration value="AS"/>
+      <xs:enumeration value="AY"/>
+      <xs:enumeration value="AZ"/>
+      <xs:enumeration value="BA"/>
+      <xs:enumeration value="EU"/>
+      <xs:enumeration value="BN"/>
+      <xs:enumeration value="DZ"/>
+      <xs:enumeration value="BH"/>
+      <xs:enumeration value="BI"/>
+      <xs:enumeration value="BR"/>
+      <xs:enumeration value="BG"/>
+      <xs:enumeration value="MY"/>
+      <xs:enumeration value="BE"/>
+      <xs:enumeration value="KM"/>
+      <xs:enumeration value="CA"/>
+      <xs:enumeration value="ZH"/>
+      <xs:enumeration value="CO"/>
+      <xs:enumeration value="HR"/>
+      <xs:enumeration value="CS"/>
+      <xs:enumeration value="DA"/>
+      <xs:enumeration value="NL"/>
+      <xs:enumeration value="EN"/>
+      <xs:enumeration value="EO"/>
+      <xs:enumeration value="ET"/>
+      <xs:enumeration value="FO"/>
+      <xs:enumeration value="FJ"/>
+      <xs:enumeration value="FI"/>
+      <xs:enumeration value="FR"/>
+      <xs:enumeration value="FY"/>
+      <xs:enumeration value="GL"/>
+      <xs:enumeration value="KA"/>
+      <xs:enumeration value="DE"/>
+      <xs:enumeration value="EL"/>
+      <xs:enumeration value="KL"/>
+      <xs:enumeration value="GN"/>
+      <xs:enumeration value="GU"/>
+      <xs:enumeration value="HA"/>
+      <xs:enumeration value="HE"/>
+      <xs:enumeration value="HI"/>
+      <xs:enumeration value="HU"/>
+      <xs:enumeration value="IS"/>
+      <xs:enumeration value="ID"/>
+      <xs:enumeration value="IA"/>
+      <xs:enumeration value="IE"/>
+      <xs:enumeration value="IK"/>
+      <xs:enumeration value="IU"/>
+      <xs:enumeration value="GA"/>
+      <xs:enumeration value="IT"/>
+      <xs:enumeration value="JA"/>
+      <xs:enumeration value="JW"/>
+      <xs:enumeration value="KN"/>
+      <xs:enumeration value="KS"/>
+      <xs:enumeration value="KK"/>
+      <xs:enumeration value="RW"/>
+      <xs:enumeration value="KY"/>
+      <xs:enumeration value="RN"/>
+      <xs:enumeration value="KO"/>
+      <xs:enumeration value="KU"/>
+      <xs:enumeration value="LO"/>
+      <xs:enumeration value="LA"/>
+      <xs:enumeration value="LV"/>
+      <xs:enumeration value="LN"/>
+      <xs:enumeration value="LT"/>
+      <xs:enumeration value="MK"/>
+      <xs:enumeration value="MG"/>
+      <xs:enumeration value="MS"/>
+      <xs:enumeration value="ML"/>
+      <xs:enumeration value="MT"/>
+      <xs:enumeration value="MI"/>
+      <xs:enumeration value="MR"/>
+      <xs:enumeration value="MO"/>
+      <xs:enumeration value="MN"/>
+      <xs:enumeration value="NA"/>
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="NO"/>
+      <xs:enumeration value="OC"/>
+      <xs:enumeration value="OR"/>
+      <xs:enumeration value="PS"/>
+      <xs:enumeration value="FA"/>
+      <xs:enumeration value="PL"/>
+      <xs:enumeration value="PT"/>
+      <xs:enumeration value="PA"/>
+      <xs:enumeration value="QU"/>
+      <xs:enumeration value="RM"/>
+      <xs:enumeration value="RO"/>
+      <xs:enumeration value="RU"/>
+      <xs:enumeration value="SM"/>
+      <xs:enumeration value="SG"/>
+      <xs:enumeration value="SA"/>
+      <xs:enumeration value="GD"/>
+      <xs:enumeration value="SR"/>
+      <xs:enumeration value="SH"/>
+      <xs:enumeration value="ST"/>
+      <xs:enumeration value="TN"/>
+      <xs:enumeration value="SN"/>
+      <xs:enumeration value="SD"/>
+      <xs:enumeration value="SI"/>
+      <xs:enumeration value="SS"/>
+      <xs:enumeration value="SK"/>
+      <xs:enumeration value="SL"/>
+      <xs:enumeration value="SO"/>
+      <xs:enumeration value="ES"/>
+      <xs:enumeration value="SU"/>
+      <xs:enumeration value="SW"/>
+      <xs:enumeration value="SV"/>
+      <xs:enumeration value="TL"/>
+      <xs:enumeration value="TG"/>
+      <xs:enumeration value="TA"/>
+      <xs:enumeration value="TT"/>
+      <xs:enumeration value="TE"/>
+      <xs:enumeration value="TH"/>
+      <xs:enumeration value="BO"/>
+      <xs:enumeration value="TI"/>
+      <xs:enumeration value="TO"/>
+      <xs:enumeration value="TS"/>
+      <xs:enumeration value="TR"/>
+      <xs:enumeration value="TK"/>
+      <xs:enumeration value="TW"/>
+      <xs:enumeration value="UG"/>
+      <xs:enumeration value="UK"/>
+      <xs:enumeration value="UR"/>
+      <xs:enumeration value="UZ"/>
+      <xs:enumeration value="VI"/>
+      <xs:enumeration value="VO"/>
+      <xs:enumeration value="CY"/>
+      <xs:enumeration value="WO"/>
+      <xs:enumeration value="XH"/>
+      <xs:enumeration value="YI"/>
+      <xs:enumeration value="YO"/>
+      <xs:enumeration value="ZA"/>
+      <xs:enumeration value="ZU"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="QueryString">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="MatchType" type="QueryMatchType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="CompanyType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Ltd"/>
+      <xs:enumeration value="NonLtd"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OfficeType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Registered"/>
+      <xs:enumeration value="Trading"/>
+      <xs:enumeration value="HeadOffice"/>
+      <xs:enumeration value="Branch"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CompanyStatus">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="($|(Active|NonActive|Pending|Other)(\s*,\s*(Active|NonActive|Pending|Other))*)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AddressCriteria">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SimpleValue" type="QueryString"/>
+      <xs:element minOccurs="0" name="Street" type="xs:string"/>
+      <xs:element minOccurs="0" name="HouseNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="City" type="xs:string"/>
+      <xs:element minOccurs="0" name="PostalCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="Province" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaSchema">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="SafeNumber" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="Name" type="SearchCriteriaSchema.QueryStringSchema"/>
+      <xs:element minOccurs="0" name="Type" type="SearchCriteriaSchema.ValueSchema_CompanyType"/>
+      <xs:element minOccurs="0" name="OfficeType" type="SearchCriteriaSchema.ValueSchema_OfficeType"/>
+      <xs:element minOccurs="0" name="Status" type="SearchCriteriaSchema.ValueSchema_CompanyStatus"/>
+      <xs:element minOccurs="0" name="RegistrationNumber" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="VatNumber" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="Address" type="AddressCriteriaSchema"/>
+      <xs:element minOccurs="0" name="PhoneNumber" type="SearchCriteriaSchema.ValueSchema_String"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangeEventDescription">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ChangeEventBasicParams">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Category" type="ChangeEventCategory" use="required"/>
+        <xs:attribute name="CanBeMonitored" type="xs:boolean" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="MessageType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Information"/>
+      <xs:enumeration value="Warning"/>
+      <xs:enumeration value="Error"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MessageCode">
+    <xs:restriction base="xs:unsignedInt">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="10101"/>
+      <xs:enumeration value="10102"/>
+      <xs:enumeration value="10103"/>
+      <xs:enumeration value="10104"/>
+      <xs:enumeration value="10105"/>
+      <xs:enumeration value="10106"/>
+      <xs:enumeration value="20101"/>
+      <xs:enumeration value="20102"/>
+      <xs:enumeration value="20103"/>
+      <xs:enumeration value="20104"/>
+      <xs:enumeration value="20201"/>
+      <xs:enumeration value="20202"/>
+      <xs:enumeration value="30101"/>
+      <xs:enumeration value="30102"/>
+      <xs:enumeration value="30103"/>
+      <xs:enumeration value="30104"/>
+      <xs:enumeration value="30201"/>
+      <xs:enumeration value="30202"/>
+      <xs:enumeration value="30203"/>
+      <xs:enumeration value="40101"/>
+      <xs:enumeration value="40102"/>
+      <xs:enumeration value="40103"/>
+      <xs:enumeration value="40104"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CompanyData">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element minOccurs="0" name="Type" type="CompanyType"/>
+      <xs:element minOccurs="0" name="OfficeType" type="OfficeType"/>
+      <xs:element minOccurs="0" name="Status" type="CompanyStatus"/>
+      <xs:element minOccurs="0" name="RegistrationNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="VatNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="Address" type="AddressData"/>
+      <xs:element minOccurs="0" name="PhoneNumber" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Country" type="CountryCode"/>
+    <xs:attribute name="Id" type="xs:string"/>
+    <xs:attribute name="SafeNumber" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="ChangeEvent">
+    <xs:attribute name="Code" type="xs:string" use="required"/>
+    <xs:attribute name="Date" type="xs:dateTime" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ValueBasedCondition" abstract="true"/>
+  <xs:complexType name="PortfolioRelatedData" abstract="true">
+    <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="Name" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="EmailNotificationSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="NotificationSettings">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Subject" type="xs:string"/>
+          <xs:element minOccurs="0" name="AddressesMain">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Address" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="AddressesCopy">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Address" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FtpNotificationSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="NotificationSettings">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Login" type="xs:string"/>
+          <xs:element minOccurs="0" name="Password" type="xs:string"/>
+          <xs:element minOccurs="0" name="Path" type="xs:string"/>
+          <xs:element minOccurs="0" name="FilePrefix" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Url" type="xs:string" use="required"/>
+        <xs:attribute name="FileFormat" type="FileFormat" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="HttpNotificationSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="NotificationSettings">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Login" type="xs:string"/>
+          <xs:element minOccurs="0" name="Password" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Url" type="xs:string" use="required"/>
+        <xs:attribute name="PostDataFormat" type="FileFormat" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="QueryMatchType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="MatchBeginning"/>
+      <xs:enumeration value="MatchBlock"/>
+      <xs:enumeration value="MatchAnyParts"/>
+      <xs:enumeration value="MatchWords"/>
+      <xs:enumeration value="MatchBlockOrWords"/>
+      <xs:enumeration value="ExactValue"/>
+      <xs:enumeration value="ClosestKeywords"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="SearchCriteriaSchema.ValueSchema_String">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowedValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AllowedValue" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ValidationRegExp" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Optional" type="xs:boolean" use="required"/>
+    <xs:attribute name="MinLength" type="xs:int"/>
+    <xs:attribute name="MaxLength" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaSchema.QueryStringSchema">
+    <xs:complexContent mixed="false">
+      <xs:extension base="SearchCriteriaSchema.ValueSchema_String">
+        <xs:sequence>
+          <xs:element name="AllowedMatchTypes">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="AllowedMatchType" type="QueryMatchType"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaSchema.ValueSchema_CompanyType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowedValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AllowedValue" type="CompanyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ValidationRegExp" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Optional" type="xs:boolean" use="required"/>
+    <xs:attribute name="MinLength" type="xs:int"/>
+    <xs:attribute name="MaxLength" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaSchema.ValueSchema_OfficeType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowedValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AllowedValue" type="OfficeType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ValidationRegExp" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Optional" type="xs:boolean" use="required"/>
+    <xs:attribute name="MinLength" type="xs:int"/>
+    <xs:attribute name="MaxLength" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaSchema.ValueSchema_CompanyStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowedValues">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AllowedValue" type="CompanyStatus"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ValidationRegExp" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Optional" type="xs:boolean" use="required"/>
+    <xs:attribute name="MinLength" type="xs:int"/>
+    <xs:attribute name="MaxLength" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="AddressCriteriaSchema">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SimpleValue" type="SearchCriteriaSchema.QueryStringSchema"/>
+      <xs:element minOccurs="0" name="Street" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="HouseNumber" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="City" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="PostalCode" type="SearchCriteriaSchema.ValueSchema_String"/>
+      <xs:element minOccurs="0" name="Province" type="SearchCriteriaSchema.ValueSchema_String"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ChangeEventCategory">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="SimpleEvent"/>
+      <xs:enumeration value="TextValueChangeEvent"/>
+      <xs:enumeration value="NumericValueChangeEvent"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Currency">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="AFA"/>
+      <xs:enumeration value="ALL"/>
+      <xs:enumeration value="DZD"/>
+      <xs:enumeration value="ADF"/>
+      <xs:enumeration value="ADP"/>
+      <xs:enumeration value="AOA"/>
+      <xs:enumeration value="ARA"/>
+      <xs:enumeration value="ARS"/>
+      <xs:enumeration value="AMD"/>
+      <xs:enumeration value="AWG"/>
+      <xs:enumeration value="AUD"/>
+      <xs:enumeration value="AZM"/>
+      <xs:enumeration value="BSD"/>
+      <xs:enumeration value="BHD"/>
+      <xs:enumeration value="BDT"/>
+      <xs:enumeration value="BBD"/>
+      <xs:enumeration value="BYR"/>
+      <xs:enumeration value="BZD"/>
+      <xs:enumeration value="BMD"/>
+      <xs:enumeration value="BTN"/>
+      <xs:enumeration value="BOB"/>
+      <xs:enumeration value="BAM"/>
+      <xs:enumeration value="BWP"/>
+      <xs:enumeration value="BRC"/>
+      <xs:enumeration value="BRL"/>
+      <xs:enumeration value="GBP"/>
+      <xs:enumeration value="BND"/>
+      <xs:enumeration value="BGN"/>
+      <xs:enumeration value="BIF"/>
+      <xs:enumeration value="XOF"/>
+      <xs:enumeration value="XAF"/>
+      <xs:enumeration value="KHR"/>
+      <xs:enumeration value="CAD"/>
+      <xs:enumeration value="CVE"/>
+      <xs:enumeration value="KYD"/>
+      <xs:enumeration value="CLP"/>
+      <xs:enumeration value="CNY"/>
+      <xs:enumeration value="COP"/>
+      <xs:enumeration value="KMF"/>
+      <xs:enumeration value="CDF"/>
+      <xs:enumeration value="CRC"/>
+      <xs:enumeration value="HRK"/>
+      <xs:enumeration value="CUP"/>
+      <xs:enumeration value="CZK"/>
+      <xs:enumeration value="DKK"/>
+      <xs:enumeration value="DJF"/>
+      <xs:enumeration value="DOP"/>
+      <xs:enumeration value="NLG"/>
+      <xs:enumeration value="EUR"/>
+      <xs:enumeration value="ECS"/>
+      <xs:enumeration value="EGP"/>
+      <xs:enumeration value="SVC"/>
+      <xs:enumeration value="EEK"/>
+      <xs:enumeration value="ETB"/>
+      <xs:enumeration value="FKP"/>
+      <xs:enumeration value="FJD"/>
+      <xs:enumeration value="FRF"/>
+      <xs:enumeration value="GMD"/>
+      <xs:enumeration value="GEL"/>
+      <xs:enumeration value="GHC"/>
+      <xs:enumeration value="GIP"/>
+      <xs:enumeration value="XAU"/>
+      <xs:enumeration value="GTQ"/>
+      <xs:enumeration value="GNF"/>
+      <xs:enumeration value="GWP"/>
+      <xs:enumeration value="GYD"/>
+      <xs:enumeration value="HTG"/>
+      <xs:enumeration value="HNL"/>
+      <xs:enumeration value="HKD"/>
+      <xs:enumeration value="HUF"/>
+      <xs:enumeration value="ISK"/>
+      <xs:enumeration value="INR"/>
+      <xs:enumeration value="IDR"/>
+      <xs:enumeration value="IRR"/>
+      <xs:enumeration value="IQD"/>
+      <xs:enumeration value="ILS"/>
+      <xs:enumeration value="JMD"/>
+      <xs:enumeration value="JPY"/>
+      <xs:enumeration value="JOD"/>
+      <xs:enumeration value="KZT"/>
+      <xs:enumeration value="KES"/>
+      <xs:enumeration value="KRW"/>
+      <xs:enumeration value="KWD"/>
+      <xs:enumeration value="KGS"/>
+      <xs:enumeration value="LAK"/>
+      <xs:enumeration value="LVL"/>
+      <xs:enumeration value="LBP"/>
+      <xs:enumeration value="LSL"/>
+      <xs:enumeration value="LRD"/>
+      <xs:enumeration value="LYD"/>
+      <xs:enumeration value="LTL"/>
+      <xs:enumeration value="MOP"/>
+      <xs:enumeration value="MKD"/>
+      <xs:enumeration value="MGF"/>
+      <xs:enumeration value="MWK"/>
+      <xs:enumeration value="MYR"/>
+      <xs:enumeration value="MVR"/>
+      <xs:enumeration value="MTL"/>
+      <xs:enumeration value="MRO"/>
+      <xs:enumeration value="MUR"/>
+      <xs:enumeration value="MXN"/>
+      <xs:enumeration value="MDL"/>
+      <xs:enumeration value="MNT"/>
+      <xs:enumeration value="MAD"/>
+      <xs:enumeration value="MZM"/>
+      <xs:enumeration value="MMK"/>
+      <xs:enumeration value="ANG"/>
+      <xs:enumeration value="NAD"/>
+      <xs:enumeration value="NPR"/>
+      <xs:enumeration value="NZD"/>
+      <xs:enumeration value="NIO"/>
+      <xs:enumeration value="NGN"/>
+      <xs:enumeration value="KPW"/>
+      <xs:enumeration value="NOK"/>
+      <xs:enumeration value="OMR"/>
+      <xs:enumeration value="PKR"/>
+      <xs:enumeration value="XPD"/>
+      <xs:enumeration value="PAB"/>
+      <xs:enumeration value="PGK"/>
+      <xs:enumeration value="PYG"/>
+      <xs:enumeration value="PEN"/>
+      <xs:enumeration value="PHP"/>
+      <xs:enumeration value="XPT"/>
+      <xs:enumeration value="PLN"/>
+      <xs:enumeration value="QAR"/>
+      <xs:enumeration value="RON"/>
+      <xs:enumeration value="RUB"/>
+      <xs:enumeration value="RWF"/>
+      <xs:enumeration value="WST"/>
+      <xs:enumeration value="STD"/>
+      <xs:enumeration value="SAR"/>
+      <xs:enumeration value="RSD"/>
+      <xs:enumeration value="SCR"/>
+      <xs:enumeration value="SLL"/>
+      <xs:enumeration value="XAG"/>
+      <xs:enumeration value="SGD"/>
+      <xs:enumeration value="SKK"/>
+      <xs:enumeration value="SIT"/>
+      <xs:enumeration value="SBD"/>
+      <xs:enumeration value="SOS"/>
+      <xs:enumeration value="ZAR"/>
+      <xs:enumeration value="LKR"/>
+      <xs:enumeration value="SHP"/>
+      <xs:enumeration value="SDD"/>
+      <xs:enumeration value="SDG"/>
+      <xs:enumeration value="SDP"/>
+      <xs:enumeration value="SRD"/>
+      <xs:enumeration value="SRG"/>
+      <xs:enumeration value="SZL"/>
+      <xs:enumeration value="SEK"/>
+      <xs:enumeration value="CHF"/>
+      <xs:enumeration value="SYP"/>
+      <xs:enumeration value="TWD"/>
+      <xs:enumeration value="TJS"/>
+      <xs:enumeration value="TZS"/>
+      <xs:enumeration value="THB"/>
+      <xs:enumeration value="TOP"/>
+      <xs:enumeration value="TTD"/>
+      <xs:enumeration value="TND"/>
+      <xs:enumeration value="TRY"/>
+      <xs:enumeration value="TMM"/>
+      <xs:enumeration value="USD"/>
+      <xs:enumeration value="UGX"/>
+      <xs:enumeration value="UAG"/>
+      <xs:enumeration value="UAK"/>
+      <xs:enumeration value="AED"/>
+      <xs:enumeration value="UYU"/>
+      <xs:enumeration value="UZS"/>
+      <xs:enumeration value="VUV"/>
+      <xs:enumeration value="VEF"/>
+      <xs:enumeration value="VND"/>
+      <xs:enumeration value="YUN"/>
+      <xs:enumeration value="ZMK"/>
+      <xs:enumeration value="ZWD"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AddressData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SimpleValue" type="xs:string"/>
+      <xs:element minOccurs="0" name="Street" type="xs:string"/>
+      <xs:element minOccurs="0" name="HouseNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="City" type="xs:string"/>
+      <xs:element minOccurs="0" name="PostalCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="Province" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NumericValueChangeEvent">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ChangeEvent">
+        <xs:attribute name="PreviousValue" type="xs:decimal"/>
+        <xs:attribute name="NewValue" type="xs:decimal"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TextValueChangeEvent">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ChangeEvent">
+        <xs:attribute name="PreviousValue" type="xs:string"/>
+        <xs:attribute name="NewValue" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ChangeRangeCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ValueBasedCondition">
+        <xs:attribute name="MinChange" type="xs:decimal"/>
+        <xs:attribute name="MaxChange" type="xs:decimal"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NumericValueRangeCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ValueBasedCondition">
+        <xs:attribute name="MinValue" type="xs:decimal"/>
+        <xs:attribute name="MaxValue" type="xs:decimal"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TextValueRangeCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ValueBasedCondition">
+        <xs:attribute name="MinValue" type="xs:string"/>
+        <xs:attribute name="MaxValue" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="FileFormat">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Xml"/>
+      <xs:enumeration value="Csv"/>
+      <xs:enumeration value="Json"/>
+      <xs:enumeration value="Xls"/>
+      <xs:enumeration value="Pdf"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ServiceResponse" type="ServiceResponse"/>
+  <xs:element name="CompaniesList" type="CompaniesList"/>
+  <xs:element name="CompanyChangesList" type="CompanyChangesList"/>
+  <xs:element name="CompanyReferences" type="CompanyReferences"/>
+  <xs:element name="ChangeEventsBasicParamsList" type="ChangeEventsBasicParamsList"/>
+  <xs:element name="MonitoringRules" type="MonitoringRules"/>
+  <xs:element name="CurrentPortfolioMonitoringRules" type="CurrentPortfolioMonitoringRules"/>
+  <xs:element name="CustomDataSchema" type="CustomDataSchema"/>
+  <xs:element name="CountriesList" type="CountriesList"/>
+  <xs:element name="CountriesListingFilter" type="CountriesListingFilter"/>
+  <xs:element name="CurrentPortfolioSettings" type="CurrentPortfolioSettings"/>
+  <xs:element name="CustomData" type="CustomData"/>
+  <xs:element name="PortfolioCompanyRemovalResult" type="PortfolioCompanyRemovalResult"/>
+  <xs:element name="MonitoredCompaniesList" type="MonitoredCompaniesList"/>
+  <xs:element name="PortfolioRemovalResult" type="PortfolioRemovalResult"/>
+  <xs:element name="PortfolioSettings" type="PortfolioSettings"/>
+  <xs:element name="PortfoliosList" type="PortfoliosList"/>
+  <xs:element name="ReportboxContents" type="ReportboxContents"/>
+  <xs:element name="ReportboxListingFilter" type="ReportboxListingFilter"/>
+  <xs:element name="ReportOrder" type="ReportOrder"/>
+  <xs:element name="PortfolioCompanyAdditionResult" type="PortfolioCompanyAdditionResult"/>
+  <xs:element name="SearchCriteria" type="SearchCriteria"/>
+  <xs:element name="SearchCriteriaSchemaSet" type="SearchCriteriaSchemaSet"/>
+  <xs:element name="SimpleResult" type="SimpleResult"/>
+  <xs:element name="SupportedChangeEventsList" type="SupportedChangeEventsList"/>
+</xs:schema>

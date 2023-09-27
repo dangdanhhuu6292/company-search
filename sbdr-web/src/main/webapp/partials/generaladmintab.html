@@ -1,0 +1,186 @@
+<div ng-controller="GeneralAdminTabController">
+	<div class="row box-content">
+		<div class="col-sm-12">
+			<div class="row box-context">
+				<div class="col-sm-6 col-md-3">
+					<div class="panel  panel-generaladmin panel-fixed">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-2">
+									<i class="fa fa-building-o fa-3x"></i>
+								</div>
+								<div class="col-xs-10 text-right">
+									<div class="huge">{{totaalNieuweKlanten}}</div>
+									<div>Nieuwe klanten!</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="wrapper">
+								<ng-sparkline-seriesbar id="sparky2" value="valueKlanten"
+									height=50 max-points=12 init-points="dataPointsNieuweKlanten"
+									bar-width=12 bar-spacing=4
+									chart-range-min=0 number-digit-group-sep='.'
+									number-decimal-mark=',' tooltip-suffix='/ 2u' init=false></ng-sparkline-seriesbar>
+							</div>
+						</div>							
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<div class="panel  panel-generaladmin panel-fixed">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-2">
+									<i class="fa fa-exclamation-triangle fa-3x"></i>
+								</div>
+								<div class="col-xs-10 text-right">
+									<div class="huge">{{totaalNieuweMeldingen}}</div>
+									<div>Nieuwe vermeldingen!</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="wrapper">
+								<ng-sparkline-seriesbar id="sparky2" value="valueMeldingen"
+									height=50 max-points=12 init-points="dataPointsNieuweMeldingen"
+									bar-width=12 bar-spacing=4
+									chart-range-min=0 number-digit-group-sep='.'
+									number-decimal-mark=',' tooltip-suffix='/ 2u' init=false></ng-sparkline-seriesbar>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<div class="panel  panel-generaladmin panel-fixed">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-2">
+									<i class="fa fa-desktop fa-3x"></i>
+								</div>
+								<div class="col-xs-10 text-right">
+									<div class="huge">{{totaalNieuweMonitoring}}</div>
+									<div>Nieuwe monitoring!</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="wrapper">
+								<ng-sparkline-seriesbar id="sparky2" value="valueMonitoring"
+									height=50 max-points=12 init-points="dataPointsNieuweMonitoring"
+									bar-width=12 bar-spacing=4
+									chart-range-min=0 number-digit-group-sep='.'
+									number-decimal-mark=',' tooltip-suffix='/ 2u' init=false></ng-sparkline-seriesbar>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<div class="panel  panel-generaladmin panel-fixed">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-2">
+									<i class="fa fa-file fa-3x"></i>
+								</div>
+								<div class="col-xs-10 text-right">
+									<div class="huge">{{totaalNieuweRapporten}}</div>
+									<div>Nieuwe rapporten!</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="wrapper">
+								<ng-sparkline-seriesbar id="sparky2" value="valueRapport"
+									height=50 max-points=12 init-points="dataPointsNieuweRapporten"
+									bar-width=12 bar-spacing=4
+									chart-range-min=0 number-digit-group-sep='.'
+									number-decimal-mark=',' tooltip-suffix='/ 2u' init=false></ng-sparkline-seriesbar>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row box-content">
+		<div class="col-sm-12">
+			<div class="row box-context">
+				<div class="col-sm-12 col-lg-8">
+					<div class="box-content">
+						
+						<div class="row one-list-message">
+							<div class="col-xs-1">
+								<i class="fa fa-user"></i>
+							</div>
+							<div class="col-xs-2">
+								<b>Klanten</b>
+							</div>
+							<div class="col-xs-2">{{totaalKlanten}} klanten totaal</div>
+							<div class="col-xs-2">{{totaalKlanten-totaalVerwijderdeKlanten}} klanten actief</div>
+							<div class="col-xs-5">
+								<progress><bar ng-repeat="bar in stackedKlanten track by $index" value="bar.value" type="{{bar.type}}" title="{{bar.value}}% {{bar.description}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></bar></progress>
+							</div>
+						</div>						
+
+						<div class="row one-list-message">
+							<div class="col-xs-1">
+								<i class="fa fa-building-o"></i>
+							</div>
+							<div class="col-xs-2">
+								<b>Meldingen</b>
+							</div>
+							<div class="col-xs-2">{{totaalMeldingen}} meldingen</div>
+							<div class="col-xs-2">{{totaalMeldingen-totaalVerwijderdeMeldingen}} meldingen actief</div>
+							<div class="col-xs-5">
+								<progress><bar ng-repeat="bar in stackedMeldingen track by $index" value="bar.value" type="{{bar.type}}" title="{{bar.value}}% {{bar.description}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></bar></progress>
+							</div>
+						</div>						
+
+						<div class="row one-list-message">
+							<div class="col-xs-1">
+								<i class="fa fa-desktop"></i>
+							</div>
+							<div class="col-xs-2">
+								<b>Monitoring</b>
+							</div>
+							<div class="col-xs-2">{{totaalMonitoring}} monitoring</div>
+							<div class="col-xs-2">{{totaalMonitoring-totaalVerwijderdeMonitoring}} monitoring actief</div>
+							<div class="col-xs-5">
+								<progress><bar ng-repeat="bar in stackedMonitoring track by $index" value="bar.value" type="{{bar.type}}" title="{{bar.value}}% {{bar.description}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></bar></progress>
+							</div>																			
+						</div>		
+						
+						<div class="row one-list-message">
+							<div class="col-xs-1">
+								<i class="fa fa-file"></i>
+							</div>
+							<div class="col-xs-2">
+								<b>Rapporten</b>
+							</div>
+							<div class="col-xs-2">{{totaalRapporten}} rapporten totaal</div>
+							<div class="col-xs-2"></div>
+							<div class="col-xs-5">
+								<progress><bar ng-repeat="bar in stackedRapporten track by $index" value="bar.value" type="{{bar.type}}" title="{{bar.value}}% {{bar.description}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></bar></progress>
+							</div>																			
+						</div>
+						<div class="row one-list-message">
+							<div class="col-xs-1">
+								<i class="fa fa-users"></i>
+							</div>
+							<div class="col-xs-2">
+								<b>Gebruikers</b>
+							</div>
+							<div class="col-xs-2">{{totaalGebruikers-totaalDeactivatedGebruikers}} gebruikers actief</div>
+							<div class="col-xs-2">{{gebruikersIngelogd}} gebruikers ingelogd</div>
+							<div class="col-xs-5">
+								<progress><bar ng-repeat="bar in stackedGebruikers track by $index" value="bar.value" type="{{bar.type}}" title="{{bar.value}}% {{bar.description}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></bar></progress>
+							</div>																			
+						</div>												
+																		
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

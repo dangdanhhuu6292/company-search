@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="systemtypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mstns="systemtypes" xmlns="systemtypes">
+  <xs:simpleType name="System.ServiceModel.Security.X509CertificateValidationMode">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="PeerTrust"/>
+      <xs:enumeration value="ChainTrust"/>
+      <xs:enumeration value="PeerOrChainTrust"/>
+      <xs:enumeration value="Custom"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="System.ServiceModel.BasicHttpSecurityMode">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Transport"/>
+      <xs:enumeration value="Message"/>
+      <xs:enumeration value="TransportWithMessageCredential"/>
+      <xs:enumeration value="TransportCredentialOnly"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="System.ServiceModel.BasicHttpMessageCredentialType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="UserName"/>
+      <xs:enumeration value="Certificate"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="System.ServiceModel.HttpClientCredentialType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Basic"/>
+      <xs:enumeration value="Digest"/>
+      <xs:enumeration value="Ntlm"/>
+      <xs:enumeration value="Windows"/>
+      <xs:enumeration value="Certificate"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="System.ServiceModel.HttpProxyCredentialType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Basic"/>
+      <xs:enumeration value="Digest"/>
+      <xs:enumeration value="Ntlm"/>
+      <xs:enumeration value="Windows"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="System.ServiceModel.SecurityMode">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Transport"/>
+      <xs:enumeration value="Message"/>
+      <xs:enumeration value="TransportWithMessageCredential"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="System.ServiceModel.MessageCredentialType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Windows"/>
+      <xs:enumeration value="UserName"/>
+      <xs:enumeration value="Certificate"/>
+      <xs:enumeration value="IssuedToken"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

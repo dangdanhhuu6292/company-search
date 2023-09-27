@@ -1,0 +1,296 @@
+<div class="row">
+<div id="faillissementenoverzicht_page" class="col-xs-12 col-sm-12">
+	    <script>
+		    $(document).ready(function() {
+				
+			setTimeout(function(){
+			  $('.fixit').matchHeight();
+			 $('.fixit2').matchHeight();
+			  jQuery(".livicon-evo").addLiviconEvo();
+			},600);
+            });
+		    
+        </script>
+       <div class="box no noborderlegend">
+		<div class="col-xs-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+            <div class="row box-content border shad margb">
+                <span class="mylivicon" data-options="name: balance.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;tryToSharpen: true"></span>
+                <span class="legend">Surseances & faillissementen</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 ">
+                        <div class="greenbox margreen clearfix fixit fix-box-1">
+						 <div class="row col-xs-10">
+                            <div class="greenleft">
+                                <div class="faillissemententext">Faillissementen dit jaar</div>
+                                <div class="greenbignumber">{{stats.nrOfFaillissementenJaar}}</div>
+                                <div class="greensmallnumber"><span>Afgelopen week:</span> {{stats.nrOfFaillissementenWeek}}</div>
+                            </div> 
+							</div>
+                          <div class="col-xs-2">
+                                <div class="mylivicon" data-options="name: legal.svg; size: 47px;strokeColor:#0a212f; style: lines; autoPlay:true; eventOn:grandparent; tryToSharpen: true"></div>
+                            </div>
+                        </div>  
+						</div>
+                  
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="bluebox margreen clearfix fixit fix-box-2">
+						 <div class="row col-xs-10">
+                            <div class="greenleft">
+                                <div class="faillissemententext">Surseances dit jaar</div>
+                                <div class="bluebignumber">{{stats.nrOfSurseancesJaar}}</div>
+                                <div class="bluesmallnumber"><span>Afgelopen week:</span> {{stats.nrOfSurseancesWeek}}</div>
+                            </div>
+                           	</div>
+                          <div class="col-xs-2">
+                                <div class="mylivicon" data-options="name: hourglass.svg; size: 42px; style: lines;strokeColor:#0a212f; eventOn:grandparent; tryToSharpen: true"></div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="greenbox margreen clearfix fixit fix-box-3">
+						 <div class="row col-xs-10">
+                            <div class="greenleft">
+                                <div class="faillissemententext">Faillissementen 2019</div>
+                                <div class="greenbignumber">4377</div>
+                                <div class="greensmallnumber"><span>Gemiddeld per week:</span>365</div>
+                            </div>
+                           	</div>
+                          <div class="col-xs-2">
+                                <div class="mylivicon" data-options="name: legal.svg; size: 47px;strokeColor:#0a212f; style: lines;autoPlay:true; eventOn:grandparent; tryToSharpen: true"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="bluebox margreen clearfix fixit fix-box-4">
+						 <div class="row col-xs-10">
+                            <div class="greenleft">
+                                <div class="faillissemententext">Surseances 2019</div>
+                                <div class="bluebignumber">10</div>
+                                <div class="bluesmallnumber"><span>Gemiddeld per week:</span>0</div>
+                            </div>
+                         	</div>
+                          <div class="col-xs-2">
+                                <div class="mylivicon" data-options="name: hourglass.svg; size: 42px;strokeColor:#0a212f; style: lines;autoPlay:true; eventOn:grandparent; tryToSharpen: true"></div>
+                            </div> 
+                        </div> 
+						</div>
+               
+             
+			 </div> </div></div>
+            <div class="col-xs-12  col-sm-6 col-md-6 col-lg-6 ">
+                <div class="row margb mobpad ">
+                    <div class="box-content boxl border fixit2 clearfix">
+                        <span class="mylivicon" data-options="name: line-chart.svg; size: 35px; style: lines-alt;eventOn:grandparent; strokeColor:#0a212f; tryToSharpen: true"></span>
+                        <span class="legend">Aantal faillissementen 2019</span>
+                        <div class="home">
+                            <hr>
+                        </div>
+                        <div class="row mobpad"> 
+                            <div class="box-content clearfix margin20">
+                                <div id="faillissementchart2017"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="row margb mobpad">
+                    <div class="box-content border fixit2 clearfix">
+                        <span class="mylivicon" data-options="name: line-chart.svg; size: 35px; style: lines-alt;eventOn:grandparent; strokeColor:#0a212f; tryToSharpen: true"></span>
+                        <span class="legend">Aantal faillissementen 2020</span>
+                        <div class="home">
+                            <hr>
+                        </div>
+                        <div class="row mobpad">
+                            <div class="box-content">
+                                <div id="faillissementchart2018"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+        </div>
+		  <div class="box no noborderlegend">
+		 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		 <div class="row box-content border margb trap">
+                <span class="mylivicon" data-options="name: notebook.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; repeat:6; autoPlay:true; tryToSharpen: true"></span>
+                 <span class="legend">Faillissementen afgelopen 7 dagen</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="row box-content overres mobpad marging5">    
+                    <div class="box-content">
+                        <form id="form-faillissementen" name="formfaillissementen" class="form-horizontal" novalidate>
+                            <fieldset>
+                                <table id="faillissementen" class="table m-table table-bordered table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1">Datum publicatie</th>
+                                            <th class="col-md-2">Bedrijfsnaam</th>
+                                            <th class="col-md-2">KvK-nummer</th>
+                                            <th class="col-md-3">Omschrijving</th>
+                                            <th class="col-md-2">Publicatiekenmerk (rechtspraak.nl)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="faillissement in faillissementen">
+                                            <td>{{faillissement.datumPublicatie}}</td>
+                                            <td>{{faillissement.naam}}</td>
+                                            <td>{{showKvKNumber(faillissement.kvkNummer)}}</td>
+                                            <td>{{faillissement.publicatieOmschrijving}}</td>
+                                            <td>{{faillissement.publicatieKenmerk}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+               <div data-ng-show="error">
+            <div class="box-content fout-smal text-center">
+              <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+            </div></div>
+ </div>	
+ </div>	   
+ </div>
+<Script> 
+    Highcharts.chart('faillissementchart2017', {
+        colors: ['#184058', '#219be6', '#9bc9e4', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Aantal faillissementen'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Aantal faillissementen: <b>{point.y:.1f}</b>'
+        },
+        series: [{
+            name: 'Faillissementen',
+            data: [
+                ['Januari', 392],
+                ['Februari', 345],
+                ['Maart', 357],
+                ['April', 419],
+                ['Mei', 326],
+                ['Juni', 344],
+                ['Juli', 410],
+                ['Augustus', 330],
+                ['September', 342],
+                ['Oktober', 393],
+                ['November', 366],
+                ['December', 353]
+            ],
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y:f}',
+                y: 10,
+                style: {
+                    fontSize: '10',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+</script>
+<script>
+    Highcharts.chart('faillissementchart2018', {
+        colors: ['#0098ca', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Tot eerste kwartaal'
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '14px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Aantal faillissementen'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Aantal faillissementen: <b>{point.y:.1f}</b>'
+        },
+        series: [{
+            name: 'Faillissementen',
+            data: [
+                ['Januari', 358],
+                ['Februari', 0],
+                ['Maart', 0],
+                ['April', 0],
+                ['Mei', 0],
+                ['Juni', 0],
+                ['Juli', 0],
+                ['Augustus', 0],
+                ['September', 0],
+                ['Oktober', 0],
+                ['November', 0],
+                ['December', 0]
+            ],
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y:f}',
+                y: 10,
+                style: {
+                    fontSize: '10',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+</script>
+<script>
+angular.element(document).ready(function() {
+        setTimeout(function(){
+$(function() {
+            jQuery(".mylivicon").addLiviconEvo()
+        })
+}, 400)
+    });
+</script>
+

@@ -1,0 +1,950 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.creditsafe.com/globaldata/datatypes/administration" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mstns="http://www.creditsafe.com/globaldata/datatypes/administration" xmlns="http://www.creditsafe.com/globaldata/datatypes/administration">
+  <xs:import schemaLocation="meta_1_2.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes"/>
+  <xs:import schemaLocation="meta_1_2_3_4_5_6.xsd" namespace="systemtypes"/>
+  <xs:complexType name="AccountManagersList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountManager" type="AccountManagerData"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReportSnapshotsList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ReportSnapshot" type="ReportSnapshotData"/>
+        </xs:sequence>
+        <xs:attribute name="Results" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="FirstPosition" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="TotalResults" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="PageSize" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReportSnapshot">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element name="OrderNumber" type="xs:unsignedLong"/>
+          <xs:element minOccurs="0" name="Report">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+              </xs:sequence>
+              <xs:anyAttribute processContents="skip"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OfflineReportOrdersList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="OfflineReportOrder" type="ExtendedOfflineReportOrderData"/>
+        </xs:sequence>
+        <xs:attribute name="Results" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="FirstPosition" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="TotalResults" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="PageSize" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CrmSettingsList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CrmSetting" type="CrmSettings"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CurrentAccountManagerSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Settings" type="AccountManagerSettings"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CurrentUserPreferences">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Preferences" type="UserPreferences"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UserAccountLoginDetails">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Details">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="LoginDetail"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CurrentCustomerSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Settings" type="CustomerSettings"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CurrentDataSourceSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Settings" type="DataSourceSettings"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CurrentProviderServicesSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Settings" type="ProviderServicesSettings"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CurrentUserAccountAccessRights">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccessRights" type="UserAccountAccessRights"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CurrentUserAccountSettings">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Settings" type="UserAccountSettings"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CustomersList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Customer" type="CustomerData"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DataSourcesReport">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element name="DataSources">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="DataSource" type="DataSource"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Priorities">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Priority" type="DataSourcePriorities"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FullSystemReport">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Overview" type="StatusOverview"/>
+          <xs:element minOccurs="0" name="Subsystems">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Subsystem" type="FullSystemReport.SubsystemReport"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Log" type="Log"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemStatusSummary">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Overview" type="StatusOverview"/>
+          <xs:element minOccurs="0" name="Subsystems">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Subsystem" type="SystemStatusSummary.SubsystemReport"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UserAccountActivityLog">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Browsing">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="LogEntry" type="ActivityLogBrowsingEntry"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Reports">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="LogEntry" type="ActivityLogReportsEntry"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Monitoring">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="LogEntry" type="ActivityLogMonitoringEntry"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Reportbox">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="LogEntry" type="ActivityLogReportboxEntry"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="FirstRow" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="RowCount" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="TotalResults" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UserAccountsList">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="UserAccount" type="UserAccountOverview"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AccountManagerData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="AccountManagerSettings">
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReportSnapshotData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ReportboxEntry" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FailureDetails" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="UserId" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="Language" type="q1:Language"/>
+        <xs:attribute name="FailureReasonCode" type="xs:unsignedInt"/>
+        <xs:attribute name="FailureReason" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ExtendedOfflineReportOrderData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="OfflineReportOrderData">
+        <xs:attribute name="CustomerId" type="xs:unsignedInt"/>
+        <xs:attribute name="CustomerName" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CrmSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OfflineReportsEmailAddresses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="OfflineReportsEmailAddress" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Entity" type="CreditsafeEntity"/>
+  </xs:complexType>
+  <xs:complexType name="AccountManagerSettings">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element name="Entity" type="CreditsafeEntity"/>
+      <xs:element name="Email" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UserPreferences">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ReportboxNotificationsEmailAddresses" type="xs:string"/>
+      <xs:element minOccurs="0" name="ReportBinaryFormats">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="ReportBinaryFormat" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="SpecialFlags">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="SpecialFlag" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ChangesCheckDays" type="xs:unsignedInt"/>
+    <xs:attribute name="MaxPortfolios" type="xs:unsignedInt"/>
+    <xs:attribute name="MaxPortfolioCompanies" type="xs:unsignedInt"/>
+    <xs:attribute name="ReportboxRemovalDays" type="xs:int"/>
+    <xs:attribute name="ContractEndNotification" type="xs:dateTime"/>
+    <xs:attribute name="OfflineServiceType" type="OrderUrgency"/>
+    <xs:attribute name="ReportBinaryQuota" type="xs:unsignedInt"/>
+  </xs:complexType>
+  <xs:complexType name="LoginDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccessInfo" type="ServiceAccessInfo"/>
+    </xs:sequence>
+    <xs:attribute name="Date" type="xs:dateTime" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="CustomerSettings">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element minOccurs="0" name="AccountManager" type="xs:unsignedInt"/>
+      <xs:element name="Status" type="CustomerStatus"/>
+      <xs:element minOccurs="0" name="Country" type="q1:CountryCode" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="Address" type="q1:AddressData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="PhoneNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="FrontSystemNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="BackOfficeId" type="xs:string"/>
+      <xs:element name="IsReseller" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="ContractStartDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="ContractEndDate" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DataSourceSettings">
+    <xs:sequence>
+      <xs:element name="Countries">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Country" type="CountrySettings"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReportPricing" type="ReportPricing"/>
+    </xs:sequence>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ProviderServicesSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Service" type="ProviderServiceSettings"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UserAccountAccessRights">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Browsing">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="ACE" type="AccessControlEntry"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="OnlineReports">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="ACE" type="AccessControlEntry"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="OfflineReports">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="ACE" type="AccessControlEntry"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Monitoring">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="ACE" type="AccessControlEntry"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UserAccountSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Username" type="xs:string"/>
+      <xs:element minOccurs="0" name="Password" type="xs:string"/>
+      <xs:element name="Enabled" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="CustomerId" type="xs:unsignedInt"/>
+      <xs:element minOccurs="0" name="Email" type="xs:string"/>
+      <xs:element minOccurs="0" name="OfflineReportsEmailAddresses" type="xs:string"/>
+      <xs:element minOccurs="0" name="ContractType" type="ContractType"/>
+      <xs:element minOccurs="0" name="ParentProduct" type="ExternalProduct"/>
+      <xs:element minOccurs="0" name="BannedTill" type="xs:dateTime"/>
+      <xs:element name="AllowOfflineServiceTypeOverride" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Notes" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomerData">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CustomerSettings">
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DataSource">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CountriesEnabled">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="EnabledCountry">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:boolean">
+                    <xs:attribute name="key" type="q1:CountryCode" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="Creditsafe.GlobalData.Administration.DataSource-CountriesEnabled">
+          <xs:selector xpath="mstns:EnabledCountry"/>
+          <xs:field xpath="@key"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="DataSourcePriorities">
+    <xs:sequence>
+      <xs:element minOccurs="2" maxOccurs="unbounded" name="DS" type="xs:unsignedInt"/>
+    </xs:sequence>
+    <xs:attribute name="Country" type="q1:CountryCode" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+  </xs:complexType>
+  <xs:complexType name="StatusOverview">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Country" type="CountryStatus"/>
+    </xs:sequence>
+    <xs:attribute name="Status" type="StatusFlags" use="required"/>
+    <xs:attribute name="Hash" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="FullSystemReport.SubsystemReport">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FullSystemReport">
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Log">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Messages">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Message" type="TextLogEntry"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="LoadHistory">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="LoadHistoryItem" type="LoadLogEntry"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Overloads">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Overload">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="TextLogEntry"/>
+                </xs:sequence>
+                <xs:attribute name="key" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="Creditsafe.GlobalData.Administration.Log-Overloads">
+          <xs:selector xpath="mstns:Overload"/>
+          <xs:field xpath="@key"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SystemStatusSummary.SubsystemReport">
+    <xs:complexContent mixed="false">
+      <xs:extension base="SystemStatusSummary">
+        <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ActivityLogBrowsingEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ActivityLogEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Countries">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Country" type="q1:CountryCode" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="SearchCriteria" type="q1:SearchCriteria" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ActivityLogReportsEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ActivityLogEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SearchCriteria" type="q1:SearchCriteria" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+          <xs:element minOccurs="0" name="RetrievedCompanyId" type="xs:string"/>
+          <xs:element minOccurs="0" name="RetrievedCompanyName" type="xs:string"/>
+          <xs:element minOccurs="0" name="Notes" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="OrderType" type="ActivityReportOrderType" use="required"/>
+        <xs:attribute name="Country" type="q1:CountryCode" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:attribute name="ReportType" type="q1:CompanyReportType" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:attribute name="Language" type="q1:Language" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ActivityLogMonitoringEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ActivityLogEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Portfolios">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Portfolio">
+                  <xs:complexType>
+                    <xs:simpleContent>
+                      <xs:extension base="xs:string">
+                        <xs:attribute name="key" type="xs:unsignedInt" use="required"/>
+                      </xs:extension>
+                    </xs:simpleContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+            <xs:unique name="Creditsafe.GlobalData.Administration.ActivityLogMonitoringEntry-Portfolios">
+              <xs:selector xpath="mstns:Portfolio"/>
+              <xs:field xpath="@key"/>
+            </xs:unique>
+          </xs:element>
+          <xs:element minOccurs="0" name="SearchCriteria" type="MonitoringActivitySearchCriteria"/>
+          <xs:element minOccurs="0" name="Data">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="DataItem" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Notes" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Action" type="ActivityMonitoringAction" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ActivityLogReportboxEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ActivityLogEntry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReportboxIds">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="ReportboxId" type="xs:unsignedInt"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Data">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="DataItem" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Notes" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Action" type="ActivityReportboxAction" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UserAccountOverview">
+    <xs:sequence>
+      <xs:element name="Username" type="xs:string"/>
+      <xs:element minOccurs="0" name="Email" type="xs:string"/>
+      <xs:element minOccurs="0" name="OfflineReportsEmailAddresses" type="xs:string"/>
+      <xs:element minOccurs="0" name="ContractType" type="ContractType"/>
+      <xs:element minOccurs="0" name="ParentProduct" type="ExternalProduct"/>
+      <xs:element minOccurs="0" name="LastLogin" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="BannedTill" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Notes" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+    <xs:attribute name="CustomerId" type="xs:unsignedInt"/>
+    <xs:attribute name="AllowOfflineServiceTypeOverride" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="OfflineReportOrderData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SearchCriteria" type="q1:SearchCriteria" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="CustomData" type="q1:CustomData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    </xs:sequence>
+    <xs:attribute name="ReportboxId" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="OrderNumber" type="xs:unsignedLong" use="required"/>
+    <xs:attribute name="UserId" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="OrderedOn" type="xs:dateTime" use="required"/>
+    <xs:attribute name="Country" type="q1:CountryCode" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    <xs:attribute name="ReportType" type="q1:CompanyReportType" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    <xs:attribute name="Language" type="q1:Language" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    <xs:attribute name="ServiceType" type="OrderUrgency" use="required"/>
+  </xs:complexType>
+  <xs:simpleType name="CreditsafeEntity">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="INT"/>
+      <xs:enumeration value="CSUK"/>
+      <xs:enumeration value="CSDE"/>
+      <xs:enumeration value="CSFR"/>
+      <xs:enumeration value="CSNL"/>
+      <xs:enumeration value="CSBE"/>
+      <xs:enumeration value="CSIE"/>
+      <xs:enumeration value="CSSE"/>
+      <xs:enumeration value="CSUS"/>
+      <xs:enumeration value="CSIT"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrderUrgency">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Express"/>
+      <xs:enumeration value="Urgent"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ServiceAccessInfo">
+    <xs:attribute name="ContractVersion" type="xs:string"/>
+    <xs:attribute name="Binding" type="BindingType"/>
+  </xs:complexType>
+  <xs:simpleType name="CustomerStatus">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Disabled"/>
+      <xs:enumeration value="Active"/>
+      <xs:enumeration value="Inactive"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CountrySettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ReportPricing" type="ReportPricing"/>
+    </xs:sequence>
+    <xs:attribute name="CountryCode" type="q1:CountryCode" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ReportPricing">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Online">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="OnlineItem">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:decimal">
+                    <xs:attribute name="key" type="q1:CompanyReportType" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="Creditsafe.GlobalData.Administration.ReportPricing-Online">
+          <xs:selector xpath="mstns:OnlineItem"/>
+          <xs:field xpath="@key"/>
+        </xs:unique>
+      </xs:element>
+      <xs:element minOccurs="0" name="Offline">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="OfflineItem">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:decimal">
+                    <xs:attribute name="key" type="q1:CompanyReportType" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="Creditsafe.GlobalData.Administration.ReportPricing-Offline">
+          <xs:selector xpath="mstns:OfflineItem"/>
+          <xs:field xpath="@key"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProviderServiceSettings">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="unbounded" name="Endpoint" type="Endpoint"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Enabled" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="AccessControlEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Countries">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Country" type="q1:CountryCode" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="CompanyType" type="q1:CompanyType" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="Message" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="AllowAccess" type="xs:boolean" use="required"/>
+    <xs:attribute name="Starts" type="xs:dateTime"/>
+    <xs:attribute name="Expires" type="xs:dateTime"/>
+    <xs:attribute name="Limit" type="xs:unsignedInt"/>
+    <xs:attribute name="CurrentCount" type="xs:unsignedInt"/>
+  </xs:complexType>
+  <xs:simpleType name="ContractType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="PrePaid"/>
+      <xs:enumeration value="PayAsYouGo"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExternalProduct">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="WhiteLabel"/>
+      <xs:enumeration value="Mobile"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StatusFlags">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="($|(None|HasWarnings|HasErrors|Online)(\s*,\s*(None|HasWarnings|HasErrors|Online))*)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CountryStatus">
+    <xs:attribute name="Country" type="q1:CountryCode" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    <xs:attribute name="Status" type="StatusFlags" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="TextLogEntry">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Type" type="q1:MessageType" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:attribute name="Time" type="xs:dateTime" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="LoadLogEntry">
+    <xs:attribute name="HitsSincePrevious" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="Time" type="xs:dateTime" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ActivityLogEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomData">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="key" type="xs:string" use="required"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="Creditsafe.GlobalData.Administration.ActivityLogEntry-CustomData">
+          <xs:selector xpath="mstns:Entry"/>
+          <xs:field xpath="@key"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:unsignedLong" use="required"/>
+    <xs:attribute name="UserId" type="xs:unsignedInt" use="required"/>
+    <xs:attribute name="OrderNumber" type="xs:unsignedLong"/>
+    <xs:attribute name="ChargeReference" type="xs:string"/>
+    <xs:attribute name="Date" type="xs:dateTime" use="required"/>
+    <xs:attribute name="Ip" type="xs:string"/>
+    <xs:attribute name="Status" type="ActivityStatus" use="required"/>
+    <xs:attribute name="ProcessingTime" type="xs:duration"/>
+  </xs:complexType>
+  <xs:simpleType name="ActivityReportOrderType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="StandardReport"/>
+      <xs:enumeration value="DirectReport"/>
+      <xs:enumeration value="OfflineReportOrder"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ActivityMonitoringAction">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="PortfolioCreation"/>
+      <xs:enumeration value="PortfolioRemoval"/>
+      <xs:enumeration value="PortfolioSettingsChange"/>
+      <xs:enumeration value="MonitoringRulesChange"/>
+      <xs:enumeration value="PortfolioListing"/>
+      <xs:enumeration value="PortfolioCompaniesListing"/>
+      <xs:enumeration value="CompaniesAddition"/>
+      <xs:enumeration value="CompaniesRemoval"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="MonitoringActivitySearchCriteria" abstract="true"/>
+  <xs:simpleType name="ActivityReportboxAction">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="EntryAddition"/>
+      <xs:enumeration value="EntryRemoval"/>
+      <xs:enumeration value="EntriesListing"/>
+      <xs:enumeration value="ReportRetrieval"/>
+      <xs:enumeration value="OfflineOrderProcessingCompleted"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BindingType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Unknown"/>
+      <xs:enumeration value="WsHttp"/>
+      <xs:enumeration value="BasicHttp"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Endpoint">
+    <xs:sequence>
+      <xs:element name="Binding" type="ServiceBinding"/>
+      <xs:element name="Details" type="EndpointDetails"/>
+      <xs:element name="ClientCredentials" type="ServiceCredentials"/>
+    </xs:sequence>
+    <xs:attribute name="Type" type="EndpointType" use="required"/>
+    <xs:attribute name="Timeout" type="xs:duration" use="required"/>
+  </xs:complexType>
+  <xs:simpleType name="ActivityStatus">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="Successful"/>
+      <xs:enumeration value="Rejected"/>
+      <xs:enumeration value="InvalidRequest"/>
+      <xs:enumeration value="TooManyOrNoResults"/>
+      <xs:enumeration value="ReportStructureError"/>
+      <xs:enumeration value="OtherError"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="MonitoringListingSearchCriteria">
+    <xs:complexContent mixed="false">
+      <xs:extension base="MonitoringActivitySearchCriteria">
+        <xs:attribute name="ChangedOnly" type="xs:boolean"/>
+        <xs:attribute name="ChangedSince" type="xs:dateTime"/>
+        <xs:attribute name="FirstPosition" type="xs:unsignedInt"/>
+        <xs:attribute name="PageSize" type="xs:unsignedInt"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="EndpointType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="($|(None|DataBrowsingService|CompanyDataAccess|MonitoringAccess|GlobalData|DataAdministration|SystemMaintenance|SpecialPurpose|PdfGeneratorService)(\s*,\s*(None|DataBrowsingService|CompanyDataAccess|MonitoringAccess|GlobalData|DataAdministration|SystemMaintenance|SpecialPurpose|PdfGeneratorService))*)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ServiceBinding" abstract="true"/>
+  <xs:complexType name="EndpointDetails">
+    <xs:sequence>
+      <xs:element name="IdentityType" type="EndpointIdentityType"/>
+      <xs:element minOccurs="0" name="IdentityValue" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Address" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ServiceCredentials">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientCertificate" type="xs:string"/>
+      <xs:element minOccurs="0" name="ServiceCertificateValidationMode" type="q1:System.ServiceModel.Security.X509CertificateValidationMode" xmlns:q1="systemtypes"/>
+      <xs:element minOccurs="0" name="UserName" type="xs:string"/>
+      <xs:element minOccurs="0" name="Password" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BasicHttpBinding">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceBinding">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MessageClientCredentialType" type="q1:System.ServiceModel.BasicHttpMessageCredentialType" xmlns:q1="systemtypes"/>
+          <xs:element minOccurs="0" name="TransportClientCredentialType" type="q1:System.ServiceModel.HttpClientCredentialType" xmlns:q1="systemtypes"/>
+          <xs:element minOccurs="0" name="ProxyCredentialType" type="q1:System.ServiceModel.HttpProxyCredentialType" xmlns:q1="systemtypes"/>
+          <xs:element minOccurs="0" name="Realm" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="SecurityMode" type="q1:System.ServiceModel.BasicHttpSecurityMode" use="required" xmlns:q1="systemtypes"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WsHttpBinding">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceBinding">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MessageClientCredentialType" type="q1:System.ServiceModel.MessageCredentialType" xmlns:q1="systemtypes"/>
+          <xs:element minOccurs="0" name="EstablishSecurityContext" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="NegotiateServiceCredential" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="TransportClientCredentialType" type="q1:System.ServiceModel.HttpClientCredentialType" xmlns:q1="systemtypes"/>
+          <xs:element minOccurs="0" name="ProxyCredentialType" type="q1:System.ServiceModel.HttpProxyCredentialType" xmlns:q1="systemtypes"/>
+          <xs:element minOccurs="0" name="Realm" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="SecurityMode" type="q1:System.ServiceModel.SecurityMode" use="required" xmlns:q1="systemtypes"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="EndpointIdentityType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Dns"/>
+      <xs:enumeration value="Rsa"/>
+      <xs:enumeration value="Spn"/>
+      <xs:enumeration value="Upn"/>
+      <xs:enumeration value="X509"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

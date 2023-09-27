@@ -1,0 +1,41 @@
+<div ng-controller="NotificationsStatusTabController">
+<div class="row box-content">
+  <h4>Status meldingen</h4>
+  <div class="col-xs-12 col-sm-9">
+  <fieldset>
+	<div class="form-group">
+		<label class="col-xs-6 col-sm-2 control-label">Snel zoeken</label>
+		<div class="col-sm-6">
+			<input ng-paste="checkFieldMaxLength($event, filterCriteria.filterValue, maxFieldLengths.zoeken)" wm-block on-enter-blur on-blur-change="filterResult()" ng-model="filterCriteria.filterValue" type="text" placeholder="KvK-nummer of bedrijfsnaam" wm-block-length="maxFieldLengths.zoeken"/>
+		</div>
+	</div>
+ </fieldset>
+</div>
+</div>
+<div class="row box-content">
+  <div class="col-sm-12">	
+	<table id="notificationsstatus" class="table m-table table-bordered table-hover table-striped">
+       <thead>
+           <tr>
+           	<th>Kvk-nummer</th> 
+           	<th>Bedrijfsnaam</th>
+           	<th>Toegevoegd op</th> 
+           	<th>Status</th> 
+           	<th>Acties</th>           
+           </tr>
+       </thead>
+       <tbody>
+           <tr ng-repeat="notification in notifications">
+             <td>{{notification.company.kvkNumber}}</td>                              
+             <td>{{notification.company.name}}</td>
+             <td>{{notification.dateCreated}}</td>                              
+             <td>{{notification.status}}</td>                              
+             <td><button ng-show="true" type="button" class="btn btn-primary btn-xs" ng-click="remove()" ng-disabled="false"><span class="glyphicon glyphicon-upload"></span> Verwijderen melding</button>
+             </td> 
+           </tr>
+       </tbody>
+    </table>
+    <pagination direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+   </div>
+   </div>
+</div>

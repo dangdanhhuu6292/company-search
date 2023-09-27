@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-reverse-engineering
+  SYSTEM "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<!-- DOCTYPE hibernate-reverse-engineering SYSTEM "sbdr-data\hibernate-reverse-engineering-3.0.dtd" -->
+
+<hibernate-reverse-engineering>
+    <schema-selection match-catalog="sbdr" />
+
+    <table-filter match-catalog="sbdr" match-name=".*" package="nl.devoorkant.sbdr.data.model"/>
+
+    <table catalog="sbdr" name="RemovedBedrijf">
+        <primary-key><key-column name="removedBedrijf_id"/></primary-key>        
+    </table>
+
+    <table catalog="sbdr" name="SearchResult">
+        <primary-key><key-column name="searchResult_ID"/></primary-key>        
+    </table>
+
+    <table catalog="sbdr" name="AlertView">
+        <primary-key><key-column name="alertView_id"/></primary-key>        
+    </table>
+        
+    <table catalog="sbdr" name="SearchResult">
+        <foreign-key constraint-name="SEARCHRESULTS_BEDRIJF"
+  					foreign-catalog="sbdr"
+  					foreign-table="Bedrijf">
+  			<column-ref local-column="vanBedrijf_id" foreign-column="Bedrijf_ID"/>
+   			<many-to-one property="vanBedrijf"/>
+   			<set exclude="true" property="searchResults"/>
+ 		</foreign-key>
+        <foreign-key constraint-name="SEARCHRESULTS_BEDRIJFDOOR"
+  					foreign-catalog="sbdr"
+  					foreign-table="Bedrijf">
+  			<column-ref local-column="doorBedrijf_id" foreign-column="Bedrijf_ID"/>
+   			<many-to-one property="doorBedrijf"/>
+   			<set exclude="true" property="searchResults"/>
+ 		</foreign-key> 		
+    </table>    
+
+    <table catalog="sbdr" name="AlertView">
+        <primary-key><key-column name="alertView_id"/></primary-key>        
+    </table>
+    
+    <table catalog="sbdr" name="AlertView">
+        <foreign-key constraint-name="ALERTVIEW_BEDRIJF"
+  					foreign-catalog="sbdr"
+  					foreign-table="Bedrijf">
+  			<column-ref local-column="bedrijf_Id" foreign-column="Bedrijf_ID"/>
+   			<many-to-one property="bedrijf"/>
+   			<set exclude="true" property="alertView"/>
+ 		</foreign-key>
+    </table> 
+            
+    <table catalog="sbdr" name="GebruikerBasis">
+        <meta attribute="scope-class">@Inheritance(strategy=InheritanceType.JOINED)&#xA;public</meta>
+        <primary-key><generator class="identity"/></primary-key>
+        <column name="gebruiker">
+            <meta attribute="gen-property">false</meta>
+        </column>
+    </table>
+
+    <table catalog="sbdr" name="Gebruiker">
+        <meta attribute="scope-class">@Inheritance(strategy=InheritanceType.JOINED)&#xA;public</meta>
+        <meta attribute="extends">GebruikerBasis</meta>
+        <column name="Gebruiker_ID">
+            <meta attribute="gen-property">false</meta>
+        </column>
+        <foreign-key constraint-name="GebruikerBasis_Gebruiker">
+            <one-to-one exclude="true"/>
+        </foreign-key>
+    </table>
+
+<!--    <table catalog="sbdr" name="GebruikerBasis">
+        <meta attribute="scope-class">@Inheritance(strategy=InheritanceType.JOINED)&#xA;public</meta>
+        <primary-key><generator class="identity"/></primary-key>
+        <column name= "gebruiker">
+            <meta attribute="gen-property">false</meta>
+        </column>
+        <column name="gebruikergroep">
+            <meta attribute="gen-property">false</meta>
+        </column>
+    </table>
+
+    <table catalog="sbdr" name="Gebruiker">
+        <meta attribute="scope-class">@Inheritance(strategy=InheritanceType.JOINED)&#xA;public</meta>
+        <meta attribute="extends">GebruikerBasis</meta>
+        <column name="Gebruiker_ID">
+            <meta attribute="gen-property">false</meta>
+        </column>
+        <foreign-key constraint-name="GebruikerBasis_Gebruiker">
+            <one-to-one exclude="true"/>
+        </foreign-key>
+    </table>-->    
+
+    <table catalog="sbdr" name="GebruikerGroep">
+        <meta attribute="extends">GebruikerBasis</meta>
+        <column name="Gebruiker_ID">
+            <meta attribute="gen-property">false</meta>
+        </column>
+        <foreign-key constraint-name="GebruikerBasis_GebruikerGroep">
+            <one-to-one exclude="true"/>
+        </foreign-key>
+    </table>
+
+    <table catalog="sbdr" name="Klant">
+        <meta attribute="extends">Gebruiker</meta>
+        <column name="Gebruiker_ID">
+            <meta attribute="gen-property">false</meta>
+        </column>
+        <foreign-key constraint-name="Gebruiker_Klant">
+            <one-to-one exclude="true"/>
+        </foreign-key>
+    </table>
+
+<!-- 	<table catalog="sbdr" name="Websiteparam"> -->
+<!-- 		<primary-key> -->
+<!-- 		    setting up a specific id generator for a table -->
+<!-- 		    <generator class="identity"> -->
+<!-- 		    	<param name="identity">websiteparam_ID</param> -->
+<!-- 		    </generator> -->
+<!-- 		</primary-key>	 -->
+<!-- 	</table> -->
+
+    <table catalog="sbdr" name="InternalProcess">
+        <foreign-key constraint-name="Gebruiker_InternalProcess">
+            <many-to-one property="verwerktDoorGebruiker"/>
+            <set property="verwerkteInternalProcesses"/>
+        </foreign-key>
+    </table>
+
+</hibernate-reverse-engineering>

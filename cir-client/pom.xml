@@ -1,0 +1,171 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>nl.devoorkant.sbdr.multi</groupId>
+    <artifactId>sbdr-parent</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+  </parent>
+  <artifactId>cir-client</artifactId>
+  <name>cir-client</name>
+  <description>Insolvency register (CIR) client</description>
+  
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<maven.compiler.source>1.8</maven.compiler.source>
+						<maven.compiler.target>1.8</maven.compiler.target>					
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>InsolvencyContent02</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<extension>true</extension>
+           					<protocol>Xsoap1.2</protocol>						
+							<schemaDirectory>src/main/resources/xsd</schemaDirectory>
+       						<schemaFiles>RSpublicWS_InsolvencyContent02.xsd</schemaFiles>						
+							<packageName>nl.rechtspraak.namespaces.insolvency.content02</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.RSpublicWS_InsolvencyContent02StaleFlag
+							</staleFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>InsolvencyRequests</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<extension>true</extension>
+           					<protocol>Xsoap1.2</protocol>						
+							<schemaDirectory>src/main/resources/xsd</schemaDirectory>
+       						<schemaFiles>RSpublicWS_InsolvencyRequests.xsd</schemaFiles>
+							<packageName>nl.rechtspraak.namespaces.insolvency.requests</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.RSpublicWS_InsolvencyRequestsStaleFlag
+							</staleFile>							
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+					<execution>
+						<id>InsolvencyResponseList01</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<extension>true</extension>
+           					<protocol>Xsoap1.2</protocol>						
+							<schemaDirectory>src/main/resources/xsd</schemaDirectory>
+							<schemaFiles>RSpublicWS_InsolvencyResponseList01.xsd</schemaFiles>
+							<packageName>nl.rechtspraak.namespaces.insolvency.responselist02</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.RSpublicWS_InsolvencyResponseList01StaleFlag
+							</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+					<execution>
+						<id>LastUpdate01</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<extension>true</extension>
+           					<protocol>Xsoap1.2</protocol>						
+							<schemaDirectory>src/main/resources/xsd</schemaDirectory>
+							<schemaFiles>RSpublicWS_LastUpdate01.xsd</schemaFiles>
+							<packageName>nl.rechtspraak.namespaces.lastupdate01</packageName>
+							<clearOutputDir>false</clearOutputDir>
+							<staleFile>${project.build.directory}/jaxb2/.RSpublicWS_LastUpdate01StaleFlag
+							</staleFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/wsdl/CIR.asmx.wsdl</wsdl>									
+									<wsdlLocation>wsdl/CIR.asmx.wsdl</wsdlLocation>
+								</wsdlOption>							
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!--plugin> <groupId>org.jboss.ws.plugins</groupId> <artifactId>maven-jaxws-tools-plugin</artifactId> 
+				<version>1.1.0.GA</version> <configuration> <wsdls> <wsdl>${basedir}/src/main/resources/wsdl/cir.asmx.wsdl</wsdl> 
+				</wsdls> <sourceDirectory>${basedir}/target/generated-sources/wsconsume</sourceDirectory -->
+			<!--targetPackage>nl/rechtspraak/namespaces/cir01</targetPackage -->
+			<!--extension>true</extension> <verbose>true</verbose> <endpointClass>nl.devoorkant.insolventie.client.WebServiceClient</endpointClass> 
+				</configuration> <executions> <execution> <id>generate-sources</id> <phase>generate-sources</phase> 
+				<goals> <goal>wsconsume</goal> </goals> </execution> </executions> </plugin -->
+		</plugins>
+
+	</build>
+
+	<dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>sbdr-data</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
+        </dependency>
+		        	
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- dependency>
+			<groupId>org.apache.ws.security</groupId>
+			<artifactId>wss4j</artifactId>
+			<version>1.6.19</version>
+			< scope>provided</scope>
+		</dependency -->
+		<dependency>
+		    <groupId>org.apache.wss4j</groupId>
+		    <artifactId>wss4j-ws-security-common</artifactId>
+		    <version>2.2.4</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-security</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+
+	</dependencies>  
+</project>

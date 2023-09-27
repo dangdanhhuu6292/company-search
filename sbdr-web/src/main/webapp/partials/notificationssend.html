@@ -1,0 +1,135 @@
+<div class="row">
+    <div id="content" class="col-sm-12">
+        <div class="box no shad noborderlegend">
+            <div class="box-content border ">
+                <div ng-hide="meldingenSavedOk">
+                    <span class="livicon-evo rechts infoi" data-text="<strong>Gegevens voor akkoord</strong><br/><br/>De gegevens die u op deze pagina invult dienen slechts ter verificatie en zullen nimmer zichtbaar zijn voor derden. Uw gegevens worden veilig verzonden waarbij bovendien aan de vereiste wetgeving wordt voldaan inzake het verzenden van persoonsgegevens. CRZB is de enige partij die inzage heeft in deze gegevens." data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true">&nbsp;</span>
+                    <span class="livicon-evo" data-options="name: step-four-fifth.svg; size: 35px; style: filled; strokeColor: #0a212f; fillColor: #d3ebff; solidColor: #e89a00; solidColorAction: #1f5d9f; autoPlay:true;eventOn:parent ;tryToSharpen:true">&nbsp;</span>
+                    <span class="legend">Vermelding(en) verzenden</span>
+                </div>
+                <div ng-show="meldingenSavedOk">
+                    <span class="livicon-evo" data-options="name: step-full.svg; size: 35px; style: filled; strokeColor: #0a212f; fillColor: #d3ebff; solidColor: #e89a00; solidColorAction: #1f5d9f; autoPlay:true;eventOn:parent ;tryToSharpen:true">&nbsp;</span>
+                    <span class="legend">Vermelding(en) verzonden</span>
+                </div>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="row box-context" ng-class="{'vertical-align-nospace' : meldingenSavedOk}">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="box-content mobpad">
+                            <form id="form-notificationssend" name="formnotificationssend" class="form-horizontal" ng-hide="meldingenSavedOk" autocomplete="off" novalidate>
+							<span class="b font-14" ng-show="aantalVermeldingen == 1 && vermeldingenTotaalbedrag !== 'undefined'">U staat op het punt om een factuur aan te melden.</span> 
+							<span class="b font-14" ng-show="aantalVermeldingen > 1 && vermeldingenTotaalbedrag !== 'undefined'">U staat op het punt om {{aantalVermeldingen}} facturen aan te melden.</span>
+                                <fieldset>
+                                    <div class="legend margin10">Gegevens voor akkoord</div>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-3 control-label">Voornaam</label>
+                                        <span class="col-xs12 col-sm-9">
+											{{akkoord.voornaam}}
+										</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-3 control-label">Achternaam</label>
+                                        <span class="col-xs-12 col-sm-9" ng-show="!editBankOn">
+											{{akkoord.achternaam}}
+										</span>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formnotificationssend, 'telefoonnummer')}">
+                                        <label class="col-xs-12 col-sm-3 control-label">Telefoonnummer</label>
+                                        <div class="col-xs-12 col-sm-5 col-lg-4">
+                                            <input ng-paste="checkFieldMaxLength($event, akkoord.telefoonnummer, maxFieldLengths.telefoonnummer)" wm-block class="form-control" type="text" name="telefoonnummer" id="telefoonnummer" ng-model="akkoord.telefoonnummer" ng-pattern="PHONE_REGEXP" wm-block-length="maxFieldLengths.telefoonnummer" required/>
+                                            <small class="help-block" ng-show="isInvalid(formnotificationssend, 'telefoonnummer')"><span>Voer uw telefoonnummer in.</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formnotificationssend, 'afdeling')}">
+                                        <label class="col-xs-12 col-sm-3 control-label">Afdeling (optioneel)</label>
+                                        <div class="col-xs-12 col-sm-5 col-lg-4">
+                                            <input ng-paste="checkFieldMaxLength($event, akkoord.afdeling, maxFieldLengths.afdeling)" wm-block class="form-control" type="text" name="afdeling" id="afdeling" ng-model="akkoord.afdeling" capitalize-first wm-block-length="maxFieldLengths.afdeling" />
+                                            <small class="help-block" ng-show="isInvalid(formnotificationssend, 'afdeling')"><span>Vul de afdelingsnaam in.</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formnotificationssend, 'password')}">
+                                        <label class="col-xs-12 col-sm-3 control-label">Wachtwoord (huidige gebruiker)</label>
+                                        <div class="col-xs-12 col-sm-9">
+                                            <input ng-paste="checkFieldMaxLength($event, akkoord.wachtwoord, maxFieldLengths.wachtwoord)" wm-block name="password" id="password" ng-model="akkoord.wachtwoord" type="password" class="form-control" wm-block-length="maxFieldLengths.wachtwoord" required>
+                                            <small class="help-block" ng-show="isInvalid(formnotificationssend, 'password')"><span>Voer uw wachtwoord in.</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-9 col-sm-offset-3 col-lg-8 col-lg-offset-3">
+                                            <button type="submit" class="margin10 btn buttonmin btnlgw2 btn-primary w100mob btn-lg-mob" ng-disabled="buttonDisabled(formnotificationssend)" ng-click="send()">Verzenden</button>
+                                            <button type="button" class="btn btn-primary btnlgw2 buttonmin margin10 w100mob btn-lg-mob bluebtn11" ng-click="back()">Terug</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <form id="form-notificationssendok" name="formnotificationssendok" class="form-horizontal mopad  " ng-show="meldingenSavedOk" novalidate>
+                                <fieldset>
+								    <div class="text-center margin20 ">
+                                <img class="fixt-attention-icon" src="img/icons/svg/calendar.svg" width="120" height="120"> 
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-12 autocenter">
+                                            <div class="text-center margin30">
+                                                <span class="legend b" ng-show="meldingenSavedOk">{{vermeldingResultaat}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-sm-12 text-center mobpad margin20">
+                                        <div class="col-xs-12 col-sm-5 autocenter mobpad">
+                                            <div ng-show="meldingenSavedOk" class="plutto">Wij stellen uw debiteur schriftelijk en telefonisch op de hoogte en geven hem 14 dagen de tijd om met u tot overeenstemming te komen. Wij verzoeken u de achterstand z.s.m. nadat uw debiteur heeft betaald uit het register te verwijderen.<br/><br/>Mocht betaling toch niet plaatsvinden en heeft uw debiteur geen geldig bezwaar kunnen opvoeren tegen de registratie? Dan zal worden overgegaan tot opname van de achterstand in het CRZB register. U wordt door middel van e-mails op de hoogte gehouden van de voortgang. Bovendien kunt u de status ook terugvinden in het dashboard onder het tabblad ‘vermeldingen’.</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class=" col-xs-12 col-sm-6 col-sm-2 autocenter">
+                                                <div class="centered">
+                                                    <button type="button" class="btn  btn-primary margin30 w100 btn-lg w100mob" ng-click="sendok()">Verder</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>		
+			<div ng-show="error">
+        <div class="box-content foutw text-center">
+            <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+            <span id="alert" class="fouttext text-center">{{error}}</span>
+        </div>
+    </div>	
+			
+                        </div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+<div id="info-box2" class="informatieinfo">
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <p id="textinfo2">#######</p>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('info-box2');
+    var btns = document.getElementsByClassName("infoi");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            modal.style.display = "block";
+            $('#textinfo2').html($(this).attr('data-text'));
+        }
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+</div>
+</div>

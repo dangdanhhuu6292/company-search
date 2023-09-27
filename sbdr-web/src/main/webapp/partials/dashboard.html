@@ -1,0 +1,55 @@
+<div class="row">
+	<div id="dashboard_tabs" class="col-xs-12">
+		<div id="dashboard-overview">
+			<div class="box no shad">
+				   <div class="box-content border">
+            <span class="livicon-evo" data-options="name: dashboard.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;tryToSharpen: true"></span>
+            <span class="legend">Dashboard</span>
+            <div class="home">
+                <hr>
+            </div>
+					<div class="row">
+						<div class="col-xs-12">
+							<tabsetsbdr> 
+
+								<tabsbdr class="tab_1" ng-click="tabClicked()" ng-show="showTab('alerts')" nr-of-items="nrOfItems('alerts')" title="Actueel" name="alertstab" id="alertstab" tabtag="dashboard" faicon="icon-alert" template-url="partials/alertstab.html"></tabsbdr>
+								
+								<tabsbdr class="trap2" ng-click="tabClicked()" ng-show="showTab('reportrequested')" nr-of-items="nrOfItems('reportrequested')" title="Rapport" name="reportrequestedtab" id="reportrequestedtab" tabtag="dashboard" faicon="icon-rapport" template-url="partials/reportrequestedtab.html"></tabsbdr>
+
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('monitoring')" nr-of-items="nrOfItems('monitoring')" title="Monitoring" name="portfoliomonitoringtab" id="portfoliomonitoringtab" tabtag="dashboard" faicon="icon-monitoring" template-url="partials/portfoliomonitoringtab.html"></tabsbdr>								
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('notifications') && notAllowedNotification() == ''" nr-of-items="nrOfItems('notifications')" title="Vermeldingen" name="companiesnotifiedtab" id="companiesnotifiedtab" tabtag="dashboard" faicon="icon-vermelden" template-url="partials/companiesnotifiedtab.html"></tabsbdr>
+								<tabsbdr  class="trap2" ng-click="tabClicked()" ng-show="showTab('removedcompanies')" nr-of-items="nrOfItems('removedcompanies')" title="Historie" name="companiesremovedtab" id="companiesremovedtab" tabtag="dashboard" faicon="icon-history" template-url="partials/companiesremovedtab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('generaladmin')" nr-of-items="nrOfItems('generaladmin')" title="Overzicht" name="generaladmintab" id="generaladmintab" tabtag="dashboard" faicon="icon-generaladmin" template-url="partials/generaladmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('objectionsadmin')" nr-of-items="nrOfItems('objectionsadmin')" title="Bezwaar" name="objectionsadmintab" id="objectionsadmintab" tabtag="dashboard" faicon="icon-objectionadmin" template-url="partials/objectionsadmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('supportticketsadmin')" nr-of-items="nrOfItems('supportticketsadmin')" title="Support" name="supportticketsadmintab" id="supportticketsadmintab" tabtag="dashboard" faicon="icon-supportadmin" template-url="partials/supportticketsadmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('searchresultsadmin')" nr-of-items="nrOfItems('searchresultsadmin')" title="Zoeken" name="searchresultsadmintab" id="searchresultsadmintab" tabtag="dashboard" faicon="icon-searchadmin" template-url="partials/searchresultsadmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('customersadmin')" nr-of-items="nrOfItems('customeradmin')" title="Klant" name="customersadmintab" id="customersadmintab" tabtag="dashboard" faicon="icon-customersadmin" template-url="partials/customersadmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('notificationsadmin')" nr-of-items="nrOfItems('notificationsadmin')" title="Vermelding" name="notificationsadmintab" id="notificationsadmintab" tabtag="dashboard" faicon="icon-notificationsadmin" template-url="partials/notificationsadmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('notificationsofprospectadmin')" nr-of-items="nrOfItems('notificationsofprospectadmin')" title="Vermelding(P)" name="notificationsadmintab" id="notificationsadmintab" tabtag="dashboard" faicon="icon-notificationsprospectadmin" template-url="partials/notificationsofprospectadmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('exceptioncompaniesadmin')" nr-of-items="nrOfItems('exceptioncompaniesadmin')" title="Melding" name="exceptioncompaniesadmintab" id="exceptioncompaniesadmintab" tabtag="dashboard" faicon="icon-exceptioncompaniesadmin" template-url="partials/exceptioncompaniesadmintab.html"></tabsbdr>
+								<tabsbdr ng-click="tabClicked()" ng-show="showTab('internalprocessadmin')" nr-of-items="nrOfItems('internalprocessadmin')" title="Intern werk" name="internalprocessesadmintab" id="internalprocessesadmintab" tabtag="dashboard" faicon="icon-internadmin" template-url="partials/processesadmintab.html"></tabsbdr>
+								<div class="userinfo" data-ng-show="username && companyname">
+									<ul class="fa-ul">
+										
+										<li class="fa fa-building-o" data-ng-show="aantalGebruikerBedrijven > 1">											
+											<select class="" id="gebruikerBedrijf" name="gebruikerBedrijf" ng-change="updateCompany(gebruikerBedrijfId)" data-ng-model="gebruikerBedrijfId" data-ng-options="gebruikerBedrijf.bedrijfId as gebruikerBedrijf.description for gebruikerBedrijf in gebruikerBedrijven" required>
+												<option value="" data-ng-hide="gebruikerBedrijfId">Selecteer een bedrijf</option>
+											</select>
+										</li>
+										<li class="fa fa-building-o" data-ng-show="aantalGebruikerBedrijven == 1">
+											<label class="userinfofont"> {{companyname}}</label>
+										<li> 
+										<li class="fa fa-user">
+										<label class="userinfofont"> {{username}}</label></li>
+									</ul>
+								</div>
+							</tabsetsbdr>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+  

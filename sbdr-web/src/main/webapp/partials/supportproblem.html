@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-12" id="support_problem_page">
+        <div class="box no shad">
+            <div class="box-content border">
+                <span class="livicon-evo" data-options="name: comments.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; ; tryToSharpen: true"></span>
+                <span class="legend">Support</span>
+                <span class="livicon-evo rechts trap" data-options="name: phone-alt.svg; size: 35px; style:lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+                <span class="legend rechts trap">085 - 484 5700</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div ng-show="supportSavedOk" class="alert maxw legend">
+                  <span>Uw verzoek is in goede orde ontvangen.<br/> Uw support ticket wordt in behandeling genomen en zal z.s.m. worden beantwoord.</span>
+                </div>
+                <div class="row box-content mobpad" ng-hide="supportSavedOk">
+                    <div class="col-md-6">
+                        <form id="formsupportkpv" name="formsupportkpv" class="form-horizontal" novalidate>
+                            <fieldset>
+                                <span class="legend marginb20">Heeft u een vraag of opmerking?</span><br/><br/>
+                                <div class="form-group" ng-class="{'has-error' : isInvalid(formsupportkpv, 'supporttype')}">
+                                    <label class="col-md-3 control-label">Betreft</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="supporttype" name="supporttype" ng-model="support.supportType" ng-options="supporttype.id as supporttype.description for supporttype in supporttypes" required>
+											<option value="" ng-hide="support.supportType">
+												Selecteer een type
+											</option>
+										</select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : isInvalid(formsupportkpv, 'supportreden')}">
+                                    <label class="col-md-3 control-label">Reden</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="supportreden" name="supportreden" ng-model="support.supportReden" ng-disabled="support.supportType != 'PRB'" ng-options="supportreden.id as supportreden.description for supportreden in supportredenen">
+											<option value="" ng-show="support.supportType!='PRB'">
+												Selecteer een reden (alleen in het geval van problemen)
+											</option>
+										</select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : isInvalid(formsupportkpv, 'bericht')}">
+                                    <label class="col-md-3 control-label">Bericht</label>
+                                    <div class="col-md-9">
+                                        <textarea ng-paste="checkFieldMaxLength($event, support.bericht, maxFieldLengths.supportBericht)" wm-block class="form-control" cols="80" rows="5" name="bericht" id="bericht" ng-model="support.bericht" wm-block-length="maxFieldLengths.supportBericht" required></textarea>
+                                        <small class="help-block" ng-show="isInvalid(formsupportkpv, 'bericht')">
+											<span>Vul uw bericht a.u.b. in</span>
+										</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-5 col-md-offset-3">
+                                        <button type="button" ng-hide="supportSavedOk" class="btn btnlgw2 btn-primary w100mob" ng-click="submitSupport()">
+											Versturen
+										</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+				<div class="box-content mobpad">
+                <button class=" btn btnlgw2 btn-primary" ng-click="gotoSupport()" type="button">
+					Terug
+				</button>
+            </div></div>
+        </div>
+        <div ng-show="error">
+            <div class="box-content fout text-center">
+            <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+    </div>
+</div>

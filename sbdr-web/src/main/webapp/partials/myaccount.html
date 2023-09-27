@@ -1,0 +1,144 @@
+<div class="row">
+    <div id="myaccount_page" class="col-xs-12">
+        <div class="box no shad mobpad">
+            <div class="box-content border">
+                <span class="livicon-evo" data-options="name: user.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;tryToSharpen: true"></span>
+                <span class="legend">Mijn account</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div data-ng-show="verificationError">
+                    <div class="box-content fout-smal text-center">
+                        <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+                        <span id="alertTop" class="fouttext-smal">{{verificationError}}</span>
+                    </div>
+                </div>
+                <div data-ng-show="klantActivated">
+                    <div class="box-content prima-smal text-center">
+                        <span class="primatext-smal">Uw account is succesvol geactiveerd.</span>
+                    </div>
+                </div>
+                <div class="row" data-ng-show="!isKlantActivated()">
+                    <div class="col-xs-12 col-lg-9">
+                        <div class="box-content mobpad">
+                            <form id="form-activatiegegevens" name="obj.formactivatiegegevens" class="form-horizontal" novalidate>
+                                <fieldset>
+                                    <span class="legend">Voer uw verificatiecode in</span>
+                                    <span class="livicon-evo" data-options="name: morph-toggle-1.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;tryToSharpen: true">&nbsp;</span>
+                                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formactivatiegegevens, 'activatiecode')}">
+                                        <label class="col-xs-12 col-sm-3 control-label">Verificatiecode<a href="" class="clickableinfo-input" data-info-popover data-tooltixp="U heeft uw voorlopige account geactiveerd en krijgt nu van ons een brief toegezonden naar het adres dat bekend is bij het handelsregister. In deze brief vindt u een unieke verificatiecode waarmee u uw account dient te verifiëren." data-popover-placement="right"></a></label>
+                                        <div class="col-xs-12 col-sm-7 col-md-5 col-lg-3">
+                                            <input data-ng-paste="checkFieldMaxLength($event, activatiecode, maxFieldLengths.verificatiecode)" data-wm-block name="activatiecode" id="activatiecode" data-ng-model="activatiecode" type="text" class="form-control" data-wm-block-length="maxFieldLengths.verificatiecode" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9 col-sm-offset-3">
+                                            <button type="button" class="btn btn-primary " data-ng-disabled="obj.formactivatiegegevens.$invalid || isUnchangedActivatieCode(activatiecode)" data-ng-click="activateKlant()">Activeren
+											</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mopad" data-ng-hide="userDetails || !addressEditAllowed()">
+                    <div class="col-xs-12 col-sm-9 mopad">
+                        <button type="button" class="btn btnlgw2 btn-primary w100mob btn-lg-mob" data-ng-click="back()">
+							Terug
+					</button>
+                    </div>
+                </div>
+                <tabsetsbdr>
+                    <tabsbdr data-ng-click="tabClicked()" nr-of-items="0" title="Bedrijf" data-ng-show="showTab('bedrijfsgegevenstab')" name="bedrijfsgegevenstab" id="bedrijfsgegevenstab" tabtag="myaccount" faicon="icon-mya-bedrijf" template-url="templates/myAccount/bedrijfsgegevenstab.html"></tabsbdr>
+                    <!--<tabsbdr data-ng-click="tabClicked()" data-ng-hide="addressEditAllowed()" nr-of-items="0" title="Overig " name="overigegegevenstab" id="overigegegevenstab" tabtag="myaccount" faicon="icon-mya-overig" template-url="templates/myAccount/overigegegevenstab.html"></tabsbdr>-->
+                    <tabsbdr data-ng-click="tabClicked()" nr-of-items="0" title="Gebruikers" data-ng-show="showTab('userstab')" name="userstab" id="userstab" tabtag="myaccount" faicon="icon-mya-gebruikers" template-url="templates/myAccount/gebruikergegevenstab.html"></tabsbdr>
+                    <!--tabsbdr data-ng-click="tabClicked()" nr-of-items="0" title="Facturen" data-ng-show="showTab('factuurtab')" name="factuurtab" id="factuurtab" tabtag="myaccount" faicon="icon-mya-facturen" template-url="templates/myAccount/factuurgegevenstab.html"></tabsbdr -->
+                    <tabsbdr class="trap2" data-ng-click="tabClicked()" nr-of-items="0" title="E-mail" data-ng-show="showTab('factuurtab')" name="factuurtab" id="factuurtab" tabtag="myaccount" faicon="icon-mya-email" template-url="templates/myAccount/emailgegevenstab.html"></tabsbdr>
+                    <tabsbdr class="trap2" data-ng-click="tabClicked()" nr-of-items="0" title="API" data-ng-show="showTab('factuurtab')" name="factuurtab" id="factuurtab" tabtag="myaccount" faicon="icon-mya-api" template-url="templates/myAccount/apigegevenstab.html"></tabsbdr>
+                    <div class="userinfo" data-ng-show="username && companyname">
+                        <ul class="fa-ul">
+                            <li>
+                                <li class="fa fa-building-o" />
+                                <label class="userinfofont"> {{companyname}}</label></li>
+                            <li>
+                                <li class="fa fa-user" />
+                                <label class="userinfofont"> {{username}}</label></li>
+                        </ul>
+                    </div>
+                </tabsetsbdr>
+            </div>
+        </div>
+        <div data-ng-show="btwNrError">
+            <div class="box-content fout text-center">
+                <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+                <span id="btwAlert" class="fouttext">{{btwNrError}}</span>
+            </div>
+        </div>
+        <div data-ng-show="error">
+            <div class="box-content fout text-center">
+                <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+        <div data-ng-show="userSavedOk">
+            <div class="box-content prima text-center">
+                <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+                <span class="primatext">Gebruiker is opgeslagen.</span>
+            </div>
+        </div>
+        <div data-ng-show="passwordSavedOk">
+            <div class="box-content prima text-center">
+                <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+                <span class="primatext">Wachtwoord aangepast.</span>
+            </div>
+        </div>
+        <div data-ng-show="userRemovedOk">
+            <div class="box-content prima text-center">
+                <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+                <span class="primatext">Gebruiker account is verwijderd.</span>
+            </div>
+        </div>
+        <div data-ng-show="accountSavedOk && !letterCreatedOk">
+            <div class="box-content prima text-center">
+                <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+                <span class="primatext">Gegevens zijn opgeslagen.</span>
+            </div>
+        </div>
+        <div data-ng-show="accountSavedOk && letterCreatedOk">
+            <div class="box-content prima text-center">
+                <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+                <span class="primatext">Gegevens zijn opgeslagen en klantbrief is aangemaakt.</span>
+            </div>
+        </div>
+        <script type="text/ng-template" id="removechanges.html" class="reveal-modal">
+            <div class="modal-header">
+                <i class="modal-icon-fix fa fa-ban" aria-hidden="true"></i>
+                <span class="modal-title legend">Weet u zeker dat u wilt annuleren?</span>
+            </div>
+            <div class="modal-body">
+                <p>De gebruikersgegevens worden niet opgeslagen.</p>
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btnlgw2  bluebtn11 btn-primary w100mob btn-lg-mob" data-ng-click="closeRemoveChangesModal()">Nee</button>
+                <button class="btn btnlgw2 btn-primary w100mob btn-lg-mob" data-ng-click="removeChangesOk()">Ja</button>
+            </div>
+        </script>
+        <script type="text/ng-template" id="removeuser.html" class="reveal-modal">
+            <div class="modal-header">
+                <i class="modal-icon-fix fa fa-trash-o" aria-hidden="true"></i>
+                <span class="modal-title legend">Gebruiker verwijderen?</span>
+            </div>
+            <div class="modal-body">
+                <p>Alle open support tickets en lopende bezwaren van de gebruiker worden bij het verwijderen overgezet naar het hoofd account.</p>
+                <p>Weet u zeker dat u de gebruiker wilt verwijderen?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btnlgw2 bluebtn11 w100mob btn-lg-mob" data-ng-click="closeRemoveUserModal()">Nee</button>
+                <button class="btn btn-primary btnlgw2 w100mob btn-lg-mob" data-ng-click="removeUserOk()">Ja</button>
+
+            </div>
+        </script>
+    </div>
+</div>

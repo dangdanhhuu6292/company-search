@@ -1,0 +1,32 @@
+<header class="navbar mobiel" data-ng-cloak data-ng-show="username">
+        <div class="container-fluid mobie">
+            <div id="functionbar" class="col-xs-12 autocenter text-left buttongroup">
+                <div class="functionbarleft buttongroup">
+                    <button data-ng-hide="hasRoleUser('admin_sbdr') || hasRoleUser('admin_sbdr_hoofd')" class="btn btnm" type="button" onclick="this.blur();" data-ng-click="searchCompany()"> 
+<img class="menu-icon" src="img/icons/svg/database.svg" width="30" height="30" alt="Europees Register"> 
+<span class="menu-text">Zoek bedrijf</span></button>
+                    <button class="btn btnm" type="button" onclick="this.blur();" data-ng-click="dashboard()"> <img class="menu-icon" src="img/icons/svg/monitor.svg" width="30" height="30" alt="Inloggen register"> <span class="menu-text">Dashboard</span> </button>
+                    <button class="btn btnm" type="button" onclick="this.blur();" data-ng-click="faillissementenoverzicht()" tabindex="-1"> <img class="menu-icon" src="img/icons/svg/auction.svg" width="30" height="30" alt="BA-register"> <span class="menu-text">Faillissementen</span> </button>
+                    <button data-ng-show="showExactOnline() == true" class="btn btnm" type="button" onclick="this.blur();" data-ng-click="exactonline()" tabindex="-1"> <img class="menu-icon" src="img/icons/svg/api.svg" width="30" height="30" alt="CRZB register"> <span class="menu-text">ExactOnline</span> </button>
+                </div>
+                <div class="functionbarright buttongroup">
+                    <button data-ng-show="hasRoleUser('admin_sbdr') || hasRoleUser('admin_sbdr_hoofd')" class="btn btnm" type="button" onclick="this.blur();" data-ng-click="websiteparam()" tabindex="-1"> <img class="menu-icon" src="img/icons/svg/stats.svg" width="30" height="30" alt="Register"> <span class="menu-text">Api</span> </button>
+                    <button class="btn btnm" type="button" onclick="this.blur();" data-ng-click="createticket()"> <img class="menu-icon" src="img/icons/svg/conversation-symbol.svg" width="30" height="30" alt="Zakelijke register"> <span class="menu-text">Support</span> </button>
+                    <button data-ng-show="hasRoleUser('admin_klant') || hasRoleUser('hoofd_klant')" class="btn btnm" type="button" onclick="this.blur();" data-ng-click="myaccount()"> <img class="menu-icon" src="img/icons/svg/user.svg" width="30" height="30" alt="Credit management"> <span class="menu-text">Mijn Account</span> </button>
+                    <button data-ng-hide="hasRoleUser('admin_klant') || hasRoleUser('hoofd_klant')" class="btn btnm" type="button" onclick="this.blur();" data-ng-click="myuseraccount()"> <img class="menu-icon" src="img/icons/svg/locked.svg" width="30" height="30" alt="B2b-Register"> <span class="menu-text">Wachtwoord</span> </button>
+                    <button class="btn btnm" type="button" onclick="this.blur();" data-ng-click="logout()"> <img class="menu-icon" src="img/icons/svg/exit1.svg" width="30" height="30" alt="National database"> <span class="menu-text">Uitloggen</span>
+ </button>
+                </div>
+            </div>
+        </div>
+</header>
+    <div data-ng-cloak data-ng-show="adbEnabled" id="fuck-adb-enabled">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-5 autocenter pad150t">
+            <div class="maxw autocenter">
+                <div class="box-content border adblok">
+                    <h3>Beste bezoeker,</h3><br/>
+                    <span>Wij zien dat u een adblocker gebruikt met specifieke privacy instellingen waardoor de web applicatie van het CRZB register niet gebruikt kan worden.<br/>Dit is op te lossen door de instellingen van uw adblocker aan te passen of door een uitzondering voor deze website toe te voegen in de adblocker.<br/><br/>Gebruikt u AdBlock? Dan kunt u de extensie in uw browser openen als u op deze pagina zit. Vervolgens kiest u voor 'Blokkeer niets op pagina's van dit domein' en drukt u op 'uitsluiten'. Daarna kunt u weer gebruik maken van het CRZB register.</span>
+                </div>
+            </div>
+        </div>
+    </div>

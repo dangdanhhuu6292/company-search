@@ -1,0 +1,100 @@
+<div class="col-xs-12 overres mobpad">
+    <table id="customerAlerts" class="table nomob  m-table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th class="trap4">KvK-nummer</th>
+                <th>Bedrijfsnaam</th>
+                <th class="trap4">Adres</th>
+                <!--<th>Type</th>-->
+                <!-- <th>Indicatoren bedrijf</th> -->
+                <th>Onderwerp</th>
+                <th class="minw-222">Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="alertRow in alertsCollection">
+                <td>{{alertRow.gewijzigd}}</td>
+                <td class="trap4" ng-hide="alertRow.alertType=='VVM'">{{alertRow.kvkNummer}}</td>
+	            <td ng-hide="alertRow.alertType=='VVM'">{{alertRow.bedrijfsNaam | limitTo:50}}</td>
+                <td class="trap4" ng-hide="alertRow.alertType=='VVM'">{{alertRow.adres}}</td>
+                <!--<td ng-hide="alertRow.alertType=='VVM'">
+                    <span ng-if="alertRow.alertType == 'MON'">Monitoring</span>
+                    <span ng-if="alertRow.alertType == 'VER'">Vermelding</span>
+                    <span ng-if="alertRow.alertType == 'SUP' && alertRow.supportType == 'BZW'">Bezwaar</span>
+                    <span ng-if="alertRow.alertType == 'SUP' && alertRow.supportType == 'KLT'">Klacht</span>
+                    <span ng-if="alertRow.alertType == 'SUP' && alertRow.supportType == 'PRB'">Probleem</span>
+                    <span ng-if="alertRow.alertType == 'SUP' && alertRow.supportType == 'SGT'">Suggestie</span>
+                    <span ng-if="alertRow.alertType == 'SUP' && alertRow.supportType == 'VRG'">Vraag</span>
+                </td>--->
+                <!-- <td>F{{alertRow.indFaillissement}} S{{alertRow.indSurseance}}</td> -->
+                <td ng-hide="alertRow.alertType=='VVM'">
+                        <span ng-if="alertRow.alertType == 'MON' && alertRow.meldingStatus == 'Opgenomen'">
+                            <span class="text-oranje" title="Er is een vermelding geregistreerd op een bedrijf in monitoring">Betalingsachterstand</span>
+                        </span> 
+                        <span ng-if="alertRow.alertType == 'MON' && alertRow.meldingStatus == 'Verwijderd'">
+                            <span class="text-oranje" title="Er is een vermelding verwijderd van een bedrijf in monitoring">Vermelding {{lowercaseFirstLetter(alertRow.meldingStatus)}}</span>
+                        </span>
+                        <span ng-if="alertRow.alertType == 'SUP'">
+                            <span class="text-oranje">Nieuw bericht</span>
+                        </span>
+                        <span ng-if="alertRow.alertType == 'VER' && alertRow.meldingStatus != 'Opgenomen'">
+                            <span class="text-oranje">Vermelding {{lowercaseFirstLetter(alertRow.meldingStatus)}}</span>
+                        </span>
+                        <span ng-if="alertRow.alertType == 'VER' && alertRow.meldingStatus == 'Opgenomen'">
+                            <span class="text-groen">Vermelding {{lowercaseFirstLetter(alertRow.meldingStatus)}}</span>
+                        </span>
+                </td>
+                <td>
+				<div class="zoekenmobielhide btn-fix-search-2 btn-fix-alert">
+							 <button ng-show="alertRow.alertType!='VVM'" type="button" class="btn btn-primary " ng-click="viewdetails(alertRow.alertType, alertRow.alertId, alertRow.monitoringId, alertRow.meldingId, alertRow.supportId, alertRow.bedrijfId, alertRow.referentieNummerNoPrefix)" ng-disabled="false">Inzien
+	                    </button>
+	<span ng-hide="alertRow.alertType=='SUP'||alertRow.alertType=='VVM'">
+							  <button type="button" class="btn bluebtn11 btn-primary" ng-click="ignorealert(alertRow.alertType, alertRow.alertId, alertRow.bedrijfId)" ng-disabled="false">Negeren
+	                    </button>
+						</span>
+
+
+							<Span ng-show="alertRow.alertType=='VVM'">        
+		                <button type="button" class="btn bluebtn11 btn-primary" ng-click="ignorealert(alertRow.alertType, alertRow.alertId, alertRow.bedrijfId)" ng-disabled="false">Verwijderen
+		                </button>
+								</span>
+					</div>
+
+
+	                                              <div class="zoekenmobielshow margin10">
+													<button ng-show="alertRow.alertType!='VVM'" type="button"  class="btn btn-lg w100 btn-primary" ng-click="viewdetails(alertRow.alertType, alertRow.alertId, alertRow.monitoringId, alertRow.meldingId, alertRow.supportId, alertRow.bedrijfId, alertRow.referentieNummerNoPrefix)" ng-disabled="false">Inzien</button>
+                                                   </div>  
+
+					
+				 </td>                        
+            </tr>
+        </tbody>
+    </table>
+    <pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+</div>
+  <script>
+        (function() {
+            var headertext = [];
+            var headers = document.querySelectorAll("thead");
+            var tablebody = document.querySelectorAll("tbody");
+
+            for (var i = 0; i < headers.length; i++) {
+                headertext[i] = [];
+                for (var j = 0, headrow; headrow = headers[i].rows[0].cells[j]; j++) {
+                    var current = headrow;
+                    headertext[i].push(current.textContent.replace(/\r?\n|\r/, ""));
+                }
+            }
+
+            if (headers.length > 0) {
+                for (var h = 0, tbody; tbody = tablebody[h]; h++) {
+                    for (var i = 0, row; row = tbody.rows[i]; i++) {
+                        for (var j = 0, col; col = row.cells[j]; j++) {
+                            col.setAttribute("data-th", headertext[h][j]);
+                        }
+                    }
+                }
+            }
+        }());
+    </script>

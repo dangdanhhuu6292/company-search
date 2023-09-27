@@ -1,0 +1,33 @@
+<div ng-controller="ReportHistoryTabController">
+	<div class="row box-context" ng-show="nrOfHistorie(report.historie) >= 1">
+		<div class="col-xs-12 col-sm-8 col-lg-6">
+			<div class="box-content">
+				<form id="form-historiegegevens">
+					<fieldset>
+						<legend>Historie</legend>
+						<ul class="timeline">
+							<div ng-repeat="historieitem in report.historie">
+								<li>
+									<div ng-class="$index % 2 ? 'direction-r' : 'direction-l'">
+										<div class="flag-wrapper">
+											<span class="flag">{{historieitem.label}}</span>
+											<span class="time-wrapper"><span class="time">{{historieitem.datum}}</span></span>
+										</div>
+										<div class="desc">{{historieitem.omschrijving}}</div>
+									</div>
+								</li>
+							</div>
+						</ul>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row box-context" ng-hide="nrOfHistorie(report.historie) >= 1">
+		<div class="col-xs-12 col-sm-8 col-md-6">
+			<div class="box-content">
+				<div class="alert alert-info">Er is geen historie bekend.</div>
+			</div>
+		</div>
+	</div>
+</div>

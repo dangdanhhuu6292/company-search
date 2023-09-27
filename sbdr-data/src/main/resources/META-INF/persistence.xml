@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+	<persistence-unit name="sbdr" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>nl.devoorkant.sbdr.data.model.Applicatie</class>
+        <class>nl.devoorkant.sbdr.data.model.Bedrijf</class>
+        <class>nl.devoorkant.sbdr.data.model.BedrijfHistorie</class>
+        <class>nl.devoorkant.sbdr.data.model.BedrijfRol</class>
+        <class>nl.devoorkant.sbdr.data.model.BedrijfStatus</class>
+        <class>nl.devoorkant.sbdr.data.model.Bericht</class>
+        <class>nl.devoorkant.sbdr.data.model.Bevoegdheid</class>
+        <class>nl.devoorkant.sbdr.data.model.CIKvKDossier</class>
+        <class>nl.devoorkant.sbdr.data.model.CIKvKDossierHistorie</class>
+        <class>nl.devoorkant.sbdr.data.model.CompanyInfo</class>
+        <class>nl.devoorkant.sbdr.data.model.Configuratie</class>
+        <class>nl.devoorkant.sbdr.data.model.Document</class>
+        <class>nl.devoorkant.sbdr.data.model.DocumentType</class>        
+        <class>nl.devoorkant.sbdr.data.model.Eigenschap</class>
+        <class>nl.devoorkant.sbdr.data.model.Factuur</class>
+        <class>nl.devoorkant.sbdr.data.model.FactuurRegel</class>
+        <class>nl.devoorkant.sbdr.data.model.Gebruiker</class>
+        <class>nl.devoorkant.sbdr.data.model.GebruikerBasis</class>
+        <class>nl.devoorkant.sbdr.data.model.GebruikerEigenschap</class>
+        <class>nl.devoorkant.sbdr.data.model.GebruikerGroep</class>
+        <class>nl.devoorkant.sbdr.data.model.Klant</class>
+        <class>nl.devoorkant.sbdr.data.model.KlantStatus</class>
+        <class>nl.devoorkant.sbdr.data.model.KlantType</class>
+        <class>nl.devoorkant.sbdr.data.model.Melding</class>
+        <class>nl.devoorkant.sbdr.data.model.MeldingStatus</class>
+        <class>nl.devoorkant.sbdr.data.model.MobileGebruiker</class>
+        <class>nl.devoorkant.sbdr.data.model.Monitoring</class>
+        <class>nl.devoorkant.sbdr.data.model.MonitoringStatus</class>
+        <class>nl.devoorkant.sbdr.data.model.Persoon</class>
+        <class>nl.devoorkant.sbdr.data.model.Product</class>
+        <class>nl.devoorkant.sbdr.data.model.Rol</class>
+        <class>nl.devoorkant.sbdr.data.model.Tarief</class>
+        <class>nl.devoorkant.sbdr.data.model.Wachtwoord</class>
+        <class>nl.devoorkant.sbdr.data.model.WachtwoordStatus</class>
+	</persistence-unit>
+	<persistence-unit name="cir" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>nl.devoorkant.sbdr.cir.data.model.Applicatie</class>
+	</persistence-unit>	
+	<persistence-unit name="oauth" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	</persistence-unit>	
+</persistence>

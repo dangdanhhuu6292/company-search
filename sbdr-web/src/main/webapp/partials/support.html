@@ -1,0 +1,169 @@
+<div class="row">
+    <div class="col-xs-12" id="support_page">
+        <script>
+		    $(document).ready(function() {
+			setTimeout(function(){
+			 $('.fixit').matchHeight();
+			 jQuery(".livicon-evo").addLiviconEvo();
+			 $('.fixit2').matchHeight();
+		
+			},600);
+            });
+        </script>
+        <div class="box no shad">
+            <div class="box-content border">
+                <span class="livicon-evo" data-options="name:help.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;eventOn:parent ;tryToSharpen:true"></span>
+                <span class="legend">Support</span>
+                <span class="livicon-evo rechts infoi" data-text="<h4><b>Support</b></h4><br/>Heeft u hulp nodig bij het gebruik van onze oplossingen? Op deze pagina verwijzen wij u naar antwoorden op de meest gestelde vragen en bieden wij u instructies voor het gebruik. Heeft u verdere vragen dan kunt u gebruik maken van de contactmogelijkheden. Tot slot wordt op deze pagina uw mogelijkheid tot het doen van digitaal bezwaar weergeven. Wanneer er geen achterstanden bij ons bekend zijn, zal er logischerwijs geen mogelijkheid zijn tot het doen van bezwaar." data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; tryToSharpen: true">&nbsp;</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="row" data-ng-hide="hasRoleUser('admin_sbdr') || hasRoleUser('admin_sbdr_hoofd')">
+                  
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 " style="height:100%;">
+                            <a href="" data-ng-click="gotoFAQ()">
+                                <div class="greenbox3 margreen clearfix  text-center" style="height:140px;">
+                                    <div class="livicon-evo autocenter marginb15" data-options="name: question-alt.svg; size: 50px; style: lines;strokeColor:#0a212f; eventOn:parent;strokeColorAction:#fff;colorsOnHover:custom; tryToSharpen: true"></div>
+                                    <span class="faillissemententext3">Meest gestelde vragen en instructies</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="height:100%;">
+                            <a href="" data-ng-click="gotoProblem()">
+                                <div class="bluebox3 margreen text-center clearfix " style="height:140px;">
+                                    <div class="livicon-evo marginb15 autocenter" data-options="name: comments.svg; size: 50px; style: lines;strokeColor:#0a212f; eventOn:parent;strokeColorAction:#fff;colorsOnHover:custom; tryToSharpen: true"></div>
+                                    <span class="faillissemententext3">Neem contact met ons op</span>
+                                </div>
+                            </a>
+                        </div>
+						    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="height:100%;">
+                            <a href="" onclick="alert('U heeft geen lopende api contracten hierdoor zijn er geen beschikbare api documentatie.');">
+                                <div class="bluebox3 margreen text-center clearfix " style="height:140px;">
+                                    <div class="livicon-evo marginb15 autocenter" data-options="name: gears.svg; size: 50px; style: lines;strokeColor:#0a212f; eventOn:parent;strokeColorAction:#fff;colorsOnHover:custom; tryToSharpen: true"></div>
+                                    <span class="faillissemententext3">Api documentatie</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 " style="height:100%;" data-ng-show="hasRoleUser('admin_klant') || hasRoleUser('hoofd_klant')">
+                            <a href="" data-ng-click="gotoObjection()">
+                                <div class="bluebox3 margreen clearfix text-center " style="height:140px;" title="{{ !hasNotificationsToObject && 'Er kan geen bezwaar worden aangemaakt, omdat er geen vermelding tegen uw bedrijf is ingediend.' || '' }}">
+                                    <div class="livicon-evo autocenter marginb15" data-options="name: balance.svg; size: 50px; style: lines; strokeColor:#0a212f; eventOn:grandparent;strokeColorAction:#fff;colorsOnHover:custom; tryToSharpen: true"></div>
+                                    <span data-ng-show="hasNotificationsToObject" class="faillissemententext3">Digitaal bezwaar maken tegen vermelding</span>
+                                    <span data-ng-hide="hasNotificationsToObject" class="faillissemententext3">U kunt op dit moment geen bezwaar maken</span>
+                               </a>
+                            </div>
+                        </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="box no">
+            <div class="box-content border minhight">
+                <span class="livicon-evo" data-options="name: comments.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; ; tryToSharpen: true"></span>
+                <span class="legend">Uw tickets</span>
+                <span class="livicon-evo rechts infoi" data-text="<h4><b>Support tickets</b></h4><br/>Hier vindt u een overzicht van support tickets die u aangemaakt heeft." data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; tryToSharpen: true"></span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div data-ng-show="userSupportTickets.length == 0">
+                    <div class="marging20a text-center">
+                        <span class="legend">Er zijn momenteel geen support tickets</span>
+                    </div>
+                </div>
+					
+                <div class="row box-content overres" data-ng-show="userSupportTickets.length > 0">
+				 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11 clearfix"> 
+                    <table id="userSupportTicketTable" class="table m-table table-bordered table-hover clearfix table-striped">
+                        <thead>
+                            <tr>
+                                <th data-label="Datum">Datum</th>
+                                <th data-label="Datum update">Datum update</th>
+                                <th data-label="Referentienummer">Referentienummer</th>
+                                <th data-label="Betreft">Betreft</th>
+                                <th data-label="Onderwerp">Onderwerp</th>
+								<th data-label="Factuur / dossiernummer">Factuur / dossiernummer</th>
+                                <th data-label="Status">Status</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="supportTicket in userSupportTickets">{{supportTicket}}
+                                <td data-label="Datum">{{supportTicket.datumAangemaakt}}</td>
+                                <td data-label="Datum update">{{supportTicket.datumUpdate !=undefined ? supportTicket.datumUpdate : "-"}}</td>
+                                <td data-label="Referentienummer">{{supportTicket.referentieIntern}}, {{supportTicket.melding.referentieIntern}}</td>
+                                <td data-label="Betreft">
+                                    <span data-ng-show="supportTicket.supportType == 'BZW'">Bezwaar</span><span ng-show="supportTicket.supportType != 'BZW'">Support</span>
+                                </td>
+                                <td data-label="Onderwerp">                                  
+                                    <span data-ng-show="supportTicket.melding">
+									 {{supportTicket.gebruiker.bedrijfNaam}}
+                                    </span>
+									 <span data-ng-show="!supportTicket.melding"> 
+									<span data-ng-show="supportTicket.supportRedenDesc">{{supportTicket.supportRedenDesc}}</span>
+                                    <span data-ng-show="!supportTicket.supportRedenDesc">Overig</span> 
+                                    </span>
+                                </td>
+								   <td data-label="Factuur / dossiernummer">                                  
+									<span ng-show="supportTicket.meldingFactuurNr">{{supportTicket.meldingFactuurNr}}</span>
+									<span ng-show="!supportTicket.meldingFactuurNr"> N.V.T.</span> 
+                                   
+                                </td>
+                                <td data-label="Status">
+                                    <span title="Openstaand" data-ng-show="supportTicket.supportStatus == 'OPN'" class="bg-success badgew badge">Ingediend</span>
+                                    <span title="In behandeling" data-ng-show="supportTicket.supportStatus == 'IBH'" class="bg-warning badgew badge">In behandeling</span>
+                                    <span title="In behandeling(bij CRZB)" data-ng-show="supportTicket.supportStatus == 'GST'" class="bg-warning badge">In behandeling</span>
+                                    <span title="Gesloten" data-ng-show="supportTicket.supportStatus == 'ARC'" class="bg-default badgew badge">Gesloten</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn w100mob btn-primary" data-ng-click="gotoDetails(supportTicket.referentieNummer)">
+										Inzien
+									</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                </div>
+				   </div>
+			 <div data-ng-show="error"> 
+            <div class="box-content fout-smal text-center">
+              <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+         
+        </div> </div>
+     
+    </div>
+</div>
+<div id="info-box2" class="informatieinfo">
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <p id="textinfo2">#######</p>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('info-box2');
+    var btns = document.getElementsByClassName("infoi");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            modal.style.display = "block";
+            $('#textinfo2').html($(this).attr('data-text'));
+        }
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

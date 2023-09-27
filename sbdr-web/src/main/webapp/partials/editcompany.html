@@ -1,0 +1,403 @@
+<div class="row">
+	<div id="myaccount_page" class="col-sm-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-building-o"></i>
+					<span>Bedrijf</span>
+				</div>
+			</div>
+			<div class="box-content">
+				<div class="row box-content">
+					<div class="col-xs-12 col-lg-9">
+						<div class="box-content">
+							<form id="form-bedrijfsgegevens" name="formbedrijfsgegevens" class="form-horizontal" novalidate>
+								<fieldset>
+									<legend>Bedrijfsgegevens</legend>
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-0">
+											<button ng-show="addressEditAllowed() && !(editAddressOn)" type="button" class="btn btn-primary" ng-click="editCompanyData()">
+												Wijzigen
+											</button>
+										</div>
+									</div>
+									<div ng-show="editAddressOn" class="alert alert-warning">
+										Let op: Het muteren van bedrijfsgegevens kan effect hebben op bestaande meldingen en/of klant accounts!
+									</div>
+									<div class="form-group" ng-show="adresOkFalseOnLoad">
+										<div class="col-sm-9 col-sm-offset-3">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" ng-disabled="!editAddressOn" ng-model="account.bedrijf.adresOk" id="akkoordBedrijf" name="akkoordBedrijf"/>
+													Adresgegevens zijn correct. Pas na akkoord hiervan worden meldingen + evt. gekoppelde klant doorgezet!
+													<i class="fa fa-square-o"></i>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'bedrijfsnaam')}">
+										<label class="col-sm-3 control-label">Bedrijfsnaam</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.bedrijfsNaam, maxFieldLengths.bedrijfsnaam)" wm-block class="form-control" type="text" name="bedrijfsnaam" id="bedrijfsnaam" ng-model="account.bedrijf.bedrijfsNaam" wm-block-length="maxFieldLengths.bedrijfsnaam" required/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'bedrijfsnaam')">
+												<span>Voer een geldige bedrijfsnaam in</span>
+											</small>
+										</div>																
+										<span class="col-sm-9" ng-show="!editAddressOn">
+											{{account.bedrijf.bedrijfsNaam}}
+										</span>
+									</div>
+									<div class="form-group" ng-show="!editAddressOn">
+										<label class="col-sm-3 control-label">Adres</label>																		
+										<span class="col-sm-9">
+											{{account.bedrijf.straat}}
+											{{account.bedrijf.huisNr}}
+											{{account.bedrijf.huisNrToevoeging}}
+										</span>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'straat')}">
+										<label class="col-sm-3 control-label">Straat</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.straat, maxFieldLengths.straat)" wm-block class="form-control" type="text" name="straat" id="straat" ng-model="account.bedrijf.straat" wm-block-length="maxFieldLengths.straat" required/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'straat')">
+												<span>Voer een geldige straatnaam in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'huisnummer')}">
+										<label class="col-sm-3 control-label">Huisnummer</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.huisNr, maxFieldLengths.huisnummer)" wm-block class="form-control" type="text" name="huisnummer" id="huisnummer" ng-model="account.bedrijf.huisNr" wm-block-length="maxFieldLengths.huisnummer" required/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'huisnummer')">
+												<span>Voer een geldig huisnummer in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'huisnummersuffix')}">
+										<label class="col-sm-3 control-label">Huisnummer toevoeging</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.huisNrToevoeging, maxFieldLengths.huisnummertoevoeging)" wm-block class="form-control" type="text" name="huisnummersuffix" id="huisnummersuffix" ng-model="account.bedrijf.huisNrToevoeging" wm-block-length="maxFieldLengths.huisnummertoevoeging"/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'huisnummersuffix')">
+												<span>Voer een geldige huisnummertoevoeging in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-show="!editAddressOn">
+										<label class="col-sm-3 control-label">Postcode en plaats</label>																		
+										<span class="col-sm-9">
+											{{account.bedrijf.postcode}}
+											{{account.bedrijf.plaats}}
+										</span>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'postcode')}">
+										<label class="col-sm-3 control-label">Postcode</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.postcode, maxFieldLengths.postcode)" wm-block class="form-control" type="text" name="postcode" id="postcode" ng-model="account.bedrijf.postcode" wm-block-length="maxFieldLengths.postcode" required/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'postcode')">
+												<span>Voer een geldige postcode in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'plaats')}">
+										<label class="col-sm-3 control-label">Plaats</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.plaats, maxFieldLengths.plaats)" wm-block class="form-control" type="text" name="plaats" id="plaats" ng-model="account.bedrijf.plaats" wm-block-length="maxFieldLengths.plaats" required/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'plaats')">
+												<span>Voer een geldige plaats in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-show="!editAddressOn">
+										<label class="col-sm-3 control-label">Telefoonnummer</label>
+										<span class="col-sm-9">
+											{{account.bedrijf.telefoonnummer}}
+										</span>
+									</div>
+									<div class="form-group" ng-show="editAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'telefoonnummer')}">
+										<label class="col-sm-3 control-label">Telefoonnummer</label>
+										<span class="col-sm-9" ng-show="editAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.telefoonnummer, maxFieldLengths.telefoonnummer)" wm-block class="form-control" type="text" name="telefoonnummer" id="telefoonnummer" ng-model="account.bedrijf.telefoonnummer" ng-pattern="PHONE_REGEXP" wm-block-length="maxFieldLengths.telefoonnummer"/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'telefoonnummer')">
+												<span>Voer een geldig telefoonnummer in</span>
+											</small>
+										</span>
+									</div>
+									<div class="form-group" ng-show="!editAddressOn && account.bedrijf.postPostbus">
+										<label class="col-sm-3 control-label">Postbus en postcode (postadres)</label>																		
+										<span class="col-sm-9">
+											{{account.bedrijf.postPostbus}}
+											{{account.bedrijf.postPostcode}}
+										</span>
+									</div>
+									<div class="form-group" ng-show="!editAddressOn && account.bedrijf.postPostbus">
+										<label class="col-sm-3 control-label">Plaats (postadres)</label>
+										<span class="col-sm-9">{{account.bedrijf.postPlaats}}</span>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'postpostbus')}">
+										<label class="col-sm-3 control-label">Postbus (postadres)</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.postPostbus, maxFieldLengths.postbus)" wm-block class="form-control" type="text" name="postpostbus" id="postpostbus" ng-model="account.bedrijf.postPostbus" wm-block-length="maxFieldLengths.postbus"/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'postpostbus')">
+												<span>Voer een geldige postbus in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'postpostcode')}">
+										<label class="col-sm-3 control-label">Postcode (postadres)</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.postPostcode, maxFieldLengths.postcode)" wm-block class="form-control" type="text" name="postpostcode" id="postpostcode" ng-model="account.bedrijf.postPostcode" wm-block-length="maxFieldLengths.postcode"/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'postpostcode')">
+												<span>Voer een geldige postcode in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-show="editAddressOn && disableAddressOn" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'postplaats')}">
+										<label class="col-sm-3 control-label">Plaats (postadres)</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.postPlaats, maxFieldLengths.plaats)" wm-block class="form-control" type="text" name="postplaats" id="postplaats" ng-model="account.bedrijf.postPlaats" wm-block-length="maxFieldLengths.plaats"/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'postplaats')">
+												<span>Voer een geldige plaats in</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'kvknummer')}">
+										<label class="col-sm-3 control-label">Kvk nummer</label>
+
+										<div class="col-sm-9" ng-show="editAddressOn && disableAddressOn">
+											<input ng-paste="checkFieldMaxLength($event, account.bedrijf.kvKnummer, maxFieldLengths.kvknummer)" wm-block class="form-control" type="text" name="kvknummer" id="kvknummer" ng-model="account.bedrijf.kvKnummer" wm-block-length="maxFieldLengths.kvknummer" required/>
+											<small class="help-block" ng-show="isInvalid(formbedrijfsgegevens, 'kvknummer')">
+												<span>Voer een geldig KVK nummer in</span>
+											</small>
+										</div>																												
+										<span class="col-sm-9" ng-show="!editAddressOn">
+											{{account.bedrijf.kvKnummer}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Bedrijf Referentie</label>
+										<span class="col-sm-9">{{account.referentieIntern}}</span>
+									</div>
+									<div class="form-group">
+										<div ng-show="editAddressOn" class="col-sm-9 col-sm-offset-3">
+											<button type="button" class="btn btn-primary" ng-disabled="formbedrijfsgegevens.$invalid || isUnchanged(account.bedrijf)" ng-click="updateCompanyData()">
+												Opslaan
+											</button>
+											<button type="button" class="btn btn-primary" ng-click="editCompanyData()">
+												Annuleren
+											</button>
+										</div>
+										<div ng-show="!editAddressOn && !isCustomMelding" class="col-sm-9 col-sm-offset-0">
+											<button type="button" class="btn btn-primary" ng-click="back()">
+												Terug
+											</button>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div ng-show="isCustomMelding" class="row box-content">
+					<div class="col-xs-12 col-lg-9">
+						<div class="box-content">
+							<form id="form-custommeldinggegevens" name="formcustommeldinggegevens" class="form-horizontal" novalidate>
+								<fieldset>
+									<legend>Melding gegevens</legend>
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-3">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" ng-disabled="true" class="form-control" ng-model="exceptionCompany.frauduleusBedrijf" id="fraude" name="fraude"/>
+													Frauduleus bedrijf
+													<i class="fa fa-square-o"></i>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-3">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" ng-disabled="true" class="form-control" ng-model="exceptionCompany.dreigendFaillissement" id="dreigendFaillissement" name="dreigendFaillissement"/>
+													Dreigend faillissement
+													<i class="fa fa-square-o"></i>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-3">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" ng-disabled="true" class="form-control" ng-model="exceptionCompany.incorrectGegeven" id="incorrectGegeven" name="incorrectGegeven"/>
+													Incorrect gegeven
+													<i class="fa fa-square-o"></i>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-3">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" ng-disabled="true" class="form-control" ng-model="exceptionCompany.faillissementVraag" id="faillissementVraag" name="faillissementVraag">
+													Faillissement aanvragen
+													<i class="fa fa-square-o"></i></input>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-3">
+											<span>&nbsp;</span>
+										</div>
+									</div>
+									<div class="col-sm-9 col-sm-offset-3">
+										<span>Melding detailinformatie (bewijsstukken/bronnen)</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Details melding</label>
+
+										<div class="col-sm-9">
+											<textarea ng-paste="checkFieldMaxLength($event, exceptionCompany.meldingDetails, maxFieldLengths.meldingDetails)" wm-block class="form-control" id="meldingDetails" rows="5" ng-model="exceptionCompany.meldingDetails" wm-block-length="maxFieldLengths.meldingDetails" ></textarea>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div ng-show="isCustomMelding" class="row box-content">
+					<div class="col-xs-12 col-lg-9">
+						<div class="box-content">
+							<form id="form-gebruikergegevens" name="formgebruikergegevens" class="form-horizontal" novalidate>
+								<fieldset>
+									<legend>Melding aangegeven door</legend>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Naam</label>																	
+										<span class="col-sm-9">
+											{{exceptionCompany.bedrijfDoor.bedrijfsNaam}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Adres</label>
+										<span class="col-sm-9">
+											{{exceptionCompany.bedrijfDoor.straat}} {{exceptionCompany.bedrijfDoor.huisnummer}} {{exceptionCompany.bedrijfDoor.huisnummerSuffix}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Postcode en plaats</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.bedrijfDoor.postcode}}
+											{{exceptionCompany.bedrijfDoor.plaats}}
+										</span>
+									</div>
+									<div class="form-group" ng-show="monitoring.postPostbus">
+										<label class="col-sm-3 control-label">Postbus en postcode (postadres)</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.bedrijfDoor.postPostbus}}
+												{{exceptionCompany.bedrijfDoor.postPostcode}}
+										</span>
+									</div>
+									<div class="form-group" ng-show="monitoring.postPostbus">
+										<label class="col-sm-3 control-label">Plaats (postadres)</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.bedrijfDoor.postPlaats}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Kvk nummer</label>	
+										<span class="col-sm-9">
+											{{exceptionCompany.bedrijfDoor.kvkNummer}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Bedrijf Referentie</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.bedrijfDoor.sbdrNummer}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Gebruiker</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.gebruiker.voornaam}} {{exceptionCompany.gebruiker.naam}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Functie gebruiker</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.gebruiker.functie}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Gebruikersnaam</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.gebruiker.gebruikersNaam}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Email gebruiker</label>																		
+										<span class="col-sm-9">
+											{{exceptionCompany.gebruiker.emailAdres}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Telefoon klant</label>																		
+										<span class="col-sm-9" ng-show="exceptionCompany.signTelefoonNummer != null">
+											{{exceptionCompany.signTelefoonNummer}}
+										</span>
+										<span class="col-sm-9" ng-hide="exceptionCompany.signTelefoonNummer != null">
+											{{exceptionCompany.gebruiker.telefoonNummer}}
+										</span>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-9 col-sm-offset-3">
+											<span>&nbsp;</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div ng-show="!editAddressOn" class="col-sm-9 col-sm-offset-0">
+											<button type="button" class="btn btn-primary" ng-click="back()">
+												Terug
+											</button>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div id="alert" class="alert alert-danger" ng-show="error">{{error}}</div>
+				<div ng-show="accountSavedOk" class="alert alert-success">Gegevens zijn opgeslagen.</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="removechanges.html" class="reveal-modal">
+	<div class="modal-header">
+		<h4 class="modal-title">De gegevens worden niet opgeslagen</h4>
+	</div>
+	<div class="modal-body">
+		<p>Weet u zeker dat u wilt annuleren?</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="removeChangesOk()">Ja</button>
+		<button class="btn btn-primary" ng-click="closeRemoveChangesModal()">Nee</button>
+	</div>
+</script>
+

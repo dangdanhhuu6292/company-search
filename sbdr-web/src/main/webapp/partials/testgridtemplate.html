@@ -1,0 +1,18 @@
+<div ng-click="row.toggleExpand()" ng-style="rowStyle(row)"
+	class="ngAggregate">
+	<span class="ngAggregateText">{{row.label| CUSTOM_FILTERS}}
+		(count: {{row.totalChildren()}} {{AggItemsLabel}} Remaining:
+		{{aggFC(row)}})</span>
+	<div class="{{row.aggClass()}}"></div>
+</div>
+
+
+<div ng-style="{'top':row.offsetTop+'px'}" class="{{row.aggClass()}}"></div>
+<div ng-click="row.toggleExpand()"
+	ng-style="{ 'cursor': row.cursor ,'top':row.offsetTop+'px'}"
+	ng-repeat="col in renderedColumns" ng-class="col.colIndex()"
+	class="ngCell ngCellGroup {{col.cellClass}}">
+	<div class="ngVerticalBar" ng-style="{height: rowHeight}"
+		ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div>
+	<div>{{aggFc(row,col) }}</div>
+</div>

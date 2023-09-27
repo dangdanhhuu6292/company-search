@@ -1,0 +1,240 @@
+<div class="row">
+    <div id="search_page" data-ng-class="username ?'col-xs-12' : 'col-xs-12 col-sm-12 minw-zoeken autocenter search-fixt-padding'">
+        <div class="box no shad">
+            <div class="box-content border">
+                <div data-ng-show="username">
+                    <span class="mylivicons" data-options="name: search.svg; size: 35px; style: lines-alt;autoplay:true; strokeColor:#0a212f; tryToSharpen: true"></span>
+                    <span class="legend">Zoek bedrijf</span>
+                    <a href="" class="infoi rechts" data-text="<h4><b>Bedrijf niet vindbaar</b></h4><br/>Indien het juiste bedrijf niet gevonden wordt verzoeken wij u het volgende te proberen:<br/> - Zoekt u op de handelsnaam? Probeer dan eens de statutaire naam of vice versa. <br/>- Zoekt u op een afkorting van het bedrijf? Probeer dan eens de naam voluit te schrijven of vice versa. <br/>- Let goed op hoofd- en kleine letter. <br/>- Zoek op het KvK-nummer. <br/><br/>Heeft u bovenstaande opties oplossingen geprobeerd zonder succes? Mogelijk komt uw zoekopdracht niet overeen met de bedrijfsgegevens die bij het Handelsregister bekend zijn. Een oorzaak hiervan kan zijn dat inschrijvingen/wijzigingen nog niet doorgevoerd zijn of het bedrijf is uitgeschreven. Probeer het eventueel opnieuw wanneer de gegevens bij het Handelsregister zijn doorgevoerd. Betreft het een nieuw opgericht bedrijf? Dan kan de verwerking 2 weken in beslag nemen.">
+                <span class="mylivicons" data-options="name: info-alt.svg; size: 30px; style: solid; solidColor:#0a212f; colorsOnHover:custom; solidColorAction:#0082ad; tryToSharpen: true"></span>
+				</a>
+                </div>
+                <div data-ng-hide="username">
+                    <span class="mylivicons" data-options="name: lock.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+                    <a href="" class="infoi rechts" data-text="<h4><b>Toegang tot het CRZB register</b></h4><br/>Om toegang te krijgen tot het Betalingsachterstandenregister is het vereist dat u vooraf een inlogaccount aanmaakt. Door uw eigen bedrijfsnaam of KvK-nummer in het onderstaande zoekveld in te typen en vervolgens op ‘Enter’ te drukken of op het vergrootglas te klikken, zorgt u ervoor dat uw gegevens direct worden geladen.<br/><br/>Uw gegevens worden opgehaald uit het Handelsregister van de Kamer van Koophandel. Kies uw bedrijf en klik op de button ‘account aanmaken’ en rond het aanmeldingsproces af. Ter verificatie versturen wij een verificatiebrief naar het adres zoals dat bekend is bij de Kamer van Koophandel. Volg de instructies in deze brief om uw aanmelding af te ronden en volledige toegang te hebben tot het Betalingsachterstandenregister.">
+                <span class="mylivicons" data-options="name: info-alt.svg; size: 30px; style: solid; solidColor:#0a212f; colorsOnHover:custom; solidColorAction:#0082ad; tryToSharpen: true"></span>
+				</a>
+                    <span class="accsr1">Inlogaccount aanmaken</span>
+                </div>
+                <div class="home">
+                    <hr>
+                </div>
+                <form id="search-form" class="form-horizontal" novalidate>
+				<fieldset>
+                    <div class="box-content mobpad" data-ng-show="hasSearchResults && username">
+					 
+                        
+                           
+                                <span class="legend">Bedrijfsgegevens zoeken</span>
+								<div class="col-xs-12 ">
+                                <div class="form-group">
+                                    <div class="inputform-control">
+                                        <div id="search_input-left" class="=input-group col-xs-12 fake_input">
+                                            <input class="company_search" data-ng-paste="checkFieldMaxLength($event, searchcompany.searchValue, maxFieldLengths.zoeken)" data-wm-block type="text" name="companyname" data-ng-model="searchcompany.searchValue" class="form-control input-lg" placeholder="Zoek hier op bedrijfsnaam of KvK-nummer" data-wm-block-length="maxFieldLengths.zoeken"></input>
+                                            <span class="input-group-btn">
+										        <button style="margin-bottom:0px;" type="submit" class="btn zoekenbtn btn-lg-2" data-ng-click="searchCompanies()" data-ng-enabled="isSearchFieldsOk(searchcompany)">
+											        <span class="fa fa-search fa-2x fixed-fa-2x"></span></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                         
+                        </div>
+						   
+                    </div>
+					</fieldset>
+                    <div class="row box-content vertical-align-nospace" data-ng-class="!hasSearchResults ? 'search-align':''" data-ng-show="(!hasSearchResults && !username) || !username">
+                        <div class="col-xs-12">
+                            <fieldset>
+                                <div class="form-group" data-ng-show="!username">
+                                    <div data-ng-hide="hasSearchResults || username" class="iconxtrabig autocenter iconkantoor">&nbsp;</div>
+                                    <div data-ng-hide="hasSearchResults || username" class="accsr margin20 b">Welk bedrijf vertegenwoordigt u?</div>
+                                    <div id="search_input" class="input-group col-xs-12 fake_input">
+                                        <input class="company_search" data-ng-paste="checkFieldMaxLength($event, searchcompany.searchValue, maxFieldLengths.zoeken)" data-wm-block type="text" name="companyname" data-ng-model="searchcompany.searchValue" class="form-control input-lg" placeholder="Vul hier uw bedrijfsnaam of KvK-nummer in" data-wm-block-length="maxFieldLengths.zoeken"></input>
+                                        <span class="input-group-btn">  
+								            <button type="submit" class="btn zoekenbtn btn-lg-2" data-ng-click="searchCompanies()" data-ng-enabled="isSearchFieldsOk(searchcompany)">
+									            <span class="fa fa-search fa-2x fixed-fa-2x"></span>
+                                        </button>
+                                        <button data-ng-show="hasSearchResults" type="submit" class="btn btn-primary btn-lg-2 fix-left-bt2trap" data-info-popover data-ng-click="showInfoPopup()">
+								                <span class="fa fa-info fa-2x fixed-fa-2x"></span>
+							                </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row box-content vertical-align-nospace" data-ng-class="!hasSearchResults ? 'search-align':''" data-ng-show="!hasSearchResults && username">
+                        <div class="col-xs-12">
+                            <fieldset>
+                                <div class="form-group" data-ng-show="username">
+                                    <div id="search_input" class="input-group col-xs-12 fake_input">
+                                        <input class="company_search" data-ng-paste="checkFieldMaxLength($event, searchcompany.searchValue, maxFieldLengths.zoeken)" data-wm-block type="text" name="companyname" data-ng-model="searchcompany.searchValue" class="form-control input-lg" placeholder="Zoek hier op bedrijfsnaam of KvK-nummer" data-wm-block-length="maxFieldLengths.zoeken">
+                                        <span class="input-group-btn">
+							                <button type="submit" class="btn btn-lg-2 zoekenbtn" data-ng-click="searchCompanies()" data-ng-enabled="isSearchFieldsOk(searchcompany)">
+								                <span class="fa fa-search fa-2x fixed-fa-2x"></span>
+                                        </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mobpad">
+                        <div class="box-content " data-ng-show="hasSearchResults">
+                            <table id="companies" class="table m-table nomob myelement table-bordered max-width-1200px table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="zoekenmobielhide">KvK-nummer</th>
+                                        <th>Bedrijfsnaam</th>
+                                        <th class="zoekenmobielshow">KvK-nummer</th>
+                                        <th>Adres</th>
+                                        <th>Hoofdvestiging</th>
+                                        <th>Bedrijfsstatus</th>
+                                        <th ng-hide="!username">Opmerking</th>
+                                        <th class="btn-fix-searchaction">Acties</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="company in companies">
+                                        <td class="zoekenmobielhide">{{company.kvkNummer}}</td>
+                                        <td><img class="zoekenmobielshow fixt-office-block-icon" src="img/icons/svg/office-block.svg" width="30" height="30">&nbsp;{{company.bedrijfsNaam | limitTo:50}}</td>
+                                        <td class="zoekenmobielshow ">{{company.kvkNummer}}</td>
+                                        <td>{{company.adres}}</td>
+                                        <td>
+                                            <span data-ng-show="company.hoofd" class="checkyes"><i class="fa fa-check" aria-hidden="true"></i></span><span data-ng-show="!company.hoofd" class="checkno"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        </td>
+                                        <td>
+                                            <span data-ng-show="company.actief == true" class="checkactiev">Actief</span><span data-ng-show="!company.actief" class="checknoactiev">Niet actief</span>
+                                        </td>
+                                        <td ng-hide="!username">
+                                            <div class="centered" ng-show="company.meldingBijBedrijf == true || company.monitoringBijBedrijf == true||isProspect()==true||isAdresOk() == false">
+                                                <a href="" class="clickableinfox" data-tooltixp="{{opmerkingen(company.meldingBijBedrijf, company.monitoringBijBedrijf, false)}}" >    <img class="fixt-attention-icon" src="img/icons/svg/information.svg" width="17" height="17"></a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="zoekenmobielshow" ng-hide="!username">
+                                                <div class="dropdown zoekenbutton ">
+                                                    <button class="btn btn-primary dropdown-toggle w100mob btn-lg-mob margin10" type="button" data-toggle="dropdown">Selecteer een actie
+											              <span class="caret"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><button class="btn btn-fix-search" ng-disabled="notAllowedNotification() != '' || isOwnCompany(company.kvkNummer)" data-ng-click="registercompany(company.bedrijfId, company.kvkNummer, company.subDossier, company.hoofd)"><i class="fa fa-file-text-o">&nbsp;&nbsp;&nbsp;&nbsp;</i>Openstaande factuur indienen</button></li>
+                                                        <li><button class="btn btn-fix-search" ng-disabled="isProspect() == true || isAdresOk() == false" data-ng-click="makeReport(company.bedrijfId, company.kvkNummer, company.subDossier, company.hoofd, company.monitoringBijBedrijf)" title="{{notAllowedReport()}}"><i class="fa fa-building-o">&nbsp;&nbsp;&nbsp;&nbsp;</i>Rapport opvragen</button></li>
+                                                        <li><button class="btn btn-fix-search" ng-disabled="company.monitoringBijBedrijf == true || isProspect() == true || isAdresOk() == false" ng-click="monitoringcompany(company.bedrijfId, company.bedrijfsNaam, company.adres, company.kvkNummer, company.subDossier, company.hoofd, company.bekendBijSbdr, company.monitoringBijBedrijf)" title="{{notAllowedMonitoring(company.monitoringBijBedrijf)}}"><i class="fa fa-desktop">&nbsp;&nbsp;&nbsp;</i>Bedrijf monitoren</button></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="zoekenmobielhide btn-fix-search-2" data-ng-hide="!username">
+
+                                                <button class="btn btn-fix-search" ng-hide="notAllowedNotification()" ng-disabled="isOwnCompany(company.kvkNummer)" ng-click="registercompany(company.bedrijfId, company.kvkNummer, company.subDossier, company.hoofd)" data-tooltixp="Factuur indienen"><i class="fix-search-icon fa fa-file-text-o" aria-hidden="true"></i> 
+											</button>
+
+                                                <button class="btn btn-fix-search" ng-disabled="isProspect() == true || isAdresOk() == false" data-ng-click="makeReport(company.bedrijfId, company.kvkNummer, company.subDossier, company.hoofd, company.monitoringBijBedrijf)" title="{{notAllowedMonitoring(company.monitoringBijBedrijf)}}" data-tooltixp="Rapport opvragen"><i class="fix-search-icon fa fa-pie-chart" aria-hidden="true"></i>
+																				   </button>
+
+                                                <button class="btn btn-fix-search " ng-disabled="company.monitoringBijBedrijf == true || isProspect() == true || isAdresOk() == false" ng-click="monitoringcompany(company.bedrijfId, company.bedrijfsNaam, company.adres, company.kvkNummer, company.subDossier, company.hoofd, company.bekendBijSbdr, company.monitoringBijBedrijf)" title="{{notAllowedMonitoring(company.monitoringBijBedrijf)}}" data-tooltixp="Bedrijf monitoren">  <i class="fix-search-icon fa fa-desktop" aria-hidden="true"></i>
+																					</button>
+                                            </div>
+
+                                            <div data-ng-hide="username">
+                                                <button type="button" class="btn btnlgw btn-warning btn-xs w100 btn-lg-mob btn-fix-account" data-ng-disabled="!company.actief" data-ng-click="createaccount(company.kvkNummer, company.hoofd, company.subDossier)">Account aanmaken</button>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <pagination direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-ng-show="error">
+            <div class="box-content fout text-center">
+                <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="30" height="30">
+                <span id="alert" class="fouttext text-center">{{error}}</span>
+            </div>
+        </div>
+        <div data-ng-show="monitorCreated">
+            <div class="box-content prima text-center">
+                <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+                <span class="primatext">{{$scope.bedrijfSelected}} toegevoegd aan bedrijfsmonitor.</span>
+            </div>
+        </div>
+        <div data-ng-include="'templates/modals/reportPopup.html'"></div>
+        <div data-ng-include="'templates/modals/reportNoPaymentInfo.html'"></div>
+        <div data-ng-include="'templates/modals/searchInfoPopup.html'"></div>
+        <div id="info-box2" class="informatieinfo">
+            <div class="modal-content2">
+                <span class="close">&times;</span>
+                <p id="textinfo2">####</p>
+            </div>
+        </div>
+
+
+        <script>
+            var modal = document.getElementById('info-box2');
+            var btns = document.getElementsByClassName("infoi");
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal 
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].onclick = function() {
+                    modal.style.display = "block";
+                    $('#textinfo2').html($(this).attr('data-text'));
+                }
+            }
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+        <script>
+            (function() {
+                var headertext = [];
+                var headers = document.querySelectorAll("thead");
+                var tablebody = document.querySelectorAll("tbody");
+
+                for (var i = 0; i < headers.length; i++) {
+                    headertext[i] = [];
+                    for (var j = 0, headrow; headrow = headers[i].rows[0].cells[j]; j++) {
+                        var current = headrow;
+                        headertext[i].push(current.textContent.replace(/\r?\n|\r/, ""));
+                    }
+                }
+
+                if (headers.length > 0) {
+                    for (var h = 0, tbody; tbody = tablebody[h]; h++) {
+                        for (var i = 0, row; row = tbody.rows[i]; i++) {
+                            for (var j = 0, col; col = row.cells[j]; j++) {
+                                col.setAttribute("data-th", headertext[h][j]);
+                            }
+                        }
+                    }
+                }
+            }());
+        </script>
+        <script>
+            angular.element(document).ready(function() {
+                setTimeout(function() {
+                    $(function() {
+                        jQuery("#mylivicon").addLiviconEvo()
+                    })
+                }, 500)
+            });
+        </script>
+    </div>
+</div>

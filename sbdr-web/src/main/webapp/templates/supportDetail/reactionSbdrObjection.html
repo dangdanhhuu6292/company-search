@@ -1,0 +1,42 @@
+	<div class="box-content">
+	<div class="row">
+<div class="row box-content bordersupportblue">
+	
+			<form id="form-bedrijfsgegevens" class="form-horizontal">
+				<fieldset>
+								 <div class="supportboxblue2">
+                    <div class="supporthead">
+                        <div class="support-upper">Reactie door<span class="rechts trap2">Datum</span></div>
+                        <span class="support-head">{{support.gebruiker.bedrijfNaam}}</span>&nbsp;&nbsp;&nbsp;
+                        <span class="support-datum rechts3 brmob">{{support.datumAangemaakt}}</span> 
+                    </div> 
+        </div>
+
+					<div class="box-content mobpad">	
+					<div class="form-group">
+						<span class="col-xs-12">
+							<strong>CRZB heeft het bezwaar afgehandeld betreffende de vermelding :</strong><br/>{{supportTicket.melding.referentieIntern}}.
+						</span>
+					</div>
+					<div class="form-group" ng-show="support.bericht">
+				<div class="col-xs-12">
+							<strong>Hieronder treft u eventuele toelichtingen op het bezwaar:</strong>
+					
+					</div></div>
+					<div class="form-group" ng-show="support.bericht">
+						<div class="col-xs-12">
+							
+								<pre>{{support.bericht}}</pre>
+													
+						</div>
+					</div>
+					<div class="form-group">
+						<span class="col-xs-12 b">
+							<span ng-show="supportTicket.melding.meldingstatusCode == 'AFW' || supportTicket.melding.meldingstatusCode == 'DEL'"><u>CRZB heeft besloten dat het bezwaar gegrond is en dat de vermelding wordt verwijderd</u></span>
+							<span ng-show="supportTicket.melding.meldingstatusCode == 'ACT' || supportTicket.melding.meldingstatusCode == 'INB'"><u>CRZB heeft besloten dat het bezwaar ongegrond is en dat de vermelding wordt opgenomen</u></span>
+						</span>
+					</div>	</div>
+				</fieldset>
+			</form>
+		
+	</div></div></div>

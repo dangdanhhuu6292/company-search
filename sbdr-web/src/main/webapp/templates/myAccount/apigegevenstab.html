@@ -1,0 +1,55 @@
+<div class="row box-content mobpad">
+	<div class="col-xs-12 col-md-10">
+		<div class="box-content overres">
+			<span class="legend">API users</span>
+<script>
+function hideNoApiUsers() {
+    var x = document.getElementById("no-api-users");
+    x.style.display = "none";
+}
+</script>			
+			<table id="facturen" class="table no-mobiel m-table table-bordered table-hover table-striped margin20 " ng-init="totalApiUsers = 0">
+				<thead> 
+					<tr> 
+						<th>Username</th>
+						<th>Client_id</th>
+						<th>Client_secret</th>
+						<th>Token Authorization</th>
+						<th>Grant_type</th>
+					    <th>Report_arrears</th>
+						<th>Request_reports</th>
+						<th>Monitor</th>					
+					</tr>
+				</thead>
+				<tbody> 
+					<tr data-ng-repeat="user in users" data-ng-if="isApiToegestaan(user.roles)">
+						<td>{{user.emailAdres}}</td>
+						<td>{{user.clientId}}</td>
+						<td>{{user.clientSecret}}</td>
+						<td>Basic {{encoded(user.clientId + ':' + user.clientSecret)}}</td>
+						<td>password, refresh_token</td>
+					    <td>true</td>
+						<td>false</td>
+						<td>false</td>					
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+<div class="col-xs-12 col-sm-8" ng-hide="apiUserAvailable == true">
+		<div class="row box-content">
+				<form id="form-search" name="formsearch" class="form-horizontal" novalidate>
+					<fieldset>
+						<div class="legend-dash">Er zijn geen API gebruikers gevonden.</h4>
+						</div>
+							<div class="dash-font">
+								<span>Met een API-koppeling kunt u elke software verbinden met het CRZB register. Hiermee is het mogelijk om een grote hoeveelheid data te im- en exporteren tegen een deelnemerstarief.</span>
+								<a title="API" target="_blank" href="https://www.crzb.nl/api">Klik hier voor meer informatie.</a>
+							</div>													
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	

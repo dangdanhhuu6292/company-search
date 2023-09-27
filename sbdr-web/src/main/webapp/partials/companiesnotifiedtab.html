@@ -1,0 +1,403 @@
+<div ng-controller="CompaniesNotifiedTabController">
+    <div class="row box-context" id="notify_page">
+        <div class="col-xs-12 col-sm-8">
+            <div class="box-content">
+                <form ng-show="firstfetch" id="form-search" name="formsearch" class="form-horizontal" novalidate>
+                    <fieldset>
+                        <div ng-show="!hasItems() && !filterCriteria.filterValue">
+
+                            <div class="dash-font">
+                                <span>Hier vindt u een overzicht van de door u gedane vermeldingen en hun status.</span>
+                                <span>Om een vermelding te kunnen doen van een betalingsachterstand van een bepaald bedrijf dient u desbetreffend bedrijf  in het menu  'zoek bedrijf' op te zoeken.</span>
+                            </div>
+                            <div class="legend-dash">Er zijn geen bedrijven met een achterstand gemeld.</div>
+                        </div>
+                        <div ng-show="hasItems() || filterCriteria.filterValue" class="form-group">
+                            <label class="col-xs-12 mobpad control-label">Snel zoeken in de lijst</label>
+
+                            <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 mobpad">
+                                <input ng-paste="checkFieldMaxLength($event, filterCriteria.filterValue, maxFieldLengths.zoeken)" wm-block class="form-control" name="filter" id="filter" ng-model="filterCriteria.filterValue" type="text" placeholder="Factuurnummer, bedrijfsnaam of KvK-nummer" wm-block-length="maxFieldLengths.zoeken" />
+                            </div>
+                        </div>
+                        <div ng-show="!hasItems() && filterCriteria.filterValue">
+                            <h4 class="padding30 mobpad">Er zijn geen zoekresultaten.</h4>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-4 trap2">
+            <div class="box-content">
+			
+                <form id="form-download" name="formdownload" class="form-horizontal" ng-show="hasItems()" novalidate>
+                    <fieldset>
+                        <div class="form-group">
+                            <div ng-show="hasItems()" class="box-content download">
+                                <notifiedcompanies-download url="/download/a.xls" filename="my-awesome.xls"></notifiedcompanies-download>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div ng-hide="true" id="companyAccount" data-name="{{companyAccount.bedrijfsNaam}}" data-refintern="{{companyAccount.sbdrNummer}}" data-adres="{{companyAccount.adres}}" data-straat="{{companyAccount.straat}}" data-huisnummer="{{companyAccount.huisnummer}}" data-huisnummer-toevoeging="{{companyAccount.huisnummerToevoeging}}" data-postcode="{{companyAccount.postcode}}" data-plaats="{{companyAccount.plaats}}" data-post-postbus="{{companyAccount.postPostbus}}" data-post-plaats="{{companyAccount.postPlaats}}" data-post-postcode="{{companyAccount.postPostcode}}"data-telefoonnummer="{{companyAccount.telefoonnummer}}"/>
+    
+    <div class="row box-content mobpad">
+        <div class="col-sm-12" id="fix-companiesnotified" ng-show="companies">
+
+            <input id="hid-username" value="{{username}}" type="hidden">
+            <input id="hid-compname" value="{{companyname}}" type="hidden">
+            <button type="button" class="btn btn-secondary" onclick="mSelect(this)">Selecteer meerdere</button>			
+            <table id="companiesnotified" class="fix-companiesnotified table m-table nomob table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="selectmultiple">Select</th>
+                        <th class="zoekenmobielhide trap4">KvK-nummer</th>
+                        <th>Bedrijfsnaam</th>
+                        <th class="trap4">Adres</th>
+                        <th class="trap6 pn-hide">Referentienummer</th>
+                        <th>Meldingsdatum</th>
+                        <th class="pn-hide">Status</th>
+                        <th>Factuurnummer</th>
+                        <th class="btn-fix-searchaction pn-hide">Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key, company) in companies">
+                        <td class="selectmultiple"><input type="checkbox" name="vermeldingen[{{key}}][selected]" id="select-{{company.kvkNummer}}-{{company.referentieIntern}}"><input name="vermeldingen[{{key}}][selected]" type="hidden" value="true"></td>
+                        <td class="zoekenmobielhide trap4">{{company.kvkNummer}}</td>
+                        <td><i class="zoekenmobielshow fa fa-building-o" aria-hidden="true">&nbsp;&nbsp;</i>{{company.bedrijfsNaam | limitTo:50}}</td>
+                        <td class="trap4">{{company.adres}}</td>
+                        <td class="trap6 pn-hide">{{company.referentieIntern}}</td>
+                        <td>{{company.toegevoegd}}</td>
+                        <td class="pn-hide">
+                            <span ng-show="company.statusCode == 'NOK'||company.statusCode == 'BLK'" class="text-oranje">In behandeling</span>
+                            <span ng-show="company.statusCode == 'INI'" class="text-oranje ">{{company.status}}</span>
+                            <span ng-show="company.statusCode == 'INB'" class="text-oranje ">{{company.status}}</span>
+                            <span ng-show="company.statusCode == 'ACT'" class="text-groen " data-tooltip="Actief vanaf {{company.datumGeaccordeerd}}">{{company.status}}</span>
+                            <span ng-show="company.statusCode == 'AFW'" data-tooltip="Afgewezen" class="text-oranje">{{company.status}}</span>
+                            <span ng-show="company.statusCode == 'DEL'" data-tooltip="Verwijder door admin" class="text-oranje">{{company.status}}</span>
+                        </td>
+                        <td>{{company.referentie}}</td>
+                        <td class="pn-hide">
+                            <div class="zoekenmobielhide btn-fix-search-2">
+                                <button data-tooltip="Inzien" ng-show="true" type="button" class="btn btn-fix-search" ng-click="notificationReadOnly(company.meldingId, company.bedrijfId)" ng-disabled="false"><i class="fix-search-icon fa fa-search-plus" aria-hidden="true"></i></button>
+                                <button data-tooltip="Wijzigen" ng-show="true" type="button" class="btn btn-fix-search" ng-click="notificationChange(company.meldingId, company.bedrijfId)" ng-disabled="company.statusCode != 'ACT'" title="{{notAllowedChangeNotification(company.statusCode)}}"><i class="fix-search-icon fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <button ng-disabled="company.statusCode == 'DEL'||company.statusCode == 'AFW'" type="button" class="btn btn-fix-search" ng-click="notificationRemove(company.meldingId, company.bedrijfId)" data-tooltip="Verwijderen"><i class="fix-search-icon fa fa-trash-o" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="zoekenmobielshow">
+                                <div class="dropdown zoekenbutton" ng-show="true">
+                                    <button ng-show="true" class="btn btn-primary dropdown-toggle w100mob btn-lg-mob margin10" type="button" data-toggle="dropdown">Selecteer een actie&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+											             </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <button type="button" class="btn btn-fix-search" ng-show="true" ng-click="notificationReadOnly(company.meldingId, company.bedrijfId)" ng-disabled="false">
+													<i class="fix-search-icon fa fa-search-plus" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;</i>Inzien</button>
+                                        </li>
+
+                                        <li>
+                                            <button type="button" class="btn btn-fix-search" ng-show="true" ng-click="notificationChange(company.meldingId, company.bedrijfId)" ng-disabled="company.statusCode != 'ACT'" title="{{notAllowedChangeNotification(company.statusCode)}}"><i class="fix-search-icon fa fa-pencil-square-o" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;</i>Wijzigen</button>
+                                        </li>
+
+                                        <li>
+                                            <button type="button" class="btn btn-fix-search" ng-hide="company.statusCode == 'DEL'||company.statusCode == 'AFW'" ng-click="notificationRemove(company.meldingId, company.bedrijfId)"><i class="fix-search-icon fa fa-trash-o" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;</i>Verwijderen</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td ng-hide="true"><div id="telefoonnummerDebiteur" data-telefoonnummer-debiteur="{{company.telefoonnummerDebiteur}}"/></td>
+                        <td ng-hide="true"><div id="emailDebiteur" data-email-debiteur="{{company.emailDebiteur}}"/></td>
+                        <td ng-hide="true"><div id="oorspronkelijkBedrag" data-oorspronkelijk-edrag="{{company.oorspronkelijkBedrag}}"/></td>                        
+                        <td ng-hide="true"><div id="bedrag" data-bedrag="{{company.bedrag}}"/></td>   
+                    </tr>
+                </tbody>
+            </table>
+            <pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+        </div>
+    </div>
+    <div data-ng-show="error">
+        <div class="box-content foutw text-center">
+            <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+            <span id="alert" class="fouttext text-center">{{error}}</span>
+        </div>
+    </div>
+    <div data-ng-show="notificationRemoved">
+        <div class="box-content primaw text-center">
+            <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+            <span class="primatext">Melding succesvol verwijderd.</span>
+        </div>
+    </div>
+    <div ng-include="'templates/modals/removeNotification.html'"></div>
+    <div ng-include="'templates/modals/donatePopup.html'"></div>
+    <script>
+        (function() {
+            var headertext = [];
+            var headers = document.querySelectorAll("thead");
+            var tablebody = document.querySelectorAll("tbody");
+
+            for (var i = 0; i < headers.length; i++) {
+                headertext[i] = [];
+                for (var j = 0, headrow; headrow = headers[i].rows[0].cells[j]; j++) {
+                    var current = headrow;
+                    headertext[i].push(current.textContent.replace(/\r?\n|\r/, ""));
+                }
+            }
+
+            if (headers.length > 0) {
+                for (var h = 0, tbody; tbody = tablebody[h]; h++) {
+                    for (var i = 0, row; row = tbody.rows[i]; i++) {
+                        for (var j = 0, col; col = row.cells[j]; j++) {
+                            col.setAttribute("data-th", headertext[h][j]);
+                        }
+                    }
+                }
+            }
+        }());
+
+        //send encrypted
+
+            function smbtnclick(el){
+                	$('#dossier').ajaxSubmit({
+                        success: function(response, result, xhr, form) {
+                            // console.log('success', response, result, xhr, form);
+                            console.log(response.message)
+                            $('#message').html(response.message);
+                        },
+                        uploadProgress: function(event, position, total, percentComplete) {
+                            console.log('progress', event, position, total, percentComplete);
+                        },
+                        complete: function() {
+                            console.log('always');
+                        },
+                        error: function() {
+                            console.log('Error');
+                        },
+                        failure: function() {
+                            console.log('Error');
+                        }
+                    });
+            }
+
+
+
+        //multiselect
+        function mSelect(el){
+            $('.selectmultiple').show();
+            if($(el).html() == 'Selecteer meerdere') {
+                $(el).html('Doorsturen');
+            }
+            else{
+                if($('.selectmultiple input:checked').length === 0 ){
+                    $('#info-box2').show();
+                    $('#textinfo2').html("<h3>Melding</h3><p>Selecteer van één bedrijf minstens 1 vermelding</p>");
+                }
+                else {
+                    $('#info-box2').show();
+                    let markup = '<div id="doorsturen">';
+                    markup += '<h3>Deze vermeldingen doorsturen:</h3>';
+                    markup +="<form id='dossier' action='http://dossiers.ba-register.info/dossier?json' method='POST' enctype='multipart/form-data' accept-charset='UTF-8'>";
+                    markup += "<table class='fix-companiesnotified table m-table nomob table-bordered table-hover'>";
+
+                    //FIXME: Aria vragen
+                    markup += '<input name="dossier[name]" type="hidden" value="patrick" />';
+                    markup += '<input name="dossier[email]" type="hidden" value="patrick@neeteson.org" />';
+
+                    markup +='<tr>'+
+                        '<td class="selectmultiple" style="display: table-cell;">Select</td>'+
+                        '<td class="zoekenmobielhide trap4">KvK-nummer</td>'+
+                        '<td>Bedrijfsnaam</td>'+
+                        '<td class="trap4">Adres</td>'+
+                        '<td class="trap6 pn-hide">Referentie</td>'+
+                        '<td>Meldingsdatum</td>'+
+                        '<td class="pn-hide">Status</td>'+
+                        '<td>Factuurnummer</td>'+
+                        '<td class="pn-hide btn-fix-searchaction last-col">Acties</td>'+
+                        '<td>Upload</td>'+
+                    '</tr>';
+                    markup += '<tbody id="tbody-doorsturen"></tbody>';
+                    markup += '</table>';
+
+                    markup += '<ul id="uploaded-files"></ul>';
+                    markup += '<div id="extra-fields"></div>';
+                    markup += '<button id="sm-btn" onclick="smbtnclick();return false;" class="btn btn-secondary aria">Verstuur versleuteld</button>';
+                    markup += '</div>';
+
+                    markup += '</form>';
+                    markup += '<div id="message"></div>';
+                    //$('#textinfo2').append(markup);
+                    $('#textinfo2').append(markup);
+                    $('#tbody-doorsturen').html($('.selectmultiple input:checked').parent().parent());
+
+
+                    $("#doorsturen [data-th='Acties']").each( function( i, element ){
+                         $( this ).after('<td><div class="input-group fileuploader">\n<span class="input-group-btn">\n<button id="fake-file-button-browse'+i+'" type="button" class="btn btn-default">\n<span class="glyphicon glyphicon-file"></span>\n</button>\n</span>\n<input name="vermeldingen['+i+'][files][]" type="file" id="files-input-upload'+i+'" style="display:none">\n<input type="text" id="fake-file-input-name'+i+'" class="fakefileupload" disabled="disabled" placeholder="Geen bestand" class="form-control">\n<span class="input-group-btn">\n<button type="button" class="btn btn-default" disabled="disabled" id="fake-file-button-upload'+i+'">\n<span class="glyphicon glyphicon-upload"></span>\n</button>\n</span>\n</div><input type="hidden" name="vermeldingen['+i+'][bedrijf]" value="'+$( this ).closest('tr').find('td:nth-child(3)').text()+'" /></td>');
+
+                         document.getElementById('fake-file-button-browse'+i).addEventListener('click', function() {
+                         	document.getElementById('files-input-upload'+i).click();
+                         });
+
+                         document.getElementById('files-input-upload'+i).addEventListener('change', function() {
+                         	   document.getElementById('fake-file-input-name'+i).value = this.value;
+                               document.getElementById('fake-file-button-upload'+i).removeAttribute('disabled');
+                               //console.log("start preparing encrypted upload....")
+                               let fn = this.value.split("\\");
+
+                               //clone the one field
+                               // input name="vermeldingen['+i+'][files][]" type="file" id="files-input-upload'+i+'" style="display:none">
+                                var clone = $('#files-input-upload'+i).clone();
+                                clone.attr('id', 'files-input-upload'+i);
+                                clone.attr('name', 'vermeldingen['+i+'][files][]');
+
+
+                               $("#uploaded-files").append($("<li>").text(fn[fn.length - 1])).append(clone);
+
+                         });
+                    });
+
+
+                    var username = $('#hid-username').val();
+                    var companyname = $('#hid-compname').val();
+
+                    var extraFields = '<fieldset>';
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="contactperson_cp">Contactpersoon</label>';
+                    extraFields += '<input type="text" class="form-control" id="contactperson_cp" value='+username+' placeholder="Contactpersoon">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="emailadres_cp">Emailadres</label>';
+                    extraFields += '<input type="email" class="form-control" id="emailadres_cp" value='+companyname+' placeholder="Emailadres" name="dossier[email_cp]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="phonenumber_cp">Telefoonnummer</label>';
+                    extraFields += '<input type="phone" class="form-control" id="phonenumber_cp" placeholder="Telefoonnummer"  name="dossier[phone_cp]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="kvknumber_cp">KvK nummer</label>';
+                    extraFields += '<input type="text" class="form-control" id="kvknumber_cp" placeholder="KvK nummer" name="dossier[kvk_cp]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="street_cp">Straatnaam</label>';
+                    extraFields += '<input type="text" class="form-control" id="street_cp" placeholder="Straatnaam" name="dossier[street_cp]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="postalcode_cp">Postcode</label>';
+                    extraFields += '<input type="text" class="form-control" id="postalcode_cp" placeholder="Postcode" name="dossier[postalcode_cp]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="city_cp">Woonplaats</label>';
+                    extraFields += '<input type="text" class="form-control" id="city_cp" placeholder="Woonplaats" name="dossier[city_cp]">';
+                    extraFields += '</div>';
+
+                    extraFields += '</fieldset>';
+
+
+                    extraFields += '<fieldset>';
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="contactperson_db">Contactpersoon</label>';
+                    extraFields += '<input type="text" class="form-control" id="contactperson_db" placeholder="Contactpersoon">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="emailadres_db">Emailadres</label>';
+                    extraFields += '<input type="email" class="form-control" id="emailadres_db" placeholder="Emailadres" name="dossier[email_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="phonenumber_db">Telefoonnummer</label>';
+                    extraFields += '<input type="phone" class="form-control" id="phonenumber_db" placeholder="Telefoonnummer"  name="dossier[phone_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="kvknumber_db">KvK nummer</label>';
+                    extraFields += '<input type="text" class="form-control" id="kvknumber_db" placeholder="KvK nummer" name="dossier[kvk_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="street_db">Straatnaam</label>';
+                    extraFields += '<input type="text" class="form-control" id="street_db" placeholder="Straatnaam" name="dossier[street_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="postalcode_db">Postcode</label>';
+                    extraFields += '<input type="text" class="form-control" id="postalcode_db" placeholder="Postcode" name="dossier[postalcode_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="city_db">Woonplaats</label>';
+                    extraFields += '<input type="text" class="form-control" id="city_db" placeholder="Woonplaats" name="dossier[city_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '</fieldset>';
+
+
+                    // Vordering
+                    extraFields += '<fieldset>';
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="amount-outstanding">Openstaand bedrag</label>';
+                    extraFields += '<input type="text" class="form-control" id="amount-outstanding" placeholder="Openstaand bedrag">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="account_nr">Welke rekening bedrag storten?</label>';
+                    extraFields += '<input type="text" class="form-control" id="account_nr" placeholder="Rekeningnummer" name="dossier[account_nr]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="discuss_amount">Betwiste vordering?</label>';
+                    extraFields += '<select class="form-control" id="discuss_amount"><option value="nee">Nee</option><option value="ja">Ja</option></select>';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="earlier_sold_amount">Eerder overgedragen? </label>';
+                    extraFields += '<select class="form-control" name="dossier[earlier_sold_amount]" id="earlier_sold_amount"><option value="nee">Nee</option><option value="ja">Ja</option></select>';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="remarks_db">Opmerkingen</label>';
+                    extraFields += '<textarea type="text" class="form-control" id="remarks_db" placeholder="Opmerkingen" name="dossier[remarks_db]" rows="5"></textarea>';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="street_db">Straatnaam</label>';
+                    extraFields += '<input type="text" class="form-control" id="street_db" placeholder="Straatnaam" name="dossier[street_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="postalcode_db">Postcode</label>';
+                    extraFields += '<input type="text" class="form-control" id="postalcode_db" placeholder="Postcode" name="dossier[postalcode_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '<div class="form-group">';
+                    extraFields += '<label for="city_db">Woonplaats</label>';
+                    extraFields += '<input type="text" class="form-control" id="city_db" placeholder="Woonplaats" name="dossier[city_db]">';
+                    extraFields += '</div>';
+
+                    extraFields += '</fieldset>';
+
+                    $('#extra-fields').html(extraFields);
+
+                }
+            }
+        }
+
+        $('.selectmultiple').click(function(e){
+            console.log('check same kvk as others');
+            let kvkNr = $(this).closest('tr').find('td:nth-child(2)').text();
+
+            $('.selectmultiple input:checked').each(function(){
+                console.log("test", $(this).closest('tr').find('td:nth-child(2)').text()  )
+            })
+        })
+
+
+
+    </script>
+</div>

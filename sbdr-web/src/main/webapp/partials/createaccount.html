@@ -1,0 +1,340 @@
+<div class="row">
+<div id="createaccount_page" data-ng-class="user ?'col-xs-12' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12 autocenter paddinginlog'">
+    <div class="box no maxw autocenter accountaanamken noborderlegend">
+	
+	
+	  <div class="row">
+            <div class="col-xs-12">
+                <div class="box-content border margb">
+                    <a href="" class="rechts infoi" data-text="<h4><b>Uw BA-code</b></h4><br/>Heeft u reeds een brief ontvangen met een BA-code? Vul deze dan hier in. Heeft u geen BA-code ontvangen of bent u het kwijt? Dan kunt u deze stap overslaan.">
+				   <span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; eventOn:grandparent; tryToSharpen: true"></span>
+				   </a>
+                    <span class="mylivicon" data-options="name: notebook.svg; size: 35px; style: lines-alt; autoPlay:true; eventOn:grandparent; strokeColor:#0a212f; tryToSharpen: true"></span>
+                    <span class="legend">Uw BA-code</span>
+                    <div class="home">
+                        <hr>
+                    </div>
+                    <form class="form-horizontal ba-code" novalidate>
+                        <fieldset>
+                            <div class="form-group ">
+                                <span class="col-xs-12">
+											Heeft u een BA-code ontvangen? Vul deze dan hieronder in.
+										</span>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : showDiscountError}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">BA-code (optioneel)</label>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="fixed-input col-xs-8">
+                                        <input data-ng-paste="checkFieldMaxLength($event, kortingsCode.code, maxFieldLengths.kortingscode)" data-wm-block class="form-control" type="text" name="kortingsCode" id="kortingsCode" data-ng-model="kortingsCode.code" data-wm-block-length="maxFieldLengths.kortingscode" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12" style="padding:0">
+                                        <small class="help-block" data-ng-show="showDiscountError">
+													<span><br/>Voer een geldige BA-code in.</span>
+												</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box-content border margb">
+                    <a href="" class="rechts infoi" data-text="<h4><b>Bedrijfsgegevens</b></h4><br/>In dit venster worden uw eigen bedrijfsgegevens weergeven zoals deze op dit moment bij ons bekend zijn. Omdat wij een verificatiebrief toezenden naar dit adres, verzoeken wij u om aan te geven of de adresgegevens al dan niet correct zijn.">
+					<span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; eventOn:grandparent; tryToSharpen: true"></span>
+					</a>
+                    <span class="mylivicon" data-options="name: building.svg; size: 35px; style: lines-alt; autoPlay:true; strokeColor:#0a212f; eventOn:grandparent; tryToSharpen: true"></span>
+                    <span class="legend">Uw Bedrijfsgegevens</span>
+                    <div class="home">
+                        <hr>
+                    </div>
+                    <form id="form-bedrijfsgegevens" name="formbedrijfsgegevens" class="form-horizontal" novalidate>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Bedrijfsnaam</label>
+                                <span class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+											{{account.bedrijf.bedrijfsNaam}}
+									</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Straatnaam en nummer</label>
+                                <span class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+											{{account.bedrijf.straat}} {{account.bedrijf.huisNr}} {{account.bedrijf.huisNrToevoeging}}
+									</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Postcode</label>
+                                <span class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+											{{account.bedrijf.postcode}}
+									</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Plaats</label>
+                                <span class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+											{{account.bedrijf.plaats}}
+									</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">KvK-nummer</label>
+                                <span class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+											{{account.bedrijf.kvKnummer}}
+									</span>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'akkoordBedrijf')}">
+                                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-7 col-md-offset-5 col-lg-8 col-lg-offset-4">
+                                    <div class="checkbox-inline">
+                                        <label>
+													<input type="checkbox" data-ng-change="changeAdresCheck('selBedrijfAdresOk')" data-ng-model="controle.bedrijfsgegevensok" id="akkoordBedrijf" name="akkoordBedrijf"> Adresgegevens zijn correct
+													<i class="fa fa-square-o"></i></input>
+											</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'geenAkkoordBedrijf')}">
+                                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-7 col-md-offset-5 col-lg-8 col-lg-offset-4">
+                                    <div class="checkbox-inline">
+                                        <label>
+													<input type="checkbox" data-ng-change="changeAdresCheck('selBedrijfAdresNotOk')" data-ng-model="controle.bedrijfsgegevensnotok" id="geenAkkoordBedrijf" name="geenAkkoordBedrijf"> Adresgegevens zijn NIET correct
+													<i class="fa fa-square-o"></i></input>
+												</label>
+                                    </div>
+                                    <a class="clickableinfo" href="" data-info-popover data-tooltixp="Kloppen de adresgegevens niet? Dit kan komen door een vertraging in de verwerking bij het Handelsregister. Stel ons hiervan op de hoogte door deze optie aan te vinken. Het voorgaande heeft verder geen gevolgen voor uw aanmelding bij CRZB. U kunt deze alsnog voltooien."></a>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+      
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box-content border margb">
+				 <a href="" class="rechts infoi" data-text="<h4><b>Gebruikersgegevens</b></h4><br/>Na registratie bestaat de mogelijk om een extra gebruikersaccounts aan te maken, zodat eventuele collega’s over een eigen account kunnen beschikken. Hierbij kunt u als hoofdgebruiker zelf bepalen welke rechten uw medegebruikers toekomen, zodat zij bijvoorbeeld enkel rapporten kunnen opvragen.">
+                    <span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; eventOn:grandparent; tryToSharpen: true"></span>
+					</a>
+                    <span class="mylivicon" data-options="name: user.svg; size: 35px; style: lines-alt;autoPlay:true; eventOn:grandparent; strokeColor:#0a212f; tryToSharpen: true"></span>
+                    <span class="legend">Gebruikersgegevens</span>
+                    <div class="home">
+                        <hr>
+                    </div>
+                    <form id="form-accountgegevens" name="formaccountgegevens" class="form-horizontal" novalidate>
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-7 col-md-offset-5 col-lg-8 col-lg-offset-4">
+                                    <div class="radio">
+                                        <label>
+													<input type="radio" name="radio" data-ng-model="account.klant.geslacht" value="M" checked> De heer
+													<i class="fa fa-circle-o"></i>
+			 									</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+													<input type="radio" name="radio" data-ng-model="account.klant.geslacht" value="V"> Mevrouw
+													<i class="fa fa-circle-o"></i>
+												</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'voornaam')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Voornaam</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.voornaam, maxFieldLengths.voornaam)" data-wm-block class="form-control" type="text" name="voornaam" id="voornaam" data-ng-model="account.klant.voornaam" data-wm-block-length="maxFieldLengths.voornaam" data-capitalize-first required/>
+                                    <small class="help-block" data-ng-show="isInvalid(formaccountgegevens, 'voornaam')">
+												<span>Vul uw voornaam in.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'achternaam')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Achternaam</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.naam, maxFieldLengths.naam)" data-wm-block class="form-control" type="text" name="achternaam" id="achternaam" data-ng-model="account.klant.naam" data-wm-block-length="maxFieldLengths.naam" data-capitalize-first required/>
+                                    <small class="help-block" data-ng-show="isInvalid(formaccountgegevens, 'achternaam')">
+												<span>Vul uw achternaam in.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'functie')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Functie</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <select class="form-control" id="functie" name="functie" data-ng-model="account.klant.functie" data-ng-options="functie.id as functie.description for functie in functies" required>
+												<option value="" data-ng-hide="account.klant.functie">Selecteer een functie</option>
+											</select>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'afdeling')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Afdeling</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.afdeling, maxFieldLengths.afdeling)" data-wm-block class="form-control" type="text" name="afdeling" id="afdeling" data-ng-model="account.klant.afdeling" data-wm-block-length="maxFieldLengths.afdeling" data-capitalize-first/>
+                                    <small class="help-block" data-ng-show="isInvalid(formaccountgegevens, 'afdeling')">
+												<span>Vul uw afdeling in.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'telefoonnummerbedrijf')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Telefoonnummer bedrijf</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.telefoonnummer, maxFieldLengths.telefoonnummer)" data-wm-block class="form-control" type="text" name="telefoonnummerbedrijf" id="telefoonnummerbedrijf" data-ng-model="account.bedrijf.telefoonnummer" data-ng-pattern="PHONE_REGEXP" data-wm-block-length="maxFieldLengths.telefoonnummer" required/>
+                                    <small class="help-block" data-ng-show="isInvalid(formaccountgegevens, 'telefoonnummerbedrijf')">
+												<span>Voer een geldig telefoonnummer in.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'telefoonnummer')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Telefoonnummer contactpersoon</label>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.telefoonNummer, maxFieldLengths.telefoonnummer)" data-wm-block class="form-control" type="text" name="telefoonnummer" id="telefoonnummer" data-ng-model="account.klant.telefoonNummer" data-ng-pattern="PHONE_REGEXP" data-wm-block-length="maxFieldLengths.telefoonnummer" />
+                                    <small class="help-block" data-ng-show="isInvalid(formaccountgegevens, 'telefoonnummer')">
+									<span>Voer een geldig telefoonnummer in.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'email') || emailInUse}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">E-mailadres</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.emailAdres, maxFieldLengths.emailadres)" data-wm-block class="form-control" type="text" placeholder="Dit e-mailadres wordt uw gebruikersnaam" name="email" id="email" data-ng-model="account.klant.emailAdres" data-ng-pattern="EMAIL_REGEXP" data-wm-block-length="maxFieldLengths.emailadres" required/>
+                                    <small class="help-block" id="emailhelp" data-ng-show="isInvalid(formaccountgegevens, 'email') || emailInUse">
+												<span>Voer een geldig e-mailadres in.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : emailCheckInvalid(formaccountgegevens, 'email', 'email2')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">E-mailadres controle</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, controle.emailAdres, maxFieldLengths.emailadres)" data-wm-block class="form-control" type="text" name="email2" id="email2" data-ng-model="controle.emailAdres" data-wm-block-length="maxFieldLengths.emailadres" required/>
+                                    <small class="help-block" data-ng-show="emailCheckInvalid(formaccountgegevens, 'email', 'email2')  || emailInUse">
+												<span>Controle e-mailadres komt niet overeen met eerder opgegeven e-mailadres.</span>
+											</small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'wachtwoord') || passwordInvalid(formaccountgegevens, 'wachtwoord')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Wachtwoord</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.wachtwoord.wachtwoord, maxFieldLengths.wachtwoord)" data-wm-block class="form-control" type="password" name="wachtwoord" id="wachtwoord" data-ng-model="account.wachtwoord.wachtwoord" data-wm-block-length="maxFieldLengths.wachtwoord" required/>
+                                    <small class="help-block" id="passwordhelp" data-ng-show="isInvalid(formaccountgegevens, 'wachtwoord') || passwordInvalid(formaccountgegevens, 'wachtwoord')">
+												<span>Voer een geldig wachtwoord in.</span></small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : passwordCheckInvalid(formaccountgegevens, 'wachtwoord', 'wachtwoord2')}">
+                                <label class="col-xs-12 col-sm-6 col-md-5 col-lg-4 control-label">Wachtwoord controle</label>
+
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <input data-ng-paste="checkFieldMaxLength($event, controle.wachtwoord, maxFieldLengths.wachtwoord)" data-wm-block class="form-control" type="password" name="wachtwoord2" id="wachtwoord2" data-ng-model="controle.wachtwoord" data-wm-block-length="maxFieldLengths.wachtwoord" required/>
+                                    <small class="help-block" data-ng-show="passwordCheckInvalid(formaccountgegevens, 'wachtwoord', 'wachtwoord2')">
+												<span>Wachtwoord komt niet overeen met eerder opgegeven wachtwoord.</span>
+											</small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formaccountgegevens, 'akkoordAv')}">
+                                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-7 col-md-offset-5 col-lg-8 col-lg-offset-4">
+                                    <div class="checkbox">
+                                        <label>
+													<input type="checkbox" data-ng-model="controle.akkoord" id="akkoordAv" name="akkoordAv" required> Ja, ik ga akkoord met de van toepassing zijnde algemene voorwaarden.
+													<i class="fa fa-square-o"></i></input>
+												</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-7 col-md-offset-5 col-lg-8 col-lg-offset-4">
+                                    <p>
+                                        <a href="downloads/crzb_algemene_voorwaarden.pdf" target="_blank">Klik hier voor de algemene voorwaarden.</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- div class="form-group" data-ng-class="{'has-error' : isInvalidCaptcha()}">
+										<div class="col-sm-9 col-sm-offset-3">
+											<no-captcha g-recaptcha-response="gRecaptchaResponse" widget-id="gRecaptchaWidgetId">
+											</no-captcha>
+											<small class="help-block" data-ng-show="isInvalidCaptcha()">
+												<span>Captcha invullen is verplicht.</span></small>
+										</div>
+									</div-->
+                            <div class="form-group" data-ng-hide="ipaddress == '0.0.0.0'">
+                                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-7 col-md-offset-5 col-lg-8 col-lg-offset-4">
+                                    <span>Al uw gegevens worden verstuurd via een beveiligde SSL verbinding. Ter voorkoming van fraude en misbruik wordt uw IP-adres ({{ipaddress}}) vastgelegd.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-7 col-md-offset-5 col-lg-8 col-lg-offset-4">
+                                    <button type="button" class="btn btn-register-fix btn-warning fontb btn-lg-mob w100mob" data-ng-show="bedrijfdataOk && !accountCreated" data-ng-disabled="showDiscountError" data-ng-click="newAccountRequest()">
+												Registreer
+											</button>
+                                    <button type="button" class="bluebtn11 btn-register-fix btn btn-primary fontb btn-lg-mob w100mob" data-ng-click="returnToSearch()">
+												Terug
+											</button>
+                                    <button type="button" class="bluebtn11 btn-register-fix btn btn-primary fontb btn-lg-mob w100mob" data-ng-show="!bedrijfdataOk || accountCreated" data-ng-click="returnToLogin()">
+												Ok
+											</button>
+                                </div>
+                            </div>
+							
+                        </fieldset>
+                    </form>
+					 <div data-ng-show="error">
+            <div class="box-content fout-smal text-center">
+                <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25"> 
+                <span id="alert" class="fouttext-smal">{{error}}</span>
+            </div>
+        </div>
+                </div>
+            </div>
+        </div>      
+    </div>
+</div>
+<div class="g-recaptcha" data-sitekey="{{siteKey}}" data-callback="captchaCallback" data-size="invisible"></div>
+<script type="text/javascript">
+    var captchaCallback = function() {
+        var el = document.querySelector('.g-recaptcha'),
+            $el = angular.element(el),
+            $scope = $el.scope();
+
+        $scope.goReCaptcha();
+    }
+    
+    // grecaptcha.reset();
+</script>
+<script>
+angular.element(document).ready(function() {
+        setTimeout(function(){
+$(function() {
+            jQuery(".mylivicon").addLiviconEvo()
+        })
+}, 500)
+    });
+</script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<div id="info-box2" class="informatieinfo">
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <p id="textinfo2">#######</p>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('info-box2');
+    var btns = document.getElementsByClassName("infoi");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            modal.style.display = "block";
+            $('#textinfo2').html($(this).attr('data-text'));
+        }
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+</div>

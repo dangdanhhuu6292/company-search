@@ -1,0 +1,181 @@
+<div ng-controller="ReportNotificationsTabController">
+	<div class="row box-context">
+		<div class="col-xs-12 col-sm-8 col-lg-6">
+			<div class="box-content">
+				<form id="form-vermeldingenalgemeen" class="form-horizontal">
+					<fieldset>
+						<legend>Betalingsachterstanden</legend>
+						<div class="form-group">
+							<label class="col-xs-8 col-sm-6 col-lg-5 control-label">Aantal geregistreerde vermeldingen</label>																		
+							<span class="col-xs-4 col-sm-6 col-lg-7">
+								<span ng-show="report.aantalMeldingenActief>0">{{report.aantalMeldingenActief}}</span>
+								<span ng-show="report.aantalMeldingenActief==0">Geen</span>
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-8 col-sm-6 col-lg-5 control-label">Bedrag geregistreerde vermeldingen </label>
+							<span class="col-xs-4 col-sm-6 col-lg-7">
+								{{bedragOpenstaand()}}
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-8 col-sm-6 col-lg-5 control-label">Vermelding(en) geregistreerd door</label>																		
+							<span class="col-xs-4 col-sm-6 col-lg-7">
+								{{aantalMeldingDoorBedrijven()}}
+							</span>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="row box-context">
+		<div class="col-xs-12 col-sm-8 col-lg-6">
+			<div class="box-content">
+				<form id="form-vermeldingenalgemeen" class="form-horizontal">
+					<fieldset>
+						<legend>Actieve betalingsachterstanden</legend>
+					</fieldset>
+					<nvd3 options="options" data="exampleData" class="with-3d-shadow with-transitions"></nvd3>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="row box-content" ng-show="nrOfMeldingen(report.meldingen) > 0">
+		<div ng-repeat="melding in report.meldingen">
+			<div class="col-sm-12">
+				<h4 class="page-header">
+					Vermelding #{{$index + 1}}
+				</h4>
+
+				<div class="col-sm-12 col-md-6 col-lg-5">
+					<div class="box-content">
+						<form id="form-meldinggegevens-partone" class="form-horizontal">
+							<fieldset>
+								<div class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Referentienummer</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.referentieIntern}}
+									</span>
+								</div>
+								<div class="form-group" ng-show="hideCompanyInfo(melding.bedrijfId)">
+									<label class="col-sm-6 col-lg-5 control-label">Opname in register</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.toegevoegd}}
+									</span>
+								</div>
+								<div ng-hide="hideCompanyInfo(melding.bedrijfId)" class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Bedrijfsnaam</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.bedrijfsNaam}}
+									</span>
+								</div>
+								<div ng-show="hideCompanyInfo(melding.bedrijfId) && melding.sbiOmschrijving" class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Bedrijfssector</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.sbiOmschrijving}}
+									</span>
+								</div>
+								<div ng-show="hideCompanyInfo(melding.bedrijfId) && !melding.sbiOmschrijving" class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Bedrijfsgegevens</label>
+									<span class="col-sm-6 col-lg-7">
+										geen
+									</span>
+								</div>								
+								<div ng-hide="hideCompanyInfo(melding.bedrijfId)" class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Straat + huisnummer</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.straat}} {{melding.huisnummer}} {{melding.huisnummerToevoeging}}
+									</span>
+								</div>
+								<div ng-hide="hideCompanyInfo(melding.bedrijfId)" class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Postcode + plaats</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.postcode}} {{melding.plaats}}
+									</span>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Datum verloop factuur</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.verloopdatumFactuur}}
+									</span>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Openstaand bedrag</label>
+									<span class="col-sm-6 col-lg-7">
+										{{getBedragText(melding.bedrag)}}
+									</span>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Oorspronkelijk bedrag</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.oorspronkelijkBedrag|currency}}
+									</span>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6 col-lg-4" ng-hide="hideCompanyInfo(melding.bedrijfId)">
+					<div class="box-content">
+						<form id="form-meldinggegevens-parttwo" class="form-horizontal">
+							<fieldset>
+								<div class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Opname in register</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.datumGeaccordeerd}}
+									</span>
+								</div>
+								<div ng-hide="hideCompanyInfo(melding.bedrijfId)" class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">BA-nummer</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.sbdrNummer}}
+									</span>
+								</div>
+								<div ng-hide="hideCompanyInfo(melding.bedrijfId)" class="hidden-sm form-group">
+									<label class="col-sm-6 col-lg-5 control-label">&nbsp;</label>
+									<span class="col-sm-6 col-lg-7">
+										&nbsp;
+									</span>
+								</div>
+								<div ng-hide="hideCompanyInfo(melding.bedrijfId)" class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Factuurreferentie bedrijf</label>
+									<span class="col-sm-6 col-lg-7">
+										{{melding.referentie}}
+									</span>
+								</div>
+								<div ng-show="hideCompanyInfo(melding.bedrijfId)" class="hidden-sm form-group">
+									<label class="col-sm-6 col-lg-5 control-label">&nbsp;</label>
+									<span class="col-sm-6 col-lg-7">
+										&nbsp;
+									</span>
+								</div>
+								<div ng-hide="hideCompanyInfo(melding.bedrijfId)" class="hidden-sm form-group">
+									<label class="col-sm-6 col-lg-5 control-label">Telefoonnummer</label>
+									<span class="col-sm-6 col-lg-7">
+										tel: {{melding.telefoonnummer}}
+									</span>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-6 col-lg-5 control-label">&nbsp;</label>
+									<span class="col-sm-6 col-lg-7">
+										&nbsp;
+									</span>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row box-context" ng-hide="nrOfMeldingen(report.meldingen) > 0">
+		<div class="col-xs-12 col-sm-8 col-lg-6">
+			<div class="box-content">
+				<div class="alert alert-info">Er zijn geen geregistreerde betalingsachterstanden bekend.</div>
+			</div>
+		</div>
+	</div>
+</div>

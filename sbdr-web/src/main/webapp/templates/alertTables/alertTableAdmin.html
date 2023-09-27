@@ -1,0 +1,31 @@
+<div class="col-sm-12">
+    <table id="adminAlerts" class="table m-table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Support type</th>
+            <th>Support reden</th>
+            <th>Bericht</th>
+            <th>Acties</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="adminAlert in adminAlertsCollection">
+            <td>{{adminAlert.datum}}</td>
+            <td>{{adminAlert.support.supportTypeDesc}}</td>
+            <td>{{adminAlert.support.supportRedenDesc}}</td>
+            <td>{{adminAlert.support.bericht | limitTo:100}}...</td>
+            <td>
+                <button ng-show="true" type="button" class="btn btn-primary btn-xs"
+                        ng-click="viewAdminDetails(adminAlert.referentieNummerNoPrefix)"
+                        ng-disabled="false">Inzien
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems"
+                items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage"
+                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                last-text="&raquo;"></pagination>
+</div>

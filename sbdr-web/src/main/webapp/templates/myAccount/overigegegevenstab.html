@@ -1,0 +1,104 @@
+<div class="row box-content">
+    <div class="col-xs-12 col-lg-9">
+        <div class="box-content">
+            <form id="form-accountgegevens" name="obj.formaccountgegevens" class="form-horizontal" novalidate>
+                <fieldset>
+                    <legend>Overige gegevens</legend>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-0">
+                            <button ng-hide="editBankOn" type="button" class="btn btnlgw2 btn-primary" ng-click="editBank()">Wijzigen</button>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'telefoonnummer')}">
+                        <label class="col-sm-3 control-label">Telefoonnummer</label>
+
+                        <div class="col-sm-9">
+                            <input ng-paste="checkFieldMaxLength($event, account.bedrijf.telefoonnummer, maxFieldLengths.telefoonnummer)" wm-block class="form-control" type="text" ng-show="editBankOn" name="telefoonnummer" id="telefoonnummer" ng-model="account.bedrijf.telefoonnummer" ng-pattern="PHONE_REGEXP" wm-block-length="maxFieldLengths.telefoonnummer" required/>
+                            <small class="help-block" ng-show="isInvalid(obj.formaccountgegevens, 'telefoonnummer')">
+								<span>Voer een geldig telefoonnummer in</span>
+							</small>
+                        </div>
+                        <span class="col-sm-9" ng-show="!editBankOn">
+							{{account.bedrijf.telefoonnummer}}
+						</span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : (isInvalid(obj.formaccountgegevens, 'btwnummer') || btwnummerInvalid) && !isNietBtwPlichtig() && !isUnchangedKlant(account.klant) && editBankOn}">
+                        <label class="col-sm-3 control-label">BTW nummer</label>
+
+                        <div class="col-sm-9">
+                            <input ng-paste="checkFieldMaxLength($event, account.klant.btwnummer, maxFieldLengths.btwnummer)" wm-block ng-disabled="isNietBtwPlichtig()" ng-show="editBankOn" class="form-control" type="text" name="btwnummer" id="btwnummer" ng-model="account.klant.btwnummer" wm-block-length="maxFieldLengths.btwnummer" />
+                            <small class="help-block" ng-show="(isInvalid(obj.formaccountgegevens, 'btwnummer') || btwnummerInvalid) && !isNietBtwPlichtig() && !isUnchangedKlant(account.klant) && editBankOn">
+								<span>Voer een geldig BTW nummer in</span>
+							</small>
+                        </div>
+                        <span class="col-sm-9" ng-show="!editBankOn">
+						{{account.klant.btwnummer}}
+						</span>
+                    </div>
+                    <div ng-hide="btwNummerAanwezig(account.klant.btwnummer)" class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <div class="checkbox">
+                                <label>
+									<input type="checkbox" ng-disabled="!editBankOn" ng-model="account.klant.nietBtwPlichtig" ng-click="nietBtwPlichtig()" id="nietBtwPlichtig" name="nietBtwPlichtig">
+									Mijn bedrijf is niet BTW-plichtig
+									<i class="fa fa-square-o"></i>
+								</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'tenaamstelling')}">
+                        <label class="col-sm-3 control-label">Tenaamstelling</label>
+
+                        <div class="col-sm-9" ng-show="editBankOn">
+                            <input ng-paste="checkFieldMaxLength($event, account.klant.tenaamstelling, maxFieldLengths.tenaamstelling)" wm-block class="form-control" type="text" name="tenaamstelling" id="tenaamstelling" ng-model="account.klant.tenaamstelling" wm-block-length="maxFieldLengths.tenaamstelling" required/>
+                            <small class="help-block" ng-show="isInvalid(obj.formaccountgegevens, 'tenaamstelling')">
+								<span>Vul de tenaamstelling van uw bankrekening in</span>
+							</small>
+                        </div>
+                        <span class="col-sm-9" ng-show="!editBankOn">
+							{{account.klant.tenaamstelling}}
+						</span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'bankrekeningnummer') || bankrekeningNummerInvalid}">
+                        <label class="col-sm-3 control-label">Rekeningnummer (IBAN)</label>
+
+                        <div class="col-sm-9" ng-show="editBankOn">
+                            <input ng-paste="checkFieldMaxLength($event, account.klant.bankrekeningNummer, maxFieldLengths.bankrekeningnummer)" wm-block class="form-control" type="text" name="bankrekeningnummer" id="bankrekeningnummer" ng-model="account.klant.bankrekeningNummer" wm-block-length="maxFieldLengths.bankrekeningnummer" required capitalize-all/>
+                            <small class="help-block" ng-show="isInvalid(obj.formaccountgegevens, 'bankrekeningnummer') || bankrekeningNummerInvalid">
+								<span>Vul een geldig bankrekeningnummer (IBAN) in</span>
+							</small>
+                        </div>
+                        <span class="col-sm-9" ng-show="!editBankOn">
+							{{account.klant.bankrekeningNummer}}
+						</span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : (isInvalid(obj.formaccountgegevens, 'akkoordIncasso') || !isIncassoAkkoord())&& !isUnchangedKlant(account.klant)}">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <div class="checkbox">
+                                <label>
+									<input type="checkbox" ng-disabled="!editBankOn" ng-model="account.klant.akkoordIncasso" id="akkoordIncasso" name="akkoordIncasso" required>
+									Automatische incasso machtiging
+									<i class="fa fa-square-o"></i>
+								</label>
+                            </div>
+                            <small class="help-block" ng-show="(isInvalid(obj.formaccountgegevens, 'akkoordIncasso')  || !isIncassoAkkord()) && !isUnchangedKlant(account.klant)">
+								<span>U dient uw rekeninggegevens correct in te vullen en akkoord te gaan met automatische incassering</span>
+							</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button ng-show="editBankOn" type="button" class="btn btn-primary" ng-disabled="false" ng-click="updateAccountData()"> <!-- obj.formaccountgegevens.$invalid || isUnchanged(account.klant) || buttonBankDisabled() -->
+								Opslaan
+							</button>
+                            <button ng-show="editBankOn" type="button" class="btn btn-primary" ng-click="editBank()">
+								Annuleren
+							</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

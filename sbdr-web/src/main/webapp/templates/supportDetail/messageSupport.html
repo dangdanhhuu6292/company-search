@@ -1,0 +1,46 @@
+	<div class="row box-content">
+		<div class="col-xs-12">
+		 <div class="row box-content bordersupportblue">
+			<form id="form-bedrijfsgegevens" class="form-horizontal">
+				<fieldset>
+				  		 <div class="supportboxblue">
+                    <div class="supporthead">
+                        <div>Aangemaakt door<span class="rechts trap2">Datum</span></div>
+                        <span class="legend mobpad">{{support.gebruiker.bedrijfNaam}}</span>&nbsp;&nbsp;&nbsp;
+                        <span class="legend rechts3 brmob">{{support.datumAangemaakt}}</span> 
+                    </div> 
+                   </div>
+				
+				
+				
+				 <div class="box-content">
+					<div class="form-group">
+						<span class="col-xs-12">
+							Er is een support ticket ingediend bij het CRZB <br/>Door gebruiker: <br/>{{support.gebruiker.voornaam}} {{support.gebruiker.naam}}.<br/> Het type van het support ticket
+            is <br/><strong>{{support.supportTypeDesc}}</strong>.
+						</span>
+					</div>
+
+
+					
+					<div class="form-group" ng-show="support.supportReden"> 
+						<span class="col-xs-12">
+							De reden van het probleem is als volgt: <strong>{{support.supportRedenDesc}}</strong>
+						</span>
+					</div>						
+					<div class="form-group" ng-show="support.bericht" >
+						<span class="col-xs-12">
+							Onderstaand de toelichting die is gegeven:
+						</span>
+					</div>						
+					<div class="form-group" ng-show="support.bericht" >
+						<span class="col-xs-12">
+						
+							<pre>{{support.bericht}}</pre>
+												
+						</span>
+					</div>						
+				</fieldset>
+			</form>
+		</div>
+	</div></div></div>

@@ -1,0 +1,126 @@
+<div ng-controller="NotificationsAdminTabController">
+	<div class="row box-content">
+		<!--   <h4>Meldingen beheer</h4> -->
+
+		<div class="col-sm-12">
+			<div class="row box-context">
+				<div class="col-sm-12 col-lg-8">
+					<div class="box-content">
+						<form id="form-search" name="formsearch" class="form-horizontal" novalidate>
+							<fieldset>
+								<div ng-show="hasItems() || filterCriteria.filterValue" class="form-group">
+									<label class="col-sm-3 col-md-2 control-label">Snel zoeken</label>
+
+									<div class="col-sm-6">
+										<input ng-paste="checkFieldMaxLength($event, filterCriteria.filterValue, maxFieldLengths.zoeken)" wm-block class="form-control" name="filter" id="filter" ng-model="filterCriteria.filterValue" type="text" placeholder="Referentienummer, KvK-nummer of bedrijfsnaam" wm-block-length="maxFieldLengths.zoeken"/>
+									</div>
+									
+									<div class="col-sm-6">
+										<div class="checkbox-inline">
+											<label>
+												<input type="checkbox" ng-change="setShowActive()" ng-model="selectieShowActive" id="selShowActive" name="selShowActive"> Toon actief
+												<i class="fa fa-square-o"></i>
+											</label>
+										</div>
+									</div>									
+								</div>
+								<div ng-show="!hasItems()">
+									<div ng-show="!filterCriteria.filterValue" class="col-sm-6">
+										<div class="checkbox-inline">
+											<label>
+												<input type="checkbox" ng-change="setShowActive()" ng-model="selectieShowActive" id="selShowActive" name="selShowActive"> Toon actief
+												<i class="fa fa-square-o"></i>
+											</label>
+										</div>
+									</div>	
+									<h4>Er zijn geen meldingen door bedrijven gevonden.</h4>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row box-content">
+		<div class="col-sm-12" ng-show="notifications">
+			<table id="notificationcompanies" class="table m-table table-bordered table-hover table-striped">
+				<thead>
+				<tr>
+					<th>Kvk-nummer</th>
+					<th>Bedrijfsnaam</th>
+					<th>Bedrijf referentie</th>
+					<th>Adres</th>
+					<th>Factuurnummer</th>
+					<th>Vermelding referentie</th>
+					<th>Dagen ingediend</th>
+					<th>Melding status</th>
+					<th>Acties</th>
+					<th>Brief</th>
+					<th>Brief status</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="notification in notifications">
+					<td>{{notification.kvkNummer}}</td>
+					<td>{{notification.bedrijfsNaam | limitTo:50}}</td>
+					<td>{{notification.sbdrNummer}}</td>
+					<td>{{notification.adres | limitTo:75}}</td>
+					<td>{{notification.referentie}}</td>
+					<td>{{notification.referentieIntern}}</td>
+					<td>{{getDagenSinds(notification.datumAangemaakt)}}</td>
+					<td>
+						<span ng-show="notification.meldingstatusCode == 'NOK'" class="bg-danger badge">{{notification.meldingstatus}}</span><span ng-show="notification.meldingstatusCode == 'INI'" class="bg-warning badge">{{notification.meldingstatus}}</span><span ng-show="notification.meldingstatusCode == 'INB'" class="bg-warning badge">{{notification.meldingstatus}}</span><span ng-show="notification.meldingstatusCode == 'BLK'" class="bg-warning badge">{{notification.meldingstatus}}</span><span ng-show="notification.meldingstatusCode == 'ACT'" class="bg-success badge">{{notification.meldingstatus}}</span><span ng-show="notification.meldingstatusCode == 'AFW'" class="bg-info badge">{{notification.meldingstatus}}</span><span ng-show="notification.meldingstatusCode == 'DEL'" class="bg-info badge">{{notification.meldingstatus}}</span>
+						<span ng-show="notification.hasObjection" class="bg-warning badge">Bezwaar loopt</span>
+					</td>
+					<td>
+						<button ng-show="true" type="button" class="btn btn-primary" ng-click="notificationReadOnly(notification.meldingId, notification.bedrijfIdGerapporteerd, notification.bedrijfId)" title="Melding inzien">
+							<i class="fa fa-folder-open-o"/></button>
+						<button ng-show="true" type="button" class="btn btn-primary" ng-click="notificationChange(notification.meldingId, notification.bedrijfIdGerapporteerd, notification.bedrijfId)" title="Melding wijzigen">
+							<i class="fa fa-edit"/></button>
+						<button type="button" class="btn btn-primary" ng-click="detailsCompany(notification.bedrijfId)" title="Bedrijfsgegevens inzien">
+							<i class="fa fa-building-o"/></button>
+						<button type="button" class="btn btn-primary" ng-click="createNewNotificationLetter(notification.meldingId)" ng-show="notification.meldingstatusCode!='BLK'&&notification.meldingstatusCode!='NOK'&&notification.briefStatus!='NVW'&&notification.briefStatus!='IBT'">Maak nieuwe brief</button>
+						<button type="button" class="btn btn-primary" ng-click="createInitialNotificationLetter(notification.meldingId)" ng-show="notification.briefStatus=='NVW'&&notification.meldingstatusCode!='BLK'&&notification.meldingstatusCode!='NOK'">Maak brief</button>
+						<button type="button" class="btn btn-primary" ng-click="holdNotificationCompany(notification.meldingId, notification.bedrijfId)" ng-disabled="false" ng-show="notification.meldingstatusCode == 'INB'" title="Melding parkeren">
+							<i class="fa fa-toggle-off"/></button>
+						<button type="button" class="btn btn-primary" ng-click="removeHoldNotificationCompany(notification.meldingId, notification.bedrijfId)" ng-disabled="false" ng-show="notification.meldingstatusCode == 'BLK'" title="Melding parkeren verwijderen">
+							<i class="fa fa-toggle-on"/></button>							
+						<button type="button" class="btn btn-primary" ng-click="removeNotification(notification.meldingId, notification.bedrijfId)" ng-disabled="false" ng-show="isSbdrHoofd()" title="Melding verwijderen">
+							<i class="fa fa-trash-o"/></button>
+					</td>
+					<td>
+						<button type="button" class="btn btn-primary" ng-disabled="true" ng-hide="notification.briefStatus!='NVW'&&notification.meldingstatusCode!='BLK'&&notification.meldingstatusCode!='NOK'">Download</button>
+						<notificationletter-download url="/download/a.pdf" filename="my-awesome.pdf" ng-show="notification.briefStatus!='NVW'&&notification.meldingstatusCode!='BLK'&&notification.meldingstatusCode!='NOK'"></notificationletter-download>
+					</td>
+					<td>
+						<div class="checkbox-inline" ng-show="notification.briefStatus=='KDL'&&notification.meldingStatusCode!='BLK'&&notification.meldingStatusCode!='NOK'&&!notification.verwerktInBatch">
+							<label>
+								Is gedownload
+								<input type="checkbox" ng-click="printNotificationLetter(notification.meldingId, $index)"/>
+								<i class="fa fa-square-o"/>
+							</label>
+						</div>
+						<div ng-show="notification.briefStatus=='NVW'">
+							N.v.t.
+						</div>
+						<div ng-show="(notification.briefStatus!='NVW'&&notification.briefStatus!='KDL')||(notification.meldingstatusCode=='INB'&&notification.briefStatus=='KDL'&&notification.verwerktInBatch)">{{notification.briefStatusDesc}}</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+		</div>
+
+	</div>
+	<div id="alert" class="alert alert-danger" ng-show="error">{{error}}</div>
+	<div ng-show="notificationRemoved" class="alert alert-success">Melding succesvol verwijderd.</div>
+	<div ng-show="letterCreatedOk" class="alert alert-success">Nieuwe meldingbrief aangemaakt.</div>
+	<div ng-show="notificationOnHoldSavedOk" class="alert alert-success">Melding parkeer statusverandering opgeslagen</div>
+
+</div>
+
+<div ng-include="'templates/modals/removeNotificationAdminReason.html'"></div>
+<div ng-include="'templates/modals/createBatchPopup.html'"></div>
+<div ng-include="'templates/modals/createMeldingBriefPopup.html'"></div>
+<div ng-include="'templates/modals/holdNotificationCompany.html'"></div>

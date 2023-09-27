@@ -1,0 +1,32 @@
+<!-- Assembly descriptor for the WS interfaces and wsdl's -->
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>interfaces</id>
+	<formats>
+		<format>jar</format>
+	</formats>
+	<baseDirectory>/</baseDirectory>
+	<fileSets>
+		<!-- include WSDL's -->
+		<fileSet>
+			<directory>${project.basedir}/target/jaxws/wsgen/wsdl</directory>
+			<outputDirectory>/wsdl</outputDirectory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+			
+		<!-- webservice interfaces -->
+		<fileSet>
+			<directory>${project.basedir}/target/classes</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>**/*.class</include>
+			</includes>
+			<excludes>
+				<exclude>**/*Impl.class</exclude>
+				<exclude>**/jaxws/*.class</exclude>
+			</excludes>
+		</fileSet>		
+	</fileSets>
+</assembly>

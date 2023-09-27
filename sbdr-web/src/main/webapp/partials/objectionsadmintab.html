@@ -1,0 +1,53 @@
+<div ng-controller="ObjectionsAdminTabController">
+    <div class="row box-content">
+        <div class="col-sm-8">
+            <div class="box-content">
+                <form id="form-search" name="formsearch" class="form-horizontal" novalidate>
+                    <fieldset>
+                        <div ng-show="!hasItems()">
+                            <div class="alert alert-info">
+                                <span>Hier vindt u een overzicht van de nieuw ingediende bezwaren.</span>
+                            </div>
+                            <h4>Er zijn momenteel geen bezwaren.</h4>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row box-content">
+		<div class="col-sm-12">
+		    <table id="objectionsAdmin" class="table m-table table-bordered table-hover table-striped">
+		        <thead>
+		        <tr>
+		            <th>Datum</th>
+		            <th>Omschrijving</th>
+		            <th>Bezwaar reden</th>
+		            <th>Bericht</th>
+		            <th>Acties</th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr ng-repeat="objectionAdmin in objectionsAdminCollection">
+		            <td>{{objectionAdmin.datum}}</td>
+		            <td>{{objectionAdmin.support.supportTypeDesc}}</td>
+		            <td>{{objectionAdmin.support.supportRedenDesc}}</td>
+		            <td>{{objectionAdmin.support.bericht | limitTo:100}}...</td>
+		            <td>
+		                <button ng-show="true" type="button" class="btn btn-primary btn-xs"
+		                        ng-click="viewAdminDetails(objectionAdmin.referentieNummerNoPrefix)"
+		                        ng-disabled="false">Inzien
+		                </button>
+		            </td>
+		        </tr>
+		        </tbody>
+		    </table>
+		    <pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems"
+		                items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage"
+		                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+		                last-text="&raquo;"></pagination>
+		</div>        
+    </div>
+    <div id="alert" class="alert alert-danger" ng-show="error">{{error}}</div>
+</div>

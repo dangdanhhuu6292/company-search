@@ -1,0 +1,350 @@
+<div class="box-content" id="myaccount_page">
+    <div class="row mobpad">
+        <div class="col-xs-12 mobpad">
+            <div class="box-content mobpad">
+                <form id="form-bedrijfsgegevens" name="obj.formbedrijfsgegevens" class="form-horizontal" novalidate>
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                                <span class="legend">Organisatiegegevens</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-9 col-sm-offset-0">
+                                <button data-ng-show="addressEditAllowed() && !(editBankOn && editAddressOn)" type="button" class="btn btnlgw2 btn-primary" data-ng-click="editAddressAndBank()">Wijzigen</button>
+                            </div>
+                        </div>
+                        <div data-ng-show="editBankOn && editAddressOn && adresOkFalseOnLoad" class="alert alert-warning">
+                            Let op: Het muteren van bedrijfsgegevens kan effect hebben op bestaande meldingen en/of klant accounts!
+                        </div>
+                        <div class="form-group" data-ng-show="addressEditAllowed() && adresOkFalseOnLoad">
+                            <div class="col-xs-12 col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8 col-lg-offset-3 col-lg-9">
+                                <div class="checkbox">
+                                    <label>
+									<input type="checkbox" data-ng-disabled="(!adresOkFalseOnLoad || !editBankOn)" data-ng-model="account.bedrijf.adresOk" id="akkoordBedrijf" name="akkoordBedrijf">
+									Adresgegevens zijn correct. Pas na akkoord hiervan wordt een nieuwe klant doorgezet!
+									<i class="fa fa-square-o"></i>
+								           </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'bedrijfsnaam')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Bedrijfsnaam</label>
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.bedrijfsNaam, maxFieldLengths.bedrijfsnaam)" data-wm-block class="form-control" type="text" name="bedrijfsnaam" id="bedrijfsnaam" data-ng-model="account.bedrijf.bedrijfsNaam" data-wm-block-length="maxFieldLengths.bedrijfsnaam" required/>
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'bedrijfsnaam')"><span>Voer een geldige bedrijfsnaam in.</span></small>
+                            </div>
+                            <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editAddressOn">{{account.bedrijf.bedrijfsNaam}}</span>
+                        </div>
+                        <div class="form-group" data-ng-show="!editAddressOn">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Straat en huisnummer</label>
+                            <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{account.bedrijf.straat}}
+		                                 {{account.bedrijf.huisNr}} {{account.bedrijf.huisNrToevoeging}} </span>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'straat')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Straat</label>
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.straat, maxFieldLengths.straat)" data-wm-block class="form-control" type="text" name="straat" id="straat" data-ng-model="account.bedrijf.straat" data-wm-block-length="maxFieldLengths.straat" required/>
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'straat')"><span>Voer een geldige straatnaam in.</span></small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'huisnummer')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Huisnummer</label>
+
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.huisNr, maxFieldLengths.huisnummer)" data-wm-block class="form-control" type="text" name="huisnummer" id="huisnummer" data-ng-model="account.bedrijf.huisNr" data-wm-block-length="maxFieldLengths.huisnummer" required/>
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'huisnummer')"><span>Voer een geldig huisnummer in.</span></small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'huisnummersuffix')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Huisnummer toevoeging</label>
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.huisNrToevoeging, maxFieldLengths.huisnummertoevoeging)" data-wm-block class="form-control" type="text" name="huisnummersuffix" id="huisnummersuffix" data-ng-model="account.bedrijf.huisNrToevoeging" data-wm-block-length="maxFieldLengths.huisnummertoevoeging" />
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'huisnummersuffix')"><span>Voer een geldige huisnummertoevoeging in.</span></small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="!editAddressOn">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postcode en plaats</label>
+                            <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{account.bedrijf.postcode}}
+								{{account.bedrijf.plaats}}</span>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'postcode')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postcode</label>
+
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.postcode, maxFieldLengths.postcode)" data-wm-block class="form-control" type="text" name="postcode" id="postcode" data-ng-model="account.bedrijf.postcode" data-wm-block-length="maxFieldLengths.postcode" required/>
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'postcode')"><span>Voer een geldige postcode in.</span></small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'plaats')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Plaats</label>
+
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.plaats, maxFieldLengths.plaats)" data-wm-block class="form-control" type="text" name="plaats" id="plaats" data-ng-model="account.bedrijf.plaats" data-wm-block-length="maxFieldLengths.plaats" required/>
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'plaats')">
+								<span>Voer een geldige plaats in.</span>
+							</small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="!editAddressOn && account.bedrijf.postPostbus">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postbus en postcode (postadres)</label>
+                            <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{account.bedrijf.postPostbus}}
+								{{account.bedrijf.postPostcode}}
+						</span>
+                        </div>
+                        <div class="form-group" data-ng-show="!editAddressOn && account.bedrijf.postPostbus">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Plaats (postadres)</label>
+                            <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+							{{account.bedrijf.postPlaats}}
+						</span>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'postpostbus')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postbus (postadres)</label>
+
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.postPostbus, maxFieldLengths.postbus)" data-wm-block class="form-control" type="text" name="postpostbus" id="postpostbus" data-ng-model="account.bedrijf.postPostbus" data-wm-block-length="maxFieldLengths.postbus" />
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'postpostbus')">
+								<span>Voer een geldige postbus in.</span>
+							</small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'postpostcode')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postcode (postadres)</label>
+
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.postPostcode, maxFieldLengths.postcode)" data-wm-block class="form-control" type="text" name="postpostcode" id="postpostcode" data-ng-model="account.bedrijf.postPostcode" data-wm-block-length="maxFieldLengths.postcode" />
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'postpostcode')">
+								<span>Voer een geldige postcode in.</span>
+							</small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-show="editAddressOn" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'postplaats')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Plaats (postadres)</label>
+
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.postPlaats, maxFieldLengths.plaats)" data-wm-block class="form-control" type="text" name="postplaats" id="postplaats" data-ng-model="account.bedrijf.postPlaats" data-wm-block-length="maxFieldLengths.plaats" />
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'postplaats')">
+								<span>Voer een geldige plaats in.</span>
+							</small>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formbedrijfsgegevens, 'kvknummer')}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">KvK-nummer</label>
+
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editAddressOn">
+                                <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.kvKnummer, maxFieldLengths.kvknummer)" data-wm-block class="form-control" type="text" name="kvknummer" id="kvknummer" data-ng-model="account.bedrijf.kvKnummer" data-wm-block-length="maxFieldLengths.kvknummer" required/>
+                                <small class="help-block" data-ng-show="isInvalid(obj.formbedrijfsgegevens, 'kvknummer')">
+								<span>Voer een geldig KvK-nummer in</span>
+							</small>
+                            </div>
+                            <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editAddressOn">
+							{{account.bedrijf.kvKnummer}}
+						</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">ZBR-nummer</label>
+                            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                                <span>{{account.referentieIntern}}</span>
+                                <a class="clickableinfo" href="" data-info-popover data-tooltixp="CRZB register registratienummer"></a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-12" data-ng-show="addressEditAllowed()">
+            <div class="row box-content">
+                <div class="row box-content mobpad">
+                    <form id="form-accountgegevensadmin" name="obj.formaccountgegevensadmin" class="form-horizontal" novalidate>
+                        <fieldset>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevensadmin, 'telefoonnummer')}">
+                                <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">telefoonnummer</label>
+                                <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editBankOn">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.telefoonnummer, maxFieldLengths.telefoonnummer)" data-wm-block class="form-control" type="text" name="telefoonnummer" id="telefoonnummer" data-ng-model="account.bedrijf.telefoonnummer" data-ng-pattern="PHONE_REGEXP" data-wm-block-length="maxFieldLengths.telefoonnummer" required/>
+                                    <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevensadmin, 'telefoonnummer')">
+								<span>Voer een geldig telefoonnummer in.</span>
+							</small>
+                                </div>
+                                <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editBankOn">
+							{{account.bedrijf.telefoonnummer}}
+						</span>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : (isInvalid(obj.formaccountgegevensadmin, 'btwnummer') || btwnummerInvalid) && (!isNietBtwPlichtig() && !isAdmin())}">
+                                <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">BTW-nummer</label>
+                                <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editBankOn">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.btwnummer, maxFieldLengths.btwnummer)" data-wm-block data-ng-disabled="isNietBtwPlichtig()" class="form-control" type="text" name="btwnummer" id="btwnummer" data-ng-model="account.klant.btwnummer" data-wm-block-length="maxFieldLengths.btwnummer" />
+                                    <small class="help-block" data-ng-show="(isInvalid(obj.formaccountgegevensadmin, 'btwnummer') || btwnummerInvalid) && (!isNietBtwPlichtig() && !isAdmin())">
+								<span>Voer een geldig BTW-nummer in.</span>
+							</small>
+                                </div>
+                                <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editBankOn">
+							{{account.klant.btwnummer}}
+						</span>
+                            </div>
+                            <div data-ng-hide="btwNummerAanwezig(account.klant.btwnummer)" class="form-group">
+                                <div class="col-xs-12 col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8 col-lg-offset-3 col-lg-9">
+                                    <div class="checkbox">
+                                        <label>
+									<input type="checkbox" data-ng-disabled="!editBankOn" data-ng-model="account.klant.nietBtwPlichtig" data-ng-click="nietBtwPlichtig()" id="nietBtwPlichtig" name="nietBtwPlichtig">
+									Bedrijf is niet BTW-plichtig.
+									<i class="fa fa-square-o"></i>
+								</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevensadmin, 'bankrekeningnummer') || bankrekeningNummerInvalid}">
+                                <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Rekeningnummer (IBAN)</label>
+
+                                <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editBankOn">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.bankrekeningNummer, maxFieldLengths.bankrekeningnummer)" data-wm-block class="form-control" type="text" name="bankrekeningnummer" id="bankrekeningnummer" data-ng-model="account.klant.bankrekeningNummer" data-capitalize-all data-wm-block-length="maxFieldLengths.bankrekeningnummer" />
+                                    <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevensadmin, 'bankrekeningnummer') || bankrekeningNummerInvalid">
+								<span>Vul een geldig IBAN in.</span></small>
+                                </div>
+                                <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editBankOn">
+							{{account.klant.bankrekeningNummer}}
+						</span>
+                            </div>
+                            <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevensadmin, 'tenaamstelling')}">
+                                <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Tenaamstelling</label>
+
+                                <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editBankOn">
+                                    <input data-ng-paste="checkFieldMaxLength($event, account.klant.tenaamstelling, maxFieldLengths.tenaamstelling)" data-wm-block class="form-control" type="text" name="tenaamstelling" id="tenaamstelling" data-ng-model="account.klant.tenaamstelling" data-wm-block-length="maxFieldLengths.tenaamstelling" />
+                                    <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevensadmin, 'tenaamstelling')">
+								<span>Vul de tenaamstelling van uw bankrekening in.</span>
+							</small>
+                                </div>
+                                <span class="col-xs-12 col-sm-5 col-md-4 col-lg-3" data-ng-show="!editBankOn">
+							{{account.klant.tenaamstelling}}
+						</span>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8 col-lg-offset-3 col-lg-9">
+                                    <!-- obj.formbedrijfsgegevens.$invalid || obj.formaccountgegevensadmin.$invalid || (isUnchangedKlant(account.klant) && isUnchangedBedrijf(account.bedrijf)) -->
+                                    <button data-ng-show="editBankOn || editAddressOn" type="button" class="btnlgw2 btn btn-primary" data-ng-disabled="obj.formbedrijfsgegevens.$invalid || obj.formaccountgegevensadmin.$invalid" data-ng-click="updateAccountBedrijfData()">Opslaan
+							</button>
+                                    <button data-ng-show="editBankOn || editAddressOn && account.bedrijf.adresOk && !adresOkFalseOnLoad" type="button" class="btn btnlgw2 btn-primary" data-ng-disabled="obj.formbedrijfsgegevens.$invalid || obj.formaccountgegevensadmin.$invalid || (isUnchangedKlant(account.klant) && isUnchangedBedrijf(account.bedrijf)) || buttonBankDisabled()" data-ng-click="updateAccountBedrijfDataLetter()">Opslaan + Nieuwe klantbrief
+							</button>
+                                    <button data-ng-show="editBankOn || editAddressOn" type="button" class="btnlgw2 btn btn-primary bluebtn11 " data-ng-click="editAddressAndBank()">Annuleren
+							</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="hr-fix">
+    <hr>
+	</div>
+    <form data-ng-hide="isAdmin()" id="form-accountgegevens" name="obj.formaccountgegevens" class="form-horizontal form-accountgegevensinput" novalidate>
+	 <fieldset>
+        <div class="row box-content mobpad">
+                <div class="box-content mobpad">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                            <span class="legend">Aanvullende gegevens</span>
+                        </div>
+                        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                            <i class="fa fa-briefcase trap fa-2x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  col-sm-9 col-sm-offset-0">
+                            <button data-ng-hide="editBankOn" type="button" class="btn btnlgw2 w100mob btn-primary" data-ng-click="editBank()">Wijzigen</button>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'telefoonnummer')}">
+                        <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Telefoonnummer</label>
+
+                        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 ">
+                            <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.telefoonnummer, maxFieldLengths.telefoonnummer)" data-wm-block class="form-control" type="text" data-ng-show="editBankOn" name="telefoonnummer" id="telefoonnummer" data-ng-model="account.bedrijf.telefoonnummer" data-ng-pattern="PHONE_REGEXP" data-wm-block-length="maxFieldLengths.telefoonnummer" required/>
+                            <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevens, 'telefoonnummer')">
+								<span>Voer een geldig telefoonnummer in.</span>
+							</small>
+                        </div>
+                        <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editBankOn">
+							{{account.bedrijf.telefoonnummer}}
+						</span>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'btwnummer')}">
+                        <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">BTW-nummer</label>
+                        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                            <input data-ng-paste="checkFieldMaxLength($event, account.bedrijf.bedrijfsNaam, maxFieldLengths.bedrijfsnaam)" data-wm-block data-ng-disabled="isNietBtwPlichtig()" data-ng-show="editBankOn" class="form-control" type="text" name="btwnummer" id="btwnummer" data-ng-model="account.klant.btwnummer" data-wm-block-length="maxFieldLengths.bedrijfsnaam" />
+                            <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevens, 'btwnummer')">
+								<span>Voer een geldig BTW-nummer in.</span>
+							</small>
+                        </div>
+                        <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editBankOn">
+						{{account.klant.btwnummer}}
+						</span>
+                    </div>
+                    <div data-ng-hide="btwNummerAanwezig(account.klant.btwnummer)" class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'btwnummer')}">
+                        <div class="col-xs-12 col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8 col-lg-offset-3 col-lg-9">
+                            <div class="checkbox" data-ng-show="editBankOn||(!editBankOn&&account.klant.nietBtwPlichtig)">
+                                <label>
+									<input type="checkbox" data-ng-disabled="!editBankOn" data-ng-model="account.klant.nietBtwPlichtig" data-ng-click="nietBtwPlichtig()" id="nietBtwPlichtig" name="nietBtwPlichtig">
+									Mijn bedrijf is niet BTW-plichtig.
+									<i class="fa fa-square-o"></i>
+								</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'bankrekeningnummer') || bankrekeningNummerInvalid}">
+                        <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Rekeningnummer (IBAN)</label>
+
+                        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editBankOn">
+                            <input data-ng-paste="checkFieldMaxLength($event, account.klant.bankrekeningNummer, maxFieldLengths.bankrekeningnummer)" data-wm-block class="form-control" type="text" name="bankrekeningnummer" id="bankrekeningnummer" data-ng-model="account.klant.bankrekeningNummer" data-capitalize-all data-wm-block-length="maxFieldLengths.bankrekeningnummer" required/>
+                            <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevens, 'bankrekeningnummer') || bankrekeningNummerInvalid">
+								<span>Vul een geldig IBAN in.</span>
+							</small>
+                        </div>
+                        <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editBankOn">
+							{{account.klant.bankrekeningNummer}}
+						</span>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'tenaamstelling')}">
+                        <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Tenaamstelling</label>
+
+                        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="editBankOn">
+                            <input data-ng-paste="checkFieldMaxLength($event, account.klant.tenaamstelling, maxFieldLengths.tenaamstelling)" data-wm-block class="form-control" type="text" name="tenaamstelling" id="tenaamstelling" data-ng-model="account.klant.tenaamstelling" data-wm-block-length="maxFieldLengths.tenaamstelling" required/>
+                            <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevens, 'tenaamstelling')">
+								<span>Vul de tenaamstelling van uw bankrekening in.</span>
+							</small>
+                        </div>
+                        <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9" data-ng-show="!editBankOn">
+							{{account.klant.tenaamstelling}}
+						</span>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formaccountgegevens, 'akkoordIncasso')}">
+                        <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">SEPA machtiging</label>
+                        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                            <div class="checkbox" data-ng-show="editBankOn||(!editBankOn&&account.klant.akkoordIncasso)">
+                                <label>
+									<input type="checkbox" data-ng-disabled="!editBankOn" data-ng-model="account.klant.akkoordIncasso" id="akkoordIncasso" name="akkoordIncasso" required/>
+									<i class="fa fa-square-o"></i>
+									- Ik ben bevoegd om een incassomachtiging te verlenen op het bovengenoemde bankrekeningnummer.<br/> 
+									- Ik verstrek hierbij een doorlopende machtiging aan CRZB om het factuurbedrag van het opgegeven IBAN af te schrijven.<br/> 
+									- Indien ik het oneens ben met het afgeschreven bedrag heb ik het recht om binnen een termijn van 8 weken het bedrag terug te laten boeken.
+								</label>
+                            </div>
+                            <small class="help-block" data-ng-show="isInvalid(obj.formaccountgegevens, 'akkoordIncasso')">
+								<span>U dient uw rekeninggegevens correct in te vullen en akkoord te gaan met automatische incassering</span>
+							</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8 col-lg-offset-3 col-lg-9">
+                            <button data-ng-show="editBankOn" type="button" class="btn  btnlgw2 btn-primary btn-lg-mob w100mob margin10" data-ng-click="updateAccountData()"> <!-- obj.formaccountgegevens.$invalid || isUnchanged(account.klant) || buttonBankDisabled() -->
+								Opslaan
+							</button>
+                            <button data-ng-show="editBankOn" type="button" class="btn btn-primary btnlgw2 bluebtn11 btn-lg-mob w100mob margin10" data-ng-click="editBank()">
+								Annuleren
+							</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+		   </fieldset>
+    </form>
+</div>

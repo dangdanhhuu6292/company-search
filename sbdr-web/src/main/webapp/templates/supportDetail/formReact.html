@@ -1,0 +1,90 @@
+
+<div class="row box-content bordersupportblue">
+
+<form id="formobjectionreaction" name="formobjectionreaction" class="form-horizontal" novalidate>
+
+    <fieldset>
+	
+	
+			<div class="supportboxblue">
+                    <div class="supporthead">
+                        <span class="support-head">Reageren</span>&nbsp;&nbsp;&nbsp;
+                        <span class="support-datum rechts3 brmob">{{support.datumAangemaakt}}</span> 
+                    </div> 
+        </div>
+        <div class="box-content">
+            <div class="row" data-ng-class="{'has-error' : isInvalid(formobjectionreaction, 'rbobjection')}">
+                <label class="control-label">Kunt u dit weerleggen?</label><br/>
+             
+                    <span>
+						<input class="box-content" type="radio" name="rbobjection" id="rbdiscardsobjection" data-ng-model="reaction.betwistBezwaar" value="true"/>
+						Ja, ik kan dit bezwaar weerleggen. 
+					</span>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <span> 
+						<input type="radio" name="rbobjection" id="rbacceptsobjection" data-ng-model="reaction.betwistBezwaar" value="false"/>
+						Nee, ik kan dit niet weerleggen. (vermelding wordt verwijderd)
+					</span>
+            
+            </div>
+            <div class="form-group" data-ng-class="{'has-error' : isInvalid(formobjectionreaction, 'bericht')}">
+                <label class="control-label">Toelichting</label>
+                <div>
+                    <textarea data-ng-paste="checkFieldMaxLength($event, reaction.bericht, maxFieldLengths.supportBericht)" data-wm-block class="form-control" cols="80" rows="5" name="bericht" id="bericht" data-ng-model="reaction.bericht" data-wm-block-length="maxFieldLengths.supportBericht" required></textarea>
+                    <small class="help-block" data-ng-show="isInvalid(formobjectionreaction, 'bericht')">
+						<span>Vul uw toelichting a.u.b. in</span>
+					</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <span>
+					U bent verplicht de benodigde documenten om uw zaak kracht bij te zetten, hier te uploaden.<br/>
+					Zonder deze documenten kunnen wij het bezwaar op uw vermelding niet afkeuren.<br/>
+					De minimaal benodigde documenten zijn bijvoorbeeld een factuur en/of een getekende offerte of contract, of documenten waar uit blijkt dat u recht heeft op de betaling.
+				</span>
+            </div>
+            <div class="row" data-ng-controller="SupporAttachmentController">
+             
+                    <table id="bijlagen" class="table table-condensed m-table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Bestandsnaam</th>
+                                <th>Actie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="attachment in attachments|limitTo:3">
+                                <td>Bijlage {{$index+1}}</td>
+                                <td>{{attachment.name}}</td>
+                                <td>
+                                    <button data-ng-show="true" type="button" class="btn btn-primary btn-xs" data-ng-click="removeAttachment($index)" title="Bijlage verwijderen">
+									<i class="fa fa-trash-o"></i>
+								</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+              
+            </div>
+            <div class="form-group">
+                <div data-ng-show="attachments.length<3">
+                    <span class="btn btn-primary btn-file">
+		                Bestand toevoegen <input type="file" data-fileread="createFileAttachment"/>
+		            </span>
+                </div>
+            </div>
+      
+        <div class="form-group">
+           
+                <button type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob" data-ng-disabled="checkObjectionReactionFormInvalid(formobjectionreaction)" data-ng-click="submitObjectionReaction()">
+					Indienen
+				</button>
+                <button class="btn bluebtn11 btn-primary btnlgw2 btn-lg-mob w100mob" data-ng-click="gotoSupport()" type="button">
+					Terug
+				</button>
+        
+        </div>
+		  </div>
+    </fieldset>
+</form></div>

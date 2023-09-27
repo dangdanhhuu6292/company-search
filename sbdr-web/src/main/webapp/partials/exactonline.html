@@ -1,0 +1,41 @@
+<div class="row">
+	<div id="exactonline_page" class="col-sm-12">
+	  <div class="box no shad">
+            <div class="box-content border">
+                <span class="livicon-evo" data-options="name: servers.svg;  size: 35px; style: lines; strokeColor: #0a212f ;tryToSharpen:true"></span>
+                <span class="legend">ExactOnline</span>
+                <div class="home">
+                    <hr> 
+			<div class="box-content">
+				<div class="row box-content">
+					<div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+						<div class="box-content">
+					<span class="livicon-evo" data-options="name: gears.svg;  size: 35px; style: lines; strokeColor: #0a212f; tryToSharpen:true"></span>
+					<span class="legend">ExactOnline koppelen</span>
+					<hr><br/>
+
+					<form id="form-faillissementen" name="formfaillissementen" class="form-horizontal" novalidate>
+							<fieldset>
+																	
+								<oauth
+  									site="{{exactonlineparam.site}}"
+  									client-id="{{exactonlineparam.clientId}}"
+  									redirect-uri="{{exactonlineparam.redirectUri}}"
+  									profile-uri="" 
+  									scope="public"
+  									template="partials/exactonlineauth.html">
+								</oauth>							
+																																		
+						</fieldset>
+					</form>	
+					</div>						
+					</div>
+				</div>
+
+				<div id="alert" class="alert alert-danger" ng-show="error">{{error}}</div>
+				
+			</div>
+		</div>
+	</div>
+</div>	</div>
+</div>

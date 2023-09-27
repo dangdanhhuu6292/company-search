@@ -1,0 +1,183 @@
+<div class="row">
+    <div id="createcustomnotification_page" class="col-sm-12">
+        <div class="box no shad">
+            <div class="box-content border">
+                <span class="livicon-evo" data-options="name: box.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true">&nbsp;</span>
+                <span class="legend">Steunvordering</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="row box-context">
+                    <div class="col-xs-12 col-sm-10 col-lg-7">
+                        <div class="box-content mobpad">
+                            <form id="form-createcustomnotification" name="formcreatecustomnotification" class="form-horizontal" ng-hide="meldingSavedOk" novalidate>
+                                <fieldset>
+                                    <span class="legend">Maak a.u.b. een keuze uit onderstaande opties</span><br/><br/>
+									<div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'incorrectGegeven')}">
+										<div class="col-sm-6 col-sm-offset-4">
+											<div class="checkbox-inline">
+												<label>
+													<input type="checkbox" class="form-control" ng-model="melding.incorrectGegeven" ng-change="mandatoryChecks()" id="incorrectGegeven" name="incorrectGegeven"> Incorrecte gegevens
+													<i class="fa fa-square-o"></i></input>
+												</label>
+											</div>
+											<a href="" class="clickableinfo" info-popover data-tooltixp="CRZB stelt hoge eisen aan de kwaliteit van haar gegevens.
+Indien u informatie van ons krijgt die duidelijk niet overeenstemming is met de informatie van officiële bronnen, zoals Kamer van Koophandel, laat het ons dan weten."></a>
+											<small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'incorrectGegeven')">
+												<span>Incorrect gegeven/gegevens aanpassen</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'faillissementVraag')}">
+										<div class="col-sm-6 col-sm-offset-4">
+											<div class="checkbox-inline">
+												<label>
+													<input type="checkbox" class="form-control" ng-model="melding.faillissementVraag" ng-change="mandatoryChecks()" id="faillissementVraag" name="faillissementVraag"> Faillissement aanvragen
+													<i class="fa fa-square-o"></i></input>
+												</label>
+											</div>
+											<a href="" class="clickableinfo" info-popover data-tooltixp="Indien u een faillissementsverzoek wilt indienen bij de rechtbank, gebruik deze optie dan om steunvorderingen van derden te verzoeken. Wij doen een verzoek aan diegene om contact met u op te nemen. Het staat hen dan vrij om hierop te reageren of niet."></a>
+											<small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'faillissementVraag')">
+												<span>Faillissement aanvragen</span>
+											</small>
+										</div>
+									</div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6 col-sm-offset-4">
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6 col-sm-offset-4">
+                                            <span>Geef hieronder aan wat u wilt melden, op welke grond en welke bewijsstukken/bronnen u hiervoor kunt overleggen.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'meldingDetails')}">
+                                        <label class="col-xs-12 col-sm-4 control-label">Details</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <textarea ng-paste="checkFieldMaxLength($event, melding.meldingDetails, maxFieldLengths.meldingDetails)" wm-block class="form-control" id="meldingDetails" name="meldingDetails" rows="5" ng-model="melding.meldingDetails" wm-block-length="maxFieldLengths.meldingDetails" required></textarea>
+                                            <small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'meldingDetails')">
+												<span>Vul uw toelichting in</span>
+											</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'voornaam')}">
+                                        <label class="col-xs-12 col-sm-4 control-label">Voornaam</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input ng-paste="checkFieldMaxLength($event, melding.voornaam, maxFieldLengths.voornaam)" wm-block class="form-control" type="text" name="voornaam" id="voornaam" ng-disabled="true" ng-model="melding.voornaam" wm-block-length="maxFieldLengths.voornaam" required/>
+                                            <small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'voornaam')">
+												<span>Vul de voornaam van de gebruiker in </span></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'achternaam')}">
+                                        <label class="col-xs-12 col-sm-4 control-label">Achternaam</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input ng-paste="checkFieldMaxLength($event, melding.achternaam, maxFieldLengths.naam)" wm-block class="form-control" type="text" name="achternaam" id="achternaam" ng-disabled="true" ng-model="melding.achternaam" wm-block-length="maxFieldLengths.naam" required/>
+                                            <small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'achternaam')">
+												<span>Vul de achternaam van de gebruiker in</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'telefoonnummer')}">
+                                        <label class="col-xs-12 col-sm-4 control-label">Telefoonnummer</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input ng-paste="checkFieldMaxLength($event, melding.telefoonnummer, maxFieldLengths.telefoon)" wm-block class="form-control" type="text" name="telefoonnummer" id="telefoonnummer" ng-model="melding.telefoonnummer" ng-pattern="PHONE_REGEXP" wm-block-length="maxFieldLengths.telefoon" required/>
+                                            <small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'telefoonnummer')">
+												<span>Voer een geldig telefoonnummer in</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'afdeling')}">
+                                        <label class="col-xs-12 col-sm-4 control-label">Afdeling (optioneel)</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input ng-paste="checkFieldMaxLength($event, melding.afdeling, maxFieldLengths.afdeling)" wm-block class="form-control" type="text" name="afdeling" id="afdeling" capitalize-first ng-model="melding.afdeling" wm-block-length="maxFieldLengths.afdeling" />
+                                            <small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'afdeling')">
+												<span>Vul de afdelingsnaam in</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formcreatecustomnotification, 'password')}">
+                                        <label class="col-xs-12 col-sm-4 control-label">Wachtwoord (huidige gebruiker)</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="fixed-input col-sm-12">
+                                                <input ng-paste="checkFieldMaxLength($event, melding.wachtwoord, maxFieldLengths.wachtwoord)" wm-block name="password" id="password" ng-model="melding.wachtwoord" type="password" class="form-control" wm-block-length="maxFieldLengths.wachtwoord" required>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12">
+                                                <small class="help-block" ng-show="isInvalid(formcreatecustomnotification, 'password')">
+											<span>Geef uw wachtwoord</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+                                            <button type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob" ng-click="send()">
+												Verzenden
+											</button>
+                                            <button type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob bluebtn11" ng-click="back()">
+												Terug
+											</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <form id="form-createcustomnotificationok" name="formcreatecustomnotificationok" class="form-horizontal" ng-show="meldingSavedOk" novalidate>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-12">
+                                            <div id="alert" class="alert alert-success" ng-show="meldingSavedOk">Hartelijk dank voor uw melding!<br/><br/>Uw melding is in goede orde ontvangen.<br/>CRZB zal deze zo spoedig mogelijk verwerken en in behandeling nemen.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-8 col-sm-offset-0">
+                                            <button type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob" ng-click="back()">Ok</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		       <div ng-show="error">
+            <div class="box-content fout-smal text-center">
+              <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="info-box2" class="informatieinfo">
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <p id="textinfo2">#######</p>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('info-box2');
+    var btns = document.getElementsByClassName("infoi");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            modal.style.display = "block";
+            $('#textinfo2').html($(this).attr('data-text'));
+        }
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+ 

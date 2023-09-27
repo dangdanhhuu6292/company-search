@@ -1,0 +1,170 @@
+<div ng-controller="PortfolioMonitoringTabController">
+    <div class="row box-context">
+        <div class="col-sm-8">
+            <div class="box-content">
+                <form id="form-search" name="formsearch" class="form-horizontal" novalidate>
+                    <fieldset>
+                        <div ng-show="!hasItems() && !filterCriteria.filterValue">
+                            <div class="dash-font">
+                                <span>Hier vindt u een overzicht van de bedrijven die door u in monitoring zijn gezet en de hierop van toepassing zijnde informatie.</span>
+                                <span>Door een bedrijf in monitoring te zetten wordt u door ons op de hoogte gebracht zodra er een betalingsachterstand wordt geregistreerd. Alvorens een bedrijf in monitoring te kunnen zetten dient u een rapport over het desbetreffende bedrijf op te vragen. Dit doet u door linksboven op 'zoek bedrijf' te klikken.</span>
+                            </div>
+                            <div class="legend-dash">U heeft nog geen bedrijven in monitoring.</div>
+                        </div>
+                        <div ng-show="hasItems() || filterCriteria.filterValue" class="form-group">
+                            <label class="col-xs-12 control-label mobpad">Snel zoeken in de lijst</label>
+
+                            <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 mobpad">
+                                <input ng-paste="checkFieldMaxLength($event, filterCriteria.filterValue, maxFieldLengths.zoeken)" wm-block class="form-control" name="filter" id="filter" ng-model="filterCriteria.filterValue" type="text" placeholder="Bedrijfsnaam of KvK-nummer" wm-block-length="maxFieldLengths.zoeken" />
+                            </div>
+                        </div>
+                        <div ng-show="!hasItems() && filterCriteria.filterValue">
+                            <h4 class="padding30 mobpad">Er zijn geen zoekresultaten.</h4>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-4 trap2">
+            <div class="box-content">
+                <form id="form-download" name="formdownload" class="form-horizontal" ng-show="hasItems()" novalidate>
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="box-content download">
+                                <monitoredcompanies-download url="/download/a.xls" filename="my-awesome.xls"></monitoredcompanies-download>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row box-content mobpad">
+        <div class="col-sm-12" ng-show="companies">
+            <table id="portfoliomonitoring" class="table m-table nomob table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="zoekenmobielhide">KvK-nummer</th>
+                        <th>Bedrijfsnaam</th>
+                        <th class="trap4">Adres</th>
+                        <th class="trap4">Referentienummer</th>
+                        <th>
+                            <a ng-click="fetchMonitoring('datumStart')">
+							Toegevoegd op
+							<span ng-show="orderByField == 'datumStart'">
+								<span ng-show="!reverseSort">
+									<i class="fa fa-arrow-up"></i>
+								</span>
+								<span ng-show="reverseSort">
+									<i class="fa fa-arrow-down"></i>
+								</span>
+							</span>
+						</a>
+                        </th>
+                        <th>
+                            <a ng-click="fetchMonitoring('aantalMeldingen')">
+							Opmerkingen
+							<span ng-show="orderByField == 'aantalMeldingen'">
+								<span ng-show="!reverseSort">
+									<i class="fa fa-arrow-up"></i>
+								</span>
+								<span ng-show="reverseSort">
+									<i class="fa fa-arrow-down"></i>
+								</span>
+							</span>
+						</a>
+                        </th>
+                        <th class="btn-fix-searchaction">Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="company in companies">
+                        <td class="zoekenmobielhide">{{company.kvkNummer}}</td>
+                        <td><i class="zoekenmobielshow fa fa-building-o" aria-hidden="true">&nbsp;</i>{{company.bedrijfsNaam | limitTo:50}}</td>
+                        <td class="trap4">{{company.adres}}</td>
+                        <td class="trap4">{{company.monitoringReferentieIntern}}</td>
+                        <td>{{company.toegevoegd}}</td>
+                        <td>
+                            <span ng-if="company.meldingBijBedrijf == true">&nbsp;&nbsp;<span class="text-oranje" data-tooltip="Dit bedrijf heeft actieve betalingsachterstand(en)"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i>&nbsp;Waarschuwing</span></span>
+                        </td>
+                        <!--  td><span title="Er is al eerder een melding gedaan door je bedrijf" ng-show="company.meldingBijBedrijf == true" class="bg-warning badge">Melding gedaan</span></td -->
+                        <td>
+                            <div class="zoekenmobielhide btn-fix-search-2">
+                                <button data-tooltip="Inzien" ng-show="true" type="button" class="btn btn-fix-search" ng-click="monitoringDetail(company.monitoringId)" ng-disabled="false"><i class="fix-search-icon fa fa-search-plus" aria-hidden="true"></i></button>
+
+                                <button data-tooltip="Verwijderen" ng-show="true" type="button" class=" btn btn-fix-search" ng-click="removeFromMonitoring(company.monitoringId, company.bedrijfId)" ng-disabled="false"><i class="fix-search-icon fa fa-trash-o" aria-hidden="true"></i></button>
+
+                                <button data-tooltip="Achterstand melden" type="button" class=" btn btn-fix-search" ng-show="gebruikerRegistratiesAllowed()" ng-click="notifyCompany(company.bedrijfId)" ng-disabled="false"><i class="fix-search-icon fa fa-file-text-o" aria-hidden="true"></i></button>
+
+                            </div>
+                            <div class="zoekenmobielshow">
+                                <div class="dropdown zoekenbutton ">
+                                    <button class="btn btn-primary dropdown-toggle w100mob btn-lg-mob margin10" type="button" data-toggle="dropdown">Selecteer een actie
+								<span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <button class="btn btn-fix-search" ng-click="monitoringDetail(company.monitoringId)" ng-disabled="false"><i class="fa fa-search-plus" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;</i>Inzien</button>
+                                        </li> 
+                                        <li>
+                                            <button ng-show="true" class=" btn btn-fix-search" ng-click="removeFromMonitoring(company.monitoringId, company.bedrijfId)" ng-disabled="false"><i class="fa fa-trash-o" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;</i>Verwijderen</button>
+                                        </li>
+
+                                        <li><button class=" btn btn-fix-search" ng-show="gebruikerRegistratiesAllowed()" ng-click="notifyCompany(company.bedrijfId)" ng-disabled="false"><i class="fa fa fa-file-text-o" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>Achterstanden melden</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+        </div>
+    </div>
+    <div data-ng-show="error">
+        <div class="box-content foutw text-center">
+            <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+            <span id="alert" class="fouttext text-center">{{error}}</span>
+        </div>
+    </div>
+    <script type="text/ng-template" id="removemonitoring.html" class="reveal-modal">
+        <div class="modal-header">
+            <i class="modal-icon-fix fa fa-trash-o" aria-hidden="true"></i>
+            <span class="modal-title legend">Verwijderen monitoring?</span>
+        </div>
+        <div class="modal-body">
+            <form name="myForm">
+                <p>Weet u zeker dat u de monitoring op dit bedrijf wilt stopzetten?</p>
+                <p>U wordt dan per direct niet meer op de hoogte gehouden van nieuwe registraties op dit bedrijf.</p>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary btnlgw2  bluebtn11" ng-click="closeRemoveMonitoringModal()">Annuleren</button>
+            <button class="btn btn-primary btnlgw2 w100mob btn-lg-mob" ng-click="removeMonitoringOk()">Verwijderen</button>
+        </div>
+    </script>
+    <script>
+        (function() {
+            var headertext = [];
+            var headers = document.querySelectorAll("thead");
+            var tablebody = document.querySelectorAll("tbody");
+
+            for (var i = 0; i < headers.length; i++) {
+                headertext[i] = [];
+                for (var j = 0, headrow; headrow = headers[i].rows[0].cells[j]; j++) {
+                    var current = headrow;
+                    headertext[i].push(current.textContent.replace(/\r?\n|\r/, ""));
+                }
+            }
+
+            if (headers.length > 0) {
+                for (var h = 0, tbody; tbody = tablebody[h]; h++) {
+                    for (var i = 0, row; row = tbody.rows[i]; i++) {
+                        for (var j = 0, col; col = row.cells[j]; j++) {
+                            col.setAttribute("data-th", headertext[h][j]);
+                        }
+                    }
+                }
+            }
+        }());
+    </script>
+</div>

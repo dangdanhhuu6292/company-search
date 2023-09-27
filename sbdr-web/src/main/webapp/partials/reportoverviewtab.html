@@ -1,0 +1,151 @@
+<div ng-controller="ReportOverviewTabController">
+	<div class="row box-content">
+		<div class="col-sm-12" ng-show="showRating">
+			<legend>{{ratingScoreIndicatorMessage}}</legend>
+			<div class="row">
+			  <div ng-class="ratingDanger">&nbsp;</div>
+			  <div ng-class="ratingWarning">&nbsp;</div>
+			  <div ng-class="ratingGood">&nbsp;</div>
+			  <div ng-class="ratingVeryGood">&nbsp;</div>
+			</div>							
+		</div>
+	</div>	
+	<div class="row box-content">
+		<div class="col-sm-12 col-md-12 col-lg-6">
+			<form id="form-bedrijfsgegevens" class="form-horizontal">
+				<fieldset>
+					<legend>Bedrijfsgegevens</legend>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-6 col-lg-5 control-label">BA-nummer</label>
+					<span class="col-xs-8 col-sm-6 col-lg-7">
+						{{report.kvkDossierTransfer.sbdrNummer}}
+					</span>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-6 col-lg-5 control-label">KvK-nummer</label>
+					<span class="col-xs-8 col-sm-6 col-lg-7">
+						{{report.kvkDossierTransfer.kvkNummer}}
+					</span>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-6 col-lg-5 control-label">RSIN-nummer</label>
+					<span class="col-xs-8 col-sm-6 col-lg-7">
+						{{report.kvkDossierTransfer.rsin}}
+					</span>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-6 col-lg-5 control-label">Statutaire naam</label>
+					<span class="col-xs-8 col-sm-6 col-lg-7">
+						{{report.kvkDossierTransfer.vennootschapsNaam}}
+					</span>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-6 col-lg-5 control-label">Handelsnaam</label>
+					<span class="col-xs-8 col-sm-6 col-lg-7">
+						{{report.kvkDossierTransfer.handelsNaam}}
+					</span>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-6 col-lg-5 control-label">Adres</label>
+					<span class="col-xs-8 col-sm-6 col-lg-7">
+						{{report.kvkDossierTransfer.straat}} {{report.kvkDossierTransfer.huisnummer}} {{report.kvkDossierTransfer.huisnummerToevoeging}}
+					</span>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-6 col-lg-5 control-label"> </label>
+					<span class="col-xs-8 col-sm-6 col-lg-7">
+						{{report.kvkDossierTransfer.postcode}} {{report.kvkDossierTransfer.plaats}}
+					</span>
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6" ng-show="showMonitoring()">
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">
+				<div class="col-xs-12 col-sm-8 alert alert-info">
+					<div class="col-sm-6">
+						<span>
+							Wilt u op de hoogte gehouden worden van toekomstige betalingsachterstanden van dit bedrijf die opgenomen worden in het CRZB register?
+							
+							Plaats dit bedrijf dan in monitoring.
+							<br/>
+							<br/>
+						</span>
+						<button ng-show="showMonitoring()" type="button" class="btn btn-warning btn-lg" ng-click="monitoring()">Toevoegen aan Monitoring</button>
+					</div>
+					<div class="col-sm-6">
+						<div class="icon-monitoring-off image-icon flexembed flexembed--4"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6" ng-hide="showMonitoring()">
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">
+				<div class=" col-xs-12 col-sm-8 alert alert-info">
+					<div class="col-sm-6">
+						<span>
+							U heeft dit bedrijf al in monitoring.
+							<br/>
+							Dit houdt in dat u op de hoogte gehouden wordt van toekomstige betalingsachterstanden van dit bedrijf die opgenomen worden in het betalingsachterstandenregister.
+						</span>
+					</div>
+					<div class="col-sm-6">
+						<div class="icon-monitoring-on image-icon flexembed flexembed--4"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row box-context">
+		<div class="col-xs-12 col-sm-12 col-lg-6">
+			<div class="box-content">
+				<form id="form-bedrijfsgegevens" class="form-horizontal">
+					<fieldset>
+						<legend>Overzicht</legend>
+						<div class="form-group">
+							<ul class="list-group">
+								<div ng-repeat="opmerking in report.opmerkingen">
+									<div id="opmerking">
+										<li ng-class="{'list-group-item list-group-item-info': opmerking.type == 'info', 'list-group-item list-group-item-warning': opmerking.type == 'alert'}">
+										<span>
+											<i ng-class="{'fa fa-star fa-lg': opmerking.type == 'info', 'fa fa-exclamation-triangle fa-lg': opmerking.type == 'alert'}"></i>
+										</span>
+											{{opmerking.omschrijving}}
+											<button type="button" class="btn btn-primary btn-report-small" ng-show="opmerking.link" ng-click="createReport(opmerking.link, opmerking.kvkNr)">
+												Rapport opvragen
+											</button>
+										</li>
+									</div>
+								</div>
+							</ul>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>		
+	</div>
+
+	<div class="row box-context">
+		<div class="col-xs-12 col-sm-12 col-lg-6">
+			<div class="box-content">
+				<form id="form-vermeldingenalgemeen" class="form-horizontal">
+					<fieldset>
+						<legend>Rapportaanvragen afgelopen 14 dagen</legend>
+					</fieldset>
+					<nvd3 options="options" data="exampleData" class="with-3d-shadow with-transitions"></nvd3>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div ng-include="'templates/modals/reportPopup.html'"></div>
+<div ng-include="'templates/modals/reportNoPaymentInfo.html'"></div>

@@ -1,0 +1,239 @@
+<div class="row">
+    <div id="monitoringdetails_page" class="col-xs-12">
+        <div class="box no noborderlegend shad">
+            <div class="box-content border">
+			<a href="">
+                <span  class="livicon-evo rechts infoi" data-text="<h4><b>Monitoring</b></h4><br/>Hier vindt u de bedrijfsgegevens van het gemonitord bedrijf, waaronder het adres en KvK-nummer." data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; tryToSharpen: true"></span>
+				</a>
+				<div class="download">
+											<monitordetail-download></monitordetail-download>
+										</div>
+                <span class="livicon-evo" data-options="name:morph-eye-open-close.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+                <span class="legend">Gemonitord bedrijf</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="row box-content mobpad">
+                    <div class="col-xs-12">
+                        <form id="form-bedrijfsgegevens" name="formbedrijfsgegevens" class="form-horizontal" novalidate>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3 control-label">Bedrijfsnaam</label>
+                                    <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{monitorData.bedrijfsNaam}}
+										</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3 control-label">Straatnaam en nummer</label>
+                                    <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{monitorData.straat}} {{monitorData.huisnummer}} {{monitorData.huisnummerSuffix}}
+										</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3 control-label">Postcode en plaats</label>
+                                    <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">{{monitorData.postcode}}
+											{{monitorData.plaats}}
+										</span>
+                                </div>
+                                <div class="form-group" ng-show="monitorData.postPostbus">
+                                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3 control-label">Postbus en postcode (postadres)</label>
+                                    <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">{{monitorData.postPostbus}}
+											{{monitorData.postPostcode}}
+										</span>
+                                </div>
+                                <div class="form-group" ng-show="monitorData.postPostbus">
+                                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3 control-label">Plaats (postadres)</label>
+                                    <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{monitorData.postPlaats}}
+										</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3 control-label">KvK-nummer</label>
+                                    <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{monitorData.kvkNummer}}
+										</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3 control-label">MO-nummer</label>
+                                    <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{monitorData.monitoringReferentieIntern}}
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box no noborderlegend margb trap">
+            <div class="box-content border">
+			<a href="">
+                <span  class="infoi livicon-evo rechts" data-text="<h4><strong>Historie</strong></h4><br/>In dit overzicht vindt u een interne activiteitenweergave rondom het bedrijf dat door u aan de Bedrijfsmonitor is toegevoegd." data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; tryToSharpen: true"></span>
+				</a>
+                <span class="livicon-evo" data-options="name:notebook.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+                <span class="legend">Historie</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="box-content overres  mobpad">
+                    <form id="form-verwerkingen" name="formverwerkingen" class="form-horizontal" novalidate>
+                        <fieldset>
+                            <table id="users" class="table m-table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Actie</th>
+                                        <th>Datum</th>
+                                        <th>Uitgevoerd door</th>
+                                        <th class="trap2">Functie</th>
+                                        <th class="trap2">Afdeling</th>
+                                        <th class="trap2">E-mailadres</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="actie in acties">
+                                        <td>{{actie.actie}}</td>
+                                        <td>{{actie.datum}}</td>
+                                        <td>{{actie.gebruiker}}</td>
+                                        <td class="trap2">{{actie.functie}}</td>
+                                        <td class="trap2">{{getAfdeling(actie.afdeling)}}</td>
+                                        <td class="trap2">{{actie.email}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="box no noborderlegend margb">
+            <div class="box-content border">
+			<a href="">
+                <span class="infoi livicon-evo rechts" data-text="<h4><strong>Betalingsachterstand(en)</strong></h4><br/>Indien er zich actieve betalingsachterstanden bij dit bedrijf voordoen, dan worden deze hier weergeven. Onder actieve betalingsachterstanden wordt verstaan, de in het CRZB register opgenomen openstaande facturen. Verder vindt u hier de details van een betalingsachterstand, zoals het openstaande bedrag, de bedrijfssector van de vermelder, etc." data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsWhenMorph:custom;colorsOnHover:custom;solidColorAction:#0082ad; tryToSharpen: true">
+				</span>
+				</a>
+                <span class="livicon-evo" data-options="name:servers.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;repeat:50; tryToSharpen: true"></span>
+                <span class="legend">Betalingsachterstand(en)</span>
+                <div class="home">
+                    <hr>
+                </div>
+
+                <div class="box-content mobpad" ng-show="hasVermeldingen()">
+                    <form id="form-vermeldingen" name="formvermeldingen" class="form-horizontal" novalidate>
+                        <fieldset>
+                            <table id="companiesnotified" class="table m-table nomob table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Opgenomen</th>
+                                        <th>Referentienummer</th>
+                                        <th>Bedrijfssector vermelder</th>
+                                        <th>Bedrag</th>
+                                        <th>Oorspronkelijk bedrag</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="company in companies" ng-hide="company.statusCode == 'DEL'">
+                                        <td>{{company.datumGeaccordeerd}}</td>
+                                        <td>{{company.referentieIntern}}</td>
+                                        <td>{{bedrijfdoorgegevens(company.bedrijfId, company.bedrijfsNaam, company.adres, company.sbiOmschrijving)}}</td>
+                                        <td>{{bedragVermelding(company.bedrag)}}</td>
+                                        <td>{{bedragVermelding(company.oorspronkelijkBedrag)}}</td>
+                                        <td>
+                                            <span ng-show="company.statusCode == 'NOK'" class="text-oranje">
+													Ingediend, wachten op akkoord
+												</span>
+                                            <span ng-show="company.statusCode == 'INI'||company.statusCode == 'INB'" class="text-oranje"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i>&nbsp;
+													{{company.status}}
+												</span>
+                                            <span ng-show="company.statusCode == 'ACT'" class="text-oranje"data-tooltip="Actief vanaf {{company.datumGeaccordeerd}}"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i>&nbsp;
+													{{company.status}}
+												</span>
+                                            <span ng-show="company.statusCode == 'AFW'" class="text-oranje"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i>&nbsp;
+													{{company.status}}
+												</span>
+                                            <span ng-show="company.statusCode == 'DEL'" class="text-oranje" data-tooltip="Verwijderd op {{company.datumVerwijderd}}"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i>&nbsp;
+													{{company.status}}
+												</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <pagination ng-show="vermeldingenPagingOn()" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="box-content mobpad" ng-show="!hasVermeldingen()">
+                    <span class="blue b">Op dit moment zijn er geen actieve geregistreerde betalingsachterstanden (meer) bekend.</span>
+                </div>
+                <div class="box-content mobpad" ng-show="hasVermeldingen()">
+                    <span class="legend-alert b">Waarschuwing: dit bedrijf heeft actieve betalingsachterstand(en).</span>
+                </div>
+                <div class="box-content mobpad">
+                    <form id="form-monitoringdetailsactions" name="formmonitoringdetailsactions" class="form-horizontal" novalidate>
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button type="button" class="btn btn-primary w100mob btnlgw2" ng-click="back()">Terug</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="info-box2" class="informatieinfo">
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <p id="textinfo2">#######</p>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('info-box2');
+    var btns = document.getElementsByClassName("infoi");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            modal.style.display = "block";
+            $('#textinfo2').html($(this).attr('data-text'));
+        }
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+        <script>
+            (function() {
+                var headertext = [];
+                var headers = document.querySelectorAll("thead");
+                var tablebody = document.querySelectorAll("tbody");
+
+                for (var i = 0; i < headers.length; i++) {
+                    headertext[i] = [];
+                    for (var j = 0, headrow; headrow = headers[i].rows[0].cells[j]; j++) {
+                        var current = headrow;
+                        headertext[i].push(current.textContent.replace(/\r?\n|\r/, ""));
+                    }
+                }
+
+                if (headers.length > 0) {
+                    for (var h = 0, tbody; tbody = tablebody[h]; h++) {
+                        for (var i = 0, row; row = tbody.rows[i]; i++) {
+                            for (var j = 0, col; col = row.cells[j]; j++) {
+                                col.setAttribute("data-th", headertext[h][j]);
+                            }
+                        }
+                    }
+                }
+            }());
+        </script>
+
+</div>

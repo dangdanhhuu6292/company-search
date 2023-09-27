@@ -1,0 +1,186 @@
+<div id="feedbackModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa modal-icon-fix  fa-commenting-o" aria-hidden="true"></i>Feedback</h4>
+            </div>
+            <div class="modal-body">
+			<label class="legend b">Fijn dat u uw mening over deze webapplicatie wilt geven.</label><br/><br/>
+			<div class="b">Waarover gaat uw opmerking? Selecteer een onderdeel:</div>
+			   <button class="box-content-grey border margin10" href="" onclick="$('#feedbackModal-form').modal();" data-dismiss="modal">
+			    <span class="livicon-evo" data-options="name: thumbnails-small.svg; size: 55px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;tryToSharpen: true"></span>
+				  <div  class="fieldlabel100">De hele webapplicatie</div>
+                <span>Geef uw mening over de gehele webapplicatie.</span>
+           </button>
+   <button class="box-content-grey border margin20" href="" onclick="activateFeedback()" data-dismiss="modal">
+    <span class="livicon-evo " data-options="name: camera.svg; size: 55px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;tryToSharpen: true"></span>
+ <div  class="fieldlabel100">Een deel van de webapplicatie</div>
+                <span>Beweeg uw muis over het deel van de pagina waar u feedback op wilt geven.</span>
+            </button>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary w100mob btn-lg-mob bluebtn11 btnlgw2" data-dismiss="modal">Annuleren</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="feedbackModal-form" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa modal-icon-fix  fa-commenting-o" aria-hidden="true"></i>Geef ons feedback</h4>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackform">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="fieldlabel">Wat vindt u van het gekozen onderdeel van de webapplicatie?</label>
+                            <div class="rating-wrapper">
+                                <div class="rating10">
+                                    <input type="radio" id="star5" name="rating10" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+                                    <input type="radio" id="star4half" name="rating10" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                                    <input type="radio" id="star4" name="rating10" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                                    <input type="radio" id="star3half" name="rating10" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                                    <input type="radio" id="star3" name="rating10" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+                                    <input type="radio" id="star2half" name="rating10" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                                    <input type="radio" id="star2" name="rating10" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                                    <input type="radio" id="star1half" name="rating10" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                                    <input type="radio" id="star1" name="rating10" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                                    <input type="radio" id="starhalf" name="rating10" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="fieldlabel">Kunt u uw beoordeling toelichten?</label>
+                            <select class="form-control" name="reason" required>
+								<option value="-">- Maak uw keuze</option>
+								<option value="fout">Er zit een fout in de applicatie</option>
+								<option value="suggestie">Ik heb nog een suggestie</option>
+								<option value="compliment">Het is een compliment</option>
+								<option value="anders">Anders, namelijk:</option>
+							</select>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment" class="fieldlabel">Extra toelichting:</label>
+                            <textarea class="form-control" rows="8" name="comment" id="comment"></textarea>
+                            <input type='hidden' name='compname' value="{{companyname}}">
+                            <input type='hidden' name='username' value="{{username}}">
+                            <input type='hidden' name='accountref' value="{{account.referentieIntern}}">
+                            <input type='hidden' id='partofsite' name='accountref' value="">
+                            <input type="hidden" id="screenshot" name="screenshot" value="">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary bluebtn11 w100mob btn-lg-mob btnlgw2" data-dismiss="modal">Annuleren</button>
+                <button type="button" id="send-feedback" class="btn w100mob btn-lg-mob btn-primary btnlgw2">Verstuur</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    function capture() {
+        html2canvas(document.querySelector("#main")).then(canvas => {
+             $('#screenshot').val( canvas.toDataURL("image/png"));
+        });
+    } 
+    function activateFeedback() {
+	    $('#feedbackform')[0].reset();
+        capture();
+        $('body').addClass('feedback');
+        //listeners...
+        $('body.feedback [class^=col], body.feedback .box-content, body.feedback .row').click(function(el) {
+            $('#feedbackModal-form').modal();
+            $('#feedbackform')[0].reset();
+            $('#partofsite').val($('.selectArea').html());
+        });
+
+        $('body.feedback [class^=col],body.feedback .box-content, body.feedback .row').mouseover(function (e) {
+            $('body *').removeClass('selectArea');
+            $(this).addClass("selectArea");
+            e.stopPropagation();
+        });
+        $('body.feedback [class^=col]').mouseout(function (e) {
+            $(this).removeClass("selectArea");
+        });
+    }
+
+    $('#feedbackModal-form').on('hidden.bs.modal', function() {
+        $('body').removeClass('feedback');
+        $('[class^=col]').unbind('mouseenter');
+        $('[class^=col]').unbind('mouseleave');
+        $('[class^=col]').unbind('click');
+
+        $('.box-content').unbind('mouseenter');
+        $('.box-content').unbind('mouseleave');
+        $('.box-content').unbind('click');
+
+        $('.row').unbind('mouseenter');
+        $('.row').unbind('mouseleave');
+        $('.row').unbind('click');
+    })
+
+    $('#send-feedback').click(function() {
+        var emailid = 'info@crzb.nl.',
+            data = {
+                body: $('#feedbackform').serialize()
+            };
+        $.ajax({
+                type: "POST",
+                url: "https://delayedpayments.com/tmp-mailer.php",
+                data: data,
+                dataType: "text"
+            }).done(function(data) {
+                $('#feedbackModal-form .modal-body').append("<span id='feedback-tnx' class='primatext'>Bedankt voor de feedback</span>");
+                console.info(data);
+                setTimeout(function() {
+                    $('#feedbackModal-form').modal('toggle');
+                    $('#feedback-tnx').remove();
+                }, 1500);
+            })
+            .fail(function(xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+                console.log(textStatus);
+            });
+    })
+    //listeners for Feedback, delay them, most of the els are written by angular... so after this dom loads..
+    $(function() {
+        setTimeout(function() {
+            $('#feedback-btn').css('opacity', 1);
+		}, 2000);
+	})
+	function errorReport(){
+		 $('#main').html2canvas({
+            onrendered: function (canvas) {
+                $('#screenshot').val(canvas.toDataURL("image/png"));
+				console.log("image ", $('#screenshot').val())
+            }
+        });
+
+		setTimeout(function(){
+			var emailid = 'info@crzb.nl.',
+				data = {
+					body: $('#feedbackform').serialize()
+				};
+			$.ajax({
+					type: "POST",
+					url: "https://delayedpayments.com/tmp-mailer.php",
+					data: data,
+					dataType: "text"
+				}).done(function(data) {
+					console.info(data);
+				})
+				.fail(function(xhr, textStatus, errorThrown) {
+					console.log(xhr.responseText);
+					console.log(textStatus);
+				});
+		},3000)
+	}
+
+	$('#feedbackModal-form').on('shown.bs.modal', function (e) {
+     $('#feedbackform')[0].reset();
+})
+</script>

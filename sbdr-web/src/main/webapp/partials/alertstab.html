@@ -1,0 +1,29 @@
+<div ng-controller="AlertsTabController">
+    <div class="row box-content">
+        <div class="col-xs-12 col-sm-8">
+            <div class="row box-content">
+                <form id="form-search" name="formsearch" class="form-horizontal" novalidate>
+                    <fieldset>
+                        <div ng-show="!hasItems()">
+                            <div class="dash-font">
+                                <span>Hier vindt u een overzicht van de actuele en urgente gebeurtenissen op uw account.</span>
+                            </div>
+                            <div class="legend-dash">Er zijn momenteel geen urgente meldingen.</div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row box-content">
+        <div ng-if="alertsCollection" ng-include="'templates/alertTables/alertTable.html'"></div>
+        <div ng-if="adminAlertsCollection" ng-include="'templates/alertTables/alertTableAdmin.html'"></div>
+    </div> 
+<div data-ng-show="error">
+        <div class="box-content foutw text-center">
+            <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+            <span id="alert" class="fouttext text-center">{{error}}</span>
+        </div>
+    </div>	
+</div>

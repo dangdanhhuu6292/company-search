@@ -1,0 +1,44 @@
+   <a href="" class="infoi trap" data-text="<b>Betalingsachterstandrapport</b><br/><br/>In dit scherm wordt u een overzicht aangeboden van bedrijfsgegevens, bedrijfsstatus, het aantal en het totaalbedrag van de geregistreerde betalingsachterstanden.">
+   <span class="livicon-evo rechts"data-options="name: info-alt.svg; size: 35px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true">&nbsp;</span>
+   </a>
+   
+<a class="trap" href="" ng-click="downloadDocument(documentRequested)"> <span data-tooltip="Print" class="livicon-evo rechts trap " data-options="name: print-doc.svg; size: 35px; style: lines-alt;strokeColor:#0a212f;strokeColorAction:#ff8f00; strokeColorAltAction:#ff8f00; colorsOnHover:custom; tryToSharpen: true">&nbsp;</span> 
+<span data-tooltip="Export" class="livicon-evo rechts" data-options="name: file-export.svg; size: 35px; style: lines-alt;strokeColor:#0a212f;strokeColorAction:#ff8f00; strokeColorAltAction:#ff8f00;colorsOnHover:custom; tryToSharpen: true">&nbsp;</span> 
+</a> 
+   
+<script>
+    angular.element(document).ready(function() {
+        $(function() {
+            jQuery(".livicon-evo").addLiviconEvo()
+        })
+    });
+</script>
+<div id="info-box2" class="informatieinfo">
+        <div class="modal-content2">
+            <span class="close">&times;</span>
+            <p id="textinfo2">####</p>
+        </div>
+    </div>
+	<script>
+        var modal = document.getElementById('info-box2');
+        var btns = document.getElementsByClassName("infoi");
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal 
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].onclick = function() {
+                modal.style.display = "block";
+                $('#textinfo2').html($(this).attr('data-text'));
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>

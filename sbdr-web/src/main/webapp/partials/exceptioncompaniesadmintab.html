@@ -1,0 +1,77 @@
+<div ng-controller="ExceptionCompaniesAdminTabController">
+	<div class="row box-content">
+		<!--   <h4>Klant beheer</h4> -->
+
+		<div class="col-sm-12">
+			<div class="row box-context">
+				<div class="col-sm-12 col-lg-8">
+					<div class="box-content">
+						<form id="form-search" name="formsearch" class="form-horizontal" novalidate>
+							<fieldset>
+								<div ng-show="hasItems() || filterCriteria.filterValue" class="form-group">
+									<label class="col-sm-3 col-md-2 control-label">Snel zoeken</label>
+
+									<div class="col-sm-6">
+										<input ng-paste="checkFieldMaxLength($event, filterCriteria.filterValue, maxFieldLengths.zoeken)" wm-block class="form-control" name="filter" id="filter" ng-model="filterCriteria.filterValue" type="text" placeholder="Referentienummer, KvK-nummer of bedrijfsnaam" wm-block-length="maxFieldLengths.zoeken"/>
+									</div>
+								</div>
+								<div ng-show="!hasItems()">
+									<h4>Er zijn geen bedrijven gevonden.</h4>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row box-content">
+		<div class="col-sm-12" ng-show="companies">
+			<table id="exceptioncompanies" class="table m-table table-bordered table-hover table-striped">
+				<thead>
+				<tr>
+					<th>Kvk nummer</th>
+					<th>Bedrijfsnaam</th>
+					<th>Bedrijf referentie</th>
+					<th>Adres</th>
+					<th>Klant</th>
+					<th>Meldingen</th>
+					<th>Acties</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="company in companies">
+					<td>{{company.kvkNummer}}</td>
+					<td>{{company.bedrijfsNaam | limitTo:50}}</td>
+					<td>{{company.sbdrNummer}}</td>
+					<td>{{company.adres}}</td>
+					<td>
+						<span ng-show="company.prospect" class="bg-warning badge">Prospect</span>
+						<span ng-show="company.klant && !company.prospect" class="bg-warning badge">Klant</span>
+						<span ng-show="!company.klant && !company.prospect" class="bg-info badge">Geen klant</span>
+					</td>
+					<td>
+						<span ng-show="company.frauduleusBedrijf" class="bg-danger badge">Frauduleus bedrijf</span>
+						<span ng-show="company.dreigendFaillissement" class="bg-danger badge">Dreigend faillissement</span>
+						<span ng-show="company.incorrectGegeven" class="bg-danger badge">Incorrect(e) gegeven(s)</span>
+						<span ng-show="company.faillissementVraag" class="bg-danger badge">Faillissement aangevraagd</span>
+					</td>
+					<td>
+						<button type="button" class="btn btn-primary" ng-click="detailsCompany(company.customMeldingId, company.bedrijfId)" ng-disabled="false">Inzien</button>
+						<button type="button" class="btn btn-primary" ng-click="resolveException(company.customMeldingId, company.bedrijfId)" ng-disabled="false">Melding verwerkt</button>
+						<button type="button" class="btn btn-primary" ng-click="ignoreException(company.customMeldingId, company.bedrijfId)" ng-disabled="false">Melding negeren</button>
+						<button ng-show="company.klantstatusCode == 'ACT' && company.kvkNummer != '0000000'" type="button" class="btn btn-primary" ng-click="removeCustomer(company.klantId)" ng-disabled="false">Klant verwijderen</button>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+		</div>
+	</div>
+	<div id="alert" class="alert alert-danger" ng-show="error">{{error}}</div>
+	<div ng-show="exceptionResolved" class="alert alert-success">Melding succesvol verwerkt.</div>
+	<div ng-show="exceptionIgnored" class="alert alert-success">Melding succesvol genegeerd.</div>
+
+</div>
+
+<div ng-include="'templates/modals/removeCustomNotificationAdmin.html'"></div>

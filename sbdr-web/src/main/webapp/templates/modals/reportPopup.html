@@ -1,0 +1,27 @@
+<script type="text/ng-template" id="reportPopup.html" class="modal">
+			<div class="modal-header">   
+				<img class="right10" src="img/icons/svg/euro.svg" width="35" height="35">
+					<span class="modal-title legend">Bevestiging</span>
+			</div>
+				<div class="row box-context">
+						<div class="col-xs-12">
+							<div class="box-content">
+								<form id="form-monitoringinfo" name="formmonitoringinfo" class="form-horizontal" novalidate>
+									<fieldset>
+										<div class="form-group">
+											<div class="col-xs-12">
+												<p>U staat op het punt om een rapport op te vragen. Hiervoor wordt {{reportCost | currencyNoDecimals}} in rekening gebracht.</p>
+											</div>
+										</div>
+					             	<div class="row box-context mobpad">
+										<div class="modal-footer">
+							<button type="button" class="btn btn-primary btnlgw2 bluebtn11 btn-lg-mob w100mob" ng-click="closeReportPopup()">Annuleren</button>
+												<button type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob" ng-click="createReport()">Rapport inzien</button>	
+										</div>	
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+			</div>
+</script>

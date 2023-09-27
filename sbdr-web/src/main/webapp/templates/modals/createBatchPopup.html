@@ -1,0 +1,35 @@
+<script type="text/ng-template" id="createBatchPopup.html" class="reveal-modal">
+	<div class="row">
+		<div id="myaccount_page" class="col-sm-12">
+			<div class="box">
+				<div class="modal-header">
+					<h4 class="modal-title">Bevestiging</h4>
+				</div>
+				<div class="box-content">
+					<div class="row box-context">
+						<div class="col-sm-12">
+							<div class="box-content"> 
+								<form id="form-monitoringinfo" name="formmonitoringinfo" class="form-horizontal" novalidate>
+									<fieldset>
+										<div class="form-group">
+											<div class="col-sm-12">
+												<p>U staat op het punt een batch te maken waarin {{sizeOfBatch}} brieven worden meegenomen, bevestig dit a.u.b.</p>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-12 col-sm-offset-0">
+														<button type="button" class="btn btnlgw2 bluebtn11 btn-primary" ng-click="discardPopup()">Annuleren</button>
+												<button type="button" class="btn btnlgw2 btn-primary" ng-click="acceptPopup()">Doorgaan</button>
+									
+											</div>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>

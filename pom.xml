@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+	<groupId>nl.devoorkant.sbdr.multi</groupId>
+	<artifactId>sbdr-parent</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>sbdr-parent</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<oauth.version>2.3.3.RELEASE</oauth.version>
+		<jwt.version>1.0.9.RELEASE</jwt.version>
+
+		<org.springframework.data-version>2.1.0.RELEASE</org.springframework.data-version>
+		<org.hibernate-version>5.3.6.Final</org.hibernate-version>
+
+		<cxf.version>3.3.5</cxf.version> <!-- 3.2.6 -->
+		<jaxb.api.version>2.4.0-b180830.0359</jaxb.api.version>
+		<jaxb.impl.version>2.4.0-b180830.0438</jaxb.impl.version>
+		<org.slf4j-version>1.7.25</org.slf4j-version>
+		<lowagie.version>2.1.7</lowagie.version> <!-- 4.2.2? -->
+		<!--<dvk-util.version>1.1.12</dvk-util.version>-->
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.8.RELEASE</version> <!-- 2.0.5.RELEASE -->
+	</parent>
+
+	<modules>
+		<module>HibernateTools</module>
+		<module>sbdr-data</module>
+		<module>sbdr-business</module>
+		<module>cir-client</module>
+		<module>creditSafe-client</module>
+		<module>sbdr-web</module>
+		<module>dvk-util</module>
+	</modules>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter</artifactId> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>ch.qos.logback</groupId> -->
+<!-- 					<artifactId>logback-classic</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 		        <exclusion> -->
+<!-- 		            <artifactId>log4j-over-slf4j</artifactId> -->
+<!-- 		            <groupId>org.slf4j</groupId> -->
+<!-- 		        </exclusion>				 -->
+<!-- 			</exclusions>			 -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<!-- <version>2.0.5.RELEASE</version> -->
+			<scope>test</scope>
+		</dependency>
+		<!--<dependency>
+			<groupId>nl.devoorkant.util</groupId>
+			<artifactId>dvk-util</artifactId>
+			<version>${dvk-util.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xercesImpl</artifactId>
+					<groupId>xerces</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>xalan</artifactId>
+					<groupId>xalan</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>-->
+	</dependencies>
+</project>

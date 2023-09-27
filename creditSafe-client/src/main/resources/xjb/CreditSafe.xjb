@@ -1,0 +1,14 @@
+<bindings
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"    
+    xmlns="http://java.sun.com/xml/ns/jaxws">
+    <package name="nl.devoorkant.creditsafe.cxf"/>
+	<!-- bindings>
+	  <bindings node="wsdl:definitions/wsdl:types/xsd:schema">    
+	      <jaxb:schemaBindings>
+	          <jaxb:package name="nl.devoorkant.creditsafe.cxf"/>
+	      </jaxb:schemaBindings>
+	  </bindings>
+	</bindings -->
+</bindings>

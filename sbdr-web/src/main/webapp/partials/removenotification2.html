@@ -1,0 +1,48 @@
+<script type="text/ng-template" id="removenotification.html" class="reveal-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Melding verwijderen</h4>
+        </div>
+        <div class="modal-body">
+			<form name="myForm">
+            <p>Weet u zeker dat u de melding wilt verwijderen?</p>
+			<div class="row form-group">
+				<div class="col-sm-4">
+					<div class="radio">
+						<label>
+							<input type="radio" name="reason" ng-model="reason" value="1"> De vordering is voldaan
+							<i class="fa fa-circle-o"></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="reason" ng-model="reason" value="2"> Er is een regeling getroffen
+							<i class="fa fa-circle-o"></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="reason" ng-model="reason" value="3"> De opgegeven vermelding was niet juist
+							<i class="fa fa-circle-o"></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="reason" ng-model="reason" value="4"> Vordering is overgedragen aan derde partij
+							<i class="fa fa-circle-o"></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="reason" ng-model="reason" value="5"> Anders
+							<i class="fa fa-circle-o"></i>
+						</label>
+					</div>
+				</div>
+			</div>
+			</form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="removeNotificationOk()">Ok</button>
+            <button class="btn btn-primary" ng-click="closeRemoveNotificationModal()">Annuleren</button>
+        </div>
+</script>

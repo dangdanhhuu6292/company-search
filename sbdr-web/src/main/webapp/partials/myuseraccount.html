@@ -1,0 +1,76 @@
+<div class="row">
+	<div id="myuseraccount_page" class="col-xs-12">
+	    <div class="box no shad mobpad">
+        <div class="box-content border">
+            <span class="livicon-evo" data-options="name: lock.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; autoPlay:true; tryToSharpen: true"></span>
+            <span class="legend">Wachtwoord</span>
+            <div class="home">
+                <hr>
+            </div>
+				<div class="row box-context mobpad">
+					<div class="col-xs-12 col-sm-9 col-md-7 col-lg-5">
+						<div class="box-content mobpad">
+							<form id="form-passworddata" name="formpassworddata" class="form-horizontal mobpad" novalidate>
+								<fieldset>
+									<span class="legend">Wachtwoord aanpassen</span>
+
+									<div class="form-group padding20" ng-class="{'has-error' : isInvalid(formpassworddata, 'passwordhuidig')}">
+										<label class="col-sm-6 control-label">Huidige wachtwoord</label>
+
+										<div class="col-sm-6">
+											<input ng-paste="checkFieldMaxLength($event, passwordhuidig, maxFieldLengths.wachtwoord)" wm-block name="passwordhuidig" id="passwordhuidig" ng-model="passwordhuidig" type="password" class="form-control" wm-block-length="maxFieldLengths.wachtwoord" required>
+											<small class="help-block" ng-show="isInvalid(formpassworddata, 'passwordhuidig')">
+												<span>U moet uw huidige wachtwoord invoeren</span>
+											</small>
+										</div>
+									</div>
+
+									<div class="form-group" ng-class="{'has-error' : passwordInvalid(formpassworddata, 'password')}">
+										<label class="col-sm-6 control-label">Nieuw Wachtwoord</label>
+
+										<div class="col-sm-6">
+											<input ng-paste="checkFieldMaxLength($event, password, maxFieldLengths.wachtwoord)" wm-block name="password" id="password" ng-model="password" type="password" onkeydown="if (event.keyCode == 13) {sendbtn.click()
+}" class="form-control" wm-block-length="maxFieldLengths.wachtwoord" required>
+											<small class="help-block" id="passwordhelp" ng-show="passwordInvalid(formpassworddata, 'password')">
+												<span></span>
+											</small>
+										</div>
+									</div>
+
+									<div class="form-group" ng-class="{'has-error' : passwordCheckInvalid(formpassworddata, 'password', 'passwordcheck')}">
+										<label class="col-sm-6 control-label">Wachtwoord controle</label>
+
+										<div class="col-sm-6">
+											<input ng-paste="checkFieldMaxLength($event, passwordcheck, maxFieldLengths.wachtwoord)" wm-block name="passwordcheck" id="passwordcheck" ng-model="passwordcheck" type="password" onkeydown="if (event.keyCode == 13) {sendbtn.click()
+}" class="form-control" wm-block-length="maxFieldLengths.wachtwoord" required>
+											<small class="help-block" ng-show="passwordCheckInvalid(formpassworddata, 'password', 'passwordcheck')">
+												<span>Controlewachtwoord komt niet overeen met ingegeven wachtwoord</span>
+											</small>
+										</div>
+									</div>
+
+									<!-- ng-disabled="userSavedOk || buttonDisabled(formpassworddata, 'passwordhuidig', 'password', 'passwordcheck')" -->
+									<div class="form-group">
+										<div class="col-sm-6 col-sm-offset-6">
+											<button id="sendbtn" type="button" class="btn btnlgw2  w100mob btn-primary form-control" ng-click="reset('passwordhuidig', 'passwordcheck')">
+												Verstuur
+											</button>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div ng-show="userSavedOk" class="alert alert-success">Wachtwoord aangepast.</div>
+           <div data-ng-show="error">
+            <div class="box-content fout-smal text-center">
+              <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+			</div>
+		</div>
+	</div>
+</div>

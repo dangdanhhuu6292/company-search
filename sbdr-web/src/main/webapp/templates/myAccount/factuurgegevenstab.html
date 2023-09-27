@@ -1,0 +1,81 @@
+<div class="row box-content mobpad">
+    <div class="col-xs-12 col-lg-12 maxw1000">
+        <form id="form-facturen" name="obj.formfacturatie" class="form-horizontal" novalidate>
+            <div data-ng-show="facturatie.emailAdresFacturatie || editFacturatieOn" class="row box-content mobpad">
+                <fieldset>
+                    <div class="box-content">
+                       
+                        <div class="form-group paddingb10" data-ng-class="{'has-error' : isInvalid(obj.formfacturatie, 'emailadres') || emailInUse}">
+                            <label class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">E-mailadres</label>
+                            <div class="col-xs-12 col-sm-7 col-md-6 col-lg-5 ">
+                                <input data-ng-paste="checkFieldMaxLength($event, facturatieEmailAdres, maxFieldLengths.emailadres)" data-wm-block class="form-control" type="text" data-ng-show="editFacturatieOn" name="emailadres" id="emailadres" data-ng-model="facturatie.emailAdresFacturatie" data-ng-pattern="EMAIL_REGEXP" data-wm-block-length="maxFieldLengths.emailadres" required/>
+                                <small class="help-block" id="emailhelp" data-ng-show="isInvalid(obj.formfacturatie, 'emailadres') || emailInUse">
+								<span>Voer een geldig e-mailadres in.</span>
+							</small>
+                            </div>
+                            <span class="col-xs-12 col-sm-7 col-md-6 col-lg-5" data-ng-show="!editFacturatieOn">
+							{{facturatie.emailAdresFacturatie}}
+						</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  col-sm-9 col-sm-offset-0">
+                                <button data-ng-hide="editFacturatieOn" type="button" class="btn btnlgw2  btn-primary margin10" data-ng-click="editFacturatie()">Wijzigen</button>
+                            </div>
+                            <div class="col-xs-12 col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8 col-lg-offset-3 col-lg-9">
+                                <button data-ng-show="editFacturatieOn" type="button" class="btn  btnlgw2 btn-lg-mob btn-primary w100mob " data-ng-click="updateFacturatieData()"> <!-- obj.formaccountgegevens.$invalid || isUnchanged(account.klant) || buttonBankDisabled() -->
+								Opslaan
+							</button>
+                                <!---<button data-ng-show="editFacturatieOn" type="button" class="btn btn-primary btnlgw2 bluebtn11 w100mob" data-ng-click="emptyFacturatieEmailAndUpdate()">
+								Verwijderen
+							</button>--->
+                                <button data-ng-show="editFacturatieOn" type="button" class="btn btn-primary btnlgw2 btn-lg-mob bluebtn11 w100mob" data-ng-click="editFacturatie()">
+								Annuleren
+							</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div data-ng-hide="facturatie.emailAdresFacturatie && !editFacturatieOn" class="row box-content mobpad">
+                <fieldset>
+                    <div class="box-content">
+					 <div class="form-group">
+                            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                                <span class="legend">E-factuur</span>   <a class="clickableinfo" href="" data-info-popover data-tooltixp="Uw factuur mailen wij naar het e-mailadres dat gekoppeld is aan uw account. Mocht u de factuur op een ander e-mailadres willen ontvangen, dan kunt u dat hier invullen." data-popover-placement="right"></a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  col-sm-9 col-sm-offset-0">
+                                <button data-ng-hide="editFacturatieOn" type="button" class="btn w100mob btnlgw2 btn-primary margin10" data-ng-click="editFacturatie()">Ander email instellen</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+        <div class="box-content overres mobpad">
+            <span class="legend">Facturen</span>
+            <table id="facturen" class="table no-mobiel m-table table-bordered table-hover table-striped margin20 ">
+                <thead>
+                    <tr>
+                        <th data-label="Factuurdatum">Factuurdatum</th>
+                        <th data-label="Factuurnummer">Factuurnummer</th>
+                        <th data-label="Totaal bedrag">Totaal bedrag</th>
+                        <th class="minwacties" data-label="Download">Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="factuurregel in facturen">
+                        <td data-label="Factuurdatum">{{factuurregel.datumAangemaakt}}</td>
+                        <td data-label="Factuurnummer">{{factuurregel.referentieNummer}}</td>
+                        <td data-label="Totaal bedrag">{{factuurregel.bedrag | currency}}</td>
+                        <td data-label="Download">
+                            <factuur-download url="/download/a.pdf" filename="my-awesome.pdf"></factuur-download>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination data-ng-hide="factuurTotalItems <=factuurItemsPage" direction-links="false" boundary-links="true" total-items="factuurTotalItems" items-per-page="factuurItemsPage" max-size="factuurMaxSize" data-ng-change="factuurPageChanged(factuurCurrentPage)" ng-model="factuurCurrentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+        </div>
+    </div>
+</div>

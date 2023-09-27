@@ -1,0 +1,161 @@
+appcontrollers.controller('ObjectionsAdminTabController',
+    ['$window', '$scope', '$rootScope', '$location', '$filter', '$timeout', 'maxFieldLengths', 'ngTableParams',
+        'DashboardNumberTags', 'DashboardService', 'AccountService', 'CompanyService',
+        function ($window, $scope, $rootScope, $location, $filter, $timeout, maxFieldLengths, ngTableParams,
+                  DashboardNumberTags, DashboardService, AccountService, CompanyService) {
+
+    		$scope.maxFieldLengths = maxFieldLengths;
+    		
+            $scope.title = "Bezwaren Tab";
+
+            AccountService.getCompanyAccountData({bedrijfId: JSON.parse($window.sessionStorage.user).bedrijfId}, function (data) {
+                $scope.account = data;
+            });
+
+            $scope.totalItems = 0;
+            $scope.currentPage = 1;
+            $scope.itemsPage = 20;
+            $scope.maxSize = 5;
+            $scope.thisUser = JSON.parse($window.sessionStorage.user);
+
+            if (typeof $scope.filterCriteria == 'undefined') {
+                $scope.filterCriteria = {
+                    bedrijfId: JSON.parse($window.sessionStorage.user).bedrijfId,
+                    pageNumber: 1,
+                    sortDir: "", // asc, desc
+                    sortedBy: "",
+                    filterValue: "" // text to filter on
+                };
+            }
+
+            $scope.$watch('filterCriteria.filterValue', function (search) {
+                if (typeof searchCallbackTimeout != 'undefined') $timeout.cancel(searchCallbackTimeout);
+
+                searchCallbackTimeout = $timeout(function () {
+                    if (search) {
+                        if (search.length > 2) {
+                            // refresh
+                            $scope.currentPage = 1;
+                            $scope.pageChanged();
+                            $scope.oldSearch = search;
+                        }
+                    }
+                    else if (isSearchChanged(search)) {
+                        // refresh
+                        $scope.currentPage = 1;
+                        $scope.pageChanged();
+                        $scope.oldSearch = search;
+                    }
+                }, 1000);
+            }, true);
+
+            // The function that is responsible of fetching the result from the
+            // server and setting the grid to the new result
+            $scope.fetchResult = function (success) {
+                $rootScope.range = "items=" + (($scope.filterCriteria.pageNumber - 1) * $scope.itemsPage + 1) + "-" + (($scope.filterCriteria.pageNumber - 1) * $scope.itemsPage + $scope.itemsPage);
+
+                DashboardService.objectionsadmin($scope.filterCriteria, function (data, headers) {
+                    if (typeof data != 'undefined' && data.length > 0) {
+                        $scope.objectionsAdminCollection = data;
+                        
+                        $scope.totalItems = paging_totalItems(headers("Content-Range"));
+                    }
+                    else {
+                        $scope.objectionsAdminCollection = null;
+                        $scope.totalItems = 0;
+                    }
+                    DashboardNumberTags.setNrOfObjectionsAdmin($scope.totalItems);
+
+                    success();
+                }, function () {
+                    $scope.objectionsAdminCollection = [];
+                    $scope.totalItems = 0;
+                    DashboardNumberTags.setNrOfObjectionsAdmin($scope.totalItems);
+                });
+            };
+
+            // Data table functions
+            $scope.filterResult = function () {
+                return $scope.fetchResult(function () {
+                    //The request fires correctly but sometimes the ui doesn't update, that's a fix
+                    $scope.filterCriteria.pageNumber = 1;
+                    $scope.currentPage = 1;
+
+                    // rootscope range delete
+                    delete $rootScope.range;
+
+                });
+            };
+
+            $scope.hasItems = function () {
+                return DashboardNumberTags.getNrOfObjectionsAdmin() > 0;
+            };
+
+            $scope.ignorealert = function (type, alertId, bedrijfId) {
+                if (type == 'MON') {
+                    updateMonitoring(bedrijfId);
+                } else {
+                    deleteAlert(alertId);
+                }
+            };
+
+            $scope.pageChanged = function () {
+                $scope.filterCriteria.pageNumber = $scope.currentPage;
+                $scope.fetchResult(function () {
+                    //Nothing to do..
+
+                    // rootscope range delete
+                    delete $rootScope.range;
+                });
+            };
+
+            $scope.setPage = function (pageNo) {
+                $scope.currentPage = pageNo;
+            };
+
+			$scope.viewAdminDetails = function(refNoPRefix){
+				supportObjectionDetail(refNoPRefix);
+			};
+
+            $scope.viewdetails = function (type, alertId, monitoringId, meldingId, supportId, bedrijfId, refNoPrefix) {
+            	if (type == 'SUP') {
+					deleteAlert(alertId);
+                    supportObjectionDetail(refNoPrefix);
+                }
+            };
+
+			deleteAlert = function (alertId) {
+				// remove alert record
+				CompanyService.deleteAlert(alertId, function (result) {
+					if (typeof result.errorCode !== "undefined")
+						$scope.error = result.errorCode + " " + result.errorMsg;
+					else {
+						// refresh
+						$scope.currentPage = 1;
+						$scope.pageChanged();
+					}
+				});
+			};
+
+			isSearchChanged = function (search) {
+				if (typeof $scope.oldSearch == 'undefined') {
+					$scope.oldSearch = search;
+					return false;
+				} else return $scope.oldSearch != search;
+			};
+
+
+			supportObjectionDetail = function (refNoPrefix) {
+				delete $scope.error;
+				$location.path('/support/detail/' + refNoPrefix+'/$dashboard$objectionsadmintab');
+				$location.url($location.path());
+			};
+
+			
+			$scope.lowercaseFirstLetter = function (string) {
+			    return string.charAt(0).toLowerCase() + string.slice(1);
+			};
+
+			// fetch initial data for 1st time
+			$scope.filterResult();
+        }]);

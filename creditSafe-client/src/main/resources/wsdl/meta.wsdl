@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.creditsafe.com/globaldata/operations" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://www.creditsafe.com/globaldata/operations" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.creditsafe.com/globaldata/operations/Imports">
+      <xsd:import schemaLocation="meta.xsd" namespace="http://www.creditsafe.com/globaldata/operations"/>
+      <xsd:import schemaLocation="meta_1_2.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xsd:import schemaLocation="meta_1_2_3_4.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes/reports"/>
+      <xsd:import schemaLocation="meta_1_2_3_4_5.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes/administration"/>
+      <xsd:import schemaLocation="meta_1_2_3_4_5_6.xsd" namespace="systemtypes"/>
+      <xsd:import schemaLocation="meta_1_2_3_4_5_6_7.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xsd:import schemaLocation="meta_1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xsd:import schemaLocation="meta_1_2_3.xsd" namespace="http://schemas.datacontract.org/2004/07/Creditsafe.GlobalData"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GlobalDataService_GetPortfolios_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPortfolios"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetPortfolios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPortfoliosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_ListMonitoredCompanies_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListMonitoredCompanies"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_ListMonitoredCompanies_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListMonitoredCompaniesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_CreatePortfolio_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePortfolio"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_CreatePortfolio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePortfolioResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RemovePortfolios_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemovePortfolios"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RemovePortfolios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemovePortfoliosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetPortfolioSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPortfolioSettings"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetPortfolioSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPortfolioSettingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_SetPortfolioSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetPortfolioSettings"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_SetPortfolioSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetPortfolioSettingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_AddCompaniesToPortfolios_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCompaniesToPortfolios"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_AddCompaniesToPortfolios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCompaniesToPortfoliosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_ImportCompaniesToPortfolio_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportCompaniesToPortfolio"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_ImportCompaniesToPortfolio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportCompaniesToPortfolioResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RemoveCompaniesFromPortfolios_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveCompaniesFromPortfolios"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RemoveCompaniesFromPortfolios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveCompaniesFromPortfoliosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_ChangeCompaniesReferenceStrings_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeCompaniesReferenceStrings"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_ChangeCompaniesReferenceStrings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeCompaniesReferenceStringsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetSupportedChangeEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSupportedChangeEvents"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetSupportedChangeEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSupportedChangeEventsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetMonitoringRules_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMonitoringRules"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetMonitoringRules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMonitoringRulesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_SetMonitoringRules_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetMonitoringRules"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_SetMonitoringRules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetMonitoringRulesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_SetDefaultChangesCheckPeriod_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetDefaultChangesCheckPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_SetDefaultChangesCheckPeriod_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetDefaultChangesCheckPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RetrieveCompanyOnlineReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCompanyOnlineReport"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RetrieveCompanyOnlineReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCompanyOnlineReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_TryRetrieveCompanyOnlineReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:TryRetrieveCompanyOnlineReport"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_TryRetrieveCompanyOnlineReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TryRetrieveCompanyOnlineReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_OrderCompanyOfflineReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:OrderCompanyOfflineReport"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_OrderCompanyOfflineReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OrderCompanyOfflineReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetReportboxContents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportboxContents"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetReportboxContents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportboxContentsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetReportboxReports_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportboxReports"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetReportboxReports_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportboxReportsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RemoveReportboxReports_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveReportboxReports"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_RemoveReportboxReports_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveReportboxReportsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetCountries_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountries"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetCountries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetPossibleSearchCriteria_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPossibleSearchCriteria"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetPossibleSearchCriteria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPossibleSearchCriteriaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_FindCompanies_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindCompanies"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_FindCompanies_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindCompaniesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetReportCustomDataSchema_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportCustomDataSchema"/>
+  </wsdl:message>
+  <wsdl:message name="GlobalDataService_GetReportCustomDataSchema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportCustomDataSchemaResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GlobalDataService">
+    <wsdl:operation name="GetPortfolios">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetPortfolios" message="tns:GlobalDataService_GetPortfolios_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetPortfoliosResponse" message="tns:GlobalDataService_GetPortfolios_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ListMonitoredCompanies">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/ListMonitoredCompanies" message="tns:GlobalDataService_ListMonitoredCompanies_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/ListMonitoredCompaniesResponse" message="tns:GlobalDataService_ListMonitoredCompanies_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePortfolio">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/CreatePortfolio" message="tns:GlobalDataService_CreatePortfolio_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/CreatePortfolioResponse" message="tns:GlobalDataService_CreatePortfolio_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="RemovePortfolios">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/RemovePortfolios" message="tns:GlobalDataService_RemovePortfolios_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/RemovePortfoliosResponse" message="tns:GlobalDataService_RemovePortfolios_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortfolioSettings">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetPortfolioSettings" message="tns:GlobalDataService_GetPortfolioSettings_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetPortfolioSettingsResponse" message="tns:GlobalDataService_GetPortfolioSettings_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetPortfolioSettings">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/SetPortfolioSettings" message="tns:GlobalDataService_SetPortfolioSettings_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/SetPortfolioSettingsResponse" message="tns:GlobalDataService_SetPortfolioSettings_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="AddCompaniesToPortfolios">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/AddCompaniesToPortfolios" message="tns:GlobalDataService_AddCompaniesToPortfolios_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/AddCompaniesToPortfoliosResponse" message="tns:GlobalDataService_AddCompaniesToPortfolios_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ImportCompaniesToPortfolio">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/ImportCompaniesToPortfolio" message="tns:GlobalDataService_ImportCompaniesToPortfolio_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/ImportCompaniesToPortfolioResponse" message="tns:GlobalDataService_ImportCompaniesToPortfolio_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCompaniesFromPortfolios">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/RemoveCompaniesFromPortfolios" message="tns:GlobalDataService_RemoveCompaniesFromPortfolios_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/RemoveCompaniesFromPortfoliosResponse" message="tns:GlobalDataService_RemoveCompaniesFromPortfolios_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCompaniesReferenceStrings">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/ChangeCompaniesReferenceStrings" message="tns:GlobalDataService_ChangeCompaniesReferenceStrings_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/ChangeCompaniesReferenceStringsResponse" message="tns:GlobalDataService_ChangeCompaniesReferenceStrings_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSupportedChangeEvents">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetSupportedChangeEvents" message="tns:GlobalDataService_GetSupportedChangeEvents_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetSupportedChangeEventsResponse" message="tns:GlobalDataService_GetSupportedChangeEvents_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetMonitoringRules">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetMonitoringRules" message="tns:GlobalDataService_GetMonitoringRules_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/GetMonitoringRulesResponse" message="tns:GlobalDataService_GetMonitoringRules_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetMonitoringRules">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/SetMonitoringRules" message="tns:GlobalDataService_SetMonitoringRules_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/SetMonitoringRulesResponse" message="tns:GlobalDataService_SetMonitoringRules_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetDefaultChangesCheckPeriod">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/SetDefaultChangesCheckPeriod" message="tns:GlobalDataService_SetDefaultChangesCheckPeriod_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyMonitoringService/SetDefaultChangesCheckPeriodResponse" message="tns:GlobalDataService_SetDefaultChangesCheckPeriod_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCompanyOnlineReport">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/RetrieveCompanyOnlineReport" message="tns:GlobalDataService_RetrieveCompanyOnlineReport_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/RetrieveCompanyOnlineReportResponse" message="tns:GlobalDataService_RetrieveCompanyOnlineReport_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="TryRetrieveCompanyOnlineReport">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/TryRetrieveCompanyOnlineReport" message="tns:GlobalDataService_TryRetrieveCompanyOnlineReport_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/TryRetrieveCompanyOnlineReportResponse" message="tns:GlobalDataService_TryRetrieveCompanyOnlineReport_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="OrderCompanyOfflineReport">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/OrderCompanyOfflineReport" message="tns:GlobalDataService_OrderCompanyOfflineReport_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/OrderCompanyOfflineReportResponse" message="tns:GlobalDataService_OrderCompanyOfflineReport_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetReportboxContents">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/GetReportboxContents" message="tns:GlobalDataService_GetReportboxContents_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/GetReportboxContentsResponse" message="tns:GlobalDataService_GetReportboxContents_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetReportboxReports">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/GetReportboxReports" message="tns:GlobalDataService_GetReportboxReports_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/GetReportboxReportsResponse" message="tns:GlobalDataService_GetReportboxReports_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveReportboxReports">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/RemoveReportboxReports" message="tns:GlobalDataService_RemoveReportboxReports_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/CompanyDataAccessService/RemoveReportboxReportsResponse" message="tns:GlobalDataService_RemoveReportboxReports_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountries">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/GetCountries" message="tns:GlobalDataService_GetCountries_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/GetCountriesResponse" message="tns:GlobalDataService_GetCountries_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetPossibleSearchCriteria">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/GetPossibleSearchCriteria" message="tns:GlobalDataService_GetPossibleSearchCriteria_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/GetPossibleSearchCriteriaResponse" message="tns:GlobalDataService_GetPossibleSearchCriteria_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="FindCompanies">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/FindCompanies" message="tns:GlobalDataService_FindCompanies_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/FindCompaniesResponse" message="tns:GlobalDataService_FindCompanies_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetReportCustomDataSchema">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/GetReportCustomDataSchema" message="tns:GlobalDataService_GetReportCustomDataSchema_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/DataBrowsingService/GetReportCustomDataSchemaResponse" message="tns:GlobalDataService_GetReportCustomDataSchema_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,78 @@
+<div class="row">
+    <div id="myuseraccount_page" class="col-sm-12">
+        <div class="box no shad clearfix">
+            <div class="box-content border clearfix">
+			       <span class="livicon-evo" data-options="name: morph-eye-open-close.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+                        <span class="legend">Parameters</span>
+                        <div class="home">
+                            <hr>
+                        </div>
+                <div class="row box-context">
+                    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-5">
+                        <div class="box-content mobpad">
+                            <form id="form-websiteparam" name="formwebsiteparam" class="form-horizontal" novalidate>
+                                <fieldset>							
+                                    <legend class="kopparameters">Bugs</legend>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formwebsiteparam, 'startupslastweek')}">
+                                        <label class="col-xs-12 col-sm-6 control-label">Week</label>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input name="startupslastweek" id="startupslastweek" ng-model="websiteparam.startupsWeek" type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formwebsiteparam, 'startupslastweek')}">
+                                        <label class="col-xs-12 col-sm-6 control-label">Jaar</label>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input name="startupsthisyear" id="startupsthisyear" ng-model="websiteparam.startupsYtd" type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+									<hr>
+                                    <legend class="kopparameters">Bezoekers</legend>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formwebsiteparam, 'vermeldingenlastweek')}">
+                                        <label class="col-xs-12 col-sm-6 control-label">Week</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input name="vermeldingenlastweek" id="vermeldingenlastweek" ng-model="websiteparam.vermeldingenWeek" type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formwebsiteparam, 'vermeldingenlastweek')}">
+                                        <label class="col-xs-12 col-sm-6 control-label">Jaar</label>
+
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input name="vermeldingenthisyear" id="vermeldingenthisyear" ng-model="websiteparam.vermeldingenYtd" type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+									<hr>
+                                    <legend class="kopparameters">Storingen</legend>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formwebsiteparam, 'storingen')}">
+                                        <label class="col-xs-12 col-sm-6 control-label">Storingen tekst</label>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <textarea ng-paste="checkFieldMaxLength($event, websiteparam.storingen, maxFieldLengths.storingBericht)" wm-block class="form-control" cols="80" rows="5" name="storingen" id="storingen" ng-model="websiteparam.storingen" wm-block-length="maxFieldLengths.storingBericht" required></textarea>
+                                            <!-- Op dit moment zijn er geen storingen bekend. -->
+                                            <small class="help-block" ng-show="isInvalid(formwebsiteparam, 'storingen')">
+												<span>Vul uw storingsbericht a.u.b. in</span>
+											</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+                                            <button type="button" ng-hide="websiteparamSavedOk" class="btn btnlgw2 w100mob btn-primary" ng-disabled="checkWebsiteparamFormInvalid()" ng-click="submitWebsiteparam()">
+												Opslaan
+											</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                           <div data-ng-show="error">
+            <div class="box-content fout-smal text-center">
+              <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+                <div  class="alert alert-success" ng-show="websiteparamSavedOk">Parameters succesvol gecontroleerd</div>
+            </div>
+        </div>
+    </div>
+</div> 

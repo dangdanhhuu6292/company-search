@@ -1,0 +1,62 @@
+<div ng-controller="ProcessesAdminTabController">
+	<div class="row box-content">
+		<div class="col-sm-12">
+			<div class="row box-context">
+				<div class="col-sm-12 col-lg-8">
+					<div class="box-content">
+						<div ng-show="noData">
+							<h4>Er zijn geen records om te verwerken.</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row box-content">
+		<div class="col-sm-12" ng-show="processes">
+			<table id="companycustomers" class="table m-table table-bordered table-hover table-striped">
+				<thead>
+				<tr>
+					<th>Datum</th>
+					<th>Brief referentie</th>
+					<th>Bedrijfsnaam</th>
+					<th>Bedrijf referentie</th>
+					<th>Soort proces</th>
+					<th>Status</th>
+					<th>Acties</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="process in processes">
+					<td>{{process.datumAangemaakt | date}}</td>
+					<td>{{process.documentReferentie==undefined?'-':process.documentReferentie}}</td>
+					<td>{{process.bedrijfsNaam==undefined?'-':(process.bedrijfsNaam | limitTo:50)}}</td>
+					<td>{{process.sbdrNummer==undefined?'-':process.sbdrNummer}}</td>
+					<td>{{process.internalProcessTypeDesc}}</td>
+					<td>{{process.internalProcessStatusDesc}}</td>
+					<td>
+						<button type="button" class="btn btn-primary btn-xs" ng-click="promptSendLetter(process.internalProcessId)" ng-show="process.internalProcessType=='BKL'||process.internalProcessType=='BRF'||process.internalProcessType=='BVM'">Brief verstuurd</button>
+						<button type="button" class="btn btn-primary btn-xs" ng-click="promptSendBatch(process.internalProcessId)" ng-show="process.internalProcessType=='KBD'||process.internalProcessType=='MBD'||process.internalProcessType=='BBT'">Batch verstuurd</button>
+						<batchdocument-download ng-show="process.internalProcessType=='KBD'||process.internalProcessType=='MBD'||process.internalProcessType=='BBT'"></batchdocument-download>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<pagination ng-show="hasItems()" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged()" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+		</div>
+	</div>
+	<div id="alert" class="alert alert-danger" ng-show="error">{{error}}</div>
+</div>
+
+<script type="text/ng-template" id="processLetter.html" class="reveal-modal">
+	<div class="modal-header">
+		<h4 class="modal-title">{{briefOrBatch}} status aanpassen</h4>
+	</div>
+	<div class="modal-body">
+		<p>Hiermee geeft u aan dat deze {{briefOrBatch}} verstuurd is. Kunt u dit bevestigen?</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="sendLetter()">Bevestigen</button>
+		<button class="btn btn-primary" ng-click="closeLetterPrompt()">Annuleren</button>
+	</div>
+</script>

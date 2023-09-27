@@ -1,0 +1,66 @@
+<div class="row">
+    <div id="myaccount_page" class="col-xs-12">
+        <div class="box no shad">
+            <div class="box-content border">
+                <span class="livicon-evo" data-options="name: step-one-fourth.svg;  size: 35px; style: filled; strokeColor: #0a212f; fillColor: #d3ebff; solidColor: #e89a00; solidColorAction: #1f5d9f; autoPlay:true;eventOn:parent ;tryToSharpen:true">&nbsp;</span>
+                <span class="legend">Vereisten voor vermelding</span>
+                <div class="home">
+                    <hr>
+                    <div class="box-content">
+                        <div class="row box-context">
+                            <div class="col-xs-12 col-lg-12">
+                                <div class="box-content mobpad">
+                                    <form id="form-vermeldingeninfo" name="formvermeldingeninfo" class="form-horizontal" novalidate>
+                                        <fieldset>
+                                            <legend class="kop">Voldoet uw openstaande vordering aan de volgende vereisten?</legend>
+                                            <div class="form-group">
+                                                <span class="col-xs-12">
+											Om uw debiteur te vermelden dient de vordering aan een aantal vereisten te voldoen: 
+										</span>
+                                            </div>
+                                            <div class="form-group mopad">
+                                                <span class="col-xs-12">
+											 <ul style="list-style-type:disc">
+											  <li>U beschikt over documenten waaruit het recht op het factuurbedrag volgt;</li>
+											  <li>Debiteur betwist de vordering niet;</li>
+											  <li>U heeft uw debiteur reeds een aanmaning gestuurd;</li>
+											  <li>Er zijn ten minste 30 dagen verstreken na de betalingstermijn van de vordering en</li>
+											  <li>Het betreft een vordering van minstens honderd euro (&euro; 100,-).</li>
+											</ul> 																							
+										</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="col-xs-12">&nbsp;</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="col-xs-12">
+                                         Voldoet uw vordering aan de bovenstaande vereisten dan kunt u doorgaan met het indienen van de betalingsachterstand.<br/></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-12 margin15">
+                                                    <button type="button" class="btn btnlgw2 btn-primary btn-lg-mob w100mob" ng-click="gotoVermeldingen()">Verder</button>
+                                                    <button type="button" class="btn btnlgw2 btn-primary btn-lg-mob bluebtn11 w100mob" ng-click="returnToSearch()">Terug</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <div class="checkbox">
+                                                        <label title=""> <input type="checkbox" class="form-control" ng-model="nietMeerWeergeven" id="nietMeerWeergeven" name="nietMeerWeergeven"> Deze informatie voortaan niet meer weergeven.
+													<i class="fa fa-square-o"></i></input>
+												</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="error">
+                <div class="box-content fout text-center">
+                  <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                    <span id="alert" class="fouttext">{{error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

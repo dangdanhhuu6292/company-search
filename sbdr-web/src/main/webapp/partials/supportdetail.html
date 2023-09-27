@@ -1,0 +1,137 @@
+<div class="row">
+<div id="support_detail_page" class="col-xs-12">
+    <div class="box no shad">
+        <div class="box-content border">
+            <span class="livicon-evo" data-options="name: grid.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;tryToSharpen: true">&nbsp;</span>
+            <span class="legend">Support ticket</span>
+            <div class="home">
+                <hr> 
+            </div>
+            <div data-ng-show="topError">
+                <div class="row box-content foutw text-center">
+                   <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                    <span class="fouttext text-center">{{topError}}</span>
+                </div>
+            </div>
+            <div class="box-content">             
+                        <button class="btn btn-primary btnlgw2 " data-ng-click="gotoSupport()" type="button">
+								Terug
+							</button>
+                        <button class="btn btnlgw2 btn-primary bluebtn11 w100mob" data-ng-click="pickUpSupportTicket()" data-ng-show="supportTicket.supportStatus=='OPN' && supportTicket.gebruiker.gebruikersId != thisUser.userId && !supportTicketPickUpOK && !topError" type="button">
+								Oppakken
+							</button>
+                    </div>
+            
+            <div class="row box-content" data-ng-show="!topError">
+                <div class="col-xs-12">
+                    <div class="row box-content">
+                        <form id="form-bedrijfsgegevens" name="formbedrijfsgegevens" class="form-horizontal" novalidate>
+                            <fieldset>
+                                <span class="legend" data-ng-show="supportTicket.supportType == 'BZW'">Bezwaar tegen vermelding</span>
+                                <span class="legend" data-ng-show="supportTicket.supportType != 'BZW'">Support ticket</span>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-5 col-md-5 col-lg-4 control-label">Ingediend op</label>
+                                    <span class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+		                                    {{supportTicket.datumAangemaakt}}
+		                                </span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-5 col-md-5 col-lg-4 control-label">Referentienummer support</label>
+                                    <span class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+		                                    {{supportTicket.referentieIntern}}
+		                                </span>
+                                </div>
+                                <div class="form-group" data-ng-show="monitorData.postPostbus">
+                                    <label class="col-xs-12 col-sm-5 col-md-5 col-lg-4 control-label">Support type</label>
+                                    <span class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+		                                    {{supportTicket.supportTypeDesc}}
+		                                </span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-5 col-md-5 col-lg-4 control-label">Support status</label>
+                                    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+                                        <span title="Openstaand" data-ng-show="supportTicket.supportStatus == 'OPN'" class="bg-success badge">Ingediend</span>
+                                        <span title="In behandeling" data-ng-show="supportTicket.supportStatus == 'IBH'" class="bg-warning badge">In behandeling</span>
+                                        <span title="In behandeling(bij CRZB)" data-ng-show="supportTicket.supportStatus == 'GST'" class="bg-warning badge">In behandeling</span>
+                                        <span title="Gesloten" data-ng-show="supportTicket.supportStatus == 'ARC'" class="bg-default badge">Gesloten</span>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-show="supportTicket.melding.referentieIntern">
+                                    <label class="col-xs-12 col-sm-5 col-md-5 col-lg-4 control-label">VE-nummer</label>
+                                    <span class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+		                                    {{supportTicket.melding.referentieIntern}}
+		                                </span>
+                                </div>
+                                <div class="form-group" data-ng-show="supportTicket.melding.referentieIntern">
+                                    <label class="col-xs-12 col-sm-5 col-md-5 col-lg-4 control-label">Bedrijfsnaam</label>
+                                    <span class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+		                                    {{supportTicket.melding.bedrijfsNaam}}
+		                                </span>
+                                </div>
+                                <div class="form-group" data-ng-show="supportTicket.melding.referentieIntern">
+                                    <label class="col-xs-12 col-sm-5 col-md-5 col-lg-4 control-label">Factuurnummer</label>
+                                    <span class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+		                                    {{supportTicket.melding.referentie}}
+		                                </span>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+            <hr>
+            <div class="row box-content maxwidsupport" data-ng-show="!topError">
+                <div class="col-xs-12 "> 
+                    <div data-ng-repeat="support in supportchain">
+                        <div data-ng-if="!support.supportParentId">
+                            <div data-ng-if="support.supportType == 'BZW' && support.gebruiker.gebruikersId == thisUser.userId" data-ng-include="'templates/supportDetail/messageMyObjection.html'"></div>
+                            <div data-ng-if="support.supportType != 'BZW' && support.gebruiker.gebruikersId == thisUser.userId" data-ng-include="'templates/supportDetail/messageMySupport.html'"></div>
+                            <div data-ng-if="support.supportType == 'BZW' && support.gebruiker.gebruikersId != thisUser.userId" data-ng-include="'templates/supportDetail/messageObjection.html'"></div>
+                            <div data-ng-if="support.supportType != 'BZW' && support.gebruiker.gebruikersId != thisUser.userId" data-ng-include="'templates/supportDetail/messageSupport.html'"></div>
+                        </div>
+
+                        <div data-ng-if="support.supportParentId">
+                            <div data-ng-if="support.supportType == 'BZW' && support.gebruiker.gebruikersId == thisUser.userId
+	                                && !hasAdminRole(support.gebruiker.roles)" data-ng-include="'templates/supportDetail/reactionMyObjection.html'"></div>
+                            <div data-ng-if="support.supportType == 'BZW' && support.gebruiker.gebruikersId != thisUser.userId
+	                                && !hasAdminRole(support.gebruiker.roles)" data-ng-include="'templates/supportDetail/reactionObjection.html'"></div>
+                            <div data-ng-if="support.supportType == 'BZW' && hasAdminRole(support.gebruiker.roles)" data-ng-include="'templates/supportDetail/reactionSbdrObjection.html'"></div>
+                            <div data-ng-if="support.supportType != 'BZW' && hasAdminRole(support.gebruiker.roles)" data-ng-include="'templates/supportDetail/reactionSbdrSupport.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row box-content maxwidsupport" data-ng-show="!topError">
+                <div class="col-xs-12">
+                    <div data-ng-if="supportchain.length == 1 && !hasAdminRole(thisUser.roles) && (supportTicket.supportStatus == 'OPN' || supportTicket.supportStatus == 'IBH')
+	                        && supportTicket.supportType == 'BZW' && supportTicket.gebruiker.gebruikersId != thisUser.userId" data-ng-include="'templates/supportDetail/formReact.html'" data-ng-hide="supportSavedOk"></div>
+
+                    <div data-ng-if="hasAdminRole(thisUser.roles) && supportTicket.supportType != 'BZW'
+	                        && (supportTicket.supportStatus == 'OPN' || supportTicket.supportStatus == 'IBH')" data-ng-include="'templates/supportDetail/formSbdrSupport.html'" data-ng-hide="supportSavedOk"></div>
+
+                    <div data-ng-if="supportTicket.supportStatus == 'GST' && hasAdminRole(thisUser.roles) && supportTicket.supportType == 'BZW'" data-ng-include="'templates/supportDetail/formSbdrObjection.html'" data-ng-hide="supportSavedOk"></div>
+                </div>
+            </div>
+  
+    <div data-ng-show="error">
+        <div class="box-content foutw text-center">
+            <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+            <span id="alert" class="fouttext">{{error}}</span>
+        </div>
+    </div>
+    <div data-ng-show="supportSavedOk&&!showStaticSuccessMsg()">
+        <div class="box-content primaw text-center">
+            <span class="livicon-evo" data-options="name: servers.svg; size: 30px; style: lines-alt; strokeColor:#07790d;strokeColorAlt:#07790d; autoPlay:true;repeat:3; tryToSharpen: true">&nbsp;</span>
+            <span class="primatext">{{successMsg}}</span>
+        </div>
+    </div> 
+    <div data-ng-show="showStaticSuccessMsg()">
+        <div class="box-content primaw text-center">
+            <span class="livicon-evo" data-options="name: servers.svg; size: 30px; style: lines-alt; strokeColor:#07790d;strokeColorAlt:#07790d; autoPlay:true;repeat:3; tryToSharpen: true">&nbsp;</span>
+            <span class="primatext">{{getStaticSuccessMsg()}}</span>
+        </div>
+    </div>
+	      </div>
+    </div>
+</div>
+</div>	

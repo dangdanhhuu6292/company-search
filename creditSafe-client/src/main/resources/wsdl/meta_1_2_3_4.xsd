@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.creditsafe.com/globaldata/datatypes/reports" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mstns="http://www.creditsafe.com/globaldata/datatypes/reports" xmlns="http://www.creditsafe.com/globaldata/datatypes/reports">
+  <xs:import schemaLocation="meta_1_2.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes"/>
+  <xs:complexType name="CompanyReportSet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="q1:ServiceResponse" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Reports">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Report" type="CompanyReport"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="ChargeReference" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CompanyReport" abstract="true">
+    <xs:attribute name="CompanyId" type="xs:string" use="required"/>
+    <xs:attribute name="OrderNumber" type="xs:unsignedLong" use="required"/>
+    <xs:attribute name="Language" type="q1:Language" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    <xs:attribute name="ReportCurrency" type="q1:Currency" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+  </xs:complexType>
+  <xs:complexType name="LtdCompanyFullReport">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CompanyReport">
+        <xs:sequence>
+          <xs:element name="CompanySummary" type="LtdCompanySummary"/>
+          <xs:element name="CompanyIdentification" type="LtdCompanyIdentification"/>
+          <xs:element name="CreditScore" type="LtdCreditScore"/>
+          <xs:element name="ContactInformation" type="LtdContactInformation"/>
+          <xs:element minOccurs="0" name="ShareCapitalStructure" type="LtdShareCapitalStructure"/>
+          <xs:element minOccurs="0" name="Directors" type="LtdDirectors"/>
+          <xs:element minOccurs="0" name="OtherInformation" type="LtdOtherInformation"/>
+          <xs:element minOccurs="0" name="GroupStructure" type="LtdGroupStructure"/>
+          <xs:element minOccurs="0" name="FinancialStatements">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="FinancialStatement" type="LtdFinancialStatement"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="AdditionalInformation">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+              </xs:sequence>
+              <xs:anyAttribute processContents="skip"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LtdCompanySummary">
+    <xs:sequence>
+      <xs:element name="BusinessName" type="xs:string"/>
+      <xs:element name="Country" type="q1:CountryCode" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="Number" type="xs:string"/>
+      <xs:element minOccurs="0" name="CompanyRegistrationNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="MainActivity" type="CompanyActivity"/>
+      <xs:element minOccurs="0" name="CompanyStatus" type="CompanyStatusDescription"/>
+      <xs:element minOccurs="0" name="LatestTurnoverFigure" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="LatestShareholdersEquityFigure" type="FinancialValue_Decimal"/>
+      <xs:element name="CreditRating" type="CreditRating"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdCompanyIdentification">
+    <xs:sequence>
+      <xs:element name="BasicInformation" type="LtdCompanyBasicInformation"/>
+      <xs:element minOccurs="0" name="Activities">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Activity" type="CompanyActivity"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="PreviousNames">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="PreviousName" type="PreviousName"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="PreviousLegalForms">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="PreviousLegalForm" type="PreviousLegalForm"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdCreditScore">
+    <xs:sequence>
+      <xs:element name="CurrentCreditRating" type="CreditRating"/>
+      <xs:element minOccurs="0" name="CurrentContractLimit" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="PreviousCreditRating" type="CreditRating"/>
+      <xs:element minOccurs="0" name="DateOfLatestRatingChange" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdContactInformation">
+    <xs:sequence>
+      <xs:element name="MainAddress" type="StreetAddressWithTelephone"/>
+      <xs:element minOccurs="0" name="OtherAddresses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="OtherAddress" type="StreetAddressWithTelephone"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="PreviousAddresses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="PreviousAddress" type="StreetAddress"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="EmailAddresses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailAddress" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Websites">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Website" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdShareCapitalStructure">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NominalShareCapital" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="IssuedShareCapital" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="ShareHolders">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="ShareHolder" type="ShareHolder"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdDirectors">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CurrentDirectors">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Director" type="Director"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="PreviousDirectors">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Director" type="PreviousDirector"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdOtherInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bankers">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Banker" type="Banker"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Advisors">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Advisor" type="Advisor"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="EmployeesInformation">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="EmployeeInformation" type="EmployeeInformation"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdGroupStructure">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UltimateParent" type="q1:CompanyData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="ImmediateParent" type="q1:CompanyData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="SubsidiaryCompanies">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Subsidiary" type="q1:CompanyData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="AffiliatedCompanies">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="AffiliatedCompany" type="q1:CompanyData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdFinancialStatement">
+    <xs:complexContent mixed="false">
+      <xs:extension base="FinancialYearReport">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ProfitAndLoss" type="ProfitAndLossFigures"/>
+          <xs:element minOccurs="0" name="BalanceSheet" type="BalanceSheet"/>
+          <xs:element minOccurs="0" name="OtherFinancials" type="OtherFinancials"/>
+          <xs:element minOccurs="0" name="Ratios" type="FinancialRatios"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CompanyActivity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivityCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="ActivityDescription" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompanyStatusDescription">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Code" type="q1:CompanyStatus" use="required" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="FinancialValue_Decimal">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attribute name="Currency" type="q1:Currency" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="CreditRating">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommonValue" type="CommonRatingValue"/>
+      <xs:element minOccurs="0" name="CommonDescription" type="xs:string"/>
+      <xs:element minOccurs="0" name="CreditLimit" type="FinancialValue_String"/>
+      <xs:element minOccurs="0" name="ProviderValue" type="RangeDescribedValue_String"/>
+      <xs:element minOccurs="0" name="ProviderDescription" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LtdCompanyBasicInformation">
+    <xs:sequence>
+      <xs:element name="BusinessName" type="xs:string"/>
+      <xs:element name="RegisteredCompanyName" type="xs:string"/>
+      <xs:element minOccurs="0" name="CompanyRegistrationNumber" type="xs:string"/>
+      <xs:element name="Country" type="q1:CountryCode" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="VatRegistrationNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="VatRegistrationDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="DateofCompanyRegistration" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="DateofStartingOperations" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="CommercialCourt" type="xs:string"/>
+      <xs:element minOccurs="0" name="LegalForm" type="LegalForm"/>
+      <xs:element minOccurs="0" name="TypeofOwnership" type="xs:string"/>
+      <xs:element minOccurs="0" name="CompanyStatus" type="CompanyStatusDescription"/>
+      <xs:element minOccurs="0" name="PrincipalActivity" type="CompanyActivity"/>
+      <xs:element minOccurs="0" name="ContactAddress" type="q1:AddressData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="ContactTelephoneNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PreviousName">
+    <xs:complexContent mixed="false">
+      <xs:extension base="PreviousValue">
+        <xs:sequence>
+          <xs:element name="Name" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PreviousLegalForm">
+    <xs:complexContent mixed="false">
+      <xs:extension base="PreviousValue">
+        <xs:sequence>
+          <xs:element name="LegalForm" type="LegalForm"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="StreetAddressWithTelephone">
+    <xs:complexContent mixed="false">
+      <xs:extension base="StreetAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Telephone" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="StreetAddress">
+    <xs:sequence>
+      <xs:element name="Address" type="q1:AddressData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="Country" type="q1:CountryCode" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ShareHolder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SharePercent" type="xs:double"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Director">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Entity">
+        <xs:sequence>
+          <xs:element name="Gender" type="Gender"/>
+          <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Position" type="CorporatePosition"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PreviousDirector">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Director">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ResignationDate" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Banker">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BankCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Advisor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AuditorName" type="xs:string"/>
+      <xs:element minOccurs="0" name="SolicitorName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EmployeeInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Year" type="xs:unsignedShort"/>
+      <xs:element name="NumberOfEmployees" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProfitAndLossFigures">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Revenue" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OperatingCosts" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OperatingProfit" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="WagesAndSalaries" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="PensionCosts" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="Depreciation" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="Amortisation" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="FinancialIncome" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="FinancialExpenses" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="ExtraordinaryIncome" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="ExtraordinaryCosts" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="ProfitBeforeTax" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="Tax" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="ProfitAfterTax" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="Dividends" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="MinorityInterests" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherAppropriations" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="RetainedProfit" type="FinancialValue_Decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BalanceSheet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LandAndBuildings" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="PlantAndMachinery" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherTangibleAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalTangibleAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="Goodwill" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherIntangibleAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalIntangibleAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="Investments" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="LoansToGroup" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherLoans" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="MiscellaneousFixedAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalOtherFixedAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalFixedAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="RawMaterials" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="WorkInProgress" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="FinishedGoods" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherInventories" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalInventories" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TradeReceivables" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="GroupReceivables" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="ReceivablesDueAfter1Year" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="MiscellaneousReceivables" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalReceivables" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="Cash" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherCurrentAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalCurrentAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalAssets" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TradePayables" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="BankLiabilities" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherLoansOrFinance" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="GroupPayables" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="MiscellaneousLiabilities" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalCurrentLiabilities" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TradePayablesDueAfter1Year" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="BankLiabilitiesDueAfter1Year" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherLoansOrFinanceDueAfter1Year" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="GroupPayablesDueAfter1Year" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="MiscellaneousLiabilitiesDueAfter1Year" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalLongTermLiabilities" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalLiabilities" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="CalledUpShareCapital" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="SharePremium" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="RevenueReserves" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="OtherReserves" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="TotalShareholdersEquity" type="FinancialValue_Decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OtherFinancials">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ContingentLiabilities" type="xs:string"/>
+      <xs:element minOccurs="0" name="WorkingCapital" type="FinancialValue_Decimal"/>
+      <xs:element minOccurs="0" name="NetWorth" type="FinancialValue_Decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FinancialRatios">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PreTaxProfitMargin" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="ReturnOnCapitalEmployed" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="ReturnOnTotalAssetsEmployed" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="ReturnOnNetAssetsEmployed" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="SalesOrNetWorkingCapital" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="StockTurnoverRatio" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="DebtorDays" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="CreditorDays" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="CurrentRatio" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="LiquidityRatioOrAcidTest" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="CurrentDebtRatio" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="Gearing" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="EquityInPercentage" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="TotalDebtRatio" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FinancialYearReport">
+    <xs:sequence>
+      <xs:element name="YearEndDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="NumberOfWeeks" type="xs:unsignedInt"/>
+      <xs:element name="Currency" type="q1:Currency" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xs:element minOccurs="0" name="ConsolidatedAccounts" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CommonRatingValue">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="B"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="E"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="FinancialValue_String">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Currency" type="q1:Currency" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="RangeDescribedValue_String">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="MaxValue" type="xs:string"/>
+        <xs:attribute name="MinValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="LegalForm">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="CommonCode" type="xs:string"/>
+        <xs:attribute name="ProviderCode" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="PreviousValue" abstract="true">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateChanged" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Entity">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element minOccurs="0" name="Address" type="q1:AddressData" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Gender">
+    <xs:restriction base="xs:unsignedInt">
+      <xs:whiteSpace value="collapse"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CorporatePosition">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="AppointmentDate" type="xs:dateTime"/>
+        <xs:attribute name="CommonCode" type="xs:string"/>
+        <xs:attribute name="ProviderCode" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

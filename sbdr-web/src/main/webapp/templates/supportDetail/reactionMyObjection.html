@@ -1,0 +1,62 @@
+<div class="row box-content">
+    <div class="row box-content bordersupportblue">
+            <form id="form-bedrijfsgegevens" class="form-horizontal">
+                <fieldset> 
+				 <div class="supportboxblue">
+                    <div class="supporthead">
+                        <div class="support-upper">Reactie door<span class="rechts trap2">Datum</span></div>
+                        <span class="support-head">{{support.gebruiker.bedrijfNaam}}</span>&nbsp;&nbsp;&nbsp;
+                        <span class="support-datum rechts3 brmob">{{support.datumAangemaakt}}</span> 
+                    </div> 
+        </div>
+		 <div class="box-content mobpad">
+        <div class="form-group">
+            <span class="col-xs-12">
+							<strong>U heeft gereageerd op een bezwaar tegen de vermelding:<br/> </strong>{{supportTicket.melding.referentieIntern}}.
+						</span>
+        </div>
+        <div class="form-group">
+            <span class="col-xs-12"><strong>U heeft het bezwaar van {{support.gebruiker.bedrijfNaam}}:<br/>
+							</strong>
+								<span data-ng-show="support.betwistBezwaar">Wel </span>
+            <span data-ng-show="!support.betwistBezwaar">Niet </span>
+            betwist.</strong> 
+            </span>
+        </div>
+        <div class="form-group" data-ng-show="support.supportReden && support.betwistBezwaar">
+            <span class="col-xs-12">
+						<strong>	Uw reden voor deze afwijzing is als volgt:<br/> </strong>{{support.supportRedenDesc}}
+						</span>
+        </div>
+        <div class="form-group" data-ng-show="support.bericht">
+            <span class="col-xs-12">
+						<strong>	Onderstaand de toelichting die u heeft gegeven:</strong>
+						
+        
+							<pre>{{support.bericht}}</pre>
+            </span>
+        </div>
+        <div class="form-group" data-ng-if="support.supportBestanden.length>0">
+            <div class="col-xs-12">
+                <table id="bijlagen" class="table m-table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bijlage</th>
+                            <th>Acties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="supportAttachment in support.supportBestanden paddingb20">
+                            <td>{{supportAttachment.oorspronkelijkBestandsNaam}}</td>
+                            <td>
+                                <supportattachment-download></supportattachment-download>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> </div>
+        </fieldset>
+        </form>
+    </div>
+</div>			

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.creditsafe.com/globaldata/operations" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.creditsafe.com/globaldata/operations">
+  <xs:import schemaLocation="meta_1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+  <xs:import schemaLocation="meta_1_2.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes"/>
+  <xs:import schemaLocation="meta_1_2_3.xsd" namespace="http://schemas.datacontract.org/2004/07/Creditsafe.GlobalData"/>
+  <xs:import schemaLocation="meta_1_2_3_4.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes/reports"/>
+  <xs:element name="GetPortfolios">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q1:ArrayOfunsignedInt" xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+        <xs:element minOccurs="0" name="changedSince" nillable="true" type="xs:dateTime"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPortfoliosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPortfoliosResult" nillable="true" type="q2:PortfoliosList" xmlns:q2="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListMonitoredCompanies">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q3:ArrayOfunsignedInt" xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+        <xs:element minOccurs="0" name="changedOnly" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="changedSince" nillable="true" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="firstPosition" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="pageSize" type="xs:unsignedInt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListMonitoredCompaniesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ListMonitoredCompaniesResult" nillable="true" type="q4:MonitoredCompaniesList" xmlns:q4="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreatePortfolio">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="settings" nillable="true" type="q5:PortfolioSettings" xmlns:q5="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreatePortfolioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreatePortfolioResult" nillable="true" type="q6:PortfoliosList" xmlns:q6="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemovePortfolios">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q7:ArrayOfunsignedInt" xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemovePortfoliosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemovePortfoliosResult" nillable="true" type="q8:SimpleResult" xmlns:q8="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPortfolioSettings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioId" type="xs:unsignedInt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPortfolioSettingsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPortfolioSettingsResult" nillable="true" type="q9:CurrentPortfolioSettings" xmlns:q9="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetPortfolioSettings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioId" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="newSettings" nillable="true" type="q10:PortfolioSettings" xmlns:q10="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetPortfolioSettingsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetPortfolioSettingsResult" nillable="true" type="q11:SimpleResult" xmlns:q11="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddCompaniesToPortfolios">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q12:ArrayOfunsignedInt" xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+        <xs:element minOccurs="0" name="companies" nillable="true" type="q13:CompanyReferences" xmlns:q13="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddCompaniesToPortfoliosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddCompaniesToPortfoliosResult" nillable="true" type="q14:PortfolioCompanyAdditionResult" xmlns:q14="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImportCompaniesToPortfolio">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioId" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="fileFormat" type="q15:FileFormat" xmlns:q15="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="importFile" nillable="true" type="xs:base64Binary"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImportCompaniesToPortfolioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ImportCompaniesToPortfolioResult" nillable="true" type="q16:PortfolioCompanyAdditionResult" xmlns:q16="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveCompaniesFromPortfolios">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q17:ArrayOfunsignedInt" xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+        <xs:element minOccurs="0" name="companyIds" nillable="true" type="q18:ArrayOfstring" xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveCompaniesFromPortfoliosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemoveCompaniesFromPortfoliosResult" nillable="true" type="q19:PortfolioCompanyRemovalResult" xmlns:q19="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeCompaniesReferenceStrings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q20:ArrayOfunsignedInt" xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+        <xs:element minOccurs="0" name="companies" nillable="true" type="q21:CompanyReferences" xmlns:q21="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeCompaniesReferenceStringsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ChangeCompaniesReferenceStringsResult" nillable="true" type="q22:SimpleResult" xmlns:q22="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSupportedChangeEvents">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="country" nillable="true" type="q23:CountryCode" xmlns:q23="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="language" type="q24:Language" xmlns:q24="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSupportedChangeEventsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSupportedChangeEventsResult" nillable="true" type="q25:SupportedChangeEventsList" xmlns:q25="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMonitoringRules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioId" type="xs:unsignedInt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMonitoringRulesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetMonitoringRulesResult" nillable="true" type="q26:CurrentPortfolioMonitoringRules" xmlns:q26="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetMonitoringRules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="portfolioId" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="newRules" nillable="true" type="q27:MonitoringRules" xmlns:q27="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetMonitoringRulesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetMonitoringRulesResult" nillable="true" type="q28:SimpleResult" xmlns:q28="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetDefaultChangesCheckPeriod">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="days" nillable="true" type="xs:unsignedInt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetDefaultChangesCheckPeriodResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetDefaultChangesCheckPeriodResult" nillable="true" type="q29:SimpleResult" xmlns:q29="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCompanyOnlineReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="companyId" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="reportType" type="q30:CompanyReportType" xmlns:q30="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="language" type="q31:Language" xmlns:q31="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="customData" nillable="true" type="q32:CustomData" xmlns:q32="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="chargeReference" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="storeInReportbox" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q33:ArrayOfunsignedInt" xmlns:q33="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+        <xs:element minOccurs="0" name="monitoringReference" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCompanyOnlineReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RetrieveCompanyOnlineReportResult" nillable="true" type="q34:CompanyReportSet" xmlns:q34="http://www.creditsafe.com/globaldata/datatypes/reports"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TryRetrieveCompanyOnlineReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="country" type="q35:CountryCode" xmlns:q35="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="searchCriteria" nillable="true" type="q36:SearchCriteria" xmlns:q36="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="reportType" type="q37:CompanyReportType" xmlns:q37="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="language" type="q38:Language" xmlns:q38="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="customData" nillable="true" type="q39:CustomData" xmlns:q39="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="chargeReference" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="storeInReportbox" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="portfolioIds" nillable="true" type="q40:ArrayOfunsignedInt" xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TryRetrieveCompanyOnlineReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TryRetrieveCompanyOnlineReportResult" nillable="true" type="q41:CompanyReportSet" xmlns:q41="http://www.creditsafe.com/globaldata/datatypes/reports"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OrderCompanyOfflineReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="country" type="q42:CountryCode" xmlns:q42="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="searchCriteria" nillable="true" type="q43:SearchCriteria" xmlns:q43="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="reportType" type="q44:CompanyReportType" xmlns:q44="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="language" type="q45:Language" xmlns:q45="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="customData" nillable="true" type="q46:CustomData" xmlns:q46="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="chargeReference" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OrderCompanyOfflineReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrderCompanyOfflineReportResult" nillable="true" type="q47:ReportOrder" xmlns:q47="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportboxContents">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="filter" nillable="true" type="q48:ReportboxListingFilter" xmlns:q48="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportboxContentsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetReportboxContentsResult" nillable="true" type="q49:ReportboxContents" xmlns:q49="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportboxReports">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ids" nillable="true" type="q50:ArrayOfunsignedInt" xmlns:q50="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportboxReportsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetReportboxReportsResult" nillable="true" type="q51:CompanyReportSet" xmlns:q51="http://www.creditsafe.com/globaldata/datatypes/reports"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveReportboxReports">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ids" nillable="true" type="q52:ArrayOfunsignedInt" xmlns:q52="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveReportboxReportsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemoveReportboxReportsResult" nillable="true" type="q53:SimpleResult" xmlns:q53="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCountries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="filter" nillable="true" type="q54:CountriesListingFilter" xmlns:q54="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCountriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCountriesResult" nillable="true" type="q55:CountriesList" xmlns:q55="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPossibleSearchCriteria">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="countries" nillable="true" type="q56:ArrayOfCountryCode" xmlns:q56="http://schemas.datacontract.org/2004/07/Creditsafe.GlobalData"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPossibleSearchCriteriaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPossibleSearchCriteriaResult" nillable="true" type="q57:SearchCriteriaSchemaSet" xmlns:q57="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindCompanies">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="countries" nillable="true" type="q58:ArrayOfCountryCode" xmlns:q58="http://schemas.datacontract.org/2004/07/Creditsafe.GlobalData"/>
+        <xs:element minOccurs="0" name="searchCriteria" nillable="true" type="q59:SearchCriteria" xmlns:q59="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="customData" nillable="true" type="q60:CustomData" xmlns:q60="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="chargeReference" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindCompaniesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FindCompaniesResult" nillable="true" type="q61:CompaniesList" xmlns:q61="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportCustomDataSchema">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="country" type="q62:CountryCode" xmlns:q62="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportCustomDataSchemaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetReportCustomDataSchemaResult" nillable="true" type="q63:CustomDataSchema" xmlns:q63="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

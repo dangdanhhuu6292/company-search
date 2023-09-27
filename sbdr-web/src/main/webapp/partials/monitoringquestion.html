@@ -1,0 +1,110 @@
+<div class="row">
+    <div id="myaccount_page" class="col-sm-12">
+        <div class="box no shad noborderlegend">
+            <div class="box-content border">
+                <a href="" class="rechts infoi" data-text="<h4><strong>Monitoring</strong></h4><br/>Alvorens u een bedrijf in monitoring plaatst, dient u een rapport op te vragen. Zodoende wordt de startdatum van de monitoring vastgesteld en heeft u tezamen met het bedrijfsinformatierapport een compleet overzicht van alle geregistreerde betalingsachterstanden. Met het bedrijfsinformatierapport heeft u namelijk inzicht in alle geregistreerde betalingsachterstanden tot aan het moment van opvragen van het rapport. Met het monitoren wordt u vervolgens op de hoogte gehouden van nieuwe registraties van betalingsachterstanden van het betreffende bedrijf.">
+				  <span class="mylivicons" data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f;colorsOnHover:custom;solidColorAction:#0082ad; tryToSharpen: true"></span>
+				  </a>
+                <span class="mylivicons" data-options="name:camcoder.svg; size: 35px; style: lines-alt;autoPlay:true;repeat:50;strokeColor:#0a212f; tryToSharpen: true"></span>
+                <span class="legend">Bedrijfsmonitor</span>
+                <div class="home">
+                    <hr>
+                </div>
+                <div class="row box-context">
+                    <div class="col-xs-12 col-lg-12">
+                        <div class="box-content mobpad">
+                            <form id="form-monitoringquestion" name="formmonitoringquestion" class="form-horizontal" novalidate>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <span class="col-xs-12 col-sm-4 col-md-3 col-lg-3 legend">Wilt u dit bedrijf monitoren?</span>
+                                        <span class="trap2 col-xs-12 col-sm-8 col-md-9 col-lg-9"> <span class="livicon-evo" data-options="name:building.svg; size: 40px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true">&nbsp;</span>
+                                        </span>
+                                    </div><br/>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3  control-label">Bedrijfsnaam</label>
+                                        <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{bedrijfNaam}}
+										</span>
+                                    </div>                                  
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3  control-label">Adres</label>
+                                        <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{adres}}
+										</span>
+                                    </div>
+									<div class="form-group">
+                                        <label class="col-xs-12 col-sm-4 col-md-3 col-lg-3  control-label">KvK-nummer</label>
+                                        <span class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+											{{kvkNummerPrefix}}
+										</span>
+                                    </div>
+                                    <div class="form-group padding20" ng-hide="bekendBijSbdr == 'false'">
+                                        <span class="col-xs-12 col-sm-9 col-md-6 col-lg-5"><b class="orange"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i>&nbsp;Let op!</b><br/>
+											
+Voordat u een bedrijf in de monitoring kunt plaatsen, dient u eerst een rapport op te vragen. Op deze manier wordt de startdatum van de monitoring vastgesteld en beschikt u over een bedrijfsinformatierapport waarop alle geregistreerde achterstanden tot dat moment staan weergeven. Door middel van de Bedrijfsmonitor wordt u vervolgens op de hoogte gehouden van iedere nieuwe registratie van een betalingsachterstand omtrent dit bedrijf.
+										</span>
+                                    </div>
+                                    <div class="form-group padding20" ng-hide="bekendBijSbdr == 'true'">
+                                        <span class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+											Er zijn nog geen gegevens bekend in ons register over dit bedrijf. Het bedrijf wordt toegevoegd aan uw monitoring bedrijvenlijst zodat toekomstige activiteit gevolgd kan worden.
+										</span>
+                                    </div>
+                                    <div class="row padding20">
+                                        <div class="col-xs-12 col-sm-8">
+                                            <button type="button" class="btn btn-primary w100mob btnlgw2 btn-lg-mob" ng-show="bekendBijSbdr == 'true'" ng-click="gotoReport()">Rapport opvragen</button>
+                                            <button type="button" class="btn btn-primary w100mob btnlgw2 btn-lg-mob bluebtn11" ng-show="bekendBijSbdr == 'true'" ng-click="returnToSearch()">Terug</button>
+                                            <button type="button" class="btn btn-primary w100mob btnlgw2 btn-lg-mob" ng-show="monitoringSuccessful" ng-click="returnToSearch()">Ok</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="error">
+            <div class="box-content fout text-center">
+             <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="25" height="25">
+                <span id="alert" class="fouttext">{{error}}</span>
+            </div>
+        </div>
+        <div ng-show="monitoringSuccessful">
+            <div class="box-content prima text-center">
+              <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+                <span class="primatext"> Bedrijf succesvol toegevoegd aan Bedrijfsmonitor.</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'templates/modals/reportPopup.html'"></div>
+<div ng-include="'templates/modals/reportNoPaymentInfo.html'"></div>
+<div id="info-box2" class="informatieinfo">
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <p id="textinfo2">#######</p>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('info-box2');
+    var btns = document.getElementsByClassName("infoi");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            modal.style.display = "block";
+            $('#textinfo2').html($(this).attr('data-text'));
+        }
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

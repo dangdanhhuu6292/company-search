@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.creditsafe.com/globaldata/operations/administration" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.creditsafe.com/globaldata/operations/administration">
+  <xs:import schemaLocation="meta_1_2.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes"/>
+  <xs:import schemaLocation="meta_1_2_3.xsd" namespace="http://schemas.datacontract.org/2004/07/Creditsafe.GlobalData"/>
+  <xs:import schemaLocation="meta_1_2_3_4_5.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes/administration"/>
+  <xs:element name="DeliverOfflineCompanyReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNumber" type="xs:unsignedLong"/>
+        <xs:element minOccurs="0" name="report" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="onlineRetrievalCriteria" nillable="true" type="q1:SearchCriteria" xmlns:q1="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="additionalRetrievalData" nillable="true" type="q2:CustomData" xmlns:q2="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeliverOfflineCompanyReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeliverOfflineCompanyReportResult" nillable="true" type="q3:SimpleResult" xmlns:q3="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MarkFailedOfflineOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNumber" type="xs:unsignedLong"/>
+        <xs:element minOccurs="0" name="reasonCode" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="additionalData" nillable="true" type="q4:CustomData" xmlns:q4="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MarkFailedOfflineOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MarkFailedOfflineOrderResult" nillable="true" type="q5:SimpleResult" xmlns:q5="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfflineOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNumber" nillable="true" type="xs:unsignedLong"/>
+        <xs:element minOccurs="0" name="countryCode" nillable="true" type="q6:CountryCode" xmlns:q6="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="firstRow" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="rowCount" type="xs:unsignedInt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListOfflineOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ListOfflineOrdersResult" nillable="true" type="q7:OfflineReportOrdersList" xmlns:q7="http://www.creditsafe.com/globaldata/datatypes/administration"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListRealisedOrders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNumber" nillable="true" type="xs:unsignedLong"/>
+        <xs:element minOccurs="0" name="countryCode" nillable="true" type="q8:CountryCode" xmlns:q8="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="userId" nillable="true" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="newerThan" nillable="true" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="olderThan" nillable="true" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="successfulDelivery" nillable="true" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="firstRow" type="xs:unsignedInt"/>
+        <xs:element minOccurs="0" name="rowCount" type="xs:unsignedInt"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListRealisedOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ListRealisedOrdersResult" nillable="true" type="q9:ReportSnapshotsList" xmlns:q9="http://www.creditsafe.com/globaldata/datatypes/administration"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStoredReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNumber" type="xs:unsignedLong"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStoredReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetStoredReportResult" nillable="true" type="q10:ReportSnapshot" xmlns:q10="http://www.creditsafe.com/globaldata/datatypes/administration"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateStoredReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNumber" type="xs:unsignedLong"/>
+        <xs:element minOccurs="0" name="report" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="onlineRetrievalCriteria" nillable="true" type="q11:SearchCriteria" xmlns:q11="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="additionalRetrievalData" nillable="true" type="q12:CustomData" xmlns:q12="http://www.creditsafe.com/globaldata/datatypes"/>
+        <xs:element minOccurs="0" name="updateAllInstances" type="xs:boolean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateStoredReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateStoredReportResult" nillable="true" type="q13:SimpleResult" xmlns:q13="http://www.creditsafe.com/globaldata/datatypes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

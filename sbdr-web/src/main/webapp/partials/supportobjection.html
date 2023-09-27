@@ -1,0 +1,182 @@
+<div class="row">
+    <div class="col-sm-12" id="support_objection_page">
+        <div class="box no shad"> 
+            <div class="box-content border">
+                <span class="livicon-evo" data-options="name: balance.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; autoPlay:true; tryToSharpen: true"></span>
+                <span class="legend">Bezwaar</span>
+                <span class="livicon-evo rechts infoi" data-text="<strong>Bezwaar maken</strong><br/><br/>Op deze pagina kunt u bezwaar maken tegen betalingsachterstanden die zijn aangemeld en/of reeds zijn geregistreerd. Vul het bezwaarformulier in en wij nemen uw bezwaar z.s.m. in behandeling.<br/><br/>Wij adviseren u om uw bezwaar zo volledig en duidelijk mogelijk toe te lichten. Op deze manier kan uw bezwaar met de meeste zorg en zo snel als mogelijk worden afgehandeld." data-options="name: info-alt.svg; size: 30px; style:lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+                <div class="home">
+                    <hr>
+                </div>
+							 <div ng-show="supportSavedOk" class="alert maxw">
+                    <div class="legend">Uw bezwaar is in goede orde ontvangen.</div><br/> De onderneming die de betalingsachterstand heeft aangemeld zal op de hoogte worden gebracht van uw bezwaar. Hen wordt de mogelijkheid geboden om hierop te reageren.<br/><br/> Wij zullen u zo snel mogelijk informeren over de voortgang van uw bezwaar. Tot die tijd zal de achterstand niet opgenomen worden in het register, tenzij de achterstand reeds opgenomen is.
+                </div>
+                <div ng-show="supportSavedOk" class="row box-content">
+                    <div class="col-md-2">
+                        <button class="btn btnlgw2 w100mob btn-lg-mob btn-primary btn-block btn-group-xs" ng-click="gotoSupport()" type="button">
+							Terug
+						</button>
+                    </div>
+                </div>
+                <div ng-hide="supportSavedOk" class="row box-content">
+                    <div class="row box-content col-xs-12 col-md-6">
+                        <form id="formsupportobjection" name="formsupportobjection" class="form-horizontal" novalidate>
+                            <fieldset>
+                                <span class="legend">Vul onderstaand bezwaarformulier in</span><br/><br/>
+                                <div>
+                                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(formsupportobjection, 'meldingref')}">
+                                        <label class="col-xs-12 col-md-3 control-label">VE-nummer</label>
+
+                                        <div class="col-xs-12 col-md-9">
+                                            <select class="form-control" id="meldingref" name="meldingref" ng-model="support.melding.meldingId" onchange="meldingChanged(meldingref.selectedIndex)" ng-options="melding.meldingId as melding.referentieIntern for melding in companymeldingen" required>
+												<option value="" ng-hide="support.meldingId">
+													Selecteer vermelding
+												</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-md-3 control-label">Bedrijfsnaam</label>
+
+                                        <div class="col-xs-12 col-md-9">
+                                            {{selectedCompany.bedrijfsNaam}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-md-3 control-label">Factuurnummer</label>
+
+                                        <div class="col-xs-12 col-md-9">
+                                            {{selectedNotification.referentie}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-md-3 control-label">Bedrag</label>
+
+                                        <div class="col-xs-12 col-md-9">
+                                            {{selectedNotification.oorspronkelijkBedrag | currency}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(formsupportobjection, 'supportreden')}">
+                                        <label class="col-xs-12 col-md-3 control-label">Reden bezwaar</label>
+
+                                        <div class="col-xs-12 col-md-9">
+                                            <select class="form-control" id="supportreden" name="supportreden" data-ng-model="support.supportReden" ng-options="supportreden.id as supportreden.description for supportreden in supportredenen" required>
+												<option value="" data-ng-hide="support.supportReden">
+													Selecteer reden
+												</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formsupportobjection, 'bericht')}">
+                                        <label class="col-xs-12 col-md-3 control-label">Toelichting</label>
+
+                                        <div class="col-xs-12 col-md-9">
+                                            <textarea ng-paste="checkFieldMaxLength($event, support.bericht, maxFieldLengths.supportBericht)" wm-block class="form-control" cols="80" rows="5" name="bericht" id="bericht" ng-model="support.bericht" wm-block-length="maxFieldLengths.supportBericht" required></textarea>
+                                            <small class="help-block" ng-show="isInvalid(formsupportobjection, 'bericht')">
+												<span>Vul uw toelichting a.u.b. in</span>
+											</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-md-9 col-md-offset-3">
+											Beschikt u over documenten die uw vordering ondersteunen? Upload deze dan hier.
+										</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-offset-3 col-md-9 overres mobpad">
+                                        <table id="bijlagen" class="table table-condensed m-table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th/>
+                                                    <th>Bestandsnaam</th>
+                                                    <th>Actie</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="attachment in attachments|limitTo:3">
+                                                    <td>Bijlage {{$index+1}}</td>
+                                                    <td>{{attachment.name}}</td>
+                                                    <td>
+                                                        <button ng-show="true" type="button" class="btn btn-primary btn-xs" ng-click="removeAttachment($index)" title="Bijlage verwijderen">
+														<i class="fa fa-trash-o"/>
+													</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-md-offset-3 col-md-5" ng-show="attachments.length<3">
+                                            <span class="btn btn-primary btn-file">
+	                                            Bestand toevoegen <input type="file" fileread="createFileAttachment"/>
+	                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : isInvalid(formsupportobjection, 'bezwaarAkkoord')}">
+                                        <div class="col-xs-12 col-md-9 col-md-offset-3">
+                                            <div class="checkbox">
+                                                <label>
+													<input type="checkbox" ng-model="controle.akkoord" id="bezwaarAkkoord" name="bezwaarAkkoord" required/>
+													Bovenstaande is naar waarheid ingevuld.
+													<i class="fa fa-square-o"></i>
+												</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+					
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-md-9 col-md-offset-3">
+                                        <button type="button" ng-hide="supportSavedOk" class="btn btnlgw2 w100mob btn-lg-mob btn-primary" ng-click="submitSupport()">
+											Indienen
+										</button>
+                                        <button class="btn btn-primary w100mob btn-lg-mob btnlgw2 bluebtn11" ng-click="gotoSupport()" type="button">
+											Terug
+										</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <div ng-show="error">
+            <div class="box-content fout text-center">
+                 <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35">
+                <span id="alert" class="fouttext">{{error}}</span>
+          
+            </div>
+        </div>
+    </div>
+</div>
+<div id="info-box2" class="informatieinfo">
+    <div class="modal-content2">
+        <span class="close">&times;</span>
+        <p id="textinfo2">#######</p>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('info-box2');
+    var btns = document.getElementsByClassName("infoi");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            modal.style.display = "block";
+            $('#textinfo2').html($(this).attr('data-text'));
+        }
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.creditsafe.com/globaldata/operations/administration" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://www.creditsafe.com/globaldata/operations/administration" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.creditsafe.com/globaldata/operations/administration/Imports">
+      <xsd:import schemaLocation="meta_1_2_3_4_5_6_7_8.xsd" namespace="http://www.creditsafe.com/globaldata/operations/administration"/>
+      <xsd:import schemaLocation="meta_1_2.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes"/>
+      <xsd:import schemaLocation="meta_1_2_3_4.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes/reports"/>
+      <xsd:import schemaLocation="meta_1_2_3_4_5.xsd" namespace="http://www.creditsafe.com/globaldata/datatypes/administration"/>
+      <xsd:import schemaLocation="meta_1_2_3_4_5_6.xsd" namespace="systemtypes"/>
+      <xsd:import schemaLocation="meta.xsd" namespace="http://www.creditsafe.com/globaldata/operations"/>
+      <xsd:import schemaLocation="meta_1_2_3_4_5_6_7.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xsd:import schemaLocation="meta_1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xsd:import schemaLocation="meta_1_2_3.xsd" namespace="http://schemas.datacontract.org/2004/07/Creditsafe.GlobalData"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DataInputService_DeliverOfflineCompanyReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeliverOfflineCompanyReport"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_DeliverOfflineCompanyReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeliverOfflineCompanyReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_MarkFailedOfflineOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:MarkFailedOfflineOrder"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_MarkFailedOfflineOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MarkFailedOfflineOrderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_ListOfflineOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListOfflineOrders"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_ListOfflineOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListOfflineOrdersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_ListRealisedOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListRealisedOrders"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_ListRealisedOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListRealisedOrdersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_GetStoredReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStoredReport"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_GetStoredReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStoredReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_UpdateStoredReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateStoredReport"/>
+  </wsdl:message>
+  <wsdl:message name="DataInputService_UpdateStoredReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateStoredReportResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="DataInputService">
+    <wsdl:operation name="DeliverOfflineCompanyReport">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/DeliverOfflineCompanyReport" message="tns:DataInputService_DeliverOfflineCompanyReport_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/DeliverOfflineCompanyReportResponse" message="tns:DataInputService_DeliverOfflineCompanyReport_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="MarkFailedOfflineOrder">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/MarkFailedOfflineOrder" message="tns:DataInputService_MarkFailedOfflineOrder_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/MarkFailedOfflineOrderResponse" message="tns:DataInputService_MarkFailedOfflineOrder_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ListOfflineOrders">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/ListOfflineOrders" message="tns:DataInputService_ListOfflineOrders_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/ListOfflineOrdersResponse" message="tns:DataInputService_ListOfflineOrders_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ListRealisedOrders">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/ListRealisedOrders" message="tns:DataInputService_ListRealisedOrders_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/ListRealisedOrdersResponse" message="tns:DataInputService_ListRealisedOrders_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetStoredReport">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/GetStoredReport" message="tns:DataInputService_GetStoredReport_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/GetStoredReportResponse" message="tns:DataInputService_GetStoredReport_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateStoredReport">
+      <wsdl:input wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/UpdateStoredReport" message="tns:DataInputService_UpdateStoredReport_InputMessage"/>
+      <wsdl:output wsaw:Action="http://www.creditsafe.com/globaldata/operations/administration/DataInputService/UpdateStoredReportResponse" message="tns:DataInputService_UpdateStoredReport_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

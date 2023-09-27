@@ -1,0 +1,355 @@
+<div class="row box-content mobpad">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+	<div class="row animate-show mobpad" data-ng-show="userDetails">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-7">
+        <div class="box-content mobpad">
+            <form id="form-gebruikergegevens" name="obj.formgebruikergegevens" class="form-horizontal" novalidate>
+                <fieldset>
+                    <span class="legend">Gebruikersgegevens</span>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'voornaam')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Voornaam</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, gebruikerEdit.voornaam, maxFieldLengths.voornaam)" data-wm-block class="form-control" type="text" name="voornaam" data-ng-disabled="!gNewUser" id="voornaam" data-ng-model="gebruikerEdit.voornaam" data-capitalize-first data-wm-block-length="maxFieldLengths.voornaam" required/>
+                            <small class="help-block" data-ng-show="isInvalid(obj.formgebruikergegevens, 'voornaam')">
+								<span>Vul de voornaam van de gebruiker in.</span>
+							</small>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'naam')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Achternaam</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, gebruikerEdit.naam, maxFieldLengths.naam)" data-wm-block class="form-control" type="text" name="naam" data-ng-disabled="!gNewUser" id="naam" data-ng-model="gebruikerEdit.naam" data-capitalize-first data-wm-block-length="maxFieldLengths.naam" required/>
+                            <small class="help-block" data-ng-show="isInvalid(obj.formgebruikergegevens, 'naam')">
+								<span>Vul de achternaam van de gebruiker in.</span>
+							</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-4 control-label">Geslacht</label>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="radio">
+                                <label>
+									<input type="radio" name="radio" data-ng-model="gebruikerEdit.geslacht" value="M" checked> Man
+									<i class="fa fa-circle-o"></i>
+								</label>
+                            </div>
+                            <div class="radio">
+                                <label>
+									<input type="radio" name="radio" data-ng-model="gebruikerEdit.geslacht" value="V"> Vrouw
+									<i class="fa fa-circle-o"></i>
+								</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'telefoonnummer')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Telefoonnummer</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, gebruikerEdit.gebruikerTelefoonNummer, maxFieldLengths.telefoonnummer)" data-wm-block class="form-control" type="text" name="telefoonnummer" id="telefoonnummer" data-ng-model="gebruikerEdit.gebruikerTelefoonNummer" data-ng-pattern="PHONE_REGEXP" data-wm-block-length="maxFieldLengths.telefoonnummer" required/>
+                            <small class="help-block" data-ng-show="isInvalid(obj.formgebruikergegevens, 'telefoonnummer')">
+								<span>Vul een geldig telefoonnummer van de gebruiker in.</span>
+							</small>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'afdeling')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Afdeling (optioneel)</label>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, gebruikerEdit.afdeling, maxFieldLengths.afdeling)" data-wm-block class="form-control" type="text" name="afdeling" id="afdeling" data-ng-model="gebruikerEdit.afdeling" data-capitalize-first data-wm-block-length="maxFieldLengths.afdeling" />
+                            <small class="help-block" data-ng-show="isInvalid(obj.formgebruikergegevens, 'afdeling')">
+								<span>Vul de afdeling van de gebruiker in.</span>
+							</small>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'emailadres') || emailInUse}">
+                        <label class="col-xs-12 col-sm-4 control-label">E-mailadres</label>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, gebruikerEdit.emailAdres, maxFieldLengths.emailadres)" data-wm-block class="form-control" type="text" name="emailadres" id="emailadres" data-ng-pattern="EMAIL_REGEXP" data-ng-model="gebruikerEdit.emailAdres" data-wm-block-length="maxFieldLengths.emailadres" required/>
+                            <small class="help-block" id="emailhelp" data-ng-show="isInvalid(obj.formgebruikergegevens, 'emailadres') || emailInUse">
+								<span>Voer een geldig e-mailadres in.</span>
+							</small>
+                        </div>
+                    </div>
+                    <div data-ng-hide="userIdSelected != null" class="form-group" data-ng-class="{'has-error' : emailCheckInvalid(obj.formgebruikergegevens, 'emailadres', 'emailadrescontrole')}">
+                        <label class="col-xs-12 col-sm-4 control-label">E-mailadres controle</label>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, emailadrescontrole, maxFieldLengths.emailadres)" data-wm-block name="emailadrescontrole" id="emailadrescontrole" data-ng-model="emailadrescontrole" type="text" class="form-control" data-wm-block-length="maxFieldLengths.emailadres">
+                            <small class="help-block" data-ng-show="emailCheckInvalid(obj.formgebruikergegevens, 'emailadres', 'emailadrescontrole')">
+								<span>Controle e-mailadres komt niet overeen met opgegeven e-mailadres.</span>
+							</small>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'functie')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Functie</label>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <select class="form-control" id="functie" name="functie" data-ng-model="gebruikerEdit.functie" data-ng-options="functie.id as functie.description for functie in functies" required>
+								<option value="" data-ng-hide="gebruikerEdit.functie">Selecteer een functie</option>
+							</select>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'gebruikerrol')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Gebruiker rol</label>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <select class="form-control" id="gebruikerrol" name="gebruikerrol" data-ng-model="gebruikerEdit.gebruikerrol" data-ng-options="gebruikerrol.id as gebruikerrol.description for gebruikerrol in gebruikerrollen" required>
+								<option value="" data-ng-hide="gebruikerEdit.gebruikerrol">Selecteer een gebruiker rol</option>
+							</select>
+                        </div>
+                    </div>                    
+                    <div data-ng-show="gebruikerEdit.gebruikerrol == 'Gebruiker' || gebruikerEdit.gebruikerrol == 'HoofdGebruiker' || gebruikerEdit.gebruikerrol == 'BedrijfManaged'" class="form-group">
+                        <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+                            <div class="checkbox-inline">
+                                <label>
+									<input type="checkbox" data-ng-model="gebruikerEdit.registratiesToegestaan" id="registratiesToegestaan" name="registratiesToegestaan">
+									Registraties
+									<i class="fa fa-square-o"></i>
+								</label>
+                            </div>
+                            <a class="clickableinfo" href="" data-info-popover data-tooltixp="Vink deze optie aan als u wilt dat deze gebruiker uit naam van uw bedrijf ook registraties mag inzien en verwerken."></a>
+                        </div>
+                    </div>
+                    <div data-ng-show="gebruikerEdit.gebruikerrol == 'Gebruiker' && isAdmin()" class="form-group">
+                        <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+                            <div class="checkbox-inline">
+                                <label>
+									<input type="checkbox" data-ng-model="gebruikerEdit.apiToegestaan" id="apiToegestaan" name="apiToegestaan">
+									Toegang API
+									<i class="fa fa-square-o"></i>
+								</label>
+                            </div>
+                            <a class="clickableinfo" href="" data-info-popover data-tooltixp="Vink deze optie aan als u wilt dat deze gebruiker uit naam van uw bedrijf ook gebruik mag maken van de API functie."></a>
+                        </div>
+                    </div>                    
+
+                    <div data-ng-show="gebruikerEdit.apiToegestaan && !isAdmin()" class="form-group">
+                        <div class="col-xs-12 col-sm-12 col-sm-offset-4">
+                            <br/>Met deze gebruiker kunt u gebruik maken van de CRZB API<br/><br/>
+                        </div>
+                    </div>
+                    <div data-ng-show="gebruikerEdit.userId==null" class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formgebruikergegevens, 'verantwoordelijkheidAkkoord')}">
+                        <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+                            <div class="checkbox-inline">
+                                <label>
+									<input type="checkbox" data-ng-model="gebruikerEdit.verantwoordelijkheidAkkoord" id="verantwoordelijkheidAkkoord" name="verantwoordelijkheidAkkoord" required>
+									Ik verklaar dat deze gebruiker onder mijn verantwoordelijkheid valt.
+									<i class="fa fa-square-o"></i>
+								</label>
+                                <small class="help-block" data-ng-show="isInvalid(obj.formgebruikergegevens, 'verantwoordelijkheidAkkoord')">
+									<span>U moet akkoord gaan alvorens een gebruiker aan te maken</span>
+								</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+                            <button data-ng-hide="userIdSelected != null" type="button" class="btn btnlgw2 btn-primary btn-lg-mob margin10 w100mob" data-ng-click="saveUser()">
+								Aanmaken
+							</button>
+                            <button data-ng-show="userIdSelected != null" type="button" class="btn btnlgw2 btn-primary btn-lg-mob margin10nomob w100mob" data-ng-click="saveUser()"> <!-- data-ng-disabled="checkGebruikerFormInvalid(obj.formgebruikergegevens) || isUnchanged(gebruikerEdit) || buttonUserDisabled()" -->
+								Wijzigen
+							</button>
+                            <button type="button" class="btn btn-primary btnlgw2  bluebtn11 margin10nomob btn-lg-mob w100mob" data-ng-click="annuleren(false)">
+								Annuleren
+							</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+		 <hr> 
+    </div>
+	
+</div>
+<div class="row box-context animate-show" data-ng-show="userChangePassword">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-5">
+        <div class="box-content mobpad">
+            <form id="form-passworddata" name="obj.formpassworddata" class="form-horizontal" novalidate>
+                <fieldset>
+                    <span class="legend">Wachtwoord aanpassen</span>
+                    <div class="form-group" data-ng-class="{'has-error' : isInvalid(obj.formpassworddata, 'passwordhuidig')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Huidig wachtwoord</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, passwordhuidig, maxFieldLengths.wachtwoord)" data-wm-block name="passwordhuidig" id="passwordhuidig" data-ng-model="passwordhuidig" type="password" class="form-control" data-wm-block-length="maxFieldLengths.wachtwoord" required>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : passwordInvalid(obj.formpassworddata, 'password')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Nieuw Wachtwoord</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, password, maxFieldLengths.wachtwoord)" data-wm-block name="password" id="password" data-ng-model="password" type="password" onkeydown="if (event.keyCode == 13) {sendbtn.click()}" class="form-control" data-wm-block-length="maxFieldLengths.wachtwoord" required>
+                            <small class="help-block" id="passwordhelp" data-ng-show="passwordInvalid(obj.formpassworddata, 'password')">
+								<span></span>
+							</small>
+                            <!-- passwordInvalid function sets span text -->
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-class="{'has-error' : passwordCheckInvalid(obj.formpassworddata, 'password', 'passwordcheck')}">
+                        <label class="col-xs-12 col-sm-4 control-label">Wachtwoord controle</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <input data-ng-paste="checkFieldMaxLength($event, passwordcheck, maxFieldLengths.wachtwoord)" data-wm-block name="passwordcheck" id="passwordcheck" data-ng-model="passwordcheck" type="password" onkeydown="if (event.keyCode == 13) {sendbtn.click()}" class="form-control" data-wm-block-length="maxFieldLengths.wachtwoord" required>
+                            <small class="help-block" data-ng-show="passwordCheckInvalid(obj.formpassworddata, 'password', 'passwordcheck')">
+								<span>Controlewachtwoord komt niet overeen met ingegeven wachtwoord</span>
+							</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-7 col-sm-offset-4">
+                            <button id="sendbtn" type="button" class="btn btnlgw2 btn-lg-mob btn-primary w100mob margin10" data-ng-disabled="userSavedOk || pwdButtonDisabled(obj.formpassworddata, 'passwordhuidig', 'password', 'passwordcheck')" data-ng-click="pwdReset('passwordhuidig', 'passwordcheck')">
+								Aanpassen
+							</button>
+                            <button id="cancelpwdchangebtn" type="button" class="btn btnlgw2 btn-primary btn-lg-mob margin10nomob bluebtn11 w100mob" data-ng-click="pwdCancel()">
+								Annuleren
+							</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+	 <hr>
+    </div>
+		
+</div>
+        <div class="box-content mobpad">
+            <form id="form-gebruikerstabel" name="obj.formgebruikerstabel" class="form-gebruikerstabel2 form-horizontal" novalidate>
+                <fieldset>
+                    <span class="legend">Gebruikers</span>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-0">
+                            <button data-ng-hide="userDetails" type="button" class="btn btn-primary btnlgw2" data-ng-disabled="isProspect() == true || isAdresOk() == false" data-ng-click="newUser()" title={{notAllowedNewUser()}}>
+								Gebruiker toevoegen
+							</button>
+                        </div>
+                    </div>
+                    <table id="users" class="table m-table no-mobiel table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Voornaam</th>
+                                <th>Achternaam</th>
+                                <th class="trap4">Geslacht</th>
+                                <th>E-mailadres</th>
+                                <th class="trap4">Gebruikerstype</th>
+                                <th class="trap4">Afdeling</th>
+                                <th>Functie</th>
+                                <th class="btn-fix-searchaction">Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr data-ng-repeat="user in users" data-ng-click="setSelected(user.userId)" data-ng-class="{selected: user.userId == userIdSelected}">
+                                <td>{{user.voornaam}}</td>
+                                <td>{{user.naam}}</td>
+                                <td class="trap4">
+                                    <span data-ng-show="user.geslacht=='V'">Vrouw</span><span data-ng-show="user.geslacht=='M'">Man</span>
+                                </td>
+                                <td>{{user.emailAdres}}</td>
+                                <td class="trap4" alt="Gebruiker">
+                                    <span data-ng-show="hasRole1(user.roles, 'admin_sbdr')" class="fa fa-star-o"> betalingachterstanden.nl medewerker</span>
+                                    <span data-ng-show="hasRole1(user.roles, 'admin_sbdr_hoofd')" class="fa fa-star-o"> betalingachterstanden.nl hoofdmedewerker</span>
+                                    <span data-ng-show="hasRole1(user.roles, 'admin_klant')" class="fa fa-gear"> Eigenaar klantaccount</span>
+                                    <span data-ng-show="hasRole1(user.roles, 'hoofd_klant')" class="fa fa-user"> Hoofdgebruiker</span>
+                                    <span data-ng-show="hasRole1(user.roles, 'gebruiker_klant')" class="fa fa-user"> Gebruiker</span>
+                                    <span data-ng-show="hasRole1(user.roles, 'bedrijf_manager')" class="fa fa-user"> Bedrijf manager (extern)</span>
+                                </td>
+                                <td class="trap4">{{user.afdeling}}</td>
+                                <td>{{user.functie}}</td>
+                                <td>
+                                    <div class="btn-fix-search-2 zoekenmobielhide">
+                                        <button type="button" class="btn btn-fix-search" data-ng-click="changeUser(user.userId)" data-ng-disabled="false" data-tooltixp="Gegevens wijzigen"><i class="fix-search-icon fa fa-pencil-square-o" aria-hidden="true"></i>
+									</button>
+									<span data-ng-hide="hasRole1(user.roles, 'admin_klant') || isCurrentUser(user.userId, user.emailAdres)">
+                                        <button type="button" class="btn btn-fix-search" data-ng-click="deleteUser(user.userId)"  data-tooltixp="Verwijderen"><i class="fix-search-icon fa fa-trash-o" aria-hidden="true"></i>
+									</button></span>
+                                        <button type="button" class="btn btn-fix-search" data-ng-click="changePassword()" data-ng-show="isCurrentUser(user.userId, user.emailAdres)"data-tooltixp="Wachtwoord aanpassen"><i class="fix-search-icon fa fa-key" aria-hidden="true"></i>
+									</button>
+                                    </div>
+								   <div class="zoekenmobielshow">
+                                            <div class="dropdown zoekenbutton ">
+                                                <button class="btn btn-primary dropdown-toggle w100mob btn-lg-mob margin10" type="button" data-toggle="dropdown">Selecteer een actie
+											              <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><button onclick="topFunction()" class="btn btn-fix-search" data-ng-click="changeUser(user.userId)" data-ng-disabled="false" ><i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;</i>Gegevens wijzigen</button></li>
+												   <li data-ng-hide="hasRole1(user.roles, 'admin_klant') || isCurrentUser(user.userId, user.emailAdres)"><button class="btn btn-fix-search" data-ng-click="deleteUser(user.userId)"> <i class="fa fa fa-trash-o" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;</i>Verwijderen</button></li>
+                                                    <li>
+													<button onclick="topFunction()" class="btn btn-fix-search" 
+													data-ng-click="changePassword()" data-ng-show="isCurrentUser(user.userId, user.emailAdres)"> <i class="fa fa-key" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>Wachtwoord aanpassen</button></li>			
+									</button>											
+<script>
+function topFunction() {
+    document.body.scrollTop = 100;
+    document.documentElement.scrollTop = 100;
+}
+</script>
+                                                </ul>
+                                            </div>  
+											</div>
+								 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination data-ng-hide="userDetails || totalItems <= itemsPage" direction-links="false" boundary-links="true" total-items="totalItems" items-per-page="itemsPage" max-size="maxSize" ng-change="pageChanged(currentPage)" data-ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-0">
+                            <button data-ng-hide="userDetails || !addressEditAllowed()" type="button" class="btn btn-primary btnlgw2" data-ng-click="back()">
+								Terug
+							</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    (function() {
+        var headertext = [];
+        var headers = document.querySelectorAll("thead");
+        var tablebody = document.querySelectorAll("tbody");
+
+        for (var i = 0; i < headers.length; i++) {
+            headertext[i] = [];
+            for (var j = 0, headrow; headrow = headers[i].rows[0].cells[j]; j++) {
+                var current = headrow;
+                headertext[i].push(current.textContent.replace(/\r?\n|\r/, ""));
+            }
+        }
+
+        if (headers.length > 0) {
+            for (var h = 0, tbody; tbody = tablebody[h]; h++) {
+                for (var i = 0, row; row = tbody.rows[i]; i++) {
+                    for (var j = 0, col; col = row.cells[j]; j++) {
+                        col.setAttribute("data-th", headertext[h][j]);
+                    }
+                }
+            }
+        }
+    }());
+</script>
+
+<script type="text/ng-template" id="changeusername.html" class="reveal-modal">
+    <div class="modal-header">
+       <i class="modal-icon-fix fa fa-sign-out" aria-hidden="true"></i>
+        <span class="modal-title legend">Gebruikersnaam aanpassen</span>
+    </div>
+    <div class="modal-body">
+        <p>Met het aanpassen van het e-mailadres wordt ook de gebruikersnaam voor de login aangepast.</p>
+        <p>Dit betekent dat indien deze gebruiker is ingelogd de gebruikerssessie wordt afgesloten. De gebruiker moet dan opnieuw inloggen met de nieuwe gebruikersnaam.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btnlgw2 btn-primary w100mob btn-lg-mob" data-ng-click="changeUsernameOk()">Verder</button>
+        <button class="btn btnlgw2  bluebtn11 btn-primary w100mob btn-lg-mob" data-ng-click="closeChangeUsernameModal()">Terug</button>
+    </div>
+</script>
+<script type="text/ng-template" id="logoutafteredit.html" class="reveal-modal">
+    <div class="modal-header">
+    <i class="modal-icon-fix fa fa-sign-out" aria-hidden="true"></i>
+        <span class="modal-title legend">Eigen gegevens aanpassen</span>
+    </div>
+    <div class="modal-body">
+        <p>Met het aanpassen van uw eigen gegevens wordt u uitgelogd.</p>
+        <p>Dit om er zeker van te zijn dat u geen fouten ondervindt als gevolg van oude, achtergebleven, informatie</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btnlgw2 btn-primary w100mob btn-lg-mob" data-ng-click="closeChangeUsernameModal()">Uitloggen</button>
+    </div>
+</script>

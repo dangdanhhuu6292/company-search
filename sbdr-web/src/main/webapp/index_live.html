@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Register | CRZB register</title>
+	<meta name="description" content="Centraal Register Zakelijke Betalingsachterstanden (CRZB). Inzage in de meest actuele betalingsachterstanden van alle organisaties in Nederland.." />
+	<meta name="keywords" content="CRZB, Register, Europees register, Betalingsachterstandenregister, Steunvordering, CRZB register" />
+	<meta name="author" content="Centraal Register Zakelijke Betalingsachterstanden (CRZB)"> 
+	<meta name="robots" content="index, nofollow"/>
+    <link href="img/favicon/favicon.ico" rel="icon" type="image/x-icon" />
+	<link href="css/register-style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body data-ng-app="sbdrApp" data-ng-class="username ? ' ' : 'zbr-register'">
+
+<div data-ng-include='"templates/header.html"'></div>
+<div data-ng-include='"templates/feedback.html"'></div>
+<span id="feedback-btn" onclick="$('#feedbackModal').modal();">Feedback</span>
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div id="{{content_id}}" class="col-xs-12">
+			<ng-view></ng-view>
+        </div>
+    </div>
+</div>
+    <footer class="end" data-ng-cloak data-ng-show="user"></footer>
+	<script src="js/register-min.js"></script>
+	<script src="js/sbdr-app.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAciB0USyOZS04hTgc2-21DU2xm0gg8YZM&libraries=places"></script>
+	
+</body>
+</html>

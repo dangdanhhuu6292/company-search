@@ -1,0 +1,1491 @@
+<!-----
+
+EXTRA GEGEVENS DEBITEUR VRAGEN EN WEERGEVEN.
+1A - Telefoonnummer debiteur toevoegen in database en die weer vertoonen in controler notifycompany als volgt: {{telephone.debtor}}
+1B - Emailadres debiteur toevoegen in database en die weer vertoonen in controler notifycompany als volgt : {{email.debtor}}
+1C - Op de velden telefoonnummer en email valtidatie zetten max lengt input.
+
+GESPREK VERSLAG OPSLAAN EN WEERGEVEN 
+2A - opslaan volgende gegevens: Contactdatum, Contacttijd, Contactwijze, Contactgegevens, Opgenomen, Terug bellen, Gespreksverslag, Noot van admin. 
+2B -  
+
+
+NOTIETIE GEBRUIKER OPSLAAN EN WEERGEVEN 
+3A - Opslaan in DB en weer tonen
+3B - Notietie opslaan in de scherm vermeling inzien
+
+
+TABEL VOOR VERTONEN GESPREKSVERSLAGEN
+4A - Data van gespreksverslagen vertonen.
+
+AUTOMATIS ERRO REPORT 
+5A - Lissener maken indien er error optreed de volgende functie word aangeroepen  "errorReport()"
+
+
+FACTUUR 
+In de excel lijst aangeven welke vermeling en welke rapport bij factuur bij hoord. 
+
+
+---->
+
+
+<div class="row">
+	<div id="notify_page" class="col-xs-12">
+		<div class="box no shad margb">
+			<div class="box-content border">
+				<div
+					ng-show="!readonly && !wijziging && meldingDetails">
+					<span class="livicon-evo"
+						data-options="name:step-two-fourth.svg; size: 35px; style: filled; strokeColor: #0a212f; fillColor: #d3ebff; solidColor: #e89a00; solidColorAction: #1f5d9f; autoPlay:true;eventOn:parent ;tryToSharpen:true"></span>
+					<a href="" class="rechts infoi"
+						data-text="&lt;h4&gt;&lt;b&gt;Bedrijfsgegevens&lt;/b&gt;&lt;/h4&gt;&lt;br/&gt;In dit venster worden de bedrijfsgegevens van uw debiteur weergeven, zoals deze op dit moment bij ons bekend zijn.">
+						<span class="livicon-evo"
+						data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+					</a> <span class="legend">Achterstand indienen</span>
+				</div>
+				<div ng-show="readonly">
+					<span class="livicon-evo"
+						data-options="name:servers.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;eventOn:parent ;tryToSharpen:true"></span>
+					<span class="legend">Achterstand specificatie</span>
+				</div>
+				<div ng-show="wijziging">
+					<span class="livicon-evo"
+						data-options="name:pen.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;eventOn:parent ;tryToSharpen:true"></span>
+					<span class="legend">Factuurgegevens wijzigen</span>
+				</div>
+				<div ng-hide="editExistingMelding || meldingDetails">
+					<span class="livicon-evo"
+						data-options="name:step-three-fourth.svg; size: 35px; style: filled; strokeColor: #0a212f; fillColor: #d3ebff; solidColor: #e89a00; solidColorAction: #1f5d9f; autoPlay:true;eventOn:parent ;tryToSharpen:true"></span>
+					<a href="" class="rechts infoi"
+						data-text="&lt;h4&gt;&lt;b&gt;Verzendlijst&lt;/b&gt;&lt;/h4&gt;&lt;br/&gt;Op deze pagina vindt u een overzicht van de aan te melden betalingsachterstanden van uw debiteur.">
+						<span class="livicon-evo"
+						data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+					</a> <span class="legend">Verzendlijst</span>
+				</div>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad">
+					<div class="col-xs-12 col-sm-12">
+						<div class="box-context">
+							<form id="form-bedrijfsgegevens" name="formbedrijfsgegevens"
+								class="form-horizontal" novalidate action="">
+								<fieldset>
+									<div class="form-group">
+
+										<span class="col-xs-12 col-sm-5 col-md-4 col-lg-3 legend"
+											ng-show="!gebruikerAllowed()">Debiteurgegevens</span> <span
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 legend"
+											ng-show="gebruikerAllowed()">Achterstand heeft
+											betrekking op</span> <span
+											class="col-xs-12 col-sm-7 col-md-8 col-lg-9"> <span
+											class="livicon-evo trap"
+											data-options="name:building.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;autoPlay:true;eventOn:parent ;tryToSharpen:true"></span>
+										</span>
+									</div>
+
+
+									<div class="form-group"
+										ng-show="!readonly && !wijziging && meldingDetails">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Bedrijfstatus</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9"> <span
+											data-ng-show="company.actief == true" class="checkactiev">Actief</span><span
+											data-ng-show="!company.actief" class="checknoactiev">Niet
+												actief</span>
+										</span>
+									</div>
+
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Bedrijfsnaam</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{company.bedrijfsNaam}} </span>
+									</div>
+
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Straatnaam
+											en nummer</label> <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{company.straat}} {{company.huisnummer}}
+											{{company.huisnummerSuffix}} </span>
+									</div>
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postcode
+											en plaats</label> <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{company.postcode}}
+											{{company.plaats}} </span>
+									</div>
+									<div class="form-group" ng-show="company.postPostbus">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postbus
+											en postcode (postadres)</label> <span
+											class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{company.postPostbus}}
+											{{company.postPostcode}} </span>
+									</div>
+									<div class="form-group" ng-show="company.postPostbus">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Plaats
+											(postadres)</label> <span
+											class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{company.postPlaats}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">KvK-nummer</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{company.kvkNummer}} </span>
+									</div>
+
+									<div class="form-group" ng-show="editExistingMelding">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">VE-nummer</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{melding.referentieIntern}} </span>
+									</div>
+									<div class="form-group" ng-show="editExistingMelding">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Vermeldingsstatus</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9"> <span
+											ng-show="melding.meldingstatusCode == 'NOK'"
+											class="bg-warning badge">In behandeling</span> <span
+											ng-show="melding.meldingstatusCode == 'INI'"
+											class="bg-warning badge">{{melding.meldingstatus}}</span> <span
+											ng-show="melding.meldingstatusCode == 'INB'"
+											class="bg-warning badge">{{melding.meldingstatus}}</span> <span
+											ng-show="melding.meldingstatusCode == 'ACT'"
+											class="bg-success badge"
+											title="Actief vanaf {{melding.datumGeaccordeerd}}">{{melding.meldingstatus}}</span>
+											<span ng-show="melding.meldingstatusCode == 'AFW'"
+											class="bg-warning badge">{{melding.meldingstatus}}</span> <span
+											ng-show="melding.meldingstatusCode == 'DEL'"
+											class="bg-warning badge">{{melding.meldingstatus}}</span>
+										</span>
+									</div>
+									<div class="form-group"
+										ng-show="meldingDetails && !hideConfirm()">
+										<span
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											Zijn bovenstaande bedrijfsgegevens juist? <a href=""
+											class="clickableinfo" info-popover
+											data-tooltixp="Let op! Het kan voorkomen dat er meerdere ondernemingen onder dezelfde naam opereren. Tevens is het mogelijk dat meerdere ondernemingen op hetzelfde adres gevestigd zijn. Controleer daarom goed of het aangegeven KvK-nummer correct is."></a>
+										</span>
+									</div>
+									<div class="form-group"
+										ng-show="meldingDetails && !hideConfirm()"
+										ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'akkoordBedrijf')}">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<div class="checkbox-inline">
+												<label> <input type="checkbox"
+													ng-model="controle.bedrijfsgegevensok"
+													ng-change="changeAdresCheck('selBedrijfAdresOk')"
+													id="akkoordBedrijf" name="akkoordBedrijf"> De
+													bovenstaande adresgegevens en het KvK-nummer zijn juist. <i
+													class="fa fa-square-o"></i>
+												</label>
+											</div>
+											<small class="help-block"
+												ng-show="isInvalid(formbedrijfsgegevens, 'akkoordBedrijf')">
+												<span> De bovenstaande adresgegevens en het
+													KvK-nummer zijn juist.Ja. Dit is het juiste bedrijf en het
+													juiste adres.</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group"
+										ng-show="meldingDetails && !hideConfirm()"
+										ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'geenAkkoordBedrijf')}">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<div class="checkbox">
+												<label> <input type="checkbox"
+													ng-enabled="meldingDetails && !hideConfirm() && !editExistingMelding"
+													ng-model="controle.bedrijfsgegevensNietJuist"
+													ng-change="changeAdresCheck('selBedrijfAdresNotOk')"
+													id="geenAkkoordBedrijf" name="geenAkkoordBedrijf">
+													Het bovenstaande KvK-nummer is juist, maar de adresgegevens
+													zijn niet juist. <i class="fa fa-square-o"></i>
+
+												</label>
+											</div>
+											<small class="help-block"
+												ng-show="isInvalid(formbedrijfsgegevens, 'geenAkkoordBedrijf')">
+												<span>Ja. Dit is het juiste bedrijf,<u> maar het
+														adres klopt niet</u>
+											</span>
+											</small>
+										</div>
+									</div>
+									<!------------------------------1A-------------------- Extra gegevens Schuldenaar---------------1A------------------->
+									<div id="additional-data-fix"
+										ng-hide="editExistingMelding || meldingDetails">
+										<div class="additional-data-legend">Aanvullende
+											debiteurgegevens</div>
+										<div class="form-group"
+											ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'telefoonnummerDebiteur')}">
+											<label
+												class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Telefoonnummer</label>
+											<span class="col-xs-12 col-sm-4 col-md-4 col-lg-3"> <!--- validatie geldig telefoonnummer,  veld is niet verplicht maxlengt 14 ----->
+												<div class="fixed-input col-xs-10 col-sm-10">
+												<input
+												data-ng-paste="checkFieldMaxLength($event, controle.telefoonnummerDebiteur, maxFieldLengths.telefoonnummer)"
+												data-wm-block class="form-control" type="text"
+												name="telefoonnummerDebiteur" id="telefoonnummerDebiteur"
+												data-ng-model="controle.telefoonnummerDebiteur"
+												data-ng-pattern="PHONE_REGEXP"
+												data-wm-block-length="maxFieldLengths.telefoonnummer" /> 
+												</div>
+												&nbsp;&nbsp; <a href="" class="clickableinfo" info-popover
+												data-tooltixp="Het invoeren van telefoonnummer(s) is optioneel. Sommigen organisaties hebben echter geen of moeilijk te achterhalen contactgegevens. U kunt in dit geval het beste telefoonnummer(s) toevoegen aan de vermelding. Heeft u meerdere telefoonnummers? Dan kunt u deze opsommen met het opsommingsteken puntkomma( ; )."></a>
+											</span>
+										</div>
+										<div class="form-group"
+											ng-class="{'has-error' : isInvalid(formbedrijfsgegevens, 'telefoonnummerDebiteur')}">
+											<label
+												class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">E-mailadres</label>
+											<span class="col-xs-12 col-sm-4 col-md-4 col-lg-3"> <!--- validatie geldig email adres, veld is niet verplicht----->
+												<div class="fixed-input col-xs-10 col-sm-10">
+												<input
+												data-ng-paste="checkFieldMaxLength($event, controle.emailAdresDebiteur, maxFieldLengths.emailadres)"
+												data-wm-block class="form-control" type="text"
+												name="emailadresDebiteur" id="emailadresDebiteur"
+												data-ng-pattern="EMAIL_REGEXP"
+												data-ng-model="controle.emailAdresDebiteur"
+												data-wm-block-length="maxFieldLengths.emailadres" /> 
+												</div>
+												&nbsp;&nbsp; <a href="" class="clickableinfo" info-popover
+												data-tooltixp="Het invoeren van emailadressen is optioneel. Sommigen organisaties hebben echter geen of moeilijk te achterhalen contactgegevens. U kunt in dit geval het beste emailadressen toevoegen aan de vermelding. Heeft u meerdere emailadressen? Dan kunt u deze opsommen met het opsommingsteken puntkomma( ; )."></a>
+											</span>
+										</div>
+									</div>
+									<!------------------------------1A----------------- Einde Extra gegevens Schuldenaar-----------------1A--------------->
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box no margb" ng-show="gebruikerAllowed()">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: user.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; ; tryToSharpen: true"></span>
+				<span class="legend">Achterstand aangemeld door</span> <a href=""
+					class="rechts infoi"
+					data-text="&lt;h4&gt;&lt;strong&gt;Achterstand aangemeld&lt;/strong&gt;&lt;/h4&gt;&lt;br/&gt;Hier vindt u de bedrijfsgegevens van het bedrijf door wie de achterstand is aangemeld.">
+					<span class="livicon-evo"
+					data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+				</a>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad">
+					<div class="col-xs-12">
+						<div class="box-context">
+							<form id="form-bedrijfsgegevensdoor"
+								name="formbedrijfsgegevensdoor" class="form-horizontal"
+								novalidate action="">
+								<fieldset>
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Bedrijfsnaam</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{owncompany.bedrijfsNaam}} </span>
+									</div>
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Straatnaam
+											en nummer</label> <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{owncompany.straat}} {{owncompany.huisnummer}}
+											{{owncompany.huisnummerSuffix}} </span>
+									</div>
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postcode
+											en plaats</label> <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{owncompany.postcode}}
+											{{owncompany.plaats}} </span>
+									</div>
+									<div class="form-group" ng-show="owncompany.postPostbus">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Postbus
+											en postcode (postadres)</label> <span
+											class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{owncompany.postPostbus}}
+											{{owncompany.postPostcode}} </span>
+									</div>
+									<div class="form-group" ng-show="owncompany.postPostbus">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Plaats
+											(postadres)</label> <span
+											class="col-xs-12 col-sm-7 col-md-8 col-lg-9">{{owncompany.postPlaats}}
+										</span>
+									</div>
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">KvK-nummer</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{owncompany.kvkNummer}} </span>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box no margb"
+			ng-show="editExistingMelding && !wijziging">
+			<div class="box-content border">
+
+				<span class="livicon-evo"
+					data-options="name: gears.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent;autoplay:true;repeat:8; style: lines; tryToSharpen: true"></span>
+				<span class="legend"> Verwerkingen</span> <a href=""
+					class="rechts infoi"
+					data-text="&lt;h4&gt;&lt;strong&gt;Verwerkingen&lt;/strong&gt;&lt;/h4&gt;&lt;br/&gt;De hier getoonde gegevens zijn slechts zichtbaar voor u en niet voor derden.">
+					<span class="livicon-evo"
+					data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+				</a>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content overres mobpad">
+					<div class="col-xs-12">
+						<div class="box-context ">
+							<form id="form-gebruikergegevens" name="formgebruikergegevens"
+								class="form-horizontal" novalidate action="">
+								<fieldset>
+									<table id="users"
+										class="table m-table nomob table-bordered table-hover table-striped">
+										<thead>
+											<tr>
+												<th>Actie</th>
+												<th>Datum</th>
+												<th>Uitgevoerd door</th>
+												<th>Functie</th>
+												<th>Afdeling</th>
+												<th>E-mailadres</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="actie in acties">
+												<td>{{actie.actie}}</td>
+												<td>{{actie.datum}}</td>
+												<td>{{actie.gebruiker}}</td>
+												<td>{{actie.functie}}</td>
+												<td>{{getAfdeling(actie.afdeling)}}</td>
+												<td>{{actie.email}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box no margb"
+			ng-show="!readonly && meldingDetails">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: morph-doc.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; ; tryToSharpen: true"></span>
+				<span class="legend">Betalingsachterstand</span> <span
+					ng-hide="wijziging"> <a href="" class="rechts infoi"
+					data-text="&lt;h4&gt;&lt;strong&gt;Factuurgegevens&lt;/strong&gt;&lt;/h4&gt;&lt;br/&gt;Gebruik dit invulformulier om uw openstaande factuur aan te melden. Ga allereerst de vereisten af en weet direct of uw vordering aan de vereisten voldoet voor indiening. Wij vragen u verder om het factuurnummer, het factuurbedrag en de vervaldatum van de factuur in te vullen. &lt;br/&gt;&lt;br/&gt;Heeft u meerdere facturen? Dien deze dan afzonderlijk in. Door op de button ‘+ Volgende factuur’ te drukken, kunt u onbeperkt extra facturen toevoegen. Let erop dat deze facturen wel bij dezelfde debiteur horen.">
+						<span class="livicon-evo"
+						data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+				</a>
+				</span> <span ng-show="wijziging"> <a href="" class="rechts infoi"
+					data-text="&lt;h4&gt;&lt;strong&gt;Wijziging&lt;/strong&gt;&lt;/h4&gt;&lt;br/&gt;Wijziging van uw vermelding kan slechts voor wat betreft het bedrag van de openstaande vordering. Heeft u een fout gemaakt in het opgegeven bedrag of heeft uw debiteur een deel van de vordering voldaan? Wijzig het bedrag dan hier. Factuurnummer en vervaldatum kunnen niet gewijzigd worden. Wilt u hier een verandering in aanbrengen? Verwijder deze vermelding dan en maak een nieuwe aan.">
+						<span class="livicon-evo"
+						data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+				</a>
+				</span>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad animate-show">
+					<div class="col-xs-12 ">
+						<div class="box-context">
+							<form id="form-meldinggegevens" class="form-horizontal"
+								name="formmeldinggegevens" novalidate action="">
+								<fieldset>
+									<div class="form-group">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<i class="fixed-margin-left fa fa-lock" aria-hidden="true"></i>
+
+											<span>Uw gegevens zijn geanonimiseerd. </span> <a href=""
+												class="clickableinfo" info-popover
+												data-tooltixp="CRZB en uw schuldenaar zijn de enigen die deze kunnen inzien. Derden zien dat er sprake is van een betalingsachterstand bij het door u vermeldde bedrijf, maar zien niet door welke onderneming deze is aangemeld."></a>
+
+										</div>
+									</div>
+									<div class="form-group" ng-hide="hideConfirm()"
+										ng-class="{'has-error' : isInvalid(formmeldinggegevens, 'debiteurSommatieOntvangen')}">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<div class="checkbox-inline">
+												<label> <input type="checkbox"
+													ng-model="melding.debiteurSommatieOntvangen"
+													ng-change="mandatoryChecks()"
+													id="debiteurSommatieOntvangen"
+													name="debiteurSommatieOntvangen" required>Debiteur
+													is reeds aangemaand tot betaling. <i class="fa fa-square-o"></i>
+												</label>
+											</div>
+											<small class="help-block"
+												ng-show="isInvalid(formmeldinggegevens, 'debiteurSommatieOntvangen')">
+												<span>Debiteur dient op de hoogte te zijn van de
+													openstaande vordering.</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-hide="hideConfirm()"
+										ng-class="{'has-error' : isInvalid(formmeldinggegevens, 'debiteurBetwistNiet')}">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<div class="checkbox-inline">
+												<label> <input type="checkbox"
+													ng-model="melding.debiteurBetwistNiet"
+													ng-change="mandatoryChecks()" id="debiteurBetwistNiet"
+													name="debiteurBetwistNiet" required> Debiteur
+													betwist de vordering niet. <i class="fa fa-square-o"></i>
+												</label>
+											</div>
+											<a href="" class="clickableinfo" info-popover
+												data-tooltixp="Indien er onenigheid bestaat over de vordering, dan is het niet mogelijk om een betalingsachterstand aan te melden."></a>
+											<small class="help-block"
+												ng-show="isInvalid(formmeldinggegevens, 'debiteurBetwistNiet')">
+												<span>Debiteur dient de vordering niet te betwisten.</span>
+											</small>
+										</div>
+									</div>
+									<div class="form-group" ng-hide="wijziging"
+										ng-class="{'has-error' : isInvalid(formmeldinggegevens, 'referentie') || isReferentieInvalid(melding.referentie)}">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Factuurnummer
+											(maximaal &eacute;&eacute;n)</label>
+
+										<div class="col-xs-10 col-sm-5">
+											<div class="fixed-input col-xs-2 col-sm-2">
+												<input
+													ng-paste="checkFieldMaxLength($event, melding.referentie, maxFieldLengths.referentie)"
+													wm-block class="form-control" type="text" name="referentie"
+													id="referentie"
+													ng-disabled="editExistingMelding && !gebruikerAllowed()"
+													ng-change="mandatoryChecks()"
+													wm-block-length="maxFieldLengths.referentie" required
+													ng-model="melding.referentie" />
+											</div>
+											&nbsp;&nbsp; <a href="" class="clickableinfo-input"
+												info-popover
+												data-tooltixp="Let op! Bent u een directe relatie van het bedrijf waarvan u melding maakt? Dan kunt u maximaal &#233;&#233;n factuur per melding doorgeven. Vul het factuurnummer van uw openstaande factuur in binnen dit veld. Heeft u meerdere facturen? Maak hiervan dan apart melding door middel van de button + Volgende factuur. Bent u een indirecte relatie van het bedrijf waarvan u melding maakt? (Dit is o.a. het geval wanneer u werkzaam bent onder een Incasso-, deurwaarders- of advocatenkantoor.) Dan vragen wij u om uw dossiernummer en/of ander kenmerk op te geven. Hierin mogen uiteraard aparte facturen worden opgenomen."></a>
+
+											<div class="col-xs-12 col-sm-12" style="padding: 0">
+												<small class="help-block" id="referentiehelp"
+													ng-show="isInvalid(formmeldinggegevens, 'referentie') || isReferentieInvalid(melding.referentie)">
+													<span></span>
+												</small>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" ng-show="wijziging">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Factuurnummer</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{melding.referentie}} <a href="" class="clickableinfo-input"
+											info-popover
+											data-tooltixp="Wijziging van uw vermelding kan slechts voor wat betreft het bedrag van de openstaande vordering. Heeft u een fout gemaakt in het opgegeven bedrag of heeft uw debiteur een deel van de vordering voldaan? Wijzig het bedrag dan hier. Factuurnummer en vervaldatum kunnen niet gewijzigd worden. Wilt u hier een verandering in aanbrengen? Verwijder deze vermelding dan en maak een nieuwe aan."></a>
+										</span>
+									</div>
+									<div class="form-group" ng-hide="wijziging"
+										ng-class="{'has-error' : isInvalid(formmeldinggegevens, 'verloopdatum') || isDatumFactuurInvalid(melding.datumFactuur)}">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Vervaldatum
+											factuur</label>
+
+										<div class="col-xs-10 col-sm-5">
+											<!--<input type="text" class="form-control" ng-model="datumFactuur" data-min-date="{{minDateInvoice}}" data-max-date="{{maxDateInvoice}}" placeholder="From" bs-datepicker>	 -->
+											<div class="fixed-input col-xs-2 col-sm-2">
+												<p class="input-group">
+													<!--<input type="text" class="form-control" name="verloopdatum" id="verloopdatum" ui-mask="99-99-9999" datepicker-popup="{{dateFormat}}" ng-model="melding.datumFactuur" is-open="opened" min-date="minDateInvoice" max-date="maxDateInvoice" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" current-text="Vandaag" clear-text="Leegmaken" close-text="Sluiten"/>-->
+													<input type="text" class="form-control" name="verloopdatum"
+														id="verloopdatum" ui-mask="99-99-9999"
+														ng-disabled="editExistingMelding && !gebruikerAllowed()"
+														ng-change="mandatoryChecks()"
+														ng-model="melding.datumFactuur" ng-required="true" /> <span
+														class="input-group-btn trap2">
+														<button type="button"
+															class="btn fix-btn-verloopdatum btn-default"
+															ng-disabled="editExistingMelding && !gebruikerAllowed()"
+															ng-click="open($event, 1)">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+												</p>
+												<div class="input-group  enhanced-datepicker">
+													<input type="hidden" class="form-control"
+														name="verloopdatumhidden" id="verloopdatumhidden"
+														datepicker-popup="{{dateFormat}}"
+														ng-change="pickDateFactuur(datumFactuurPicker)"
+														ng-model="datumFactuurPicker" is-open="opened_1"
+														min-date="minDateInvoice" max-date="maxDateInvoice"
+														datepicker-options="dateOptions"
+														date-disabled="disabled(date, mode)"
+														current-text="Vandaag" clear-text="Leegmaken"
+														close-text="Sluiten" />
+												</div>
+												<p></p>
+											</div>
+											&nbsp;&nbsp; <a href="" class="clickableinfo-input"
+												info-popover
+												data-tooltixp="De vervaldatum van een factuur is laatste datum waarop de factuur betaald had moeten zijn."></a>
+
+											<div class="col-xs-12 col-sm-12" style="padding: 0">
+												<small class="help-block" id="datumfactuurhelp"
+													ng-show="isInvalid(formmeldinggegevens, 'verloopdatum') || isDatumFactuurInvalid(melding.datumFactuur)">
+													<span></span>
+												</small>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" ng-show="wijziging">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Vervaldatum
+											factuur</label> <span class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{melding.datumFactuur}} </span>
+									</div>
+									<div class="form-group"
+										ng-class="{'has-error || fcsa-number-invalid' : isInvalid(formmeldinggegevens, 'bedrag') || isBedragInvalid(melding.bedrag)}">
+										<label
+											class="col-xs-10 col-sm-5 col-md-4 col-lg-3 control-label">Bedrag</label>
+										<div class="col-xs-10 col-sm-5">
+											<div class="fixed-input col-xs-2 col-sm-2">
+												<input class="form-control" type="text" name="bedrag"
+													id="bedrag" number-type='' ng-change="mandatoryChecks()"
+													ng-model="melding.bedrag"
+													ng-pattern="NUMBERINTERNAL_REGEXP" required />
+											</div>
+											<div class="col-xs-12 col-sm-12" style="padding: 0">
+												<small class="help-block" id="bedraghelp"
+													ng-show="isInvalid(formmeldinggegevens, 'bedrag') || isBedragInvalid(melding.bedrag)">
+													<span></span>
+												</small>
+											</div>
+											&nbsp;&nbsp; <a href="" class="clickableinfo-input"
+												info-popover
+												data-tooltixp="Additionele kosten zoals kosten die gemaakt zijn t.v.m. incassodiensten, deurwaarderskosten en/of andere wettelijke buiten-executoriale kosten die niet tot het oorspronkelijke bedrag van de verrichte dienst(en) of geleverde goed(eren) behoren, mogen hier tevens worden opgegeven. Heeft uw debiteur de vordering deels voldaan? Vul dan het bedrag in dat op dit moment nog openstaat."></a>
+										</div>
+									</div>
+									<div class="form-group" ng-hide="hideConfirm()">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<span>Door indiening van uw openstaande factuur geeft
+												u aan akkoord te zijn met de Algemene Voorwaarden.</span>
+										</div>
+									</div>
+									<div class="form-group" ng-hide="readonly || wijziging">
+										<p
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<a
+												href="downloads/crzb_algemene_voorwaarden.pdf"
+												target="_blank">Klik hier voor de algemene voorwaarden.</a>
+										</p>
+									</div>
+									<div class="form-group"
+										ng-hide="gebruikerAllowed() || meldingVerwerkt || meldingSavedOk">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+
+											<p ng-show="mandatory.type == 'success'"
+												ng-repeat="mandatory in mandatoryText"
+												class="fix-notify-text2">
+												<i class="fix-notify-text fa fa-check" aria-hidden="true"></i>
+												{{mandatory.text}}
+											</p>
+										</div>
+									</div>
+									<div class="form-group" ng-hide="gebruikerAllowed()">
+										<div
+											class="col-xs-12 col-sm-7 col-sm-offset-5 col-md-8 col-md-offset-4 col-lg-9 col-lg-offset-3">
+											<button ng-hide="hidePlaatsVermelding()" type="button"
+												class="btn btnlgw2 btn-primary btn-lg-mob w100mob"
+												ng-disabled="false" ng-click="saveMeldingAndSend()">Naar
+												verzendlijst</button>
+											<button ng-hide="hidePlaatsVermelding()" type="button"
+												class="btn btnlgw2  btn-primary btn-lg-mob w100mob"
+												ng-disabled="false" ng-click="saveMelding()">+
+												Volgende factuur</button>
+											<!---
+                                            <button ng-show="showAanpassenVermelding() && !readonly" type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob" ng-disabled="false" ng-click="updateMelding()">Wijzigen factuurgegevens
+											</button>--->
+											<button ng-hide="hideAnnuleren()" type="button"
+												class="btn btnlgw2 btn-primary btn-lg-mob w100mob bluebtn11"
+												ng-click="annuleren(false)">Annuleren</button>
+											<!--  <button ng-show="showTerugDetail()" type="button" class="btn btnlgw2 btn-primary btn-lg-mob w100mob bluebtn11" ng-click="annuleren(true)">Terug
+											</button>-->
+										</div>
+									</div>
+								</fieldset>
+							</form>
+							<!-- <div ng-show="editExistingMelding && !gebruikerAllowed() && wijziging">
+            <div class="row box-content informatiealert maxw">
+                <span class="informatiealerttext"> Wijziging van uw vermelding kan slechts voor wat betreft het bedrag van de openstaande vordering. Heeft u een fout gemaakt in het opgegeven bedrag of heeft uw debiteur een deel van de vordering voldaan? Wijzig het bedrag dan hier. Factuurnummer en vervaldatum kunnen niet gewijzigd worden. Wilt u hier een verandering in aanbrengen? Verwijder deze vermelding dan en maak een nieuwe aan.</span>
+            </div>
+        </div>-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box no margb"
+			ng-hide="editExistingMelding || meldingDetails">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: box-add.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; tryToSharpen: true"></span>
+				<span class="legend">Factuuroverzicht</span> <a href=""
+					class="rechts infoi"
+					data-text="&lt;h4&gt;&lt;strong&gt;Factuuroverzicht&lt;/strong&gt;&lt;/h4&gt;&lt;br/&gt;Hier vindt u een overzicht van de openstaande facturen die u wenst aan te melden. Controleer of de ingevoerde gegevens juist zijn en dien de achterstand(en) in. Heeft u meerdere openstaande facturen van dit bedrijf die voldoen aan de vereisten voor indiening? Klik dan op de button ‘Extra factuur toevoegen’ en dien deze in.">
+					<span class="livicon-evo"
+					data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+				</a>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content  mobpad">
+					<div class="col-xs-12 ">
+						<div class="box-context">
+							<form id="form-meldingenoverzicht" name="formmeldingenoverzicht"
+								class="form-horizontal " novalidate action="">
+								<fieldset>
+									<table id="vermeldingen"
+										class="table m-table table-bordered nomob  table-hover table-striped">
+										<thead>
+											<tr>
+												<th>Factuurnummer</th>
+												<th>Vervaldatum factuur</th>
+												<th>Bedrag</th>
+												<th>Acties</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr
+												ng-repeat="vermelding in meldingen | startFrom:(currentPage-1)*itemsPage | limitTo:itemsPage"
+												ng-click="setSelected(vermelding.meldingId)"
+												ng-class="{selected: vermelding.meldingId === meldingIdSelected}">
+												<td>{{vermelding.referentie}}</td>
+												<td>{{vermelding.datumFactuur}}</td>
+												<td>{{vermelding.bedrag | currency}}</td>
+												<td>
+													<button type="button"
+														class="btn w100mob fix-btn-notify-page btn-primary btn-xs"
+														ng-click="changeMelding(vermelding.meldingId)">
+														<span class="glyphicon glyphicon-edit"></span> Wijzigen
+													</button>
+													<button type="button"
+														class="btn w100mob  fix-btn-notify-page2 btn-fix btn-danger btn-xs"
+														ng-click="deleteMelding(vermelding.meldingId)">
+														<span class="glyphicon glyphicon-trash"></span>
+														Verwijderen uit lijst
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<pagination ng-hide="totalItems &lt;= itemsPage"
+										direction-links="false" boundary-links="true"
+										total-items="totalItems" items-per-page="itemsPage"
+										max-size="maxSize" ng-change="pageChanged()"
+										ng-model="currentPage" class="pagination-sm"
+										previous-text="&lsaquo;" next-text="&rsaquo;"
+										first-text="&laquo;" last-text="&raquo;"></pagination>
+									<div class="form-group"
+										ng-class="{'has-error' : isInvalid(formmeldingenoverzicht, 'vermeldingenJuist')}">
+										<div class="col-sm-9 col-sm-offset-0">
+											<div class="checkbox">
+												<label class="font-fix-verzendlijst"> <input
+													type="checkbox" ng-model="controle.vermeldingenJuist"
+													id="vermeldingenJuist" name="vermeldingenJuist" required>
+													Ik ben mij ervan bewust dat ik verantwoordelijk ben voor
+													het aandragen van de juiste gegevens en informatie. <i
+													class="fa fa-square-o"></i>
+												</label>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="row box-context" ng-hide="meldingDetails">
+					<div class="col-xs-12">
+						<div class="box-content mobpad">
+							<div class="form-group">
+								<button type="submit"
+									class="btn  btnlgw2 btn-primary btn-lg-mob w100mob"
+									ng-hide="geenMeldingen || totalItems == 0"
+									ng-click="sendMeldingen()">Achterstand(en) indienen</button>
+								<button type="submit"
+									class="btn  btnlgw2  btn-primary btn-lg-mob w100mob"
+									ng-hide="geenMeldingen" ng-click="newMelding()">Extra
+									factuur toevoegen</button>
+								<button type="submit"
+									class="btn  btnlgw2 btn-primary btn-lg-mob w100mob bluebtn11"
+									ng-click="annulerenall()">Annuleren</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="box no margb"
+			data-ng-show="readonly && meldingDetails && meldingVerwijderd() == false">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: morph-folder.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; tryToSharpen: true"></span>
+				<span class="legend">Betalingsachterstand</span> <a href=""
+					class="rechts infoi"
+					data-text="&lt;h4&gt;&lt;b&gt;Betalingsachterstand&lt;/b&gt;&lt;/h4&gt;&lt;br/&gt;In dit overzicht worden actieve betalingsachterstanden weergeven die bij het register zijn aangemeld. De openstaande factuur wordt nader gespecificeerd door middel van o.a. een factuurnummer/ dossiernummer, verloopdatum van de factuur en het bedrag dat nog openstaat.">
+					<span class="livicon-evo"
+					data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+				</a>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad overres animate-show">
+					<div class="col-xs-12 col-lg-12">
+						<div class="box-context">
+							<form id="form-meldingoverzicht" name="formmeldingoverzicht"
+								class="form-horizontal" novalidate action="">
+								<fieldset>
+									<table id="vermeldingen"
+										class="table m-table table-bordered nomob table-hover table-striped">
+										<thead>
+											<tr>
+												<th>Factuurnummer</th>
+												<th>Verloopdatum factuur</th>
+												<th>Bedrag</th>
+												<th>Oorspronkelijk bedrag</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>{{melding.referentie}}</td>
+												<td>{{melding.datumFactuur}}</td>
+												<td>{{melding.bedrag | currency}}</td>
+												<td>{{melding.oorspronkelijkBedrag | currency}}</td>
+											</tr>
+										</tbody>
+									</table>
+
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!----4A---------- Begin Notitie van admin voor gebruiker en admin in tabel na invoer ----4A------------------->
+		<div class="box no margb"
+			ng-show="(readonly || wijziging) && contactMomenten && contactMomentTotalItems > 0">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: notebook.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; tryToSharpen: true"></span>
+				<span class="legend">Verslagen</span>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad">
+					<div class="col-xs-12">
+						<div class="box-context">
+							<form id="form-notietiegebruikersoverzicht"
+								name="notietiegebruikersoverzicht" class="form-horizontal"
+								novalidate action="">
+								<fieldset>
+									<table id="contactMomenten"
+										class="table no-mobiel m-table table-bordered table-hover table-striped margin20 ">
+										<thead>
+											<tr>
+												<th data-label="Contactdatum">Contactdatum</th>
+												<th data-label="Contactwijze">Contactwijze</th>
+												<th data-label="Beantwoord">Beantwoord</th>
+												<th data-label="Notitie">Notitie</th>
+												<th data-label="Noot admin">Noot admin</th>
+												<th class="max-th-acties-admin" datalabel="Acties">Acties</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="contactMoment in contactMomenten">
+												<td data-label="Contactdatum">{{contactMoment.datumContact}}</td>
+												<td data-label="Contactwijze">{{contactMoment.contactWijze}}</td>
+												<td data-label="Beantwoord">{{contactMoment.beantwoord}}</td>
+												<td data-label="Notitie">{{contactMoment.notitie}}</td>
+												<td data-label="Noot admin">{{contactMoment.notitieIntern}}</td>
+												<td><button ng-show="gebruikerAllowed()"
+														ng-click="removeContactMoment(contactMoment.contactMomentId)"
+														type="button" class="btn btn-primary margin-btn-play"
+														ng-disabled="readonly" data-tooltip="Verwijderen">
+														<i class="fa fa-trash-o" />
+													</button>
+													<!--Gegevens verwijderen uit lijst --> <contactmomentnotificationletter-download
+														url="/download/a.pdf" filename="my-awesome.pdf"
+														ng-show="contactMoment.contactWijze == 'Vermeldingsbrief'"></contactmomentnotificationletter-download>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<pagination
+										data-ng-hide="contactMomentTotalItems &lt;=contactMomentItemsPage"
+										direction-links="false" boundary-links="true"
+										total-items="contactMomentTotalItems"
+										items-per-page="contactMomentItemsPage"
+										max-size="contactMomentMaxSize"
+										data-ng-change="contactMomentPageChanged(contactMomentCurrentPage)"
+										ng-model="contactMomentCurrentPage" class="pagination-sm"
+										previous-text="&lsaquo;" next-text="&rsaquo;"
+										first-text="&laquo;" last-text="&raquo;"></pagination>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!----------4A----------------------------- Eind Notitie admin voor gebruiker  --------------------------4A------------------>
+
+
+		<!------------------2A--------------------- Start Notitie gespreksverslag invoer is alleen door admin -------------------2A------------->
+		<div class="box no margb" ng-show="gebruikerAllowed() && (showAanpassenVermelding() || !readonly)">
+			<div class="box-content clearfix border" id="admin-noatie-input">
+				<span class="livicon-evo"
+					data-options="name: notebook.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; tryToSharpen: true"></span>
+				<span class="legend">Gespreksverslag</span>
+				<form id="form-contactmoment" class="form-horizontal"
+					name="formcontactmoment" novalidate action="">
+					<fieldset>
+						<div id="admin-notities">
+
+							<div class="form-group col-xs-12 col-sm-6"
+								ng-class="{'has-error' : isInvalid(formcontactmoment, 'datumContact') }">
+								<div class="col-xs-12 col-sm-8">
+									<label class="control-label">Contactdatum</label>
+									<div class="fixed-input">
+										<!-- col-xs-2 col-sm-2" -->
+										<p class="input-group col-xs-2 col-sm-2">
+											<input type="text" class="form-control" name="datumContact"
+												id="datumContact" ui-mask="99-99-9999"
+												ng-change="mandatoryChecks()"
+												ng-model="contactMoment.datumContact" ng-required="true" />
+											<span class="input-group-btn trap2">
+												<button type="button"
+													class="btn fix-btn-datumcontact btn-default"
+													ng-click="open($event, 1)">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										</p>
+										<div class="input-group  enhanced-datepicker">
+											<input type="hidden" class="form-control"
+												name="datumcontacthidden" id="datumcontacthidden"
+												datepicker-popup="{{dateFormat}}"
+												ng-change="pickDateContact(datumContactPicker)"
+												ng-model="datumContactPicker" is-open="opened_1"
+												min-date="minDateContact" max-date="maxDateContact"
+												datepicker-options="dateOptions"
+												date-disabled="disabled(date, mode)" current-text="Vandaag"
+												clear-text="Leegmaken" close-text="Sluiten" />
+										</div>
+
+									</div>
+									<!--  a href="" class="clickableinfo-input" info-popover data-tooltixp="De contactdatum is de datum van het contactmoment."></a -->
+
+									<div class="col-xs-12 col-sm-12"
+										ng-show="isInvalid(formcontactmoment, 'datumContact') || isDatumContactMomentInvalid(contactMoment.datumContact)"
+										style="padding: 0">
+										<small class="help-block" id="datumContacthelp"> <span></span></small>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group col-xs-12 col-sm-6"
+								ng-class="{'has-error' : isInvalid(formcontactmoment, 'timeContact') }">
+								<div class="col-xs-12 col-sm-8">
+									<label class="control-label"><i class="fa fa-clock-o"></i>
+										Contacttijd</label><br>
+									<div class="fixed-input ">
+										<p class="input-group col-xs-2 col-sm-2">
+											<input type="text" class="form-control" size="8"
+												ng-model="timeContact" name="timeContact" id="timeContact"
+												ng-change="pickTimeContact(timeContact)" bs-timepicker
+												data-time-format="HH:mm" data-length="1"
+												data-minute-step="1" data-arrow-behavior="picker">
+										</p>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="form-group col-xs-12 col-sm-6"
+								data-ng-class="{'has-error' : isInvalid(formcontactmoment, 'contactwijze')}">
+								<div class="col-xs-12 col-sm-8">
+									<label class="control-label">Contactwijze</label>
+
+									<div>
+									
+										<select class="form-control"
+											ng-change="toggleContactwijze(contactMoment.contactwijze)"
+											id="contactwijze" name="contactwijze"
+											data-ng-model="contactMoment.contactwijze"
+											data-ng-options="contactwijze.id as contactwijze.description for contactwijze in contactwijzen"
+											required>
+											<option value="" data-ng-hide="contactMoment.contactwijze">Selecteer
+												een contactwijze</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group col-xs-12 col-sm-6"
+								data-ng-class="{'has-error' : isInvalid(formcontactmoment, 'contactgegevens')}">
+								<div class="col-xs-12 col-sm-8">
+									<label class="control-label">Contactgegevens</label>
+
+									<div>
+										<input ng-enabled="contactMoment.contactwijze == 'Anders'"
+											data-ng-paste="checkFieldMaxLength($event, contactMoment.contactGegevens, maxFieldLengths.contactGegevens)"
+											data-wm-block class="form-control" type="text"
+											name="contactgegevens" id="contactgegevens"
+											data-ng-model="contactMoment.contactGegevens"
+											data-capitalize-first
+											data-wm-block-length="maxFieldLengths.contactGegevens" /> <small
+											class="help-block"
+											data-ng-show="isInvalid(formcontactmoment, 'contactgegevens')">
+											<span>Vul de contactgegevens in.</span>
+										</small>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group col-xs-12 col-sm-6"
+								data-ng-class="{'has-error' : isInvalid(formcontactmoment, 'beantwoord')}">
+								<div class="col-xs-12 col-sm-8">
+									<label class="control-label">Opgenomen?</label>
+
+									<div>
+										<select class="form-control" id="beantwoord" name="beantwoord"
+											data-ng-model="contactMoment.beantwoord"
+											data-ng-options="beantwoord.id as beantwoord.description for beantwoord in beantwoordTypes"
+											required>
+											<option value="" data-ng-hide="contactMoment.beantwoord">Maak
+												een keuze</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-6"
+								ng-class="{'has-error' : isInvalid(formcontactmoment, 'datumContactTerug')}">
+								<div class="col-xs-12 col-sm-8">
+
+									<label class="control-label">Terugbellen</label>
+
+
+									<div class="fixed-input">
+										<p class="input-group col-xs-2 col-sm-2">
+											<input
+												ng-disabled="contactMoment.beantwoord != 'Terugbellen'"
+												type="text" class="form-control" name="datumContactTerug"
+												id="datumContactTerug" ui-mask="99-99-9999"
+												ng-change="mandatoryChecks()"
+												ng-model="contactMoment.datumContactTerug"
+												ng-required="false" /> <span class="input-group-btn trap2">
+												<button
+													ng-disabled="contactMoment.beantwoord != 'Terugbellen'"
+													type="button"
+													class="btn fix-btn-datumcontactterug btn-default"
+													ng-click="open($event, 2)">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										</p>
+										<div class="input-group  enhanced-datepicker">
+											<input type="hidden" class="form-control"
+												name="datumcontactterughidden" id="datumcontactterughidden"
+												datepicker-popup="{{dateFormat}}"
+												ng-change="pickDateContactTerug(datumTerugPicker)"
+												ng-model="datumTerugPicker" is-open="opened_2"
+												min-date="minDateContactTerug"
+												max-date="maxDateContactTerug"
+												datepicker-options="dateOptions"
+												date-disabled="disabled(date, mode)" current-text="Vandaag"
+												clear-text="Leegmaken" close-text="Sluiten" />
+										</div>
+										<p></p>
+									</div>
+									<!-- a href="" class="clickableinfo-input" info-popover data-tooltixp="De terugbellen datum is de datum waarop teruggebeld dient te worden."></a -->
+
+									<div class="col-xs-12 col-sm-12"
+										ng-show="isInvalid(formcontactmoment, 'datumContactTerug') || isDatumContactTerugInvalid(contactMoment.datumContactTerug)"
+										style="padding: 0">
+										<small class="help-block" id="datumContactTerugHelp">
+											<span></span>
+										</small>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group col-xs-12 col-sm-6"
+								ng-class="{'has-error' : isInvalid(formcontactmoment, 'notitie')}">
+								<div class="col-xs-12 col-sm-11">
+									<label for="remarks">Gespreksverslag</label>
+									<textarea
+										ng-paste="checkFieldMaxLength($event, contactMoment.notitie, maxFieldLengths.contactMomentNotitie)"
+										wm-block class="form-control" cols="80" rows="5"
+										name="notitie" id="notitie" ng-model="contactMoment.notitie"
+										wm-block-length="maxFieldLengths.contactMomentNotitie"
+										required></textarea>
+									<small class="help-block"
+										ng-show="isInvalid(formcontactmoment, 'notitie')"> <span>Bewerkte
+											notities worden altijd overschreven</span>
+									</small>
+								</div>
+							</div>
+
+							<div class="form-group col-xs-12 col-sm-6"
+								ng-class="{'has-error' : isInvalid(formcontactmoment, 'notitieIntern')}">
+								<div class="col-xs-12 col-sm-11">
+									<label for="remarks2">Noot van admin</label>
+									<textarea
+										ng-paste="checkFieldMaxLength($event, contactMoment.notitieIntern, maxFieldLengths.contactMomentNotitieAdmin)"
+										wm-block class="form-control" cols="80" rows="5"
+										name="notitieIntern" id="notitieIntern"
+										ng-model="contactMoment.notitieIntern"
+										wm-block-length="maxFieldLengths.contactMomentNotitieAdmin"></textarea>
+									<small class="help-block"
+										ng-show="isInvalid(formcontactmoment, 'notitieIntern')">
+										<span>Bewerkte notities worden altijd overschreven</span>
+									</small>
+								</div>
+							</div>
+
+							<div class="form-group col-xs-12 col-sm-12"
+								ng-class="{'has-error' : isInvalid(formcontactmoment, 'alertverzenden')}">
+								<div class="col-xs-12 col-sm-5">
+									<div class="checkbox-inline">
+										<label> <input type="checkbox"
+											ng-model="contactMoment.alert" ng-change="mandatoryChecks()"
+											id="alertverzenden" name="alertverzenden">Alert
+											verzenden <i class="fa fa-square-o"></i>
+										</label>
+									</div>
+									<small class="help-block"
+										ng-show="isInvalid(formcontactmoment, 'alertverzenden')">
+										<span>Indien alert geselecteerd is, dan ontvangt de
+											gebruiker een alert melding voor elk nieuw contactmoment.</span>
+									</small>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="form-group col-xs-12 col-sm-6">
+							<button ng-show="showAanpassenVermelding() && !readonly"
+								type="button" class="btn btnlgw2 btn-primary btn-lg-mob w100mob"
+								ng-disabled="!contactMomentComplete()"
+								ng-click="saveContactMoment()">Opslaan Gespreksverslag</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<!---------2A------------------------------ EINDE Notitie gespreksverslag invoer is alleen door admin ---------------------2A----------->
+
+
+
+		<!------------------ 3A----Start Notitie Gebruiker -----------------3A----------------->
+		<div class="box no margb" ng-show="readonly || wijziging">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: notebook.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; tryToSharpen: true"></span>
+				<span ng-hide="gebruikerAllowed()" class="legend">Eigen
+					notitie</span> <span ng-show="gebruikerAllowed()" class="legend">Notitie
+					gebruiker</span>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad">
+					<div class="col-xs-12">
+						<div class="box-context">
+							<form id="form-meldingnotes" name="formmeldingnotes"
+								class="form-horizontal" novalidate action="">
+								<fieldset>
+
+									<div class="form-group"
+										ng-class="{'has-error' : isInvalid(formmeldingnotes, 'meldingNotities')}">
+										<div ng-hide="meldingVerwijderd()|| gebruikerAllowed()">
+											<div class="col-md-12"
+												ng-show="readonly || wijziging || !gebruikerAllowed() || !meldingVerwijderd()">
+												<!---------------------------------------OPSLAAN IN DB------------------------------------->
+												<textarea
+													ng-paste="checkFieldMaxLength($event, melding.notities, maxFieldLengths.notificationNotes)"
+													wm-block class="form-control" id="meldingNotities"
+													name="meldingNotities" rows="5" ng-model="melding.notities"
+													wm-block-length="maxFieldLengths.notificationNotes"
+													required cols=""></textarea>
+											</div>
+										</div>
+
+										<div class="col-md-12"
+											ng-show="gebruikerAllowed() || meldingVerwijderd()">
+											<!---------------------------VERTONEN VAN DB------------------------------------->
+											<textarea readonly class="form-control" cols="80" rows="5"
+												ng-model="melding.notities" name="meldingNotitiesR"
+												id="meldingNotitiesR"></textarea>
+										</div>
+									</div>
+									<div ng-hide="meldingVerwijderd()">
+										<div class="form-group" data-ng-show="!gebruikerAllowed()">
+											<div class="col-sm-9 col-sm-offset-0">
+
+												<button
+													ng-show="true"
+													type="button"
+													class="btn margin20 btn-primary btnlgw2 btn-lg-mob w100mob"
+													ng-disabled="!showAanpassenVermelding() || readonly" ng-click="updateMelding()">Wijzigingen opslaan</button>
+												<button
+													ng-show="true"
+													type="button"
+													class="btn margin20 btn-primary btnlgw2 btn-lg-mob w100mob"
+													ng-disabled="!showAanpassenVermelding() || !readonly" ng-click="updateNote()">Notitie opslaan</button>
+												<button type="button"
+													class="btn margin20 bluebtn11 btn-primary btnlgw2 btn-lg-mob w100mob"
+													ng-click="annuleren(true)">Terug</button>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!------------------ 3A----einde Notitie Gebruiker -----------------3A------------------>
+
+		<div class="box no margb" data-ng-show="meldingVerwijderd()">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: refresh.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; tryToSharpen: true"></span>
+				<span class="legend">Wijzigingen</span> <a href=""
+					class="rechts infoi"
+					data-text="&lt;h4&gt;&lt;b&gt;Wijzigingen&lt;/b&gt;&lt;/h4&gt;&lt;br/&gt;Betalingsachterstand is verwijderd uit het register zie voor meer informatie de reden hiervan">
+					<span class="livicon-evo"
+					data-options="name: info-alt.svg; size: 30px; style: solid;solidColor:#0a212f; colorsWhenMorph:custom;colorsOnHover:custom; solidColorAction:#0082ad; eventOn:parent; tryToSharpen: true"></span>
+				</a>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad">
+					<div class="col-xs-12">
+						<div class="box-context">
+							<form id="form-meldingverwijderd" name="formmeldingverwijderd"
+								class="form-horizontal" novalidate action="">
+								<fieldset>
+									<span class="legend b">Betalingsachterstand is
+										verwijderd uit het register</span> <br />
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Vermeldingsstatus</label>
+										<span class="col-xs-12 col-sm-7 col-md-8 col-lg-9"> <span
+											class="bg-warning badge"> {{melding.meldingstatus}} </span>
+										</span>
+									</div>
+									<div class="form-group">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Reden
+											van verwijderen</label> <span
+											class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+											{{redenVerwijderen()}} </span>
+									</div>
+									<div class="form-group"
+										data-ng-show="melding.redenVerwijderenOpmerking">
+										<label
+											class="col-xs-12 col-sm-5 col-md-4 col-lg-3 control-label">Opmerking
+											van administrator</label> <span
+											class="col-xs-12 col-sm-7 col-md-8 col-lg-9"> <span>
+												{{melding.redenVerwijderenOpmerking}} </span>
+										</span>
+									</div>
+									<div class="form-group" data-ng-show="!gebruikerAllowed()">
+										<div class="col-xs-12">
+											<button type="button"
+												class="btn btn-primary btn-lg-mob btnlgw2 margin20 w100mob"
+												ng-click="annuleren(true)">Terug</button>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="box no margb" ng-show="gebruikerAllowed()">
+			<div class="box-content border">
+				<span class="livicon-evo"
+					data-options="name: notebook.svg; size: 35px; strokeColorAlt:#0a212f; strokeColor:#0a212f;eventOn:parent; style: lines; tryToSharpen: true"></span>
+				<span class="legend">Admin notities</span>
+				<div class="home">
+					<hr>
+				</div>
+				<div class="row box-content mobpad">
+					<div class="col-xs-12">
+						<div class="box-context">
+							<form id="form-meldingnotesadmin" name="formmeldingnotesadmin"
+								class="form-horizontal" novalidate action="">
+								<fieldset>
+									<div class="form-group"
+										ng-class="{'has-error' : isInvalid(formmeldingnotesadmin, 'notitiesAdmin')}">
+										<div class="col-md-12" ng-show="!readonly">
+											<textarea
+												ng-paste="checkFieldMaxLength($event, meldingNotitiesAdmin, maxFieldLengths.notificationNotes)"
+												wm-block class="form-control" rows="5" name="notitiesAdmin"
+												id="notitiesAdmin" ng-model="meldingNotitiesAdmin"
+												wm-block-length="maxFieldLengths.notificationNotes" cols=""></textarea>
+											<small class="help-block"
+												ng-show="isInvalid(formmeldingnotesadmin, 'notitiesAdmin')">
+												<span>Bewerkte notities worden altijd overschreven</span>
+											</small>
+										</div>
+										<div class="col-md-12" ng-show="readonly">
+											<textarea readonly class="form-control" cols="80" rows="5"
+												ng-model="meldingNotitiesAdmin" name="notitiesAdminR"
+												id="notitiesAdminR"></textarea>
+										</div>
+									</div>
+									<div class="form-group" ng-show="!readonly || meldingDetails">
+										<div class="col-sm-9 col-sm-offset-0">
+
+											<!---------------Notietie opslaan in vermeldin inzien scherm-------------------->
+											<button
+												ng-show="showAanpassenVermelding() && !readonly"
+												type="button"
+												class="btn btnlgw2 btn-primary btn-lg-mob w100mob"
+												ng-disabled="false" ng-click="updateMelding()">Aanpassen
+												vermelding</button>
+											<button ng-hide="readonly" type="button"
+												class="btn btn-primary btnlgw2 btn-lg-mob btn-lg-mob w100mob bluebtn11"
+												ng-click="annuleren(true)">Annuleren</button>
+											<button ng-show="readonly" type="button"
+												class="btn btn-primary btnlgw2 btn-lg-mob btn-lg-mob w100mob bluebtn11"
+												ng-click="annuleren(true)">Terug</button>
+										</div>
+									</div>
+
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-show="error">
+			<div class="box-content fout-smal text-center">
+				<img class="fixt-attention-icon"
+					src="img/icons/svg/attention-sign.svg" width="35" height="35"
+					alt=""> <span id="alert" class="fouttext">{{error}}</span>
+			</div>
+		</div>
+
+		<div ng-show="meldingVerwerkt">
+			<div class="box-content prima text-center">
+				<span class="livicon-evo"
+					data-options="name: servers.svg; size: 50px; style: lines-alt; strokeColor:#07790d;strokeColorAlt:#07790d; autoPlay:true;repeat:50; tryToSharpen: true"></span>
+				<span id="alert" class="primatext">De gegevens zijn succesvol
+					verwerkt.</span>
+			</div>
+		</div>
+
+		<div ng-show="meldingSavedOk">
+			<div class="box-content prima text-center">
+				<span class="livicon-evo"
+					data-options="name:servers.svg; size:50px; style:lines-alt; strokeColor:#07790d; strokeColorAlt:#07790d; autoPlay:true; repeat:50; tryToSharpen:true"></span>
+				<span id="alert" class="primatext">De gegevens zijn
+					opgeslagen.</span>
+			</div>
+		</div>
+		<div ng-show="contactMomentSavedOk">
+			<div class="box-content prima text-center">
+				<span class="livicon-evo"
+					data-options="name:servers.svg; size:50px; style:lines-alt; strokeColor:#07790d; strokeColorAlt:#07790d; autoPlay:true; repeat:50; tryToSharpen:true"></span>
+				<span id="alert" class="primatext">Het gespreksverslag is
+					opgeslagen.</span>
+			</div>
+		</div>
+		<div ng-show="notitieSavedOk">
+			<div class="box-content prima text-center">
+				<span class="livicon-evo"
+					data-options="name:servers.svg; size:50px; style:lines-alt; strokeColor:#07790d; strokeColorAlt:#07790d; autoPlay:true; repeat:50; tryToSharpen:true"></span>
+				<span id="alert" class="primatext">De notitie is opgeslagen.</span>
+			</div>
+		</div>
+		<div ng-show="meldingRemovedOk">
+			<div class="box-content prima text-center">
+				<span class="livicon-evo"
+					data-options="name:trash.svg; size:50px; style:lines-alt; strokeColor:#07790d; strokeColorAlt:#07790d; autoPlay:true; repeat:2; tryToSharpen:true"></span>
+				<span id="alert" class="primatext">Factuur is verwijderd uit
+					de verzendlijst.</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="removeallnotifications.html"
+	class="reveal-modal">
+    <div class="modal-header">
+        <h4 class="modal-title"><i class="modal-icon-fix fa fa-trash-o" aria-hidden="true"></i>Alle ingevoerde facturen worden geannuleerd en gaan verloren</h4>
+    </div>
+    <div class="modal-body">
+        <p>Weet u zeker dat u alle ingevoerde facturen niet wilt verzenden?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btnlgw2 btn-lg-mob w100mob bluebtn11" ng-click="closeRemoveAllNotificationsModal()">Nee</button>
+        <button class="btn btn-primary btnlgw2 btn-lg-mob w100mob" ng-click="removeAllNotificationsOk()">Ja</button>
+
+    </div>
+</script>
+
+<script type="text/ng-template" id="removechanges.html"
+	class="reveal-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">De gegevens worden niet aangepast</h4>
+    </div>
+    <div class="modal-body">
+        <p>Weet u zeker dat u de gegevens niet wilt aanpassen?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btnlgw2  bluebtn11 btn-lg-mob w100mob" ng-click="closeRemoveChangesModal()">Nee</button>
+        <button class="btn btn-primary btnlgw2 btn-lg-mob w100mob" ng-click="removeChangesOk()">Ja</button>
+
+    </div>
+</script>
+
+<script type="text/ng-template" id="removenotification.html"
+	class="reveal-modal">
+
+    <div class="modal-header">
+        <h4 class="modal-title"><i class="modal-icon-fix fa fa-trash-o" aria-hidden="true"></i>Factuur verwijderen</h4>
+    </div>
+    <div class="modal-body">
+        <p>Weet u zeker dat u de Factuur wilt verwijderen?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btnlgw2 bluebtn11 btn-lg-mob w100mob" ng-click="closeRemoveNotificationModal()">Nee</button>
+        <button class="btn btn-primary btnlgw2 btn-lg-mob w100mob" ng-click="removeNotificationOk()">Ja</button>
+
+    </div>
+</script>
+<div id="info-box2" class="informatieinfo">
+	<div class="modal-content2">
+		<span class="close">&times;</span>
+		<p id="textinfo2">#######</p>
+	</div>
+</div>
+<script type="text/javascript">
+	var modal = document.getElementById('info-box2');
+	var btns = document.getElementsByClassName("infoi");
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal
+	for (var i = 0; i < btns.length; i++) {
+		btns[i].onclick = function() {
+			modal.style.display = "block";
+			$('#textinfo2').html($(this).attr('data-text'));
+		}
+	}
+
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+</script>
+<script type="text/javascript">
+	(function() {
+		var headertext = [];
+		var headers = document.querySelectorAll("thead");
+		var tablebody = document.querySelectorAll("tbody");
+
+		for (var i = 0; i < headers.length; i++) {
+			headertext[i] = [];
+			for (var j = 0, headrow; headrow = headers[i].rows[0].cells[j]; j++) {
+				var current = headrow;
+				headertext[i].push(current.textContent.replace(/\r?\n|\r/, ""));
+			}
+		}
+
+		if (headers.length > 0) {
+			for (var h = 0, tbody; tbody = tablebody[h]; h++) {
+				for (var i = 0, row; row = tbody.rows[i]; i++) {
+					for (var j = 0, col; col = row.cells[j]; j++) {
+						col.setAttribute("data-th", headertext[h][j]);
+					}
+				}
+			}
+		}
+
+
+		//admin notities
+		Date.prototype.toDateInputValue = (function() {
+			var local = new Date(this);
+			local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+			return local.toJSON().slice(0, 10);
+		});
+
+
+		//prefill
+		if ($('#datecall00').val() == '') $('#datecall00').val(new Date().toDateInputValue());
+		if ($('#timecall00').val() == '') $('#timecall00').val(new Date().getHours() + ':' + (new Date().getMinutes() < 10 ? '0' : '') + new Date().getMinutes());
+
+		$('#tellcall00').on('keypress', function(e) {
+			return e.metaKey ||
+				e.which <= 0 ||
+				e.which == 8 ||
+				/[0-9]/.test(String.fromCharCode(e.which)); // numbers
+		})
+		//eind admin notities
+
+
+
+
+	}());
+
+	$('#contactmethoddebtor').change(function() {
+		if ($(this).val() === "anders") {
+			$("#tel-cp").attr('disabled', false);
+		} else {
+			$("#tel-cp").attr('disabled', true);
+			$("#tel-cp").val('');
+		}
+	})
+
+	$('#answered').change(function() {
+		if ($(this).val() === "anders" || $(this).val() === "terugbellen") {
+			$("#tb-datum").attr('disabled', false);
+		} else {
+			$("#tb-datum").attr('disabled', true);
+			$("#tb-datum").val('');
+		}
+	})
+</script>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Register | CRZB register</title>
+	<meta name="description" content="Centraal Register Zakelijke Betalingsachterstanden (CRZB). Inzage in de meest actuele betalingsachterstanden van alle organisaties in Nederland.." />
+	<meta name="keywords" content="CRZB, Register, Europees register, Betalingsachterstandenregister, Steunvordering, CRZB register" />
+	<meta name="author" content="Centraal Register Zakelijke Betalingsachterstanden (CRZB)"> 
+	<meta name="robots" content="index, nofollow" />	
+	<meta name="revisit-after" content="1 month" />
+    <link rel="icon" type="image/png" href="/favicon.png" />    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/libs.min.css">
+    <link rel="stylesheet" href="css/docs.min.css">      
+    <link href="font-awesome-4.4.0/css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/bootstrap-nav-wizard.min.css" rel="stylesheet"/>
+    <link href="plugins/fancybox/jquery.fancybox.css" rel="stylesheet"/>
+    <link href="plugins/fullcalendar/fullcalendar.css" rel="stylesheet"/>
+    <link href="plugins/xcharts/xcharts.min.css" rel="stylesheet"/>
+    <link href="plugins/select2/select2.css" rel="stylesheet"/>
+    <link href="plugins/nvd3/nv.d3.min.css" rel="stylesheet"/>
+    <link href="plugins/loading-bar/loading-bar.min.css" rel="stylesheet"/>
+    <link href="bootstrap-rowlink/bootstrap-rowlink.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/ng-grid.css"/>
+    <link rel="stylesheet" type="text/css" href="css/ng-table.css"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/custom.css" rel="stylesheet"/>
+	
+</head>
+<body data-ng-app="sbdrApp" data-ng-class="username ? ' ' : 'zbr-register'">
+
+<div data-ng-include='"templates/header.html"'></div>
+<div data-ng-include='"templates/feedback.html"'></div>
+<span id="feedback-btn" onclick="$('#feedbackModal').modal();">Feedback</span>
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div id="{{content_id}}" class="col-xs-12 col-sm-12">
+			<ng-view></ng-view>
+        </div>
+    </div>
+</div> 
+    <footer class="end" data-ng-cloak data-ng-show="user"></footer>
+	<!--End Container-->
+	<script src="js/analyticstracking.js"></script>
+	<script src="js/jquery.js"></script>
+    <script src="js/jquery.matchHeight.js" type="text/javascript"></script>
+	<script src="js/highcharts.js" type="text/javascript"></script>	
+	<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<script src="plugins/justified-gallery/jquery.justifiedgallery.min.js"></script>
+	<script src="plugins/tinymce/tinymce.min.js"></script>
+	<script src="plugins/tinymce/jquery.tinymce.min.js"></script>
+	<script src="bootstrap-rowlink/bootstrap-rowlink.min.js"></script>
+
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-animate.min.js"></script>
+	<script src="plugins/angular-strap/angular-strap.compat.min.js"></script>
+	<script src="plugins/angular-strap/angular-strap.tpl.min.js"></script>
+		
+	<script src="js/angular-resource.min.js"></script>
+	<script src="js/angular-route.min.js"></script>
+	<script src="js/angular-cookies.min.js"></script>
+	<script src="js/angular-locale_nl-nl.js"></script>
+	<!-- 	<script src="angular-file-upload/angular-file-upload.js"></script> -->
+	<script src="js/ui-bootstrap-tpls.min.js"></script>
+	
+	<script src="js/async.js"></script>
+	<script src="plugins/angular-websocket/angular-websocket.min.js"></script>
+		
+	<script src="js/ng-table.min.js"></script>
+	<script src="js/ng-grid.min.js"></script>
+
+	<script src="js/ngStorage.min.js"></script>
+	<script src="js/oauth-ng.js"></script>
+
+	<script src="plugins/fuckadblocks/fuckadblock.js"></script>
+
+	<script src="plugins/nvd3/d3.min.js"></script>
+	<script src="plugins/nvd3/nv.d3.min.js"></script>
+
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script src="plugins/angular-nocaptcha/angular-no-captcha.js"></script>
+
+	<script src="plugins/nvd3/angular-nvd3.min.js"></script>
+
+	<script src="plugins/loading-bar/loading-bar.min.js"></script>
+	<script src="plugins/script/script.js"></script>
+	<script src="plugins/jquery.sparkline/jquery.sparkline.js"></script>
+	<script src="plugins/jquery.sparkline/ng-sparkline-seriesbar.js"></script>
+	<script src="plugins/angular-ui-utils/ui-utils.min.js"></script>
+
+	<script src="plugins/angular-base64-master/angular-base64.min.js"></script>
+
+
+	<script src="js/config.js"></script>
+	<script src="js/aasbdr-app.js"></script>
+
+	<script src="js/controllers/edit.js"></script>
+	<script src="js/controllers/document.js"></script>
+	<script src="js/controllers/login.js"></script>
+	<script src="js/controllers/dashboard.js"></script>
+	<script src="js/controllers/messages.js"></script>
+	<script src="js/controllers/index.js"></script>
+	<script src="js/controllers/overviewtab.js"></script>
+	<script src="js/controllers/alertstab.js"></script>
+	<script src="js/controllers/reportrequestedtab.js"></script>
+	<script src="js/controllers/portfoliomonitoringtab.js"></script>
+	<script src="js/controllers/companiesnotifiedtab.js"></script>
+	<script src="js/controllers/notificationsstatustab.js"></script>
+	<script src="js/controllers/companiesremovedtab.js"></script>
+	<script src="js/controllers/generaladmintab.js"></script>
+	<script src="js/controllers/objectionsadmintab.js"></script>
+	<script src="js/controllers/supportticketsadmintab.js"></script>
+	<script src="js/controllers/searchresultsadmintab.js"></script>
+	<script src="js/controllers/customersadmintab.js"></script>
+	<script src="js/controllers/notificationsadmintab.js"></script>
+	<script src="js/controllers/notificationsofprospectadmintab.js"></script>
+	<script src="js/controllers/searchcompany.js"></script>
+	<script src="js/controllers/monitoringquestion.js"></script>
+	<script src="js/controllers/createaccount.js"></script>
+	<script src="js/controllers/accountcreated.js"></script>
+	<script src="js/controllers/notifycompany.js"></script>
+	<script src="js/controllers/notificationssend.js"></script>
+	<script src="js/controllers/editcompany.js"></script>
+	<script src="js/controllers/myaccount.js"></script>
+	<script src="js/controllers/myuseraccount.js"></script>
+	<script src="js/controllers/forgotPassword.js"></script>
+	<script src="js/controllers/resetPassword.js"></script>
+	<script src="js/controllers/activateuser.js"></script>
+	<script src="js/controllers/report.js"></script>
+	<script src="js/controllers/reportoverviewtab.js"></script>
+	<script src="js/controllers/reportcompanytab.js"></script>
+	<script src="js/controllers/reportnotificationstab.js"></script>
+	<script src="js/controllers/reporthistorytab.js"></script>
+	<script src="js/controllers/fullreport.js"></script>
+	<script src="js/controllers/documentdownload.js"></script>
+	<script src="js/controllers/vermeldingeninfo.js"></script>
+	<script src="js/controllers/monitoringdetails.js"></script>
+	<script src="js/controllers/createcustomnotification.js"></script>
+	<script src="js/controllers/exceptioncompaniesadmintab.js"></script>
+	<script src="js/controllers/faillissementenoverzicht.js"></script>
+	<script src="js/controllers/exactonline.js"></script>
+	<script src="js/controllers/supportproblem.js"></script>
+	<script src="js/controllers/support.js"></script>
+	<script src="js/controllers/supportobjection.js"></script>
+	<script src="js/controllers/supportfaq.js"></script>
+	<script src="js/controllers/supportdetail.js"></script>
+	<script src="js/controllers/websiteparam.js"></script>
+	<script src="js/controllers/processesadmintabcontroller.js"></script>
+	<!-- <script src="js/controllers/bedrijfsgegevens.js"></script> -->
+	<script src="js/LivIconsEvo.Tools.js"></script>
+	<script src="js/services/services.js"></script>
+	<script src="js/startup.js"></script>
+	<script src='js/html2canvas.js'></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAciB0USyOZS04hTgc2-21DU2xm0gg8YZM&libraries=places"></script>
+</body>
+
+</html>
