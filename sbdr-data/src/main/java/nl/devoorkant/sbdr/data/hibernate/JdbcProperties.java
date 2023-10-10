@@ -6,7 +6,7 @@ public class JdbcProperties {
 	private String password;
 	
     public static final JdbcProperties INSTANCE = 
-            new JdbcProperties("jdbc:mysql://localhost:3306/sbdr", "sbdr", "sbdr");
+            new JdbcProperties("jdbc:mysql://localhost:3306/sbdr", "root", "Thu230292@");
 	
     JdbcProperties(String url, String user, String password) {
     	this.url = url;

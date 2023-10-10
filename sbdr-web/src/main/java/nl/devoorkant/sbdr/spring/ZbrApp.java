@@ -45,21 +45,21 @@ public class ZbrApp extends SpringBootServletInitializer {
 
 		LOGGER.info("Running embedded Tomcat...");
 		
-		System.setProperty("server.servlet.context-path", "/dashboard");
-		System.setProperty("spring.jersey.application-path",  "/services");
+		//System.setProperty("server.servlet.context-path", "/dashboard");
+		//System.setProperty("spring.jersey.application-path",  "/services");
 		LOGGER.info("TEST LOG");
 		
-		ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(ZbrApp.class)
-                .properties("spring.config.name:application,sbdr",
-                        "spring.config.location:classpath:/tst")
-                .build().run(args);		
+		//ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(ZbrApp.class)
+        //        .properties("spring.config.name:application,sbdr",
+        //              "spring.config.location:classpath:/tst")
+        //        .build().run(args);		
 		
-//		ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(ZbrApp.class)
-//                .properties("server.servlet.context-path", "/register",
-//                		"spring.jersey.application-path",  "/services",
-//                		"spring.config.name:application,sbdr",
-//                        "spring.config.location:classpath:/")
-//                .build().run(args);
+		ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(ZbrApp.class)
+                .properties("server.servlet.context-path", "/register",
+                		"spring.jersey.application-path",  "/services",
+                		"spring.config.name:application,sbdr",
+                        "spring.config.location:classpath:/")
+                .build().run(args);
 	}
 
 }

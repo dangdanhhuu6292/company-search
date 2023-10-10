@@ -10,6 +10,8 @@ import nl.devoorkant.creditsafe.CSSOAPFaultException;
 import nl.devoorkant.creditsafe.client.WebServiceClient;
 import nl.devoorkant.creditsafe.converter.CSConverter;
 import nl.devoorkant.exception.DVKException;
+import nl.devoorkant.kvk.client.RestKVK;
+import nl.devoorkant.kvk.client.impl.RestKVKImpl;
 import nl.devoorkant.sbdr.data.DataServiceException;
 import nl.devoorkant.sbdr.data.model.*;
 import nl.devoorkant.sbdr.data.service.BedrijfDataService;
@@ -42,6 +44,7 @@ import java.util.*;
 @Transactional(readOnly = true)
 public class CompanyInfoServiceImpl implements CompanyInfoService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConfiguratieService.class);
+	RestKVK restKVK = new RestKVKImpl();
 	@Autowired
 	BedrijfDataService bedrijfDataService;
 	@Autowired
@@ -71,36 +74,41 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 			 */
 			if(StringUtil.isNotEmptyOrNull(searchValue)) {
 				if(SearchUtil.isKvKNumber(searchValue)) {
-					if(SearchUtil.isFullKvKNumber(searchValue)) {
-						WebServiceClient client = new WebServiceClient();
-						result = new ArrayList<>();
-						CompanyInfo ciresult = client.getDossierWithFullNumber(searchValue);
-						if (ciresult != null)
-							result.add(ciresult);
-					} else {
-						WebServiceClient webServiceClient = new WebServiceClient();
-						result = webServiceClient.searchByKvKNummer(searchValue, maxResults);
-					}
+					//if(SearchUtil.isFullKvKNumber(searchValue)) {
+					//	WebServiceClient client = new WebServiceClient();
+					//	result = new ArrayList<>();
+					//	CompanyInfo ciresult = client.getDossierWithFullNumber(searchValue);
+					//	if (ciresult != null)
+					//		result.add(ciresult);
+					//} else {
+						//WebServiceClient webServiceClient = new WebServiceClient();
+						//result = webServiceClient.searchByKvKNummer(searchValue, maxResults);
+						result = restKVK.searchCompany(searchValue,true,false);
+						
+					//}
 				} else {
 					//This is to catch incomplete KvK numbers
-					if(!SearchUtil.onlyHasNumbers(searchValue)) {
-						WebServiceClient webServiceClient = new WebServiceClient();
-						result = webServiceClient.searchByBedrijfsNaam(searchValue, maxResults);
-					}
+					//if(!SearchUtil.onlyHasNumbers(searchValue)) {
+					//	WebServiceClient webServiceClient = new WebServiceClient();
+					//	result = webServiceClient.searchByBedrijfsNaam(searchValue, maxResults);
+					//}
+					result = restKVK.searchCompany(searchValue,false,true);
 				}
 			} else {
 				LOGGER.debug("Method retrieveFromCompanyInfo. Kan geen Companies ophalen als er geen zoekcriteria zijn opgegeven.");
 			}
-
-		} catch(JAXBException e) {
-			throw new ServiceException(e);
-		} catch(CSCommunicationException e) {
-			throw new ThirdPartyServiceException(e);
-		} catch(CSSOAPFaultException e) {
-			throw new ServiceException(e);
-		} catch (DVKException e) {
+		} catch(Exception e) {
 			throw new ServiceException(e);
 		}
+		//} catch(JAXBException e) {
+		//	throw new ServiceException(e);
+		//} catch(CSCommunicationException e) {
+		//	throw new ThirdPartyServiceException(e);
+		//} catch(CSSOAPFaultException e) {
+		//	throw new ServiceException(e);
+		//} catch (DVKException e) {
+		//	throw new ServiceException(e);
+		//}
 
 		return result;
 	}
@@ -218,13 +226,20 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 			// MBR subdossier issue 16-2-2016
 			//if(subdossier == null) kvkNummerCS += "0000";
 			//else kvkNummerCS += subdossier;
-			if (subdossier != null)
+			if (subdossier != null) {
 				kvkNummerCS += subdossier;
+			}
+				
 			
 			if(StringUtil.isNotEmptyOrNull(kvkNummerCS)) {
 				WebServiceClient webServiceClient = new WebServiceClient();
-				result = webServiceClient.getDossier(kvkNummerCS, hoofdNeven);
-
+				//result = webServiceClient.getDossier(kvkNummerCS, hoofdNeven);
+				if(kvKNummer.trim().length() > 8) {
+					result = restKVK.getDossier(kvKNummer.substring(0, 8),kvKNummer.substring(8, 20), isHoofdVestiging);
+				}else {
+					result = restKVK.getDossier(kvKNummer.substring(0, 8),"", isHoofdVestiging);
+				}
+				
 				// try something else if result is null....
 				if(result == null) {
 					// try new search with no trailing 0000, or add 0000 if there is no trailing 0000.

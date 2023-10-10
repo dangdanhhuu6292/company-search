@@ -17,6 +17,12 @@
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>dvk-util</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
 <!-- 		<dependency> -->
 <!-- 			<groupId>org.slf4j</groupId> -->

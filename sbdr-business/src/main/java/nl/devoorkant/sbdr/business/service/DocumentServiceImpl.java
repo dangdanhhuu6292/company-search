@@ -677,7 +677,7 @@ public class DocumentServiceImpl implements DocumentService {
 
 		com.lowagie.text.Document pdfdoc;
 		PdfWriter pdfwriter;
-		BedrijfReportTransfer bedrijfReport = null;
+		BedrijfReportTransfer bedrijfReport = new BedrijfReportTransfer();
 		Resource logo = null;
 		Resource warning_icon = null;
 		Resource info_icon = null;

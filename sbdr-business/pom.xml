@@ -47,7 +47,18 @@
 			<version>${project.parent.version}</version>
 			<!-- <scope>provided</scope> -->
 		</dependency>
-
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>dvk-util</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>kvk-client</artifactId>
+			<version>${project.parent.version}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-quartz</artifactId>

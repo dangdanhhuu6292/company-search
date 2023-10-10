@@ -1,37 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn">
-    <Properties>
-        <Property name="basePath">/data/tomcat8/logs</Property>
-        <Property name="LOG_PATTERN">
-            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
-        </Property>
-    </Properties>
- 
+<Configuration status="DEBUG">
     <Appenders>
-        <RollingFile name="fileLogger" fileName="${basePath}/sbdr.log" filePattern="${basePath}/sbdr-%d{yyyy-MM-dd}.log">
-            <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
-                <SizeBasedTriggeringPolicy size="10 MB" />
-            </Policies>
-            <DefaultRolloverStrategy max="10" />
-        </RollingFile>
- 
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-
-        <ApplicationInsightsAppender name="aiAppender" />
+        <RollingFile name="LogToRollingFile" fileName="logs/app.log"
+                    filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+        <PatternLayout>
+            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="10 MB"/>
+        </Policies>
+    	</RollingFile>       
     </Appenders>
     <Loggers>
         <Logger name="nl.devoorkant" level="debug" additivity="true">
-            <appender-ref ref="fileLogger" />
+            <AppenderRef ref="LogToRollingFile"/>            
         </Logger>
         <Root level="debug" additivity="false">
-            <appender-ref ref="console" />
-            <AppenderRef ref="aiAppender"  />
+            <AppenderRef ref="LogToConsole"/>      
         </Root>
     </Loggers>
 </Configuration>

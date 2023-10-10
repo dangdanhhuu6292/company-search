@@ -1022,12 +1022,15 @@ public class EmailServiceImpl implements EmailService {
 	private void submitMail(Mail mail, Integer userId, EEMailType eMailType) throws ServiceException  {		
         // sets SMTP server properties
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp02.hostnet.nl");
-        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.host", "smtp.transip.email");
+        properties.put("mail.smtp.port", "465");
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
+        //properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.user", emailSMTPuser);
         properties.put("mail.password", emailSMTPpassword);
+        properties.put("mail.smtp.socketFactory.port", "465"); //SSL Port
+        properties.put("mail.smtp.socketFactory.class",
+				"javax.net.ssl.SSLSocketFactory"); //SSL Factory Class
  
         // creates a new session with an authenticator
         Authenticator auth = new Authenticator() {

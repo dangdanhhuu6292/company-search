@@ -1493,7 +1493,7 @@ public class BedrijfServiceImpl implements BedrijfService {
 
 		try {
 			String ref = referentieNummer;
-			BedrijfReportTransfer result = null;
+			BedrijfReportTransfer result = new BedrijfReportTransfer();
 			if(bedrijfId != null) {
 				Bedrijf bedrijfAanvrager = bedrijfDataService.findByBedrijfId(bedrijfAanvragerId);
 				if(referentieNummer == null)
@@ -1761,7 +1761,7 @@ public class BedrijfServiceImpl implements BedrijfService {
 					ratingScore -= 2;
 				if (ratingScore != null && ratingScore != 0) {
 					// if eenmanszaak then +16
-					if (dossier.getRv().equals("01") || dossier.getRv().equals("02") || dossier.getRv().equals("07") || dossier.getRv().equals("11"))
+					if (dossier.getRv() != null && (dossier.getRv().equals("01") || dossier.getRv().equals("02") || dossier.getRv().equals("07") || dossier.getRv().equals("11")))
 					{
 						if (ratingScore != null)
 							ratingScore += 16;

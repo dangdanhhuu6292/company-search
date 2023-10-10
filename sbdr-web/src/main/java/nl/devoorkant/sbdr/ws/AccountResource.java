@@ -15,6 +15,9 @@ import nl.devoorkant.sbdr.data.util.EReferentieInternType;
 import nl.devoorkant.sbdr.data.util.ERol;
 import nl.devoorkant.sbdr.idobfuscator.util.ObfuscatorUtils;
 import nl.devoorkant.sbdr.ws.transfer.*;
+import nl.devoorkant.util.StringUtil;
+
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +65,12 @@ public class AccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response activateCustomerBriefCode(@QueryParam("activationcode") String activationCode, @QueryParam("userid") String obfUserId) {
-		Integer userId = ObfuscatorUtils.deofuscateInteger(obfUserId);
+		Integer userId = null;
+		if(NumberUtils.isParsable(obfUserId)){
+			userId = Integer.parseInt(obfUserId);
+		}else {
+			userId = ObfuscatorUtils.deofuscateInteger(obfUserId);
+		}		
 		ErrorResource error = null;
 
 		LOGGER.info("activateKlant brief code: " + activationCode);
@@ -186,7 +194,12 @@ public class AccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(String obfKlantId) {
-		Integer klantId = ObfuscatorUtils.deofuscateInteger(obfKlantId);
+		Integer klantId = null;
+		if(NumberUtils.isParsable(obfKlantId)){
+			klantId = Integer.parseInt(obfKlantId);
+		}else {
+			klantId = ObfuscatorUtils.deofuscateInteger(obfKlantId);
+		}
 		LOGGER.info("AccountResource, deleteAccount");
 
 		ErrorResource error = null;
@@ -223,8 +236,13 @@ public class AccountResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteAccountOfBedrijf(String obfBedrijfId) {
-		Integer bedrijfId = ObfuscatorUtils.deofuscateInteger(obfBedrijfId);
+	public Response deleteAccountOfBedrijf(String obfBedrijfId) {		
+		Integer bedrijfId = null;
+		if(NumberUtils.isParsable(obfBedrijfId)){
+			bedrijfId = Integer.parseInt(obfBedrijfId);
+		}else {
+			bedrijfId = ObfuscatorUtils.deofuscateInteger(obfBedrijfId);
+		}	
 		LOGGER.info("accountResource: deleteAccountOfBedrijf");
 
 		ErrorResource error = null;
@@ -675,7 +693,12 @@ public class AccountResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response users(@QueryParam("userId") String obfUserId, @QueryParam("bedrijfId") String obfBedrijfId, @QueryParam("sortDir") String sortDir, @QueryParam("sortedBy") String sortedBy, @QueryParam("filterValue") String filterValue, @HeaderParam("Range") String range) {
-		Integer userId = ObfuscatorUtils.deofuscateInteger(obfUserId);
+		Integer userId = null;
+		if(NumberUtils.isParsable(obfUserId)){
+			userId = Integer.parseInt(obfUserId);
+		}else {
+			userId = ObfuscatorUtils.deofuscateInteger(obfUserId);
+		}	
 		Integer bedrijfId = ObfuscatorUtils.deofuscateInteger(obfBedrijfId);
 		LOGGER.info("CompaniesAlert GET");
 

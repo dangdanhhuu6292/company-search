@@ -4,8 +4,7 @@
     <groupId>nl.devoorkant.sbdr.multi</groupId>
     <artifactId>sbdr-parent</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-  </parent>
-  <groupId>nl.devoorkant.sbdr.kvk</groupId>
+  </parent>  
   <artifactId>kvk-client</artifactId>
   <dependencies>
 	  	<dependency>
@@ -13,7 +12,13 @@
 			<artifactId>sbdr-data</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency>	
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>dvk-util</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>provided</scope>
+		</dependency>	
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 		    <groupId>org.json</groupId>

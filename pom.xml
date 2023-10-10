@@ -35,14 +35,15 @@
 	</parent>
 
 	<modules>
+		<module>dvk-util</module>
 		<module>HibernateTools</module>
 		<module>sbdr-data</module>
 		<module>sbdr-business</module>
 		<module>cir-client</module>
 		<module>creditSafe-client</module>
-		<module>sbdr-web</module>
-		<module>dvk-util</module>
 		<module>kvk-client</module>
+		<module>sbdr-web</module>		
+		
 	</modules>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->

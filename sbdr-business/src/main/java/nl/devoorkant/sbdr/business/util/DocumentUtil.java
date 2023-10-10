@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
 public class DocumentUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DocumentUtil.class);
 
-	private static String root = "/var/sbdrDocuments";
+	private static String root = "/home/stzb/sbdrDocuments";
 
 	public static File getPathByDate(Calendar now){
 		if(root == null || root.equals("null")) root = "sbdr";
@@ -25,7 +25,13 @@ public class DocumentUtil {
 
 		LOGGER.debug("RootPath: " + rootpath);
 
-		if(!dir.exists()) dir.mkdirs();
+		if(!dir.exists()) {
+			if(dir.mkdirs()) {
+				LOGGER.debug("Directory Created" + rootpath);
+			}else{
+				LOGGER.debug("Directory is not created" + rootpath);
+			};
+		}
 
 		return dir;
 	}

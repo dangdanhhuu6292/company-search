@@ -5,7 +5,7 @@
     <artifactId>sbdr-parent</artifactId>
     <version>0.0.2-SNAPSHOT</version>
   </parent>
-  <groupId>nl.devoorkant</groupId>
+  <groupId>nl.devoorkant.sbdr.multi</groupId>
   <artifactId>dvk-util</artifactId>
    <dependencies>
   	<!-- https://mvnrepository.com/artifact/xerces/xerces -->
@@ -23,6 +23,6 @@
 		<groupId>xalan</groupId>
 		<artifactId>xalan</artifactId>
 		<version>2.7.2</version>
-	</dependency>
+	</dependency>	
   </dependencies>
 </project>

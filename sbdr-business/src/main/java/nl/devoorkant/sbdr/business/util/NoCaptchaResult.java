@@ -1,6 +1,7 @@
 package nl.devoorkant.sbdr.business.util;
 
-import java.sql.Timestamp;
+
+import java.security.Timestamp;
 
 import org.joda.time.DateTime;
 
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class NoCaptchaResult {
 	boolean success;
 	String hostname;
-	DateTime challenge_ts;
+	String challenge_ts;
 	String[] errorCodes;
 	
 	public NoCaptchaResult() {
@@ -48,11 +49,11 @@ public class NoCaptchaResult {
 	}
 
 	@JsonProperty("challenge_ts")
-	public DateTime getChallenge_ts() {
+	public String getChallenge_ts() {
 		return challenge_ts;
 	}
 	@JsonProperty("challenge_ts")
-	public void setChallenge_ts(DateTime challenge_ts) {
+	public void setChallenge_ts(String challenge_ts) {
 		this.challenge_ts = challenge_ts;
 	}
 	

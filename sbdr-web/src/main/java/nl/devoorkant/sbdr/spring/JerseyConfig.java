@@ -1,10 +1,10 @@
 package nl.devoorkant.sbdr.spring;
 
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.ext.ContextResolver;
 
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -21,79 +21,11 @@ import org.springframework.boot.autoconfigure.jersey.JerseyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-
-import nl.devoorkant.sbdr.business.transfer.ActivatieCodeTransfer;
-import nl.devoorkant.sbdr.business.transfer.AdminAlertTransfer;
-import nl.devoorkant.sbdr.business.transfer.AdminOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.AlertOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.BedrijfEntityTransfer;
-import nl.devoorkant.sbdr.business.transfer.BedrijfReportTransfer;
-import nl.devoorkant.sbdr.business.transfer.BedrijfTransfer;
-import nl.devoorkant.sbdr.business.transfer.BedrijfTransferNs;
-import nl.devoorkant.sbdr.business.transfer.BedrijfTransferXml;
-import nl.devoorkant.sbdr.business.transfer.BriefBatchTransfer;
-import nl.devoorkant.sbdr.business.transfer.ChartDataTransfer;
-import nl.devoorkant.sbdr.business.transfer.CompanyInfoEntityTransfer;
-import nl.devoorkant.sbdr.business.transfer.ContactMomentTransfer;
-import nl.devoorkant.sbdr.business.transfer.ExceptionBedrijfOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.FactuurTransfer;
-import nl.devoorkant.sbdr.business.transfer.FaillissementenOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.GebruikerBedrijfTransfer;
-import nl.devoorkant.sbdr.business.transfer.GebruikerTransfer;
-import nl.devoorkant.sbdr.business.transfer.HistorieTransfer;
-import nl.devoorkant.sbdr.business.transfer.InsolventiePublicTransfer;
-import nl.devoorkant.sbdr.business.transfer.InternalProcessTransfer;
-import nl.devoorkant.sbdr.business.transfer.KlantBedrijfOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.KvkBestuurderFunctieTransfer;
-import nl.devoorkant.sbdr.business.transfer.KvkBestuurderTransfer;
-import nl.devoorkant.sbdr.business.transfer.KvkDossierTransfer;
-import nl.devoorkant.sbdr.business.transfer.MeldingOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.MeldingTransfer;
-import nl.devoorkant.sbdr.business.transfer.MonitoringDetailsTransfer;
-import nl.devoorkant.sbdr.business.transfer.MonitoringOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.NotificationPublicTransfer;
-import nl.devoorkant.sbdr.business.transfer.NotificationsPublicTransfer;
-import nl.devoorkant.sbdr.business.transfer.OpmerkingenTransfer;
-import nl.devoorkant.sbdr.business.transfer.RemovedBedrijfOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.ReportRequestedTransfer;
-import nl.devoorkant.sbdr.business.transfer.SearchResultsOverviewTransfer;
-import nl.devoorkant.sbdr.business.transfer.SupportBestandTransfer;
-import nl.devoorkant.sbdr.business.transfer.SupportTransfer;
-import nl.devoorkant.sbdr.data.DataLast24h;
-import nl.devoorkant.sbdr.data.DataStatusAantal;
-import nl.devoorkant.sbdr.data.model.Klant;
-import nl.devoorkant.sbdr.data.model.KortingsCode;
-import nl.devoorkant.sbdr.ws.AccountResource;
-import nl.devoorkant.sbdr.ws.CompanyResource;
-import nl.devoorkant.sbdr.ws.DashboardResource;
-import nl.devoorkant.sbdr.ws.DocumentResource;
-import nl.devoorkant.sbdr.ws.ExactOnlineResource;
-import nl.devoorkant.sbdr.ws.ExternalResource;
-import nl.devoorkant.sbdr.ws.GebruikerResource;
-import nl.devoorkant.sbdr.ws.InternalProcessResource;
-import nl.devoorkant.sbdr.ws.KortingsCodeResource;
-import nl.devoorkant.sbdr.ws.LoginResource;
-import nl.devoorkant.sbdr.ws.NewAccountResource;
-import nl.devoorkant.sbdr.ws.SupportResource;
-import nl.devoorkant.sbdr.ws.UserNsResource;
-import nl.devoorkant.sbdr.ws.UserResource;
-import nl.devoorkant.sbdr.ws.transfer.CompanyAccount;
-import nl.devoorkant.sbdr.ws.transfer.ExactOnlineAccessTransfer;
-import nl.devoorkant.sbdr.ws.transfer.GenericBooleanTransfer;
-import nl.devoorkant.sbdr.ws.transfer.KlantEntityTransfer;
-import nl.devoorkant.sbdr.ws.transfer.RecaptchaSiteKeyTransfer;
-import nl.devoorkant.sbdr.ws.transfer.TariefTransfer;
-import nl.devoorkant.sbdr.ws.transfer.UserAccount;
-import nl.devoorkant.sbdr.ws.transfer.UserTransfer;
-import nl.devoorkant.sbdr.ws.transfer.WebSocketTransfer;
 
 @Configuration
 //@ApplicationPath("/services") // /register/services
