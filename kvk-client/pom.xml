@@ -6,6 +6,9 @@
     <version>0.0.2-SNAPSHOT</version>
   </parent>  
   <artifactId>kvk-client</artifactId>
+  <name>kvk-client</name>
+  <description>kvk-client</description>
+  <packaging>jar</packaging>
   <dependencies>
 	  	<dependency>
 			<groupId>${project.parent.groupId}</groupId>

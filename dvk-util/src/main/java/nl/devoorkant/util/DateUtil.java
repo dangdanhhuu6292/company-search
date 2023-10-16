@@ -102,7 +102,21 @@ public class DateUtil {
   }
   
   public static Date convertUtilToSQLDate(Date poValue) {
-    return (poValue != null) ? new Date(poValue.getTime()) : null;
+	  
+	  return (poValue != null) ? new Date(poValue.getTime()) : null;
+  }
+  
+  public static Date convertUtilToDate(String poValue, String format) {
+	Date datumLaatsteUpdate = null;
+	try {
+		datumLaatsteUpdate = new SimpleDateFormat(format).parse(poValue);
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	    
+	return datumLaatsteUpdate;
+	  
   }
   
   public static Date convertToDate(Timestamp poValue) {

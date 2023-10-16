@@ -6,7 +6,8 @@ import nl.devoorkant.sbdr.data.model.CIKvKDossier;
 import nl.devoorkant.sbdr.data.model.CompanyInfo;
 
 public interface RestKVK {
-	public List<CompanyInfo> searchByKvKNummer(String kvKNummer, boolean geoData);
+	public CompanyInfo searchByKvKNummer(String kvKNummer, boolean geoData);
+	public List<CompanyInfo> searchByKvKNummers(String kvKNummer, boolean geoData);
 	public CIKvKDossier getDossier(String kvKNummer, String vestigingsnummer, boolean hoofdNeven);
 	public List<CompanyInfo> searchCompany(String kvKNummer, boolean iskvkNumber, boolean isCompanyName);
 }

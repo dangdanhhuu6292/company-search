@@ -978,7 +978,48 @@ public class ConvertUtil {
 			result.setLaatsteUpdate(ciKvkDossier.getDatumLaatsteUpdate());
 			result.setSbdrNummer(bedrijf.getSbdrNummer());
 			result.setKvkNummer(bedrijf.getKvKnummer());
-			result.setHandelsNaam(ciKvkDossier.getHandelsNaam());
+			StringBuilder handelsNaamBuilder = new StringBuilder("");
+			if(ciKvkDossier.getHandelsNaam() != null && !ciKvkDossier.getHandelsNaam().trim().isEmpty()) {
+				if (handelsNaamBuilder.toString().trim().isEmpty()) {
+					handelsNaamBuilder.append(ciKvkDossier.getHandelsNaam().trim());
+				}else {
+					handelsNaamBuilder.append(", ");
+					handelsNaamBuilder.append(ciKvkDossier.getHandelsNaam().trim());
+				}			
+			}
+			if(ciKvkDossier.getHn1x2x30() != null && !ciKvkDossier.getHn1x2x30().trim().isEmpty()) {
+				if (handelsNaamBuilder.toString().trim().isEmpty()) {
+					handelsNaamBuilder.append(ciKvkDossier.getHn1x2x30().trim());
+				}else {
+					handelsNaamBuilder.append(", ");
+					handelsNaamBuilder.append(ciKvkDossier.getHn1x2x30().trim());
+				}			
+			}
+			if(ciKvkDossier.getHn1x30() != null && !ciKvkDossier.getHn1x30().trim().isEmpty()) {
+				if (handelsNaamBuilder.toString().trim().isEmpty()) {
+					handelsNaamBuilder.append(ciKvkDossier.getHn1x30().trim());
+				}else {
+					handelsNaamBuilder.append(", ");
+					handelsNaamBuilder.append(ciKvkDossier.getHn1x30().trim());
+				}			
+			}
+			if(ciKvkDossier.getHn1x45() != null && !ciKvkDossier.getHn1x45().trim().isEmpty()) {
+				if (handelsNaamBuilder.toString().trim().isEmpty()) {
+					handelsNaamBuilder.append(ciKvkDossier.getHn1x45().trim());
+				}else {
+					handelsNaamBuilder.append(", ");
+					handelsNaamBuilder.append(ciKvkDossier.getHn1x45().trim());
+				}			
+			}
+			if(ciKvkDossier.getHn2x2x30() != null && !ciKvkDossier.getHn2x2x30().trim().isEmpty()) {
+				if (handelsNaamBuilder.toString().trim().isEmpty()) {
+					handelsNaamBuilder.append(ciKvkDossier.getHn2x2x30().trim());
+				}else {
+					handelsNaamBuilder.append(", ");
+					handelsNaamBuilder.append(ciKvkDossier.getHn2x2x30().trim());
+				}			
+			}			
+			result.setHandelsNaam(handelsNaamBuilder.toString().trim());
 			if(ciKvkDossier.getVenNaam() != null) result.setVennootschapsNaam(ciKvkDossier.getVenNaam());
 			else result.setVennootschapsNaam("-");
 			if(ciKvkDossier.getHoofdNeven() != null) result.setHoofdNeven(ciKvkDossier.getHoofdNeven());
@@ -1000,7 +1041,9 @@ public class ConvertUtil {
 
 			// Postadres
 			if(ciKvkDossier.getStraatCa() != null && ciKvkDossier.getStraatCa().equalsIgnoreCase("Postbus")) {
-				result.setPost_postbus("Postbus " + ciKvkDossier.getStraatHuisnummerCa());
+				if(ciKvkDossier.getStraatHuisnummerCa() != null) {
+					result.setPost_postbus("Postbus " + ciKvkDossier.getStraatHuisnummerCa().trim());
+				}				
 				result.setPost_plaats(ciKvkDossier.getPlaatsCa());
 				result.setPost_postcode(ciKvkDossier.getPostcodeCa());
 			}
@@ -1187,7 +1230,7 @@ public class ConvertUtil {
 				}
 				
 				result.setCuratorTransfer(curatorTransfer);
-			}
+			}			
 		}
 
 		return result;
@@ -1413,7 +1456,7 @@ public class ConvertUtil {
 		}
 		
 		if(parent != null)
-			result.add(new OpmerkingenTransfer("info", ("Moedermaatschappij " + parent.getBedrijfsNaam() + " - " + parent.getKvKnummer()), true, parent.getKvKnummer()));
+			result.add(new OpmerkingenTransfer("info", ("Hoofdvestiging " + parent.getBedrijfsNaam() + " - " + parent.getKvKnummer()), true, parent.getKvKnummer()));
 
 		if(ultParent != null)
 			result.add(new OpmerkingenTransfer("info", ("Hoogste moedermaatschappij " + ultParent.getBedrijfsNaam() + " - " + ultParent.getKvKnummer()), true, ultParent.getKvKnummer()));

@@ -320,7 +320,7 @@ public class KvkDossierTransfer {
 
 	public void setHandelsNaam(String handelsNaam) {
 		this.handelsNaam = handelsNaam;
-	}
+	}	
 
 	@XmlElement
 	public String getHoofdNeven() {

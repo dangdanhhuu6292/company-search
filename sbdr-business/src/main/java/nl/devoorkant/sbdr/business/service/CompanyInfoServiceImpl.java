@@ -141,9 +141,8 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 						CompanyInfo ciresult = client.getDossierWithFullNumber(kvknummer);
 						if (ciresult != null)
 							companylist.add(ciresult);
-					} else {
-						WebServiceClient webServiceClient = new WebServiceClient();
-						companylist = webServiceClient.searchByKvKNummer(kvknummer, 20);
+					} else {						
+						companylist = restKVK.searchByKvKNummers(kvknummer, true);
 					}
 				} 
 			} else {

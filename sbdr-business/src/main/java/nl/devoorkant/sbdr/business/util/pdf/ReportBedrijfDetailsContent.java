@@ -308,7 +308,7 @@ public class ReportBedrijfDetailsContent {
 		}
 		
 		if (report.getParent() != null) {
-			contentBedrijf.addCell(PrintUtil.createCellWithColspan(1, "Moedermaatschappij"));
+			contentBedrijf.addCell(PrintUtil.createCellWithColspan(1, "Hoofdvestiging"));
 			contentBedrijf.addCell(PrintUtil.createCellWithColspan(1, report.getParent().getBedrijfsNaam()));
 			contentBedrijf.addCell(PrintUtil.createCellWithColspan(1, " "));
 			

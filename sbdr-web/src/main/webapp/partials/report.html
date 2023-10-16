@@ -1,1 +1,1406 @@
-<div class="col-xs-12" id="report_page"><div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row no clearfix"><div class="shad"> <button class="btn-report" ng-class="{'active-tab-report' : page == 'Overzicht'}" ng-click="page='Overzicht'"><span class="mylivicon" data-options="name: pie-chart.svg; size:23px; style:lines-alt; strokeColor:#0a212f; tryToSharpen:true"></span>Overzicht</button> <button class="btn-report " ng-class="{'active-tab-report' : page == 'Bedrijfsgegevens'}" ng-click="page='Bedrijfsgegevens'"><span class="mylivicon" data-options="name:building.svg; size:23px; style:lines-alt; strokeColor:#0a212f; tryToSharpen:true"></span>Bedrijfsgegevens</button> <button class="btn-report " ng-class="{'active-tab-report' : page == 'Wanbetaling'}" ng-click="page='Wanbetaling'"><span class="mylivicon" data-options="name:morph-flag.svg; size:23px; style:lines-alt; morphState: end; strokeColor:#0a212f; tryToSharpen:true"></span>Kans op wanbetaling</button> <button class="btn-report" ng-class="{'active-tab-report' : page == 'Achterstanden'}" ng-click="page='Achterstanden'"><span class="mylivicon" data-options="name:box-add.svg; size:23px; style:lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>Achterstanden</button> <button class="btn-report" ng-class="{'active-tab-report' : page == 'Kredieten'}" ng-click="page='Kredieten'"><span class="mylivicon" data-options="name:line-chart.svg; size:23px; style: lines-alt; strokeColor:#0a212f ; tryToSharpen:true"></span>Kredieten</button> <button class="btn-report" ng-class="{'active-tab-report' : page == 'Bedrijfsmonitor'}" ng-click="page='Bedrijfsmonitor'"><span class="mylivicon" data-options="name:morph-eye-open-close.svg; size:23px; style: lines-alt; strokeColor:#0a212f ; tryToSharpen:true"></span>Bedrijfsmonitor</button></div></div></div><div ng-init="page='Overzicht'"></div><div ng-show="page === 'Overzicht'"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row box no border-report clearfix"><div class="box-content clearfix"> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download><div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"><div class="row box-content margin10"><div class="mix-head" data-status="{{report.bedrijf.bedrijfActief}}">{{report.kvkDossierTransfer.actiefOmschrijving}}</div> <span class="mylivicon" data-options="name: building.svg; size: 50px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="rapport-hoofd">{{report.bedrijf.bedrijfsNaam}}&nbsp;&nbsp; <a href="https://www.kvk.nl/zoeken/archief/?/?handelsnaam=&woonplaats=&kvknummer={{report.kvkDossierTransfer.kvkNummer}}" target="_blank" class="website report-kvk-nr"><img class="fixt-attention-icon" src="img/icons/svg/kvk.svg" width="27" height="27"> KvK-nummer: {{report.kvkDossierTransfer.kvkNummer}}</a> </span><div class="contact"><div> <span class="mylivicon" data-options="name: location-alt.svg; size: 23px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span>{{report.kvkDossierTransfer.straat}} {{report.kvkDossierTransfer.huisnummer}} {{report.kvkDossierTransfer.huisnummerToevoeging}}&nbsp;&nbsp;{{report.kvkDossierTransfer.postcode}}&nbsp; {{report.kvkDossierTransfer.plaats}}</span></div><div> <span class="mylivicon" data-options="name: globe.svg; size: 23px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span><a class="website" href="http://{{report.kvkDossierTransfer.domeinnaam}}" target="_blank">{{report.kvkDossierTransfer.domeinnaam > '' ? report.kvkDossierTransfer.domeinnaam :'Niet bekend' }}</a></span></div><div> <span class="mylivicon" data-options="name: phone.svg; size: 23px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span><a class="website" href="tel:{{report.kvkDossierTransfer.telefoonKvk}}"> {{report.kvkDossierTransfer.telefoonKvk > 0 ? report.kvkDossierTransfer.telefoonKvk :'Niet bekend' }}</a></span></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mobpad"><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mobpad"><div class="row box-content "><div ng-hide="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven'|| report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'"><div class="rapport-info-fix " ng-show="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging'"><div><i class="fa fa-exclamation-triangle font-20" aria-hidden="true"></i> Let op: Dit rapport is van een nevenvestiging.</div> <button type="button" class="btn btn-primary fix-neven" ng-click="reportHoofdVestiging()"> Rapport hoofdvestiging opvragen </button></div></div><div class="rapport-info-fix" ng-show="report.ratingScoreIndicatorMessage == 'geen score - 403 verklaring gedeponeerd, bekijk de houdstermaatschappij'"><div><span class="mylivicon" data-options="name: warning-alt.svg; size: 25px; style: lines-alt; strokeColor:#0a212f ;tryToSharpen: true"></span> <span>403 verklaring gedeponeerd, bekijk ook de houdstermaatschappij</span></div> <button type="button" class="btn btn-primary fix-neven " ng-click="createReport(report.ultimateParent, report.ultimateParent.kvKnummer)"> Rapport houdstermaatschappij opvragen </button></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="row box-content border"> <span class="mylivicon" data-options="name: servers.svg; size: 27px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true;"></span> <span class="BA-register-ref">ZBR-nummer: BA-{{report.kvkDossierTransfer.sbdrNummer}}</span><div class="home"><hr></div><div class="b"><div class="font-14-red" ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'"> <span>&nbsp; <i class="fa fa-exclamation-triangle fa-10x" aria-hidden="true"></i>&nbsp; In surseance van betaling of in faillissement</span></div><div class="font-14-red" ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven'"> <span>&nbsp; <i class="fa fa-exclamation-triangle fa-10xx" aria-hidden="true"></i>&nbsp; Uitgeschreven uit het Handelsregister</span></div><div class="b font-14" ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'Bedrijf is actief'"> <span ng-show="report.aantalMeldingenActief==0">&nbsp; Geen </span> <span class="font-14-red" ng-show="report.aantalMeldingenActief>0">&nbsp; <i class="fa fa-exclamation-triangle fa-10x" aria-hidden="true"></i>&nbsp; {{report.aantalMeldingenActief}} </span> <span class="font-14-red" ng-show="report.aantalMeldingenActief>1"> Negatieve registraties</span> <span class="font-14-red" ng-show="report.aantalMeldingenActief==1"> Negatieve registratie</span> <span ng-show="report.aantalMeldingenActief==0"> negatieve registraties</span></div></div></div></div></div></div></div><div class="row box no clearfix" id="report-score-data"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" id="credit-classe"><div class="row border box-content boxl-rap2 fixit2 fix-bars-report"><h4 class="fix-h4-report">Kredietwaardigheidsklasse</h4><div class="col-md-9 col-sm-9 col-xs-9"><h5 class="text-muted vb">Niet te bepalen</h5></div><div class="col-md-3 col-sm-3 col-xs-3"></div><div class="col-md-12 col-sm-12 col-xs-12"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div></div></div></div></div><div class="col-lg-4 col-sm-4 col-xs-12" id="barscore"><div class="row box-content border boxl-rap2 fixit2 fix-bars-report"><h4 class="fix-h4-report">CRZB score</h4><div class="col-md-9 col-sm-9 col-xs-9"><h5 class="text-muted vb">Niet te bepalen</h5></div><div class="col-md-3 col-sm-3 col-xs-3"></div><div class="col-md-12 col-sm-12 col-xs-12"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div></div></div></div></div><div class="col-lg-4 col-sm-4 col-xs-12" id="kolb"><div class="row border fixit2 box-content"><h4 class="fix-h4-report">Kans op te late-betaling</h4><div class="col-md-9 col-sm-9 col-xs-9"><h5 class="text-muted vb">Niet te bepalen</h5></div><div class="col-md-3 col-sm-3 col-xs-3"></div><div class="col-md-12 col-sm-12 col-xs-12"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div></div></div></div></div></div><div class="row"><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 "><div class="row box no clearfix"><div class="box-content border boxl-rap clearfix fixit2"> <a href="" onclick="initialize();"><span class="mylivicon rechts" data-options="name: refresh.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;tryToSharpen: true"></span> </a> <span class="mylivicon" data-options="name: location-alt.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;tryToSharpen: true"></span> <span class="legend paddingb20">Vestigingslocatie</span><div class="home"><hr></div><div class="row box-content clearfix margin10 mobpad"><div style="display:none"> <input id="address" style="width:60%" value="{{report.kvkDossierTransfer.straat}} {{report.kvkDossierTransfer.huisnummer}} {{report.kvkDossierTransfer.huisnummerToevoeging}} {{report.kvkDossierTransfer.postcode}} {{report.kvkDossierTransfer.plaats}}"> <input type="button" value="Geocode" onclick="codeAddress()"> <input type="text" id="lat" /> <input type="text" id="lng" /></div><div id="map_canvas" style="display:none"></div><div id="pano" style="height:430px;width:100%"></div></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class="row border boxr10 clearfix margb"><div class="box-content fixit2"> <span class="mylivicon" data-options="name: two-pointers.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Ondernemingsgegevens</span><div class="home2"><hr></div><div class="box-content clearfix font-14px"><div class="row clearfix"><form class="form-horizontal"><fieldset><div> <label class="col-xs-12 control-label">Rechtsvorm</label> <span class="col-xs-12"> {{report.kvkDossierTransfer.rechtsvorm}} </span></div><div> <label class="col-xs-12 control-label">Oprichtingsdatum</label> <span class="col-xs-12 "> {{getDatum(report.kvkDossierTransfer.datumInschrijving)}} </span></div><div ng-show="report.kvkDossierTransfer.gestortKapitaal"> <label class="col-xs-12 control-label">Geplaatst kapitaal</label> <span class="col-xs-12"> {{report.kvkDossierTransfer.gestortKapitaal | currency}} </span></div><div ng-show="report.kvkDossierTransfer.datumHuidigeVestiging"> <label class="col-xs-12 control-label">Gevestigd op dit adres sinds</label> <span class="col-xs-12 "> {{getDatum(report.kvkDossierTransfer.datumHuidigeVestiging)}} </span></div><div> <label class="col-xs-12 control-label">Hoofdactiviteit (SBI)</label> <span class="col-xs-12 "> {{report.kvkDossierTransfer.hoofdactiviteit}} </span></div><div ng-show="report.kvkDossierTransfer.nevenactiviteit1Sbi"> <label class="col-xs-12 control-label">Nevenactiviteit 1 (SBI)</label> <span class="col-xs-12"> {{report.kvkDossierTransfer.nevenactiviteit1}} </span></div><div ng-show="report.kvkDossierTransfer.nevenactiviteit2Sbi"> <label class="col-xs-12 control-label">Nevenactiviteit 2 (SBI)</label> <span class="col-xs-12"> {{report.kvkDossierTransfer.nevenactiviteit2}} </span></div><div> <label class="col-xs-12 control-label">Aantal medewerkers</label> <span class="col-xs-12"> {{report.kvkDossierTransfer.medewerkers > 0 ? report.kvkDossierTransfer.medewerkers : 'Onbekend'}} </span></div><div ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'"> <label class="col-xs-12 control-label">Deponering jaarstukken</label> <span class="col-xs-12"> {{report.kvkDossierTransfer.deponeringJaarstukken}} </span></div></fieldset></form></div></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class="row border clearfix margb"><div class="box-content fixit2"> <span class="mylivicon" data-options="name: notebook.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Samenvatting</span><div class="home2"><hr></div><div class="box-content clearfix"><div class="clearfix font-14px"><p>{{report.bedrijf.bedrijfsNaam}} is een {{report.kvkDossierTransfer.rechtsvorm}} welke is opgericht op {{getDatum(report.kvkDossierTransfer.datumInschrijving)}}. Volgens de laatste gegevens zijn er {{report.kvkDossierTransfer.medewerkers > 0 ? report.kvkDossierTransfer.medewerkers : 'Onbekend'}} werknemers werkzaam. {{report.bedrijf.bedrijfsNaam}} is actief binnen de sector {{report.kvkDossierTransfer.hoofdactiviteit}} en heeft een <span id="K-Waardering">niet te bepalen</span>. De CRZB score is <span id="B-Score">niet te bepalen</span> en de kans op te late betaling wordt geacht <span id="L-Betaling">niet te bepalen</span> te zijn. <span ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'">De laatste jaarrekening is gedeponeerd in {{report.kvkDossierTransfer.deponeringJaarstukken}}.</span></p></div> <button ng-show="showMonitoring()" type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob margb30" ng-click="monitoring()">Toevoegen aan Bedrijfsmonitor</button></div></div></div></div></div></div></div><div ng-show="page === 'Bedrijfsgegevens'"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row border-report box no"><div class="box-content clearfix"><div class="paddingb5"> <a href=""><span class="mylivicon rechts infoi paddingb5" data-text="<h4><b>Bedrijfsgegevens</b></h4><br/>In dit scherm wordt u een overzicht aangeboden van bedrijfsgegevens" data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span></a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download></div><div class="report-delayedpayments-tab4 row "><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class=" margin10 greenbox margreen10 clearfix fixit fix-box-1"><div class="greenleft2 row col-xs-10"><div class="faillissemententext20">Bedrijfsstatus</div><div class="greenbignumber2">{{report.kvkDossierTransfer.actief}}</div><div class="greensmallnumber2">{{report.kvkDossierTransfer.actiefOmschrijving}}</div></div><div class="col-xs-2"><div class="mylivicon" data-options="name: building.svg; size: 47px;strokeColor:#0a212f; style: lines; autoPlay:true; eventOn:grandparent; tryToSharpen: true"></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class="margin10 bluebox margreen10 clearfix fixit fix-box-2"><div class="greenleft2 row col-xs-10"><div class="faillissemententext20">Faillissement of surseance</div><div class="greenbignumber2">{{report.kvkDossierTransfer.faillietSurseance}}</div><div class="greensmallnumber2"> <span ng-show="report.kvkDossierTransfer.faillietSurseanceOmschrijving == ''"></span> <span>{{report.kvkDossierTransfer.faillietSurseanceOmschrijving}}</span></div></div><div class="col-xs-2"><div class="mylivicon" data-options="name: legal.svg; size: 47px; style: lines;strokeColor:#0a212f; eventOn:grandparent; tryToSharpen: true"></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class=" margin10 greenbox margreen10 clearfix fixit fix-box-3"><div class="greenleft2 row col-xs-10 "><div class="faillissemententext20">Oprichtingsdatum</div><div class="bluebignumber2">{{getDatum(report.kvkDossierTransfer.datumInschrijving)}}</div><div class="bluesmallnumber2">Gevestigd op dit adres sinds {{getDatum(report.kvkDossierTransfer.datumHuidigeVestiging)}}</div></div><div class="col-xs-2"><div class="mylivicon" data-options="name: morph-folder.svg; size: 47px;strokeColor:#0a212f; style: lines;autoPlay:true; eventOn:grandparent; tryToSharpen: true"></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class=" margin10 bluebox margreen10 clearfix fixit fix-box-4"><div class="greenleft2 item row col-xs-10"><div class="faillissemententext20">BTW-nummer</div><div class="bluebignumber2">Geldigheid</div><div class="bluesmallnumber2">Beschikbaar vanaf 01-06-2018</div></div><div class="col-xs-2"> <span class="mylivicon" data-options="name: check-alt.svg; size: 47px;strokeColor:#0a212f; style: lines;autoPlay:true; eventOn:grandparent; tryToSharpen:true"></span></div></div></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="box no boxr15 clearfix"><div class="row border clearfix"><div class="box-content"> <span class="mylivicon" data-options="name: morph-stack.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Uittreksel</span><div class="home2"><hr></div><div class="box-content"><form id="form-bedrijfsgegevens" class="form-horizontal"><fieldset><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">ZBR-nummer</label> <span class="col-xs-12 col-sm-6 col-lg-7"> BA-{{report.kvkDossierTransfer.sbdrNummer}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">RSIN-nummer</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.rsin}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">KvK-nummer</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.kvkNummer}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Oprichtingsdatum</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{getDatum(report.kvkDossierTransfer.datumInschrijving)}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Datum voortzetting</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{getDatum(report.kvkDossierTransfer.datumVoortzetting)}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Statutaire naam</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.vennootschapsNaam}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Handelsnaam</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.handelsNaam}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Rechtsvorm</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.rechtsvorm}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.gestortKapitaal"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Geplaatst kapitaal</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.gestortKapitaal | currency}} </span></div><div ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'"><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Deponering jaarstukken</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.deponeringJaarstukken}} </span></div></div><hr><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Vestiging</label> <span class="col-xs-12 col-sm-6 col-lg-5"> {{report.kvkDossierTransfer.hoofdNeven}} </span></div><div class="form-group" ng-show="!report.kvkDossierTransfer.datumHuidigeVestiging"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Gevestigd op dit adres sinds</label> <span class="col-xs-12 col-sm-6 col-lg-7"> Geen verhuisdata bekend </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.datumHuidigeVestiging"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Gevestigd op het adres sinds</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{getDatum(report.kvkDossierTransfer.datumHuidigeVestiging)}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Adres</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.straat}} {{report.kvkDossierTransfer.huisnummer}} {{report.kvkDossierTransfer.huisnummerToevoeging}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label"> </label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.postcode}} {{report.kvkDossierTransfer.plaats}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.post_postbus"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label control-label">Postadres</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.post_postbus}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.post_postbus"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label control-label"> </label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.post_postcode}} {{report.kvkDossierTransfer.post_plaats}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.telefoonKvk"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Telefoon</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.telefoonKvk}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.mobielKvk"> <label class="col-xs-12 col-sm-6 col-lg-5">Mobiel</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.mobielKvk}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.domeinnaam"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Domeinnaam</label> <span class="col-xs-12 col-sm-6 col-lg-7"> <a class="website" href="http://{{report.kvkDossierTransfer.domeinnaam}}" target="_blank">{{report.kvkDossierTransfer.domeinnaam}}</a> </span></div><hr><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Hoofdactiviteit (SBI)</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.hoofdactiviteit}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.nevenactiviteit1Sbi"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Nevenactiviteit 1 (SBI)</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.nevenactiviteit1}} </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.nevenactiviteit2Sbi"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Nevenactiviteit 2 (SBI)</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.nevenactiviteit2}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Aantal medewerkers</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.medewerkers > 0 ? report.kvkDossierTransfer.medewerkers : 'Onbekend'}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Import</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.importHandel == 'J' ? 'Ja' : 'Nee'}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Export</label> <span class="col-xs-12 col-sm-6 col-lg-7"> {{report.kvkDossierTransfer.exportHandel == 'J' ? 'Ja' : 'Nee'}} </span></div></fieldset></form></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="box no clearfix" ng-show="report.ultimateParent != null"><div class="row border clearfix"><div class="box-content"> <span class="mylivicon" data-options="name: share.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Hoogste moedermaatschappij</span><div class="home2"><hr></div><form class="form-horizontal box-content"><fieldset><div ng-show="report.ultimateParent"><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Hoogste moedermaatschappij</label> <span class="col-xs-12 col-sm-7"> {{report.ultimateParent.bedrijfsNaam}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Adres</label> <span class="col-xs-12 col-sm-7"> {{report.ultimateParent.straat}} {{report.ultimateParent.huisNummer}} {{report.ultimateParent.huisnummerToevoeging}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label"> </label> <span class="col-xs-12 col-sm-7"> {{report.ultimateParent.postcode}} {{report.ultimateParent.plaats}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">KvK-nummer</label> <span class="col-xs-12 col-sm-7"> {{report.ultimateParent.kvKnummer}} </span> <button type="button" class="btn btn-primary btn-report-small " ng-click="createReport(report.ultimateParent, report.ultimateParent.kvKnummer)"> Rapport opvragen </button></div></div></fieldset></form></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="box no clearfix" ng-show="report.parent"><div class="row border clearfix"><div class="box-content"> <span class="mylivicon" data-options="name: diagram.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Moedermaatschappij</span><div class="home2"><hr></div><div class="box-content"><div><form class="form-horizontal"><fieldset><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Moedermaatschappij</label><div class="col-xs-12 col-sm-7"> {{report.parent.bedrijfsNaam}}</div></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Adres</label><div class="col-xs-12 col-sm-7"> {{report.parent.straat}} {{report.parent.huisNummer}} {{report.parent.huisnummerToevoeging}}</div></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label"> </label> <span class="col-xs-12 col-sm-7"> {{report.parent.postcode}} {{report.parent.plaats}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">KvK-nummer</label> <span class="col-xs-12 col-sm-7"> {{report.parent.kvKnummer}} </span> <button type="button" class="btn btn-primary btn-report-small " ng-click="createReport(report.parent, report.parent.kvKnummer)"> Rapport opvragen </button></div></fieldset></form></div></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="report.kvkDossierTransfer.kvkBestuurderTransfer"><div class="box no clearfix"><div class="row border clearfix"><div class="box-content"> <span class="mylivicon" data-options="name: list.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Directiegegevens</span><div class="home2"><hr></div><div class="box-content"><div ng-repeat="director in report.kvkDossierTransfer.kvkBestuurderTransfer"><form class="form-horizontal"><fieldset><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Naam</label> <span class="col-xs-12 col-sm-7"> {{director.aanhef}} {{director.naam}} </span></div><div class="form-group" ng-show="director.functies"> <label class="col-xs-12 col-sm-5 control-label">Functie<span ng-show="director.functies.length>1">s</span></label> <span class="col-xs-12 col-sm-7"> <span ng-repeat="funcObj in director.functies"> {{funcObj.functie}}<span ng-show="director.functies.length>1&&$index<(director.functies.length-1)">, </span> </span> </span></div><hr/></fieldset></form></div></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="report.kvkDossierTransfer.aandeelhoudersTransfer.length > 0"><div class="box no clearfix"><div class="row border clearfix"><div class="box-content"><span class="mylivicon" data-options="name: box-add.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span><span class="legend">Aandeelhouder</span><div class="home2"><hr></div><div class="box-content"><div ng-repeat="aandeelhouder in report.kvkDossierTransfer.aandeelhoudersTransfer"><form class="form-horizontal"><fieldset><div class="form-group"><label class="col-xs-12 col-sm-5 control-label">Naam</label><div class="col-xs-12 col-sm-7"> {{aandeelhouder.naam}}</div></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Adres</label><div class="col-xs-12 col-sm-7"> {{aandeelhouder.adres}}</div></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Postcode en plaats</label><div class="col-xs-12 col-sm-7"> {{aandeelhouder.postcodeplaats}}</div></div><hr ng-show="report.kvkDossierTransfer.kvkBestuurderTransfer"></fieldset></form></div></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="box no clearfix" ng-show="report.kvkDossierTransfer.curatorTransfer != null" id="form-contactcuratorgegevens"><div class="row border clearfix"><div class="box-content"> <span class="mylivicon" data-options="name: legal.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Curator gegevens</span><div class="home2"><hr></div><div class="row box-content"><div class="box-content"><form class="form-horizontal"><fieldset><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Naam</label> <span class="col-xs-12 col-sm-7"> {{report.kvkDossierTransfer.curatorTransfer.naam}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Adres</label> <span class="col-xs-12 col-sm-7"> {{report.kvkDossierTransfer.curatorTransfer.adres}} </span></div></fieldset></form></div></div></div></div></div></div></div><div ng-show="page === 'Wanbetaling'"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row border-report box no"><div class="box-content clearfix"> <a href=""><span class="mylivicon rechts infoi paddingb5" data-text="<h4><b>Ratings</b></h4><br/>De informatie die u wordt aangeboden in het rapport betreft informatie die is verzameld uit diverse externe en interne bronnen. De informatie dient als ondersteuning voor zakelijke beslissingen en is in geen geval bedoeld als bepalend advies." data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span></a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row box-content marging10"><div class="legend b">Belangrijke informatie</div><div ng-show="report.ratingScore == '1'"> <span class="b form-group"><i class="fa fa-exclamation-triangle fa-10x " aria-hidden="true"></i>&nbsp; Er zijn {{report.aantalMeldingenActief}} actieve geregistreerde betalingsachterstanden bekend. Bekijk de tab achterstanden voor meer informatie.</span></div><div ng-hide="report.ratingScore == '1'"> <span class="b form-group"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Op dit moment zijn er geen actieve geregistreerde betalingsachterstanden (meer) bekend.</span></div><div class="b form-group" ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'"> <span><i class="fa fa-exclamation-triangle fa-10x" aria-hidden="true"></i>&nbsp; In surseance van betaling of in faillissement</span></div><div class="b form-group" ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven'"> <span><i class="fa fa-exclamation-triangle fa-10xx" aria-hidden="true"></i>&nbsp; Uitgeschreven uit het Handelsregister</span></div><div ng-hide="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven' || report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'"><div ng-hide="report.ratingScore == '1'"><div ng-hide="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging'"><div class="b form-group" ng-show="report.kvkDossierTransfer.deponeringJaarstukken>2015"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Deze ratings zijn gebaseerd op gedeponeerde jaarrekeningen uit {{report.kvkDossierTransfer.deponeringJaarstukken}}, demografische kenmerken en branchegegevens.</div></div></div><div ng-hide="report.ratingScore == '1'"><div class="form-group" ng-show="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'|| report.kvkDossierTransfer.rechtsvorm == 'Stichting'"> <span class="b"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Dit bedrijf heeft geen deponeringsplicht, waardoor er geen inzicht is in de financiële gegevens. Deze ratings zijn gebaseerd op demografische kenmerken en branchegegevens.</span></div></div><div class="form-group" ng-show="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak'"> <span class="b"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; De aansprakelijkheid voor alle handelingen van deze onderneming is op privévermogen verhaalbaar. Er is geen onderscheid tussen het privé- en bedrijfsvermogen.</span></div><div class="form-group" ng-show="report.kvkDossierTransfer.rechtsvorm == 'Besloten vennootschap met gewone structuur' || report.kvkDossierTransfer.rechtsvorm == 'Naamloze vennootschap met gewone structuur'|| report.kvkDossierTransfer.rechtsvorm == 'Stichting'"> <span class="b"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Dit bedrijf betreft een rechtspersoon. Een rechtspersoon is een zelfstandige entiteit, waardoor alleen de rechtspersoon in beginsel aansprakelijk is voor eventuele schulden.</span></div><div class="form-group" ng-hide="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging' || report.ratingScoreIndicatorMessage == 'geen score - 403 verklaring gedeponeerd, bekijk de houdstermaatschappij'"><div class="form-group" ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'|| report.kvkDossierTransfer.rechtsvorm == 'Stichting'"><div class="form-group b" ng-show="report.kvkDossierTransfer.deponeringJaarstukken<2016"><i class="fa fa-exclamation-triangle fa-10x " aria-hidden="true"></i>&nbsp; Dit bedrijf voldoet niet aan de wettelijke deponeringsplicht. De termijn voor de wettelijke deponeringsplicht bedraagt maximaal 12 maanden na afloop van het kalenderjaar. Laatste deponering: {{report.kvkDossierTransfer.deponeringJaarstukken}} : <a href=" http://www.kvk.nl/inschrijven-en-wijzigen/deponeren/jaarrekening-deponeren/wat-is-de-uiterste-termijn/" target="_blank" class="website">Klik hier voor meer informaties </a></div></div></div><div ng-show="report.ratingScoreIndicatorMessage == 'geen score - 403 verklaring gedeponeerd, bekijk de houdstermaatschappij'"><div class="b form-group"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Bekijk de 403-verklaring bij de Kamer van Koophandel voor meer informatie over de garantstellingen.</div> <span class="b form-group"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; 403-verklaring gedeponeerd. Bekijk ook de houdstermaatschappij. <button type="button" class="btn btn-primary btn-report-small" ng-click="createReport(report.ultimateParent, report.ultimateParent.kvKnummer)"> Rapport opvragen </button> </span></div><div ng-show="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging'"> <span class=" form-group b"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Dit rapport betreft een nevenvestiging, waardoor er geen score te bepalen is. Bekijk het rapport van de hoofdvestiging.&nbsp;</span> <button type="button" class="btn btn-primary btn-report-small" ng-click="reportHoofdVestiging()"> Rapport hoofdvestiging </button></div></div></div></div></div></div><div class="row box no border clearfix margb"><div class="box-content clearfix mobpad"><div id="rating" style="display:none;">0</div><div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"><div class="row box-content clearfix margin10"><div class="text-center"><h3>Kredietwaardigheidsklasse</h3> <canvas id="graph1" width="300" height="300"></canvas><div class="text-center"><h3 id="explain1"></h3></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"><div class="row box-content clearfix margin10 "><div class="text-center"><h3>Betalingsachterstanden-score</h3> <canvas id="graph2" width="300" height="300"></canvas><div class="text-center"><h3 id="explain2"></h3></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"><div class="row box-content clearfix margin10"><div class="text-center"><h3>Kans op te late-betaling</h3> <canvas id="graph3" width="300" height="300"></canvas><div class="text-center"><h3 id="explain3"></h3></div></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row box no clearfix"><div class="row box-content border"> <span class="mylivicon" data-options="name: morph-eye-open-close.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Informatie</span><div class="home"><hr></div><div class="row box-content"><div class="col-xs-12 col-sm-12 col-md-10 col-lg-8"><div class="panel-group" id="accordionMonitoring" role="tablist" aria-multiselectable="false"><div class="panel panel-default"><div class="panel-heading" role="tab" id="heading5"><h4 class="panel-title"> <a class="boldme collapsed" role="button" data-toggle="collapse" data-parent="#accordionMonitoring" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">Kredietwaardigheidsklasse </a></h4></div><div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5"><div class="panel-body"> De kredietwaardigheid van een bedrijf zegt iets over de financiële gezondheid van een onderneming. NB: het ZBR geeft geen kredietlimieten weer.</div></div></div><div class="panel panel-default"><div class="panel-heading" role="tab" id="heading6"><h4 class="panel-title"> <a class="boldme collapsed" role="button" data-toggle="collapse" data-parent="#accordionMonitoring" data-target="#collapse16" aria-expanded="false" aria-controls="collapse16">403 verklaring </a></h4></div><div id="collapse16" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading16"><div class="panel-body"> Een 403 verklaring is een verklaring waarin een moedermaatschappij zich garant stelt voor een dochteronderneming. Meestal is het gevolg dat de dochter geen jaarrekening meer hoeft op te stellen en te publiceren. Verantwoording vindt dan plaats via een gezamenlijke jaarrekening van moeder en dochterbedrijf.(een geconsolideerde jaarrekening)<br/><br/>De 403 verklaring zelf formuleert welke schulden van de dochter wel of niet door het moederbedrijf worden gedekt. Verstandig is dus om die 403 verklaring op te vragen bij de Kamer van Koophandel en goed te lezen. Ook de ingangsdatum kan geregeld staan in de 403 verklaring. Wordt hierover niets geregeld dan geldt volgens de wet de datum van inschrijving van de verklaring bij het Handelsregister.</div></div></div><div class="panel panel-default"><div class="panel-heading" role="tab" id="heading7"><h4 class="panel-title"> <a class="boldme collapsed" role="button" data-toggle="collapse" data-parent="#accordionMonitoring" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7"> Kans op te late-betaling </a></h4></div><div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading7"><div class="panel-body"> <b>Externe betalingsachterstanden</b><p>Het Betalingsachterstandenregister verzamelt dagelijks informatie uit externe bronnen, waarmee een indicatie kan worden gegeven omtrent de kans op wanbetaling. Het gaat hierbij om gevallen waarin de achterstand bestaat, maar niet in het register is aangemeld.</p> <b>Betaalgedrag</b><p>Naast de openstaande facturen worden er, vanuit externe bronnen, gegevens verzameld rondom het betaalgedrag van bedrijven. Indien er geen informatie beschikbaar is inzake eventuele betalingsachterstanden, dan zal er worden teruggevallen op data omtrent het betaalgedrag. Deze zal dan de basis vormen van de kans op wanbetaling.</p> <b>Markt en branche cijfers</b><p>Daarnaast maken wij gebruik van cijfers en statistieken die door onze experts aan nadere analyses worden onderworpen. Zo wordt er o.a. onderscheid gemaakt op basis van de leeftijd van een onderneming, de sector waarin de onderneming zich bevindt en de rechtsvorm van de onderneming. Verder worden ook eventuele moeder- of dochtermaatschappijen onder de loep genomen.</p> <b>Bestuurders en faillissementen</b><p>Met behulp van geautomatiseerde controles ten aanzien van de bestuurders, is het register in staat om te achterhalen of de bestuurder mogelijk schulden heeft in een van zijn andere ondernemingen. Zo wordt de bestuurder ertoe bewogen om zijn andere schuld te voldoen, voordat hij nieuwe schulden kan aangaan. Ook is dit het enige effectieve middel tegen wanbetalers en faillissementsfraude.</p></div></div></div></div></div></div></div></div></div></div></div><div class="tab4" style="display:block;height:0;overflow:hidden"><div ng-show="page === 'Achterstanden'"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 "><div class="row border-report box-content margb clearfix"> <a href="" class="infoi rechts paddingb5" data-text="<h4><b>Betalingsachterstandrapport</b></h4><br/>In dit scherm wordt u een overzicht aangeboden van bedrijfsgegevens, bedrijfsstatus, het aantal en het totaalbedrag van de geregistreerde betalingsachterstanden."> <span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span> </a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download><div class="report-delayedpayments-tab4 row "><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 "><div class="greenbox margin10 margeebee clearfix fixit fix-box-1"><div class="row col-xs-10"><div class="greenleft"><div class="tile-stats-rap-1"> <span ng-show="report.aantalMeldingenActief>0">{{report.aantalMeldingenActief}}</span><span ng-show="report.aantalMeldingenActief==0">Geen</span></div><div class="tile-stats-rap-2"><span ng-show="report.aantalMeldingenActief>1">Registraties</span><span ng-show="report.aantalMeldingenActief==1">Registratie</span><span ng-show="report.aantalMeldingenActief==0">Registraties</span></div><div class="tile-stats-rap-3">Betalingstermijn met min. 44 dagen overschreden</div></div></div><div class=" col-xs-2"><div class="mylivicon" data-options="name: servers.svg; size: 38px;strokeColor:#0a212f; style: lines; autoPlay:true; tryToSharpen: true"></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class="bluebox margin10 margeebee clearfix fixit fix-box-2"><div class="row col-xs-10"><div class="greenleft"><div class="tile-stats-rap-1" id="outstandingAmount">{{bedragOpenstaand()}}</div><div class="tile-stats-rap-2">Geregistreerd bedrag</div><div class="tile-stats-rap-3">Totaal</div></div></div><div class="col-xs-2"><div class="mylivicon" data-options="name: euro.svg; size: 38px; style: lines;strokeColor:#0a212f; tryToSharpen: true"></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class="greenbox margin10 margeebee clearfix fixit fix-box-3"><div class="row col-xs-10"><div class="greenleft"><div class="tile-stats-rap-1"><span ng-show="aantalMeldingDoorBedrijven()>0">{{aantalMeldingDoorBedrijven()}}</span><span ng-show="aantalMeldingDoorBedrijven()==0">N.v.t.</span></div><div class="tile-stats-rap-2"><span ng-show="aantalMeldingDoorBedrijven()==1">Onderneming</span><span ng-show="aantalMeldingDoorBedrijven()>1">Ondernemingen</span><span ng-show="aantalMeldingDoorBedrijven()==0">Ondernemingen</span></div><div class="tile-stats-rap-3"><span ng-show="aantalMeldingDoorBedrijven()>1">hebben dit geregistreerd</span><span ng-show="aantalMeldingDoorBedrijven()==1">heeft dit geregistreerd</span><span ng-show="aantalMeldingDoorBedrijven()==0">hebben dit geregistreerd</span></div></div></div><div class="col-xs-2"><div class="mylivicon" data-options="name: building.svg; size: 38px;strokeColor:#0a212f; style: lines;autoPlay:true; tryToSharpen: true"></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class="bluebox margin10 margeebee clearfix fixit fix-box-4"><div class=" row col-xs-10"><div class="greenleft"><div class="tile-stats-rap-1">{{aantalMeldingDoorBedrijven()}}</div><div class="tile-stats-rap-2">Beschikbare</div><div class="tile-stats-rap-3"> <span ng-show="aantalMeldingDoorBedrijven()>1">Steunvorderingen</span><span ng-show="aantalMeldingDoorBedrijven()==1">Steunvordering</span><span ng-show="aantalMeldingDoorBedrijven()==0">Steunvorderingen</span></div></div></div><div class="row col-xs-2"><div class="mylivicon" data-options="name: legal.svg; size: 42px;strokeColor:#0a212f; style: lines;autoPlay:true; tryToSharpen: true"></div></div></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"><div class="row box no boxr clearfix"><div class="box-content border fixit2 clearfix"> <a href="" class="infoi rechts paddingb5" data-text="<h4><b>Registratieoverzicht</b></h4><br/>In dit overzicht wordt het aantal actieve betalingsachterstanden van het afgelopen jaar schematisch weergeven. De niet-actieve betalingsachterstanden worden niet weergeven. Niet-actieve achterstanden zijn achterstanden die nog in het voortraject verkeren of achterstanden die reeds ingelost zijn en om die reden definitief uit het register zijn verwijderd."> <span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span> </a> <span class="mylivicon" data-options="name: line-chart.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Registratieoverzicht</span><div class="home"><hr></div><form id="form-vermeldingenalgemeen" class=" row form-horizontal paddingb30"><fieldset> <nvd3 options="optionsNotifications" data="exampleDataRegistratieOverzicht" class="with-3d-shadow with-transitions"></nvd3></fieldset></form></div></div></div><div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 "><div class="row box no margb boxr10 mobpad "><div class="box-content border fixit2 clearfix"> <span class="mylivicon" data-options="name: legal.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Steunvorderingen</span><div class="home"><hr></div><div class="box-content clearfix"><div class="legend b">Steunvorderingen</div> <span class="paddingb20">Is er reeds een betalingsachterstand bekend binnen het register? Vul dan het formulier in om een contactverzoek naar de andere schuldeiser(s) te verzenden. De andere schuldeiser bepaalt zelf of er contact met u wordt opgenomen. Is er nog geen achterstand bekend? Dan kunt u alsnog dit formulier invullen en verzoeken om een steunvordering. Zodra er een achterstand bij het register wordt aangemeld zult u hiervan een mededeling ontvangen.</span><br/><br/> <button class="btn btnlgw2 btn-primary margin10-" ng-click="meldingmaken()"> Steunvordering verzoekformulier </button></div></div></div></div><div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 "><div class="row box no row margb mobpad "><div class="box-content border fixit2 clearfix"> <span class="mylivicon" data-options="name: warning-alt.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Betwiste vorderingen</span><div class="home"><hr></div><div class="box-content clearfix"><div class="legend b">Meer dan 2 vorderingen betwist:</div> <span class="legend">Nee,</span> <span>{{report.bedrijf.bedrijfsNaam}} heeft niet meer dan twee aangemelde vorderingen betwist.</span> <br/><div class='progress10 twenty'><span class='status10'></span></div> <br/><br/></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row box no clearfix"><div class="box-content border"> <span class="mylivicon" data-options="name: servers.svg; size: 35px;strokeColor:#0a212f; style: lines; autoPlay:true; tryToSharpen: true"></span> <a href="" class="infoi rechts paddingb5" data-text="<h4><b>Registraties & details</b></h4><br/>De niet-actieve betalingsachterstanden worden niet weergeven. Niet-actieve achterstanden zijn achterstanden die nog in het voortraject verkeren of achterstanden die reeds ingelost zijn en om die reden definitief uit het register zijn verwijderd."> <span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span> </a> <span class="legend">Registraties & details</span><div class="home"><hr></div><div class="box-content" ng-show="nrOfMeldingen(report.meldingen) > 0"><div ng-repeat="melding in report.meldingen"><h4 class="openstaandfactuur"> Actieve registratie #{{$index + 1}}</h4><div class="box-content border2"><form id="form-meldinggegevens-partone" class="box-content form-horizontal"><fieldset><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Referentienummer</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{melding.referentieIntern}} </span></div><div class="form-group" ng-show="hideCompanyInfo(melding.bedrijfId)"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Opname in register</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{melding.toegevoegd}} </span></div><div ng-show="hideCompanyInfo(melding.bedrijfId) && melding.sbiOmschrijving" class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Bedrijfssector crediteur</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{melding.sbiOmschrijving}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Datum verloop factuur</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{melding.verloopdatumFactuur}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Oorspronkelijk factuur bedrag</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{melding.oorspronkelijkBedrag|currency}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Openstaand bedrag</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{getBedragText(melding.bedrag)}} </span></div></fieldset></form></div></div><div class="margin50"><div class="mars">De niet-actieve betalingsachterstanden worden niet weergeven. Niet-actieve achterstanden zijn achterstanden die nog in het voortraject verkeren of achterstanden die reeds ingelost zijn en om die reden definitief uit het register zijn verwijderd.</div></div></div><div ng-hide="nrOfMeldingen(report.meldingen) > 0"><div class="box-content"><div class="mars"><span>Op dit moment zijn er geen actieve registraties (meer) bekend. </span><span class="non-deco"><br/>De niet-actieve betalingsachterstanden worden niet weergeven. Niet-actieve achterstanden zijn achterstanden die nog in het voortraject verkeren of achterstanden die reeds ingelost zijn en om die reden definitief uit het register zijn verwijderd.</span></div></div></div></div></div></div></div></div><div class="tab6" style="display:block;height:0;overflow:hidden"><div ng-show="page === 'Kredieten'"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 "><div class="row box no clearfix margb"><div class="box-content border-report "> <a href="" class="infoi rechts" data-text="<h4><b>Beschikbaar vanaf 01-03-2018</b></h4><br/>Geregistreerde kredietenHier vindt u een overzicht van de leningen die zijn verstrekt aan het betreffende bedrijf en die zijn geregistreerd bij het Zakelijke Kredietregister (ZKR)."> <span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span> </a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download><div class="box-content margin30"><div class="legend b">Pilotfase beschikbaar vanaf 01-08-2018</div><form class="form-horizontal"><fieldset><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">ZBR-nummer</label> <span class="col-xs-12 col-sm-6 col-lg-7"> BA-{{report.kvkDossierTransfer.sbdrNummer}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">ZKR-nummer</label> <span class="col-xs-12 col-sm-6 col-lg-7"> Nog niet beschikbaar </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Kredietregistraties</label> <span class="col-xs-12 col-sm-6 col-lg-7"> Geen actieve registraties </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Totaal geregistreerd kredietbedrag</label> <span class="col-xs-12 col-sm-6 col-lg-7"> € 0,00 </span></div><div class="form-group"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Totaal aantal lopende dossiers</label> <span class="col-xs-12 col-sm-6 col-lg-7"> 0 </span></div><div class="form-group" ng-show="report.kvkDossierTransfer.telefoonKvk"> <label class="col-xs-12 col-sm-6 col-lg-5 control-label">Aflopend kredieten</label> <span class="col-xs-12 col-sm-6 col-lg-7"> Geen aflopend kredieten </span></div></fieldset></form></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row box no clearfix"><div class="box-content border"> <span class="mylivicon" data-options="name: servers.svg; size: 35px;strokeColor:#0a212f; style: lines; autoPlay:true; tryToSharpen: true"></span> <span href="" class="mylivicon rechts infoi" data-text="<h4><b>Beschikbaar vanaf 01-03-2018</b></h4><br/>Geregistreerde kredietenHier vindt u een overzicht van de leningen die zijn verstrekt aan het betreffende bedrijf en die zijn geregistreerd bij het Zakelijke Kredietregister (ZKR)." data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Geregistreerde kredieten</span><div class="home"><hr></div><div class="box-content" ng-show="nrOfCredit(report.credit) > 0"><div ng-repeat="credit in report.credit"><h4 class="openstaandfactuur"> Krediet registratie #{{$index + 1}}</h4><div class="box-content border2"><form id="form-meldinggegevens-krediets" class="box-content form-horizontal"><fieldset><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Referentienummer</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{credit.referentieIntern}} </span></div><div class="form-group" ng-show="hideCompanyInfo(credits.bedrijfId)"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Opname in register</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{credit.toegevoegd}} </span></div><div ng-show="hideCompanyInfo(credit.bedrijfId) && credit.sbiOmschrijving" class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Bedrijfssector crediteur</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{credit.sbiOmschrijving}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Datum verloop krediet</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{credit.verloopdatumFactuur}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Oorspronkelijk krediet bedrag</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{credit.oorspronkelijkBedrag|currency}} </span></div><div class="form-group"> <label class="col-xs-12 col-sm-5 col-lg-4 control-label">Krediet bedrag</label> <span class="col-xs-12 col-sm-7 col-lg-8"> {{getBedragText(credits.bedrag)}} </span></div></fieldset></form></div></div></div><div ng-hide="nrOfCredit(report.credit) > 0"><div class="box-content"><div class="mars">Op dit moment zijn er geen actieve kredietregistraties (meer) bekend.</div></div></div></div></div></div></div></div><div class="tab5" style="display:block;height:0;overflow:hidden"><div ng-show="page === 'Bedrijfsmonitor'"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="row"><div class="box border-report no"><div class="box-content clearfix"> <a href="" class="infoi rechts paddingb5" data-text="<h4><b>Bedrijfsmonitor</b></h4><br/>In dit scherm wordt u de mogelijkheid geboden om het bedrijf toe te voegen aan de Bedrijfsmonitor. Wilt u later het bedrijf alsnog aan de Bedrijfsmonitor toevoegen? Dan is het noodzakelijk opnieuw een rapport van dit bedrijf op te vragen"> <span class="mylivicon" data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span> </a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download><div class="col-xs-12 col-sm-12 col-md-7 col-lg-6 "><div class="row box-content clearfix"><h4>Voorkomen is beter dan genezen</h4> <span>De Bedrijfsmonitor helpt uw bedrijf bij het vroegtijdig opsporen van betalingsproblematiek. Door dit bedrijf aan de Bedrijfsmonitor toe te voegen bent u altijd als eerste op de hoogte van nieuwe achterstanden die worden geregistreerd. Met behulp van deze kennis kunt u bijtijds anticiperen door bijvoorbeeld om zekerheden te vragen, het kredietbedrag te verlagen of voortaan om vooruitbetaling te verzoeken. Zo wordt voorkomen dat uw geleverde goederen en/of diensten uiteindelijk onbetaald blijven.</span></div></div><div class="col-lg-5"><input style="display:none" class="rang-number" id="show" type="text" value="0%" disabled="disabled" /><svg class="meter"> <circle class="meter-left" r="96" cx="135" cy="142"></circle> <circle class="meter-center" r="96" cx="136" cy="142"></circle> <circle class="meter-right" r="96" cx="138" cy="142"></circle> <polygon class="meter-clock" points="129,145 137,90 145,145"></polygon> <circle class="meter-circle" r="10" cx="137" cy="145"></circle> </svg></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="row box boxr no"><div class="box-content border clearfix fixit5"> <span class="mylivicon" data-options="name: desktop.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Bedrijfsmonitor</span><div class="home"><hr></div><div ng-show="showMonitoring()"><div class="col-sm-12"><h4>Ook in de toekomst op de hoogte van achterstanden?</h4> <span>U heeft zojuist een rapport opgevraagd van {{report.bedrijf.bedrijfsNaam}}. Hierdoor bent u op de hoogte van de financiële status van dit bedrijf op dit moment. Wilt u in de toekomst direct op de hoogte zijn van wijzigingen in de financiële situatie? Voeg dit bedrijf dan toe aan de Bedrijfsmonitor.</span> <br/> <br/> <span><b>Met monitoring krijgt u meldingen bij:</b></span><ul><li>Betalingsachterstanden</li><li>Betalingsachterstanden bij nevenvestigingen</li><li>Betalingsachterstanden bij gerelateerde handelsnamen</li><li>Faillissementen</li><li>Surseance</li></ul><button ng-show="showMonitoring()" type="button" class="btn btn-primary btnlgw2 btn-lg-mob w100mob margb30" ng-click="monitoring()">Toevoegen aan Bedrijfsmonitor</button></div></div><div ng-hide="showMonitoring()"><div class="col-sm-12"><h4><b>U heeft dit bedrijf toegevoegd aan de Bedrijfsmonitor</b></h4> <span>Zodra er nieuwe achterstanden worden aangemeld bij het register wordt u hier onmiddellijk van op de hoogte gebracht.</span> <br/> <br/> <span><b>Wilt u dit bedijf uit de Bedrijfsmonitor verwijderen?</b><br/> </span><ul><li>1. Ga dan naar uw dashboard en kies voor het tabblad Monitoring.</li><li>2. Kies het bedrijf dat u uit de Bedrijfsmonitor wilt verwijderen of gebruik de zoekfunctie.</li><li>3. Klik tot slot op het verwijder-icoon <i class="fa fa-trash-o" aria-hidden="true"></i> om het bedrijf uit de Bedrijfsmonitor te verwijderen.</li></ul><div> <img src="img/icons/bedrijfsmonitoring-aan.png" width="100" height="100"></div><div><span>De Bedrijfsmonitor is maandelijks opzegbaar</span></div></div></div></div></div></div><div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="row box no "><div class="box-content border fixit5 clearfix"> <span class="mylivicon" data-options="name: file-export.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span> <span class="legend">Rapportaanvragen afgelopen 14 dagen</span> <span id="reportslasttwoweeks" style="display:none;">{{report.reportsLastTwoWeeks}}</span><div class="home"><hr></div><div class="row clearfix"><form id="form-vermeldingenalgemeen" class="form-horizontal paddingb30"><fieldset> <nvd3 options="optionsReportRequests" data="exampleDataRapportAanvragen" class="with-3d-shadow with-transitions"></nvd3></fieldset></form></div></div></div></div></div></div></div><div id="info-box2" class="informatieinfo"><div class="modal-content2"> <span class="close">&times;</span><p id="textinfo2">####</p></div></div><div class="row" data-ng-show="error"><div class=" box-content fout-smal text-center"> <img class="fixt-attention-icon" src="img/icons/svg/attention-sign.svg" width="35" height="35"> <span id="alert" class="fouttext">{{error}}</span></div></div><div class="row" data-ng-show="monitorCreated"><div class="box-content prima text-center"> <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i> <span class="primatext">{{report.bedrijf.bedrijfsNaam}} toegevoegd aan bedrijfsmonitor.</span></div></div> <script type="text/ng-template" id="nomonitoring.html" class="reveal-modal"><div class="modal-header"><i class="modal-icon-fix fa fa-desktop"aria-hidden="true"></i><h4 class="modal-title legend">Dit bedrijf staat niet in monitoring!</h4></div><div class="modal-body"><p>Let op!Als u dit rapport afsluit,sluit u ook de mogelijkheid dit bedrijf in monitoring te zetten af.Mocht u in een later stadium toch dit bedrijf in monitoring willen zetten zult u weer een rapport moeten opvragen.</p><p>Weet u zeker dat u dit bedrijf niet in monitoring wilt zetten?</p></div><div class="modal-footer"><button class="btn btn-primary btnlgw2 w100mob btn-lg-mob"ng-click="noMonitoringOk()">Ja</button><button class="btn btn-primary btnlgw2 w100mob btn-lg-mob"ng-click="closeAndMonitoringOk()">Monitoring</button><button class="btn btn-primary btnlgw2 bluebtn11 w100mob btn-lg-mob"ng-click="closeNoMonitoringModal()">Annuleren</button></div></script> <div ng-include="'templates/modals/reportPopup.html'"></div><div ng-include="'templates/modals/reportNoPaymentInfo.html'"></div><div ng-include="'templates/modals/monitorPopup.html'"></div><div ng-include="'templates/modals/monitorNoPaymentInfo.html'"></div></div> <script> var _0x9fd6=["\x47\x65\x6F\x63\x6F\x64\x65\x72","\x6D\x61\x70\x73","\x6D\x61\x70\x5F\x63\x61\x6E\x76\x61\x73","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x76\x61\x6C\x75\x65","\x61\x64\x64\x72\x65\x73\x73","\x4F\x4B","\x53\x74\x72\x65\x65\x74\x56\x69\x65\x77\x53\x74\x61\x74\x75\x73","\x6C\x61\x74\x4C\x6E\x67","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x64\x65\x73\x63\x72\x69\x70\x74\x69\x6F\x6E","\x70\x61\x6E\x6F","\x73\x65\x74\x50\x61\x6E\x6F","\x73\x65\x74\x50\x6F\x76","\x73\x65\x74\x56\x69\x73\x69\x62\x6C\x65","\x63\x6C\x69\x63\x6B","\x61\x64\x64\x4C\x69\x73\x74\x65\x6E\x65\x72","\x68\x69\x64\x65","\x23\x70\x61\x6E\x6F","\x73\x68\x6F\x77","\x23\x6D\x61\x70\x5F\x63\x61\x6E\x76\x61\x73","\x68\x65\x69\x67\x68\x74","\x47\x65\x6F\x63\x6F\x64\x65\x72\x53\x74\x61\x74\x75\x73","\x67\x65\x6F\x6D\x65\x74\x72\x79","\x73\x65\x74\x43\x65\x6E\x74\x65\x72","\x73\x65\x74\x4D\x61\x70","\x64\x72\x61\x67\x65\x6E\x64","\x6C\x61\x74","\x67\x65\x74\x50\x6F\x73\x69\x74\x69\x6F\x6E","\x6C\x6E\x67","\x65\x76\x65\x6E\x74","\x53\x74\x72\x65\x65\x74\x56\x69\x65\x77\x53\x65\x72\x76\x69\x63\x65","\x4F\x55\x54\x44\x4F\x4F\x52","\x53\x74\x72\x65\x65\x74\x56\x69\x65\x77\x53\x6F\x75\x72\x63\x65","\x67\x65\x74\x50\x61\x6E\x6F\x72\x61\x6D\x61","\x47\x65\x6F\x63\x6F\x64\x65\x20\x77\x61\x73\x20\x6E\x6F\x74\x20\x73\x75\x63\x63\x65\x73\x73\x66\x75\x6C\x20\x66\x6F\x72\x20\x74\x68\x65\x20\x66\x6F\x6C\x6C\x6F\x77\x69\x6E\x67\x20\x72\x65\x61\x73\x6F\x6E\x3A\x20","\x6C\x6F\x67","\x67\x65\x6F\x63\x6F\x64\x65","\x47\x65\x65\x6E\x20\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E","\x68\x74\x6D\x6C","\x23\x63\x72\x65\x64\x69\x74\x2D\x63\x6C\x61\x73\x73\x65\x20\x68\x35","\x74\x72\x61\x6E\x73\x66\x6F\x72\x6D","\x73\x74\x79\x6C\x65","\x72\x6F\x74\x61\x74\x65\x28","\x64\x65\x67\x29","\x25","\x23\x72\x65\x70\x6F\x72\x74\x73\x6C\x61\x73\x74\x74\x77\x6F\x77\x65\x65\x6B\x73","\x70\x61\x72\x73\x65","\x6C\x65\x6E\x67\x74\x68","\x61\x61\x6E\x74\x61\x6C","\x23\x73\x68\x6F\x77","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x2E\x6D\x65\x74\x65\x72\x2D\x63\x6C\x6F\x63\x6B","\x63\x6C\x65\x61\x72\x52\x65\x63\x74","\x62\x65\x67\x69\x6E\x50\x61\x74\x68","\x73\x74\x72\x6F\x6B\x65\x53\x74\x79\x6C\x65","\x6C\x69\x6E\x65\x57\x69\x64\x74\x68","\x50\x49","\x61\x72\x63","\x73\x74\x72\x6F\x6B\x65","\x66\x69\x6C\x6C\x53\x74\x79\x6C\x65","\x66\x6F\x6E\x74","\x35\x30\x70\x78\x20\x41\x72\x69\x61\x6C","\x77\x69\x64\x74\x68","\x6D\x65\x61\x73\x75\x72\x65\x54\x65\x78\x74","\x66\x69\x6C\x6C\x54\x65\x78\x74","\x63\x65\x69\x6C","\x67\x72\x61\x70\x68\x31","\x32\x64","\x67\x65\x74\x43\x6F\x6E\x74\x65\x78\x74","\x23\x31\x38\x34\x38\x36\x35","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x72\x61\x74\x69\x6E\x67","","\x23\x66\x62\x65\x34\x34\x36","\x65\x78\x70\x6C\x61\x69\x6E\x31","\x67\x65\x65\x6E\x20\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E","\x23\x4B\x2D\x57\x61\x61\x72\x64\x65\x72\x69\x6E\x67","\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x6F\x72\x61\x6E\x67\x65\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x2D\x3A\x20\x44\x65\x20\x77\x61\x61\x72\x64\x65\x20\x76\x61\x6E\x20\x64\x69\x74\x20\x62\x65\x64\x72\x69\x6A\x66\x20\x69\x73\x20\x6E\x69\x65\x74\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E\x3C\x2F\x73\x70\x61\x6E\x3E","\x61\x66\x74\x65\x72","\x2E\x72\x61\x70\x70\x6F\x72\x74\x2D\x68","\x2D","\x41\x63\x74\x69\x65\x76\x65\x20\x62\x65\x74\x61\x6C\x69\x6E\x67\x73\x61\x63\x68\x74\x65\x72\x73\x74\x61\x6E\x64\x65\x6E\x20\x62\x65\x6B\x65\x6E\x64","\x61\x63\x74\x69\x65\x76\x65\x20\x62\x65\x74\x61\x6C\x69\x6E\x67\x73\x61\x63\x68\x74\x65\x72\x73\x74\x61\x6E\x64\x65\x6E\x20\x62\x65\x6B\x65\x6E\x64","\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x6F\x72\x61\x6E\x67\x65\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x2D\x3A\x20\x41\x63\x74\x69\x65\x76\x65\x20\x62\x65\x74\x61\x6C\x69\x6E\x67\x73\x61\x63\x68\x74\x65\x72\x73\x74\x61\x6E\x64\x65\x6E\x20\x62\x65\x6B\x65\x6E\x64\x3C\x2F\x73\x70\x61\x6E\x3E","\x23\x65\x63\x34\x62\x33\x31","\x53\x6C\x65\x63\x68\x74\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67","\x73\x6C\x65\x63\x68\x74\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67","\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x72\x65\x64\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x43\x3A\x20\x44\x69\x74\x20\x62\x65\x64\x72\x69\x6A\x66\x20\x68\x65\x65\x66\x74\x20\x65\x65\x6E\x20\x73\x6C\x65\x63\x68\x74\x65\x20\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x3C\x2F\x73\x70\x61\x6E\x3E","\x43","\x23\x66\x31\x37\x64\x34\x34","\x4B\x72\x65\x64\x69\x65\x74\x76\x65\x72\x6C\x65\x6E\x69\x6E\x67\x20\x6F\x2E\x62\x2E\x76\x2E\x20\x6F\x6E\x64\x65\x72\x70\x61\x6E\x64","\x6B\x72\x65\x64\x69\x65\x74\x76\x65\x72\x6C\x65\x6E\x69\x6E\x67\x20\x6F\x2E\x62\x2E\x76\x2E\x20\x6F\x6E\x64\x65\x72\x70\x61\x6E\x64","\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x6F\x72\x61\x6E\x67\x65\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x42\x3A\x20\x4B\x72\x65\x64\x69\x65\x74\x76\x65\x72\x6C\x65\x6E\x69\x6E\x67\x20\x6F\x2E\x62\x2E\x76\x2E\x20\x6F\x6E\x64\x65\x72\x70\x61\x6E\x64\x3C\x2F\x73\x70\x61\x6E\x3E","\x42","\x23\x34\x62\x63\x65\x39\x34","\x47\x6F\x65\x64\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67","\x67\x6F\x65\x64\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67","\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x67\x72\x65\x65\x6E\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x64\x69\x73\x70\x6C\x61\x79\x3A\x20\x62\x6C\x6F\x63\x6B\x3B\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x41\x3A\x20\x47\x6F\x65\x64\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x3C\x2F\x73\x70\x61\x6E\x3E","\x41","\x23\x63\x72\x65\x64\x69\x74\x2D\x63\x6C\x61\x73\x73\x65\x20\x68\x33","\x63\x73\x73","\x23\x63\x72\x65\x64\x69\x74\x2D\x63\x6C\x61\x73\x73\x65\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x2D\x62\x61\x72","\x23\x64\x64\x64","\x65\x78\x70\x6C\x61\x69\x6E\x32","\x47\x65\x65\x6E\x20\x73\x63\x6F\x72\x65\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E","\x23\x62\x61\x72\x73\x63\x6F\x72\x65\x20\x68\x35","\x6E\x69\x65\x74\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E","\x23\x42\x2D\x53\x63\x6F\x72\x65","\x4E\x65\x67\x61\x74\x69\x65\x76\x65\x20\x73\x63\x6F\x72\x65","\x6E\x65\x67\x61\x74\x69\x65\x66","\x47\x65\x6D\x69\x64\x64\x65\x6C\x64\x65\x20\x73\x63\x6F\x72\x65","\x67\x65\x6D\x69\x64\x64\x65\x6C\x64","\x47\x6F\x65\x64\x65\x20\x73\x63\x6F\x72\x65","\x67\x6F\x65\x64","\x5A\x65\x65\x72\x20\x67\x6F\x65\x64\x65\x20\x73\x63\x6F\x72\x65","\x7A\x65\x65\x72\x20\x67\x6F\x65\x64","\x23\x62\x61\x72\x73\x63\x6F\x72\x65\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x2D\x62\x61\x72","\x34\x30\x33","\x23\x68\x6F\x69","\x72\x65\x70\x6C\x61\x63\x65","\x72\x6F\x75\x6E\x64","\x66\x6C\x6F\x6F\x72","\x23\x62\x61\x72\x73\x63\x6F\x72\x65\x20\x68\x33","\x67\x72\x61\x70\x68\x32","\x65\x78\x70\x6C\x61\x69\x6E\x33","\x47\x65\x65\x6E\x20\x77\x61\x61\x72\x64\x65\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E","\x23\x6B\x6F\x6C\x62\x20\x68\x35","\x23\x4C\x2D\x42\x65\x74\x61\x6C\x69\x6E\x67","\x5A\x65\x65\x72\x20\x6C\x61\x61\x67","\x7A\x65\x65\x72\x20\x6C\x61\x61\x67","\x4C\x61\x61\x67","\x6C\x61\x61\x67","\x41\x61\x6E\x77\x65\x7A\x69\x67","\x61\x61\x6E\x77\x65\x7A\x69\x67","\x48\x6F\x6F\x67","\x68\x6F\x6F\x67","\x5A\x65\x65\x72\x20\x68\x6F\x6F\x67","\x7A\x65\x65\x72\x20\x68\x6F\x6F\x67","\x23\x6B\x6F\x6C\x62\x20\x68\x33","\x23\x6B\x6F\x6C\x62\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x2D\x62\x61\x72","\x2C","\x2E","\u20AC\x26\x6E\x62\x73\x70\x3B","\x23\x6F\x75\x74\x73\x74\x61\x6E\x64\x69\x6E\x67\x41\x6D\x6F\x75\x6E\x74","\x67\x72\x61\x70\x68\x33","\x69\x6E\x66\x6F\x2D\x62\x6F\x78\x32","\x69\x6E\x66\x6F\x69","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x73\x42\x79\x43\x6C\x61\x73\x73\x4E\x61\x6D\x65","\x63\x6C\x6F\x73\x65","\x6F\x6E\x63\x6C\x69\x63\x6B","\x64\x69\x73\x70\x6C\x61\x79","\x62\x6C\x6F\x63\x6B","\x64\x61\x74\x61\x2D\x74\x65\x78\x74","\x61\x74\x74\x72","\x23\x74\x65\x78\x74\x69\x6E\x66\x6F\x32","\x6E\x6F\x6E\x65","\x74\x61\x72\x67\x65\x74","\x61\x64\x64\x4C\x69\x76\x69\x63\x6F\x6E\x45\x76\x6F","\x2E\x6D\x79\x6C\x69\x76\x69\x63\x6F\x6E","\x72\x65\x61\x64\x79","\x65\x6C\x65\x6D\x65\x6E\x74","\x6D\x61\x74\x63\x68\x48\x65\x69\x67\x68\x74","\x2E\x66\x69\x78\x69\x74\x32","\x2E\x66\x69\x78\x69\x74","\x2E\x66\x69\x78\x69\x74\x35","\x72\x65\x6D\x6F\x76\x65\x41\x74\x74\x72","\x2E\x74\x61\x62\x35","\x2E\x74\x61\x62\x34","\x2E\x74\x61\x62\x36","\x55\x49\x45\x76\x65\x6E\x74\x73","\x63\x72\x65\x61\x74\x65\x45\x76\x65\x6E\x74","\x64\x6F\x63\x75\x6D\x65\x6E\x74","\x72\x65\x73\x69\x7A\x65","\x69\x6E\x69\x74\x55\x49\x45\x76\x65\x6E\x74","\x64\x69\x73\x70\x61\x74\x63\x68\x45\x76\x65\x6E\x74","\x74\x72\x69\x67\x67\x65\x72","\x62\x75\x74\x74\x6F\x6E","\x74\x77\x65\x6E\x74\x79","\x72\x65\x6D\x6F\x76\x65\x43\x6C\x61\x73\x73","\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x31\x30","\x6E\x69\x6E\x74\x79","\x61\x64\x64\x43\x6C\x61\x73\x73"];function initialize(){geocoder=  new google[_0x9fd6[1]][_0x9fd6[0]],map=  new google[_0x9fd6[1]].Map(document[_0x9fd6[3]](_0x9fd6[2]),mapOptions),codeAddress()}function codeAddress(){var _0xd43ex3=document[_0x9fd6[3]](_0x9fd6[5])[_0x9fd6[4]];geocoder[_0x9fd6[37]]({address:_0xd43ex3},function(_0xd43ex3,_0xd43ex4){function _0xd43ex5(_0xd43ex3,_0xd43ex4){if(_0xd43ex4=== google[_0x9fd6[1]][_0x9fd6[7]][_0x9fd6[6]]){var _0xd43ex5= new google[_0x9fd6[1]].Marker({position:_0xd43ex3[_0x9fd6[9]][_0x9fd6[8]],map:map,title:_0xd43ex3[_0x9fd6[9]][_0x9fd6[10]]});_0xd43ex6[_0x9fd6[12]](_0xd43ex3[_0x9fd6[9]][_0x9fd6[11]]),_0xd43ex6[_0x9fd6[13]]({heading:270,pitch:0}),_0xd43ex6[_0x9fd6[14]](!0),_0xd43ex5[_0x9fd6[16]](_0x9fd6[15],function(){var _0xd43ex4=_0xd43ex3[_0x9fd6[9]][_0x9fd6[11]];_0xd43ex6[_0x9fd6[12]](_0xd43ex4),_0xd43ex6[_0x9fd6[13]]({heading:270,pitch:0}),_0xd43ex6[_0x9fd6[14]](!0)})}else {$(_0x9fd6[18])[_0x9fd6[17]](),$(_0x9fd6[20])[_0x9fd6[19]](),$(_0x9fd6[20])[_0x9fd6[21]](430)}}if(_0xd43ex4== google[_0x9fd6[1]][_0x9fd6[22]][_0x9fd6[6]]){map[_0x9fd6[24]](_0xd43ex3[0][_0x9fd6[23]][_0x9fd6[9]]),marker&& marker[_0x9fd6[25]](null),marker=  new google[_0x9fd6[1]].Marker({map:map,position:_0xd43ex3[0][_0x9fd6[23]][_0x9fd6[9]],draggable:!0}),google[_0x9fd6[1]][_0x9fd6[30]][_0x9fd6[16]](marker,_0x9fd6[26],function(){document[_0x9fd6[3]](_0x9fd6[27])[_0x9fd6[4]]= marker[_0x9fd6[28]]()[_0x9fd6[27]](),document[_0x9fd6[3]](_0x9fd6[29])[_0x9fd6[4]]= marker[_0x9fd6[28]]()[_0x9fd6[29]]()}),document[_0x9fd6[3]](_0x9fd6[27])[_0x9fd6[4]]= marker[_0x9fd6[28]]()[_0x9fd6[27]](),document[_0x9fd6[3]](_0x9fd6[29])[_0x9fd6[4]]= marker[_0x9fd6[28]]()[_0x9fd6[29]]();var _0xd43ex6= new google[_0x9fd6[1]].StreetViewPanorama(document[_0x9fd6[3]](_0x9fd6[11])),_0xd43ex7= new google[_0x9fd6[1]][_0x9fd6[31]];map=  new google[_0x9fd6[1]].Map(document[_0x9fd6[3]](_0x9fd6[2]),{center:{lat:marker[_0x9fd6[28]]()[_0x9fd6[27]](),lng:marker[_0x9fd6[28]]()[_0x9fd6[29]]()},zoom:16,streetViewControl:!1}),_0xd43ex7[_0x9fd6[34]]({location:{lat:marker[_0x9fd6[28]]()[_0x9fd6[27]](),lng:marker[_0x9fd6[28]]()[_0x9fd6[29]]()},radius:50,source:google[_0x9fd6[1]][_0x9fd6[33]][_0x9fd6[32]]},_0xd43ex5)}else {console[_0x9fd6[36]](_0x9fd6[35]+ _0xd43ex4)}})}setTimeout(function(){function _0xd43ex3(){var _0xd43ex3=_0xd43ex4+ 13;_0xd43ex3= _0xd43ex3> 100?100:_0xd43ex3,_0x9fd6[38]== $(_0x9fd6[40])[_0x9fd6[39]]()&& (_0xd43ex3-= 13),_0xd43ex8[_0x9fd6[42]][_0x9fd6[41]]= _0x9fd6[43]+ (-90+ 180* _0xd43ex3/ 100)+ _0x9fd6[44],_0xd43ex7[_0x9fd6[4]]= _0xd43ex3+ _0x9fd6[45]}for(var _0xd43ex4=0,_0xd43ex5=JSON[_0x9fd6[47]]($(_0x9fd6[46])[_0x9fd6[39]]()),_0xd43ex6=0;_0xd43ex6< _0xd43ex5[_0x9fd6[48]];_0xd43ex6++){_0xd43ex4+= _0xd43ex5[_0xd43ex6][_0x9fd6[49]]};var _0xd43ex7=document[_0x9fd6[51]](_0x9fd6[50]),_0xd43ex8=document[_0x9fd6[51]](_0x9fd6[52]);_0xd43ex3()},3e3),setTimeout(function(){function _0xd43ex3(){_0xd43ex7[_0x9fd6[53]](0,0,_0xd43ex8,i),_0xd43ex7[_0x9fd6[54]](),_0xd43ex7[_0x9fd6[55]]= _0xd43ex12,_0xd43ex7[_0x9fd6[56]]= 30,_0xd43ex7[_0x9fd6[58]](_0xd43ex8/ 2,i/ 2,100,0,2* Math[_0x9fd6[57]],!1),_0xd43ex7[_0x9fd6[59]]();var _0xd43ex3=_0xd43exa* Math[_0x9fd6[57]]/ 180;_0xd43ex7[_0x9fd6[54]](),_0xd43ex7[_0x9fd6[55]]= _0xd43exd,_0xd43ex7[_0x9fd6[56]]= 30,_0xd43ex7[_0x9fd6[58]](_0xd43ex8/ 2,i/ 2,100,0- 90* Math[_0x9fd6[57]]/ 180,_0xd43ex3- 90* Math[_0x9fd6[57]]/ 180,!1),_0xd43ex7[_0x9fd6[59]](),_0xd43ex7[_0x9fd6[60]]= _0xd43exd,_0xd43ex7[_0x9fd6[61]]= _0x9fd6[62],_0xd43ex10= _0xd43exf,text_width= _0xd43ex7[_0x9fd6[64]](_0xd43ex10)[_0x9fd6[63]],_0xd43ex7[_0x9fd6[65]](_0xd43ex10,_0xd43ex8/ 2- text_width/ 2,i/ 2+ 15)}function _0xd43ex4(){void(0)!=  typeof _0xd43ex11&& clearInterval(_0xd43ex11),_0xd43exb= Math[_0x9fd6[66]](3.6* _0xd43exe),_0xd43exc= _0xd43exb- _0xd43exa,_0xd43ex11= setInterval(_0xd43ex5,1e3/ _0xd43exc)}function _0xd43ex5(){_0xd43exa== _0xd43exb&& clearInterval(_0xd43ex11),_0xd43exb> _0xd43exa?_0xd43exa++:_0xd43exa--,_0xd43ex3()}var _0xd43ex6=document[_0x9fd6[3]](_0x9fd6[67]),_0xd43ex7=_0xd43ex6[_0x9fd6[69]](_0x9fd6[68]),_0xd43ex8=_0xd43ex6[_0x9fd6[63]],i=_0xd43ex6[_0x9fd6[21]],_0xd43exa=0,_0xd43exb=0,_0xd43exc=0,_0xd43exd=_0x9fd6[70],_0xd43exe=0.97* document[_0x9fd6[3]](_0x9fd6[72])[_0x9fd6[71]];_0xd43exe= _0xd43exe> 100?100:_0xd43exe;var _0xd43exf=_0x9fd6[73];0> _0xd43exe?(_0xd43exd= _0x9fd6[74],document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]]= _0x9fd6[38],$(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[38]),$(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[76]),$(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[78]),_0xd43exe= 100,_0xd43exf= _0x9fd6[81]):2> _0xd43exe?(_0xd43exd= _0x9fd6[74],document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]]= _0x9fd6[82],$(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[82]),$(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[83]),$(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[84]),_0xd43exe= 100,_0xd43exf= _0x9fd6[81]):30> _0xd43exe?(_0xd43exd= _0x9fd6[85],document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]]= _0x9fd6[86],$(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[86]),$(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[87]),$(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[88]),_0xd43exe= 33.33,_0xd43exf= _0x9fd6[89]):_0xd43exe>= 30&& 35> _0xd43exe?(_0xd43exd= _0x9fd6[90],document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]]= _0x9fd6[91],$(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[91]),$(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[92]),$(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[93]),_0xd43exe= 66.67,_0xd43exf= _0x9fd6[94]):_0xd43exe>= 35&& (_0xd43exd= _0x9fd6[95],document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]]= _0x9fd6[96],$(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[96]),$(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[97]),$(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[98]),_0xd43exe= 100,_0xd43exf= _0x9fd6[99]),$(_0x9fd6[100])[_0x9fd6[39]](_0xd43exf),$(_0x9fd6[102])[_0x9fd6[101]]({width:_0xd43exe+ _0x9fd6[45],"\x62\x61\x63\x6B\x67\x72\x6F\x75\x6E\x64\x2D\x63\x6F\x6C\x6F\x72":_0xd43exd});var _0xd43ex10,_0xd43ex11,_0xd43ex12=_0x9fd6[103];_0xd43ex4()},100),setTimeout(function(){function _0xd43ex3(){r2<= 0?(_0xd43exf= _0x9fd6[74],document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]]= _0x9fd6[105],$(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[105]),$(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[107]),t2= _0x9fd6[81]):r2< 30?(_0xd43exf= _0x9fd6[85],document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]]= _0x9fd6[109],$(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[109]),$(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[110]),t2= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r2>= 30&& r2< 45?(_0xd43exf= _0x9fd6[90],document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]]= _0x9fd6[111],$(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[111]),$(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[112]),t2= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r2>= 45&& r2< 80?(_0xd43exf= _0x9fd6[95],document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]]= _0x9fd6[113],$(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[113]),$(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[114]),t2= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r2>= 80&& r2< 90?(_0xd43exf= _0x9fd6[95],document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]]= _0x9fd6[113],$(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[113]),$(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[114]),t2= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r2>= 90&& (_0xd43exf= _0x9fd6[95],document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]]= _0x9fd6[115],$(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[115]),$(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[116]),t2= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]),$(_0x9fd6[117])[_0x9fd6[101]]({width:(r2> 0?r2:100)+ _0x9fd6[45],"\x62\x61\x63\x6B\x67\x72\x6F\x75\x6E\x64\x2D\x63\x6F\x6C\x6F\x72":_0xd43exf}),r2==  -0.96&& $(_0x9fd6[119])[_0x9fd6[39]](_0x9fd6[118]),i[_0x9fd6[53]](0,0,_0xd43exa,_0xd43exb),i[_0x9fd6[54]](),i[_0x9fd6[55]]= _0xd43ex10,i[_0x9fd6[56]]= 30,i[_0x9fd6[58]](_0xd43exa/ 2,_0xd43exb/ 2,100,0,2* Math[_0x9fd6[57]],!1),i[_0x9fd6[59]]();var _0xd43ex3=_0xd43exc* Math[_0x9fd6[57]]/ 180;i[_0x9fd6[54]](),i[_0x9fd6[55]]= _0xd43exf,i[_0x9fd6[56]]= 30,i[_0x9fd6[58]](_0xd43exa/ 2,_0xd43exb/ 2,100,0- 90* Math[_0x9fd6[57]]/ 180,_0xd43ex3- 90* Math[_0x9fd6[57]]/ 180,!1),i[_0x9fd6[59]](),i[_0x9fd6[60]]= _0xd43exf,i[_0x9fd6[61]]= _0x9fd6[62],_0xd43ex6= _0x9fd6[81]== t2?_0x9fd6[81]:Math[_0x9fd6[121]](parseInt(0.96* parseInt(t2[_0x9fd6[120]](_0x9fd6[45],_0x9fd6[73])))/ 10),_0xd43ex6= parseInt(Math[_0x9fd6[122]](parseInt(0.96* parseInt(t2[_0x9fd6[120]](_0x9fd6[45],_0x9fd6[73])))/ 10))> 8?8:_0xd43ex6,text_width= i[_0x9fd6[64]](_0xd43ex6)[_0x9fd6[63]],i[_0x9fd6[65]](_0xd43ex6,_0xd43exa/ 2- text_width/ 2,_0xd43exb/ 2+ 15),$(_0x9fd6[123])[_0x9fd6[39]](_0xd43ex6)}function _0xd43ex4(){void(0)!=  typeof _0xd43ex7&& clearInterval(_0xd43ex7),_0xd43exd= Math[_0x9fd6[66]](3.6* r2),_0xd43exe= _0xd43exd- _0xd43exc,_0xd43ex7= setInterval(_0xd43ex5,1e3/ _0xd43exe)}function _0xd43ex5(){_0xd43exc== _0xd43exd&& clearInterval(_0xd43ex7),_0xd43exd> _0xd43exc?_0xd43exc++:_0xd43exc--,_0xd43ex3()}var _0xd43ex6,_0xd43ex7,_0xd43ex8=document[_0x9fd6[3]](_0x9fd6[124]),i=_0xd43ex8[_0x9fd6[69]](_0x9fd6[68]),_0xd43exa=_0xd43ex8[_0x9fd6[63]],_0xd43exb=_0xd43ex8[_0x9fd6[21]],_0xd43exc=0,_0xd43exd=0,_0xd43exe=0,_0xd43exf=_0x9fd6[70],_0xd43ex10=_0x9fd6[103];r2= 0.96* document[_0x9fd6[3]](_0x9fd6[72])[_0x9fd6[71]],r2= r2> 80?80:r2,t2= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45],_0xd43ex4()},200),setTimeout(function(){function _0xd43ex3(){r3>= 100?(_0xd43exf= _0x9fd6[74],document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[126],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[126]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[126]),r3= 100,t3= _0x9fd6[81]):r3< 30?(_0xd43exf= _0x9fd6[95],document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[129],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[129]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[130]),t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r3>= 30&& r3< 45?(_0xd43exf= _0x9fd6[95],document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[131],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[131]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[132]),t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r3>= 45&& r3< 50?(_0xd43exf= _0x9fd6[90],document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[133],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[133]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[134]),t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r3>= 50&& r3< 80?(_0xd43exf= _0x9fd6[90],document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[135],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[135]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[136]),t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r3>= 80&& r3< 85?(_0xd43exf= _0x9fd6[85],document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[137],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[137]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[138]),t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r3>= 85?(_0xd43exf= _0x9fd6[85],document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[137],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[137]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[138]),t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]):r3< 0&& (_0xd43exf= _0x9fd6[85],r3= 0,document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]]= _0x9fd6[137],$(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[137]),$(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[138]),t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45]),$(_0x9fd6[139])[_0x9fd6[39]](t3),$(_0x9fd6[140])[_0x9fd6[101]]({width:r3+ _0x9fd6[45],"\x62\x61\x63\x6B\x67\x72\x6F\x75\x6E\x64\x2D\x63\x6F\x6C\x6F\x72":_0xd43exf}),i[_0x9fd6[53]](0,0,_0xd43exa,_0xd43exb),i[_0x9fd6[54]](),i[_0x9fd6[55]]= _0xd43ex10,i[_0x9fd6[56]]= 30,i[_0x9fd6[58]](_0xd43exa/ 2,_0xd43exb/ 2,100,0,2* Math[_0x9fd6[57]],!1),i[_0x9fd6[59]]();var _0xd43ex3=_0xd43exc* Math[_0x9fd6[57]]/ 180;i[_0x9fd6[54]](),i[_0x9fd6[55]]= _0xd43exf,i[_0x9fd6[56]]= 30,i[_0x9fd6[58]](_0xd43exa/ 2,_0xd43exb/ 2,100,0- 90* Math[_0x9fd6[57]]/ 180,_0xd43ex3- 90* Math[_0x9fd6[57]]/ 180,!1),i[_0x9fd6[59]](),i[_0x9fd6[60]]= _0xd43exf,i[_0x9fd6[61]]= _0x9fd6[62],_0xd43ex6= t3,text_width= i[_0x9fd6[64]](_0xd43ex6)[_0x9fd6[63]],i[_0x9fd6[65]](_0xd43ex6,_0xd43exa/ 2- text_width/ 2,_0xd43exb/ 2+ 15)}function _0xd43ex4(){var _0xd43ex3=parseInt($(_0x9fd6[144])[_0x9fd6[39]]()[_0x9fd6[120]](_0x9fd6[143],_0x9fd6[73])[_0x9fd6[120]](_0x9fd6[142],_0x9fd6[73])[_0x9fd6[120]](_0x9fd6[142],_0x9fd6[73])[_0x9fd6[120]](_0x9fd6[141],_0x9fd6[142]));500> _0xd43ex3?r3= 0.7* r3:1e3> _0xd43ex3?r3= 0.8* r3:2500> _0xd43ex3?r3= 0.9* r3:_0xd43ex3> 5e3&& (r3= 1* r3),void(0)!=  typeof _0xd43ex7&& clearInterval(_0xd43ex7),_0xd43exd= Math[_0x9fd6[66]](3.6* r3),_0xd43exe= _0xd43exd- _0xd43exc,_0xd43ex7= setInterval(_0xd43ex5,1e3/ _0xd43exe)}function _0xd43ex5(){_0xd43exc== _0xd43exd&& clearInterval(_0xd43ex7),_0xd43exd> _0xd43exc?_0xd43exc++:_0xd43exc--,_0xd43ex3()}var _0xd43ex6,_0xd43ex7,_0xd43ex8=document[_0x9fd6[3]](_0x9fd6[145]),i=_0xd43ex8[_0x9fd6[69]](_0x9fd6[68]),_0xd43exa=_0xd43ex8[_0x9fd6[63]],_0xd43exb=_0xd43ex8[_0x9fd6[21]],_0xd43exc=0,_0xd43exd=0,_0xd43exe=0,_0xd43exf=_0x9fd6[70],_0xd43ex10=_0x9fd6[103];r3= 100- 1.1* document[_0x9fd6[3]](_0x9fd6[72])[_0x9fd6[71]],r3= r3> 90&& r3< 100?90:r3,r3= r3< 15&& r3< 100?15:r3,t3= Math[_0x9fd6[66]](_0xd43exc/ 360* 100)+ _0x9fd6[45],_0xd43ex4()},300);for(var geocoder,map,mapOptions={zoom:17},marker,modal=document[_0x9fd6[3]](_0x9fd6[146]),btns=document[_0x9fd6[148]](_0x9fd6[147]),span=document[_0x9fd6[148]](_0x9fd6[149])[0],i=0;i< btns[_0x9fd6[48]];i++){btns[i][_0x9fd6[150]]= function(){modal[_0x9fd6[42]][_0x9fd6[151]]= _0x9fd6[152],$(_0x9fd6[155])[_0x9fd6[39]]($(this)[_0x9fd6[154]](_0x9fd6[153]))}};span[_0x9fd6[150]]= function(){modal[_0x9fd6[42]][_0x9fd6[151]]= _0x9fd6[156]},window[_0x9fd6[150]]= function(_0xd43ex3){_0xd43ex3[_0x9fd6[157]]== modal&& (modal[_0x9fd6[42]][_0x9fd6[151]]= _0x9fd6[156])},$(function(){setTimeout(function(){initialize()},1200)}),angular[_0x9fd6[161]](document)[_0x9fd6[160]](function(){setTimeout(function(){$(function(){jQuery(_0x9fd6[159])[_0x9fd6[158]]()})},900)}),setTimeout(function(){$(_0x9fd6[163])[_0x9fd6[162]](),$(_0x9fd6[164])[_0x9fd6[162]](),$(_0x9fd6[177])[_0x9fd6[15]](function(){$(_0x9fd6[163])[_0x9fd6[162]](),$(_0x9fd6[164])[_0x9fd6[162]](),$(_0x9fd6[165])[_0x9fd6[162]](),$(_0x9fd6[167])[_0x9fd6[166]](_0x9fd6[42]),$(_0x9fd6[168])[_0x9fd6[166]](_0x9fd6[42]),$(_0x9fd6[169])[_0x9fd6[166]](_0x9fd6[42]);var _0xd43ex3=window[_0x9fd6[172]][_0x9fd6[171]](_0x9fd6[170]);_0xd43ex3[_0x9fd6[174]](_0x9fd6[173],!0,!1,window,0),window[_0x9fd6[175]](_0xd43ex3),$(window)[_0x9fd6[176]](_0x9fd6[173])})},800),$(function(){setTimeout(function(_0xd43ex3){$(_0x9fd6[180])[_0x9fd6[179]](_0x9fd6[178]),$(_0x9fd6[180])[_0x9fd6[182]](_0x9fd6[181])},1e3)})</script>
+<div class="col-xs-12" id="report_page">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row no clearfix">
+				<div class="shad"> <button class="btn-report" ng-class="{'active-tab-report' : page == 'Overzicht'}"
+						ng-click="page='Overzicht'"><span class="mylivicon"
+							data-options="name: pie-chart.svg; size:23px; style:lines-alt; strokeColor:#0a212f; tryToSharpen:true"></span>Overzicht</button>
+					<button class="btn-report " ng-class="{'active-tab-report' : page == 'Bedrijfsgegevens'}"
+						ng-click="page='Bedrijfsgegevens'"><span class="mylivicon"
+							data-options="name:building.svg; size:23px; style:lines-alt; strokeColor:#0a212f; tryToSharpen:true"></span>Bedrijfsgegevens</button>
+					<button class="btn-report " ng-class="{'active-tab-report' : page == 'Wanbetaling'}"
+						ng-click="page='Wanbetaling'"><span class="mylivicon"
+							data-options="name:morph-flag.svg; size:23px; style:lines-alt; morphState: end; strokeColor:#0a212f; tryToSharpen:true"></span>Kans
+						op wanbetaling</button> <button class="btn-report"
+						ng-class="{'active-tab-report' : page == 'Achterstanden'}" ng-click="page='Achterstanden'"><span
+							class="mylivicon"
+							data-options="name:box-add.svg; size:23px; style:lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>Achterstanden</button>
+					<button class="btn-report" ng-class="{'active-tab-report' : page == 'Kredieten'}"
+						ng-click="page='Kredieten'"><span class="mylivicon"
+							data-options="name:line-chart.svg; size:23px; style: lines-alt; strokeColor:#0a212f ; tryToSharpen:true"></span>Kredieten</button>
+					<button class="btn-report" ng-class="{'active-tab-report' : page == 'Bedrijfsmonitor'}"
+						ng-click="page='Bedrijfsmonitor'"><span class="mylivicon"
+							data-options="name:morph-eye-open-close.svg; size:23px; style: lines-alt; strokeColor:#0a212f ; tryToSharpen:true"></span>Bedrijfsmonitor</button>
+				</div>
+			</div>
+		</div>
+		<div ng-init="page='Overzicht'"></div>
+		<div ng-show="page === 'Overzicht'">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row box no border-report clearfix">
+					<div class="box-content clearfix"> <report-download url="/download/a.pdf"
+							filename="my-awesome.pdf"></report-download>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+							<div class="row box-content margin10">
+								<div class="mix-head" data-status="{{report.bedrijf.bedrijfActief}}">
+									{{report.kvkDossierTransfer.actiefOmschrijving}}</div> <span class="mylivicon"
+									data-options="name: building.svg; size: 50px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+								<span class="rapport-hoofd">{{report.bedrijf.bedrijfsNaam}}&nbsp;&nbsp; <a
+										href="https://www.kvk.nl/zoeken/archief/?/?handelsnaam=&woonplaats=&kvknummer={{report.kvkDossierTransfer.kvkNummer}}"
+										target="_blank" class="website report-kvk-nr"><img class="fixt-attention-icon"
+											src="img/icons/svg/kvk.svg" width="27" height="27"> KvK-nummer:
+										{{report.kvkDossierTransfer.kvkNummer}}</a> </span>
+								<div class="contact">
+									<div> <span class="mylivicon"
+											data-options="name: location-alt.svg; size: 23px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+										<span>{{report.kvkDossierTransfer.straat}}
+											{{report.kvkDossierTransfer.huisnummer}}
+											{{report.kvkDossierTransfer.huisnummerToevoeging}}&nbsp;&nbsp;{{report.kvkDossierTransfer.postcode}}&nbsp;
+											{{report.kvkDossierTransfer.plaats}}</span></div>
+									<div> <span class="mylivicon"
+											data-options="name: globe.svg; size: 23px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+										<span><a class="website" href="http://{{report.kvkDossierTransfer.domeinnaam}}"
+												target="_blank">{{report.kvkDossierTransfer.domeinnaam > '' ?
+												report.kvkDossierTransfer.domeinnaam :'Niet bekend' }}</a></span></div>
+									<div> <span class="mylivicon"
+											data-options="name: phone.svg; size: 23px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+										<span><a class="website" href="tel:{{report.kvkDossierTransfer.telefoonKvk}}">
+												{{report.kvkDossierTransfer.telefoonKvk > 0 ?
+												report.kvkDossierTransfer.telefoonKvk :'Niet bekend' }}</a></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mobpad">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mobpad">
+								<div class="row box-content ">
+									<div
+										ng-hide="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven'|| report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'">
+										<div class="rapport-info-fix "
+											ng-show="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging'">
+											<div><i class="fa fa-exclamation-triangle font-20" aria-hidden="true"></i>
+												Let op: Dit rapport is van een nevenvestiging.</div> <button
+												type="button" class="btn btn-primary fix-neven"
+												ng-click="reportHoofdVestiging()"> Rapport hoofdvestiging opvragen
+											</button>
+										</div>
+									</div>
+									<div class="rapport-info-fix"
+										ng-show="report.ratingScoreIndicatorMessage == 'geen score - 403 verklaring gedeponeerd, bekijk de houdstermaatschappij'">
+										<div><span class="mylivicon"
+												data-options="name: warning-alt.svg; size: 25px; style: lines-alt; strokeColor:#0a212f ;tryToSharpen: true"></span>
+											<span>403 verklaring gedeponeerd, bekijk ook de houdstermaatschappij</span>
+										</div> <button type="button" class="btn btn-primary fix-neven "
+											ng-click="createReport(report.ultimateParent, report.ultimateParent.kvKnummer)">
+											Rapport houdstermaatschappij opvragen </button>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="row box-content border"> <span class="mylivicon"
+										data-options="name: servers.svg; size: 27px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true;"></span>
+									<span class="BA-register-ref">ZBR-nummer:
+										BA-{{report.kvkDossierTransfer.sbdrNummer}}</span>
+									<div class="home">
+										<hr>
+									</div>
+									<div class="b">
+										<div class="font-14-red"
+											ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'">
+											<span>&nbsp; <i class="fa fa-exclamation-triangle fa-10x"
+													aria-hidden="true"></i>&nbsp; In surseance van betaling of in
+												faillissement</span></div>
+										<div class="font-14-red"
+											ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven'">
+											<span>&nbsp; <i class="fa fa-exclamation-triangle fa-10xx"
+													aria-hidden="true"></i>&nbsp; Uitgeschreven uit het
+												Handelsregister</span></div>
+										<div class="b font-14"
+											ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'Bedrijf is actief'">
+											<span ng-show="report.aantalMeldingenActief==0">&nbsp; Geen </span> <span
+												class="font-14-red" ng-show="report.aantalMeldingenActief>0">&nbsp; <i
+													class="fa fa-exclamation-triangle fa-10x"
+													aria-hidden="true"></i>&nbsp; {{report.aantalMeldingenActief}}
+											</span> <span class="font-14-red" ng-show="report.aantalMeldingenActief>1">
+												Negatieve registraties</span> <span class="font-14-red"
+												ng-show="report.aantalMeldingenActief==1"> Negatieve registratie</span>
+											<span ng-show="report.aantalMeldingenActief==0"> negatieve
+												registraties</span></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row box no clearfix" id="report-score-data">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" id="credit-classe">
+						<div class="row border box-content boxl-rap2 fixit2 fix-bars-report">
+							<h4 class="fix-h4-report">Kredietwaardigheidsklasse</h4>
+							<div class="col-md-9 col-sm-9 col-xs-9">
+								<h5 class="text-muted vb">Niet te bepalen</h5>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3"></div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+										aria-valuemax="100"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-4 col-xs-12" id="barscore">
+						<div class="row box-content border boxl-rap2 fixit2 fix-bars-report">
+							<h4 class="fix-h4-report">CRZB score</h4>
+							<div class="col-md-9 col-sm-9 col-xs-9">
+								<h5 class="text-muted vb">Niet te bepalen</h5>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3"></div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+										aria-valuemax="100"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-4 col-xs-12" id="kolb">
+						<div class="row border fixit2 box-content">
+							<h4 class="fix-h4-report">Kans op te late-betaling</h4>
+							<div class="col-md-9 col-sm-9 col-xs-9">
+								<h5 class="text-muted vb">Niet te bepalen</h5>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3"></div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+										aria-valuemax="100"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+						<div class="row box no clearfix">
+							<div class="box-content border boxl-rap clearfix fixit2"> <a href=""
+									onclick="initialize();"><span class="mylivicon rechts"
+										data-options="name: refresh.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;tryToSharpen: true"></span>
+								</a> <span class="mylivicon"
+									data-options="name: location-alt.svg; size: 35px; style: lines-alt; strokeColor:#0a212f;tryToSharpen: true"></span>
+								<span class="legend paddingb20">Vestigingslocatie</span>
+								<div class="home">
+									<hr>
+								</div>
+								<div class="row box-content clearfix margin10 mobpad">
+									<div style="display:none"> <input id="address" style="width:60%"
+											value="{{report.kvkDossierTransfer.straat}} {{report.kvkDossierTransfer.huisnummer}} {{report.kvkDossierTransfer.huisnummerToevoeging}} {{report.kvkDossierTransfer.postcode}} {{report.kvkDossierTransfer.plaats}}">
+										<input type="button" value="Geocode" onclick="codeAddress()"> <input type="text"
+											id="lat" /> <input type="text" id="lng" /></div>
+									<div id="map_canvas" style="display:none"></div>
+									<div id="pano" style="height:430px;width:100%"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+						<div class="row border boxr10 clearfix margb">
+							<div class="box-content fixit2"> <span class="mylivicon"
+									data-options="name: two-pointers.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+								<span class="legend">Ondernemingsgegevens</span>
+								<div class="home2">
+									<hr>
+								</div>
+								<div class="box-content clearfix font-14px">
+									<div class="row clearfix">
+										<form class="form-horizontal">
+											<fieldset>
+												<div> <label class="col-xs-12 control-label">Rechtsvorm</label> <span
+														class="col-xs-12"> {{report.kvkDossierTransfer.rechtsvorm}}
+													</span></div>
+												<div> <label class="col-xs-12 control-label">Oprichtingsdatum</label>
+													<span class="col-xs-12 ">
+														{{getDatum(report.kvkDossierTransfer.datumInschrijving)}}
+													</span></div>
+												<div ng-show="report.kvkDossierTransfer.gestortKapitaal"> <label
+														class="col-xs-12 control-label">Geplaatst kapitaal</label> <span
+														class="col-xs-12"> {{report.kvkDossierTransfer.gestortKapitaal |
+														currency}} </span></div>
+												<div ng-show="report.kvkDossierTransfer.datumHuidigeVestiging"> <label
+														class="col-xs-12 control-label">Gevestigd op dit adres
+														sinds</label> <span class="col-xs-12 ">
+														{{getDatum(report.kvkDossierTransfer.datumHuidigeVestiging)}}
+													</span></div>
+												<div> <label class="col-xs-12 control-label">Hoofdactiviteit
+														(SBI)</label> <span class="col-xs-12 ">
+														{{report.kvkDossierTransfer.hoofdactiviteit}} </span></div>
+												<div ng-show="report.kvkDossierTransfer.nevenactiviteit1Sbi"> <label
+														class="col-xs-12 control-label">Nevenactiviteit 1 (SBI)</label>
+													<span class="col-xs-12">
+														{{report.kvkDossierTransfer.nevenactiviteit1}} </span></div>
+												<div ng-show="report.kvkDossierTransfer.nevenactiviteit2Sbi"> <label
+														class="col-xs-12 control-label">Nevenactiviteit 2 (SBI)</label>
+													<span class="col-xs-12">
+														{{report.kvkDossierTransfer.nevenactiviteit2}} </span></div>
+												<div> <label class="col-xs-12 control-label">Aantal medewerkers</label>
+													<span class="col-xs-12"> {{report.kvkDossierTransfer.medewerkers > 0
+														? report.kvkDossierTransfer.medewerkers : 'Onbekend'}} </span>
+												</div>
+												<div
+													ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'">
+													<label class="col-xs-12 control-label">Deponering
+														jaarstukken</label> <span class="col-xs-12">
+														{{report.kvkDossierTransfer.deponeringJaarstukken}} </span>
+												</div>
+											</fieldset>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+						<div class="row border clearfix margb">
+							<div class="box-content fixit2"> <span class="mylivicon"
+									data-options="name: notebook.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+								<span class="legend">Samenvatting</span>
+								<div class="home2">
+									<hr>
+								</div>
+								<div class="box-content clearfix">
+									<div class="clearfix font-14px">
+										<p>{{report.bedrijf.bedrijfsNaam}} is een
+											{{report.kvkDossierTransfer.rechtsvorm}} welke is opgericht op
+											{{getDatum(report.kvkDossierTransfer.datumInschrijving)}}. Volgens de
+											laatste gegevens zijn er {{report.kvkDossierTransfer.medewerkers > 0 ?
+											report.kvkDossierTransfer.medewerkers : 'Onbekend'}} werknemers werkzaam.
+											{{report.bedrijf.bedrijfsNaam}} is actief binnen de sector
+											{{report.kvkDossierTransfer.hoofdactiviteit}} en heeft een <span
+												id="K-Waardering">niet te bepalen</span>. De CRZB score is <span
+												id="B-Score">niet te bepalen</span> en de kans op te late betaling wordt
+											geacht <span id="L-Betaling">niet te bepalen</span> te zijn. <span
+												ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'">De
+												laatste jaarrekening is gedeponeerd in
+												{{report.kvkDossierTransfer.deponeringJaarstukken}}.</span></p>
+									</div> <button ng-show="showMonitoring()" type="button"
+										class="btn btn-primary btnlgw2 btn-lg-mob w100mob margb30"
+										ng-click="monitoring()">Toevoegen aan Bedrijfsmonitor</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="page === 'Bedrijfsgegevens'">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row border-report box no">
+					<div class="box-content clearfix">
+						<div class="paddingb5"> <a href=""><span class="mylivicon rechts infoi paddingb5"
+									data-text="<h4><b>Bedrijfsgegevens</b></h4><br/>In dit scherm wordt u een overzicht aangeboden van bedrijfsgegevens"
+									data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span></a>
+							<report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download></div>
+						<div class="report-delayedpayments-tab4 row ">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class=" margin10 greenbox margreen10 clearfix fixit fix-box-1">
+									<div class="greenleft2 row col-xs-10">
+										<div class="faillissemententext20">Bedrijfsstatus</div>
+										<div class="greenbignumber2">{{report.kvkDossierTransfer.actief}}</div>
+										<div class="greensmallnumber2">{{report.kvkDossierTransfer.actiefOmschrijving}}
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="mylivicon"
+											data-options="name: building.svg; size: 47px;strokeColor:#0a212f; style: lines; autoPlay:true; eventOn:grandparent; tryToSharpen: true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="margin10 bluebox margreen10 clearfix fixit fix-box-2">
+									<div class="greenleft2 row col-xs-10">
+										<div class="faillissemententext20">Faillissement of surseance</div>
+										<div class="greenbignumber2">{{report.kvkDossierTransfer.faillietSurseance}}
+										</div>
+										<div class="greensmallnumber2"> <span
+												ng-show="report.kvkDossierTransfer.faillietSurseanceOmschrijving == ''"></span>
+											<span>{{report.kvkDossierTransfer.faillietSurseanceOmschrijving}}</span>
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="mylivicon"
+											data-options="name: legal.svg; size: 47px; style: lines;strokeColor:#0a212f; eventOn:grandparent; tryToSharpen: true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class=" margin10 greenbox margreen10 clearfix fixit fix-box-3">
+									<div class="greenleft2 row col-xs-10 ">
+										<div class="faillissemententext20">Oprichtingsdatum</div>
+										<div class="bluebignumber2">
+											{{getDatum(report.kvkDossierTransfer.datumInschrijving)}}</div>
+										<div class="bluesmallnumber2">Gevestigd op dit adres sinds
+											{{getDatum(report.kvkDossierTransfer.datumHuidigeVestiging)}}</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="mylivicon"
+											data-options="name: morph-folder.svg; size: 47px;strokeColor:#0a212f; style: lines;autoPlay:true; eventOn:grandparent; tryToSharpen: true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class=" margin10 bluebox margreen10 clearfix fixit fix-box-4">
+									<div class="greenleft2 item row col-xs-10">
+										<div class="faillissemententext20">BTW-nummer</div>
+										<div class="bluebignumber2">Geldigheid</div>
+										<div class="bluesmallnumber2">Beschikbaar vanaf 01-06-2018</div>
+									</div>
+									<div class="col-xs-2"> <span class="mylivicon"
+											data-options="name: check-alt.svg; size: 47px;strokeColor:#0a212f; style: lines;autoPlay:true; eventOn:grandparent; tryToSharpen:true"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="box no boxr15 clearfix">
+					<div class="row border clearfix">
+						<div class="box-content"> <span class="mylivicon"
+								data-options="name: morph-stack.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Uittreksel</span>
+							<div class="home2">
+								<hr>
+							</div>
+							<div class="box-content">
+								<form id="form-bedrijfsgegevens" class="form-horizontal">
+									<fieldset>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">ZBR-nummer</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												BA-{{report.kvkDossierTransfer.sbdrNummer}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">RSIN-nummer</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.rsin}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">KvK-nummer</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.kvkNummer}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Oprichtingsdatum</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												{{getDatum(report.kvkDossierTransfer.datumInschrijving)}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Datum
+												voortzetting</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{getDatum(report.kvkDossierTransfer.datumVoortzetting)}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Statutaire
+												naam</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.vennootschapsNaam}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Handelsnaam</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.handelsNaam}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Rechtsvorm</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.rechtsvorm}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.gestortKapitaal">
+											<label class="col-xs-12 col-sm-6 col-lg-5 control-label">Geplaatst
+												kapitaal</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.gestortKapitaal | currency}} </span></div>
+										<div
+											ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'">
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-6 col-lg-5 control-label">Deponering
+													jaarstukken</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+													{{report.kvkDossierTransfer.deponeringJaarstukken}} </span></div>
+										</div>
+										<hr>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Vestiging</label>
+											<span class="col-xs-12 col-sm-6 col-lg-5">
+												{{report.kvkDossierTransfer.hoofdNeven}} </span></div>
+										<div class="form-group"
+											ng-show="!report.kvkDossierTransfer.datumHuidigeVestiging"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Gevestigd op dit adres
+												sinds</label> <span class="col-xs-12 col-sm-6 col-lg-7"> Geen
+												verhuisdata bekend </span></div>
+										<div class="form-group"
+											ng-show="report.kvkDossierTransfer.datumHuidigeVestiging"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Gevestigd op het adres
+												sinds</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{getDatum(report.kvkDossierTransfer.datumHuidigeVestiging)}} </span>
+										</div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Adres</label> <span
+												class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.straat}}
+												{{report.kvkDossierTransfer.huisnummer}}
+												{{report.kvkDossierTransfer.huisnummerToevoeging}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label"> </label> <span
+												class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.postcode}}
+												{{report.kvkDossierTransfer.plaats}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.post_postbus"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label control-label">Postadres</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.post_postbus}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.post_postbus"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label control-label">
+											</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.post_postcode}}
+												{{report.kvkDossierTransfer.post_plaats}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.telefoonKvk"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Telefoon</label> <span
+												class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.telefoonKvk}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.mobielKvk"> <label
+												class="col-xs-12 col-sm-6 col-lg-5">Mobiel</label> <span
+												class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.mobielKvk}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.domeinnaam"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Domeinnaam</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7"> <a class="website"
+													href="http://{{report.kvkDossierTransfer.domeinnaam}}"
+													target="_blank">{{report.kvkDossierTransfer.domeinnaam}}</a> </span>
+										</div>
+										<hr>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Hoofdactiviteit
+												(SBI)</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.hoofdactiviteit}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.nevenactiviteit1Sbi">
+											<label class="col-xs-12 col-sm-6 col-lg-5 control-label">Nevenactiviteit 1
+												(SBI)</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.nevenactiviteit1}} </span></div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.nevenactiviteit2Sbi">
+											<label class="col-xs-12 col-sm-6 col-lg-5 control-label">Nevenactiviteit 2
+												(SBI)</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.nevenactiviteit2}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Aantal
+												medewerkers</label> <span class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.medewerkers > 0 ?
+												report.kvkDossierTransfer.medewerkers : 'Onbekend'}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Import</label> <span
+												class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.importHandel == 'J' ? 'Ja' : 'Nee'}} </span>
+										</div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Export</label> <span
+												class="col-xs-12 col-sm-6 col-lg-7">
+												{{report.kvkDossierTransfer.exportHandel == 'J' ? 'Ja' : 'Nee'}} </span>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="box no clearfix" ng-show="report.ultimateParent != null">
+					<div class="row border clearfix">
+						<div class="box-content"> <span class="mylivicon"
+								data-options="name: share.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Hoogste moedermaatschappij</span>
+							<div class="home2">
+								<hr>
+							</div>
+							<form class="form-horizontal box-content">
+								<fieldset>
+									<div ng-show="report.ultimateParent">
+										<div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">Hoogste
+												moedermaatschappij</label> <span class="col-xs-12 col-sm-7">
+												{{report.ultimateParent.bedrijfsNaam}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-5 control-label">Adres</label> <span
+												class="col-xs-12 col-sm-7"> {{report.ultimateParent.straat}}
+												{{report.ultimateParent.huisNummer}}
+												{{report.ultimateParent.huisnummerToevoeging}} </span></div>
+										<div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">
+											</label> <span class="col-xs-12 col-sm-7">
+												{{report.ultimateParent.postcode}} {{report.ultimateParent.plaats}}
+											</span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-5 control-label">KvK-nummer</label> <span
+												class="col-xs-12 col-sm-7"> {{report.ultimateParent.kvKnummer}} </span>
+											<button type="button" class="btn btn-primary btn-report-small "
+												ng-click="createReport(report.ultimateParent, report.ultimateParent.kvKnummer)">
+												Rapport opvragen </button></div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="box no clearfix" ng-show="report.parent">
+					<div class="row border clearfix">
+						<div class="box-content"> <span class="mylivicon"
+								data-options="name: diagram.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Hoofdvestiging</span>
+							<div class="home2">
+								<hr>
+							</div>
+							<div class="box-content">
+								<div>
+									<form class="form-horizontal">
+										<fieldset>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Hoofdvestiging</label>
+												<div class="col-xs-12 col-sm-7"> {{report.parent.bedrijfsNaam}}</div>
+											</div>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Adres</label>
+												<div class="col-xs-12 col-sm-7"> {{report.parent.straat}}
+													{{report.parent.huisNummer}} {{report.parent.huisnummerToevoeging}}
+												</div>
+											</div>
+											<div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">
+												</label> <span class="col-xs-12 col-sm-7"> {{report.parent.postcode}}
+													{{report.parent.plaats}} </span></div>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Vestigingsnummer</label> <span
+													class="col-xs-12 col-sm-7"> {{report.parent.vestiging}} </span>
+												<button type="button" class="btn btn-primary btn-report-small "
+													ng-click="createReport(report.parent, report.parent.kvKnummer)">
+													Rapport opvragen </button></div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+				ng-if="report.vestigings.length > 0">
+				<div class="box no clearfix">
+					<div class="row border clearfix">
+						<div class="box-content"><span class="mylivicon"
+								data-options="name: box-add.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span><span
+								class="legend">Nevenvestiging</span>
+							<div class="home2">
+								<hr>
+							</div>
+							<div class="box-content">
+								<div ng-repeat="vestiging in report.vestigings">
+									<form class="form-horizontal">
+										<fieldset>
+											<div class="form-group"><label
+													class="col-xs-12 col-sm-5 control-label">Nevenvestiging</label>
+												<div class="col-xs-12 col-sm-7"> {{vestiging.bedrijfsNaam}}</div>
+											</div>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Adres</label>
+												<div class="col-xs-12 col-sm-7"> {{vestiging.straat}}
+													{{vestiging.huisNummer}} {{vestiging.huisnummerToevoeging}}
+												</div>
+											</div>
+											<div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">
+												</label> <span class="col-xs-12 col-sm-7"> {{vestiging.postcode}}
+													{{vestiging.plaats}} </span></div>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Vestigingsnummer</label> <span
+													class="col-xs-12 col-sm-7"> {{vestiging.vestiging}} </span>
+												<button type="button" class="btn btn-primary btn-report-small "
+													ng-click="createReport(report.parent, report.parent.kvKnummer)">
+													Rapport opvragen </button></div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+				ng-show="report.kvkDossierTransfer.kvkBestuurderTransfer">
+				<div class="box no clearfix">
+					<div class="row border clearfix">
+						<div class="box-content"> <span class="mylivicon"
+								data-options="name: list.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Directiegegevens</span>
+							<div class="home2">
+								<hr>
+							</div>
+							<div class="box-content">
+								<div ng-repeat="director in report.kvkDossierTransfer.kvkBestuurderTransfer">
+									<form class="form-horizontal">
+										<fieldset>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Naam</label> <span
+													class="col-xs-12 col-sm-7"> {{director.aanhef}} {{director.naam}}
+												</span></div>
+											<div class="form-group" ng-show="director.functies"> <label
+													class="col-xs-12 col-sm-5 control-label">Functie<span
+														ng-show="director.functies.length>1">s</span></label> <span
+													class="col-xs-12 col-sm-7"> <span
+														ng-repeat="funcObj in director.functies">
+														{{funcObj.functie}}<span
+															ng-show="director.functies.length>1&&$index<(director.functies.length-1)">,
+														</span> </span> </span></div>
+											<hr />
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+				ng-if="report.kvkDossierTransfer.aandeelhoudersTransfer.length > 0">
+				<div class="box no clearfix">
+					<div class="row border clearfix">
+						<div class="box-content"><span class="mylivicon"
+								data-options="name: box-add.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span><span
+								class="legend">Aandeelhouder</span>
+							<div class="home2">
+								<hr>
+							</div>
+							<div class="box-content">
+								<div ng-repeat="aandeelhouder in report.kvkDossierTransfer.aandeelhoudersTransfer">
+									<form class="form-horizontal">
+										<fieldset>
+											<div class="form-group"><label
+													class="col-xs-12 col-sm-5 control-label">Naam</label>
+												<div class="col-xs-12 col-sm-7"> {{aandeelhouder.naam}}</div>
+											</div>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Adres</label>
+												<div class="col-xs-12 col-sm-7"> {{aandeelhouder.adres}}</div>
+											</div>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Postcode en plaats</label>
+												<div class="col-xs-12 col-sm-7"> {{aandeelhouder.postcodeplaats}}</div>
+											</div>
+											<hr ng-show="report.kvkDossierTransfer.kvkBestuurderTransfer">
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="box no clearfix" ng-show="report.kvkDossierTransfer.curatorTransfer != null"
+					id="form-contactcuratorgegevens">
+					<div class="row border clearfix">
+						<div class="box-content"> <span class="mylivicon"
+								data-options="name: legal.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Curator gegevens</span>
+							<div class="home2">
+								<hr>
+							</div>
+							<div class="row box-content">
+								<div class="box-content">
+									<form class="form-horizontal">
+										<fieldset>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Naam</label> <span
+													class="col-xs-12 col-sm-7">
+													{{report.kvkDossierTransfer.curatorTransfer.naam}} </span></div>
+											<div class="form-group"> <label
+													class="col-xs-12 col-sm-5 control-label">Adres</label> <span
+													class="col-xs-12 col-sm-7">
+													{{report.kvkDossierTransfer.curatorTransfer.adres}} </span></div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="page === 'Wanbetaling'">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row border-report box no">
+					<div class="box-content clearfix"> <a href=""><span class="mylivicon rechts infoi paddingb5"
+								data-text="<h4><b>Ratings</b></h4><br/>De informatie die u wordt aangeboden in het rapport betreft informatie die is verzameld uit diverse externe en interne bronnen. De informatie dient als ondersteuning voor zakelijke beslissingen en is in geen geval bedoeld als bepalend advies."
+								data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span></a>
+						<report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="row box-content marging10">
+								<div class="legend b">Belangrijke informatie</div>
+								<div ng-show="report.ratingScore == '1'"> <span class="b form-group"><i
+											class="fa fa-exclamation-triangle fa-10x " aria-hidden="true"></i>&nbsp; Er
+										zijn {{report.aantalMeldingenActief}} actieve geregistreerde
+										betalingsachterstanden bekend. Bekijk de tab achterstanden voor meer
+										informatie.</span></div>
+								<div ng-hide="report.ratingScore == '1'"> <span class="b form-group"><i
+											class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Op dit moment
+										zijn er geen actieve geregistreerde betalingsachterstanden (meer) bekend.</span>
+								</div>
+								<div class="b form-group"
+									ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'">
+									<span><i class="fa fa-exclamation-triangle fa-10x" aria-hidden="true"></i>&nbsp; In
+										surseance van betaling of in faillissement</span></div>
+								<div class="b form-group"
+									ng-show="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven'">
+									<span><i class="fa fa-exclamation-triangle fa-10xx" aria-hidden="true"></i>&nbsp;
+										Uitgeschreven uit het Handelsregister</span></div>
+								<div
+									ng-hide="report.kvkDossierTransfer.actiefOmschrijving == 'De bedrijfsvoering is opgeheven' || report.kvkDossierTransfer.actiefOmschrijving == 'In surseance van betaling of in faillissement'">
+									<div ng-hide="report.ratingScore == '1'">
+										<div ng-hide="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging'">
+											<div class="b form-group"
+												ng-show="report.kvkDossierTransfer.deponeringJaarstukken>2015"><i
+													class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp; Deze
+												ratings zijn gebaseerd op gedeponeerde jaarrekeningen uit
+												{{report.kvkDossierTransfer.deponeringJaarstukken}}, demografische
+												kenmerken en branchegegevens.</div>
+										</div>
+									</div>
+									<div ng-hide="report.ratingScore == '1'">
+										<div class="form-group"
+											ng-show="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'|| report.kvkDossierTransfer.rechtsvorm == 'Stichting'">
+											<span class="b"><i class="fa fa-info-circle fa-10x"
+													aria-hidden="true"></i>&nbsp; Dit bedrijf heeft geen
+												deponeringsplicht, waardoor er geen inzicht is in de financiële
+												gegevens. Deze ratings zijn gebaseerd op demografische kenmerken en
+												branchegegevens.</span></div>
+									</div>
+									<div class="form-group"
+										ng-show="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak'"> <span
+											class="b"><i class="fa fa-info-circle fa-10x" aria-hidden="true"></i>&nbsp;
+											De aansprakelijkheid voor alle handelingen van deze onderneming is op
+											privévermogen verhaalbaar. Er is geen onderscheid tussen het privé- en
+											bedrijfsvermogen.</span></div>
+									<div class="form-group"
+										ng-show="report.kvkDossierTransfer.rechtsvorm == 'Besloten vennootschap met gewone structuur' || report.kvkDossierTransfer.rechtsvorm == 'Naamloze vennootschap met gewone structuur'|| report.kvkDossierTransfer.rechtsvorm == 'Stichting'">
+										<span class="b"><i class="fa fa-info-circle fa-10x"
+												aria-hidden="true"></i>&nbsp; Dit bedrijf betreft een rechtspersoon. Een
+											rechtspersoon is een zelfstandige entiteit, waardoor alleen de rechtspersoon
+											in beginsel aansprakelijk is voor eventuele schulden.</span></div>
+									<div class="form-group"
+										ng-hide="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging' || report.ratingScoreIndicatorMessage == 'geen score - 403 verklaring gedeponeerd, bekijk de houdstermaatschappij'">
+										<div class="form-group"
+											ng-hide="report.kvkDossierTransfer.rechtsvorm == 'Eenmanszaak' || report.kvkDossierTransfer.rechtsvorm == 'Vennootschap onder firma'|| report.kvkDossierTransfer.rechtsvorm == 'Stichting'">
+											<div class="form-group b"
+												ng-show="report.kvkDossierTransfer.deponeringJaarstukken<2016"><i
+													class="fa fa-exclamation-triangle fa-10x "
+													aria-hidden="true"></i>&nbsp; Dit bedrijf voldoet niet aan de
+												wettelijke deponeringsplicht. De termijn voor de wettelijke
+												deponeringsplicht bedraagt maximaal 12 maanden na afloop van het
+												kalenderjaar. Laatste deponering:
+												{{report.kvkDossierTransfer.deponeringJaarstukken}} : <a
+													href=" http://www.kvk.nl/inschrijven-en-wijzigen/deponeren/jaarrekening-deponeren/wat-is-de-uiterste-termijn/"
+													target="_blank" class="website">Klik hier voor meer informaties </a>
+											</div>
+										</div>
+									</div>
+									<div
+										ng-show="report.ratingScoreIndicatorMessage == 'geen score - 403 verklaring gedeponeerd, bekijk de houdstermaatschappij'">
+										<div class="b form-group"><i class="fa fa-info-circle fa-10x"
+												aria-hidden="true"></i>&nbsp; Bekijk de 403-verklaring bij de Kamer van
+											Koophandel voor meer informatie over de garantstellingen.</div> <span
+											class="b form-group"><i class="fa fa-info-circle fa-10x"
+												aria-hidden="true"></i>&nbsp; 403-verklaring gedeponeerd. Bekijk ook de
+											houdstermaatschappij. <button type="button"
+												class="btn btn-primary btn-report-small"
+												ng-click="createReport(report.ultimateParent, report.ultimateParent.kvKnummer)">
+												Rapport opvragen </button> </span>
+									</div>
+									<div ng-show="report.kvkDossierTransfer.hoofdNeven == 'Nevenvestiging'"> <span
+											class=" form-group b"><i class="fa fa-info-circle fa-10x"
+												aria-hidden="true"></i>&nbsp; Dit rapport betreft een nevenvestiging,
+											waardoor er geen score te bepalen is. Bekijk het rapport van de
+											hoofdvestiging.&nbsp;</span> <button type="button"
+											class="btn btn-primary btn-report-small" ng-click="reportHoofdVestiging()">
+											Rapport hoofdvestiging </button></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row box no border clearfix margb">
+					<div class="box-content clearfix mobpad">
+						<div id="rating" style="display:none;">0</div>
+						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+							<div class="row box-content clearfix margin10">
+								<div class="text-center">
+									<h3>Kredietwaardigheidsklasse</h3> <canvas id="graph1" width="300"
+										height="300"></canvas>
+									<div class="text-center">
+										<h3 id="explain1"></h3>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+							<div class="row box-content clearfix margin10 ">
+								<div class="text-center">
+									<h3>Betalingsachterstanden-score</h3> <canvas id="graph2" width="300"
+										height="300"></canvas>
+									<div class="text-center">
+										<h3 id="explain2"></h3>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+							<div class="row box-content clearfix margin10">
+								<div class="text-center">
+									<h3>Kans op te late-betaling</h3> <canvas id="graph3" width="300"
+										height="300"></canvas>
+									<div class="text-center">
+										<h3 id="explain3"></h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row box no clearfix">
+						<div class="row box-content border"> <span class="mylivicon"
+								data-options="name: morph-eye-open-close.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Informatie</span>
+							<div class="home">
+								<hr>
+							</div>
+							<div class="row box-content">
+								<div class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+									<div class="panel-group" id="accordionMonitoring" role="tablist"
+										aria-multiselectable="false">
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab" id="heading5">
+												<h4 class="panel-title"> <a class="boldme collapsed" role="button"
+														data-toggle="collapse" data-parent="#accordionMonitoring"
+														data-target="#collapse5" aria-expanded="false"
+														aria-controls="collapse5">Kredietwaardigheidsklasse </a></h4>
+											</div>
+											<div id="collapse5" class="panel-collapse collapse" role="tabpanel"
+												aria-labelledby="heading5">
+												<div class="panel-body"> De kredietwaardigheid van een bedrijf zegt iets
+													over de financiële gezondheid van een onderneming. NB: het ZBR geeft
+													geen kredietlimieten weer.</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab" id="heading6">
+												<h4 class="panel-title"> <a class="boldme collapsed" role="button"
+														data-toggle="collapse" data-parent="#accordionMonitoring"
+														data-target="#collapse16" aria-expanded="false"
+														aria-controls="collapse16">403 verklaring </a></h4>
+											</div>
+											<div id="collapse16" class="panel-collapse collapse" role="tabpanel"
+												aria-labelledby="heading16">
+												<div class="panel-body"> Een 403 verklaring is een verklaring waarin een
+													moedermaatschappij zich garant stelt voor een dochteronderneming.
+													Meestal is het gevolg dat de dochter geen jaarrekening meer hoeft op
+													te stellen en te publiceren. Verantwoording vindt dan plaats via een
+													gezamenlijke jaarrekening van moeder en dochterbedrijf.(een
+													geconsolideerde jaarrekening)<br /><br />De 403 verklaring zelf
+													formuleert welke schulden van de dochter wel of niet door het
+													moederbedrijf worden gedekt. Verstandig is dus om die 403 verklaring
+													op te vragen bij de Kamer van Koophandel en goed te lezen. Ook de
+													ingangsdatum kan geregeld staan in de 403 verklaring. Wordt hierover
+													niets geregeld dan geldt volgens de wet de datum van inschrijving
+													van de verklaring bij het Handelsregister.</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab" id="heading7">
+												<h4 class="panel-title"> <a class="boldme collapsed" role="button"
+														data-toggle="collapse" data-parent="#accordionMonitoring"
+														data-target="#collapse7" aria-expanded="false"
+														aria-controls="collapse7"> Kans op te late-betaling </a></h4>
+											</div>
+											<div id="collapse7" class="panel-collapse collapse" role="tabpanel"
+												aria-labelledby="heading7">
+												<div class="panel-body"> <b>Externe betalingsachterstanden</b>
+													<p>Het Betalingsachterstandenregister verzamelt dagelijks informatie
+														uit externe bronnen, waarmee een indicatie kan worden gegeven
+														omtrent de kans op wanbetaling. Het gaat hierbij om gevallen
+														waarin de achterstand bestaat, maar niet in het register is
+														aangemeld.</p> <b>Betaalgedrag</b>
+													<p>Naast de openstaande facturen worden er, vanuit externe bronnen,
+														gegevens verzameld rondom het betaalgedrag van bedrijven. Indien
+														er geen informatie beschikbaar is inzake eventuele
+														betalingsachterstanden, dan zal er worden teruggevallen op data
+														omtrent het betaalgedrag. Deze zal dan de basis vormen van de
+														kans op wanbetaling.</p> <b>Markt en branche cijfers</b>
+													<p>Daarnaast maken wij gebruik van cijfers en statistieken die door
+														onze experts aan nadere analyses worden onderworpen. Zo wordt er
+														o.a. onderscheid gemaakt op basis van de leeftijd van een
+														onderneming, de sector waarin de onderneming zich bevindt en de
+														rechtsvorm van de onderneming. Verder worden ook eventuele
+														moeder- of dochtermaatschappijen onder de loep genomen.</p>
+													<b>Bestuurders en faillissementen</b>
+													<p>Met behulp van geautomatiseerde controles ten aanzien van de
+														bestuurders, is het register in staat om te achterhalen of de
+														bestuurder mogelijk schulden heeft in een van zijn andere
+														ondernemingen. Zo wordt de bestuurder ertoe bewogen om zijn
+														andere schuld te voldoen, voordat hij nieuwe schulden kan
+														aangaan. Ook is dit het enige effectieve middel tegen
+														wanbetalers en faillissementsfraude.</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab4" style="display:block;height:0;overflow:hidden">
+			<div ng-show="page === 'Achterstanden'">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+					<div class="row border-report box-content margb clearfix"> <a href="" class="infoi rechts paddingb5"
+							data-text="<h4><b>Betalingsachterstandrapport</b></h4><br/>In dit scherm wordt u een overzicht aangeboden van bedrijfsgegevens, bedrijfsstatus, het aantal en het totaalbedrag van de geregistreerde betalingsachterstanden.">
+							<span class="mylivicon"
+								data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+						</a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download>
+						<div class="report-delayedpayments-tab4 row ">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 ">
+								<div class="greenbox margin10 margeebee clearfix fixit fix-box-1">
+									<div class="row col-xs-10">
+										<div class="greenleft">
+											<div class="tile-stats-rap-1"> <span
+													ng-show="report.aantalMeldingenActief>0">{{report.aantalMeldingenActief}}</span><span
+													ng-show="report.aantalMeldingenActief==0">Geen</span></div>
+											<div class="tile-stats-rap-2"><span
+													ng-show="report.aantalMeldingenActief>1">Registraties</span><span
+													ng-show="report.aantalMeldingenActief==1">Registratie</span><span
+													ng-show="report.aantalMeldingenActief==0">Registraties</span></div>
+											<div class="tile-stats-rap-3">Betalingstermijn met min. 44 dagen
+												overschreden</div>
+										</div>
+									</div>
+									<div class=" col-xs-2">
+										<div class="mylivicon"
+											data-options="name: servers.svg; size: 38px;strokeColor:#0a212f; style: lines; autoPlay:true; tryToSharpen: true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="bluebox margin10 margeebee clearfix fixit fix-box-2">
+									<div class="row col-xs-10">
+										<div class="greenleft">
+											<div class="tile-stats-rap-1" id="outstandingAmount">{{bedragOpenstaand()}}
+											</div>
+											<div class="tile-stats-rap-2">Geregistreerd bedrag</div>
+											<div class="tile-stats-rap-3">Totaal</div>
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="mylivicon"
+											data-options="name: euro.svg; size: 38px; style: lines;strokeColor:#0a212f; tryToSharpen: true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="greenbox margin10 margeebee clearfix fixit fix-box-3">
+									<div class="row col-xs-10">
+										<div class="greenleft">
+											<div class="tile-stats-rap-1"><span
+													ng-show="aantalMeldingDoorBedrijven()>0">{{aantalMeldingDoorBedrijven()}}</span><span
+													ng-show="aantalMeldingDoorBedrijven()==0">N.v.t.</span></div>
+											<div class="tile-stats-rap-2"><span
+													ng-show="aantalMeldingDoorBedrijven()==1">Onderneming</span><span
+													ng-show="aantalMeldingDoorBedrijven()>1">Ondernemingen</span><span
+													ng-show="aantalMeldingDoorBedrijven()==0">Ondernemingen</span></div>
+											<div class="tile-stats-rap-3"><span
+													ng-show="aantalMeldingDoorBedrijven()>1">hebben dit
+													geregistreerd</span><span
+													ng-show="aantalMeldingDoorBedrijven()==1">heeft dit
+													geregistreerd</span><span
+													ng-show="aantalMeldingDoorBedrijven()==0">hebben dit
+													geregistreerd</span></div>
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="mylivicon"
+											data-options="name: building.svg; size: 38px;strokeColor:#0a212f; style: lines;autoPlay:true; tryToSharpen: true">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="bluebox margin10 margeebee clearfix fixit fix-box-4">
+									<div class=" row col-xs-10">
+										<div class="greenleft">
+											<div class="tile-stats-rap-1">{{aantalMeldingDoorBedrijven()}}</div>
+											<div class="tile-stats-rap-2">Beschikbare</div>
+											<div class="tile-stats-rap-3"> <span
+													ng-show="aantalMeldingDoorBedrijven()>1">Steunvorderingen</span><span
+													ng-show="aantalMeldingDoorBedrijven()==1">Steunvordering</span><span
+													ng-show="aantalMeldingDoorBedrijven()==0">Steunvorderingen</span>
+											</div>
+										</div>
+									</div>
+									<div class="row col-xs-2">
+										<div class="mylivicon"
+											data-options="name: legal.svg; size: 42px;strokeColor:#0a212f; style: lines;autoPlay:true; tryToSharpen: true">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+					<div class="row box no boxr clearfix">
+						<div class="box-content border fixit2 clearfix"> <a href="" class="infoi rechts paddingb5"
+								data-text="<h4><b>Registratieoverzicht</b></h4><br/>In dit overzicht wordt het aantal actieve betalingsachterstanden van het afgelopen jaar schematisch weergeven. De niet-actieve betalingsachterstanden worden niet weergeven. Niet-actieve achterstanden zijn achterstanden die nog in het voortraject verkeren of achterstanden die reeds ingelost zijn en om die reden definitief uit het register zijn verwijderd.">
+								<span class="mylivicon"
+									data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+							</a> <span class="mylivicon"
+								data-options="name: line-chart.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Registratieoverzicht</span>
+							<div class="home">
+								<hr>
+							</div>
+							<form id="form-vermeldingenalgemeen" class=" row form-horizontal paddingb30">
+								<fieldset>
+									<nvd3 options="optionsNotifications" data="exampleDataRegistratieOverzicht"
+										class="with-3d-shadow with-transitions"></nvd3>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+					<div class="row box no margb boxr10 mobpad ">
+						<div class="box-content border fixit2 clearfix"> <span class="mylivicon"
+								data-options="name: legal.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Steunvorderingen</span>
+							<div class="home">
+								<hr>
+							</div>
+							<div class="box-content clearfix">
+								<div class="legend b">Steunvorderingen</div> <span class="paddingb20">Is er reeds een
+									betalingsachterstand bekend binnen het register? Vul dan het formulier in om een
+									contactverzoek naar de andere schuldeiser(s) te verzenden. De andere schuldeiser
+									bepaalt zelf of er contact met u wordt opgenomen. Is er nog geen achterstand bekend?
+									Dan kunt u alsnog dit formulier invullen en verzoeken om een steunvordering. Zodra
+									er een achterstand bij het register wordt aangemeld zult u hiervan een mededeling
+									ontvangen.</span><br /><br /> <button class="btn btnlgw2 btn-primary margin10-"
+									ng-click="meldingmaken()"> Steunvordering verzoekformulier </button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+					<div class="row box no row margb mobpad ">
+						<div class="box-content border fixit2 clearfix"> <span class="mylivicon"
+								data-options="name: warning-alt.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Betwiste vorderingen</span>
+							<div class="home">
+								<hr>
+							</div>
+							<div class="box-content clearfix">
+								<div class="legend b">Meer dan 2 vorderingen betwist:</div> <span
+									class="legend">Nee,</span> <span>{{report.bedrijf.bedrijfsNaam}} heeft niet meer dan
+									twee aangemelde vorderingen betwist.</span> <br />
+								<div class='progress10 twenty'><span class='status10'></span></div> <br /><br />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row box no clearfix">
+						<div class="box-content border"> <span class="mylivicon"
+								data-options="name: servers.svg; size: 35px;strokeColor:#0a212f; style: lines; autoPlay:true; tryToSharpen: true"></span>
+							<a href="" class="infoi rechts paddingb5"
+								data-text="<h4><b>Registraties & details</b></h4><br/>De niet-actieve betalingsachterstanden worden niet weergeven. Niet-actieve achterstanden zijn achterstanden die nog in het voortraject verkeren of achterstanden die reeds ingelost zijn en om die reden definitief uit het register zijn verwijderd.">
+								<span class="mylivicon"
+									data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+							</a> <span class="legend">Registraties & details</span>
+							<div class="home">
+								<hr>
+							</div>
+							<div class="box-content" ng-show="nrOfMeldingen(report.meldingen) > 0">
+								<div ng-repeat="melding in report.meldingen">
+									<h4 class="openstaandfactuur"> Actieve registratie #{{$index + 1}}</h4>
+									<div class="box-content border2">
+										<form id="form-meldinggegevens-partone" class="box-content form-horizontal">
+											<fieldset>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Referentienummer</label>
+													<span class="col-xs-12 col-sm-7 col-lg-8">
+														{{melding.referentieIntern}} </span></div>
+												<div class="form-group" ng-show="hideCompanyInfo(melding.bedrijfId)">
+													<label class="col-xs-12 col-sm-5 col-lg-4 control-label">Opname in
+														register</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{melding.toegevoegd}} </span></div>
+												<div ng-show="hideCompanyInfo(melding.bedrijfId) && melding.sbiOmschrijving"
+													class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Bedrijfssector
+														crediteur</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{melding.sbiOmschrijving}} </span></div>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Datum verloop
+														factuur</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{melding.verloopdatumFactuur}} </span></div>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Oorspronkelijk
+														factuur bedrag</label> <span
+														class="col-xs-12 col-sm-7 col-lg-8">
+														{{melding.oorspronkelijkBedrag|currency}} </span></div>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Openstaand
+														bedrag</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{getBedragText(melding.bedrag)}} </span></div>
+											</fieldset>
+										</form>
+									</div>
+								</div>
+								<div class="margin50">
+									<div class="mars">De niet-actieve betalingsachterstanden worden niet weergeven.
+										Niet-actieve achterstanden zijn achterstanden die nog in het voortraject
+										verkeren of achterstanden die reeds ingelost zijn en om die reden definitief uit
+										het register zijn verwijderd.</div>
+								</div>
+							</div>
+							<div ng-hide="nrOfMeldingen(report.meldingen) > 0">
+								<div class="box-content">
+									<div class="mars"><span>Op dit moment zijn er geen actieve registraties (meer)
+											bekend. </span><span class="non-deco"><br />De niet-actieve
+											betalingsachterstanden worden niet weergeven. Niet-actieve achterstanden
+											zijn achterstanden die nog in het voortraject verkeren of achterstanden die
+											reeds ingelost zijn en om die reden definitief uit het register zijn
+											verwijderd.</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab6" style="display:block;height:0;overflow:hidden">
+			<div ng-show="page === 'Kredieten'">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+					<div class="row box no clearfix margb">
+						<div class="box-content border-report "> <a href="" class="infoi rechts"
+								data-text="<h4><b>Beschikbaar vanaf 01-03-2018</b></h4><br/>Geregistreerde kredietenHier vindt u een overzicht van de leningen die zijn verstrekt aan het betreffende bedrijf en die zijn geregistreerd bij het Zakelijke Kredietregister (ZKR).">
+								<span class="mylivicon"
+									data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+							</a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download>
+							<div class="box-content margin30">
+								<div class="legend b">Pilotfase beschikbaar vanaf 01-08-2018</div>
+								<form class="form-horizontal">
+									<fieldset>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">ZBR-nummer</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7">
+												BA-{{report.kvkDossierTransfer.sbdrNummer}} </span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">ZKR-nummer</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7"> Nog niet beschikbaar </span>
+										</div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Kredietregistraties</label>
+											<span class="col-xs-12 col-sm-6 col-lg-7"> Geen actieve registraties </span>
+										</div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Totaal geregistreerd
+												kredietbedrag</label> <span class="col-xs-12 col-sm-6 col-lg-7"> € 0,00
+											</span></div>
+										<div class="form-group"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Totaal aantal lopende
+												dossiers</label> <span class="col-xs-12 col-sm-6 col-lg-7"> 0 </span>
+										</div>
+										<div class="form-group" ng-show="report.kvkDossierTransfer.telefoonKvk"> <label
+												class="col-xs-12 col-sm-6 col-lg-5 control-label">Aflopend
+												kredieten</label> <span class="col-xs-12 col-sm-6 col-lg-7"> Geen
+												aflopend kredieten </span></div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row box no clearfix">
+						<div class="box-content border"> <span class="mylivicon"
+								data-options="name: servers.svg; size: 35px;strokeColor:#0a212f; style: lines; autoPlay:true; tryToSharpen: true"></span>
+							<span href="" class="mylivicon rechts infoi"
+								data-text="<h4><b>Beschikbaar vanaf 01-03-2018</b></h4><br/>Geregistreerde kredietenHier vindt u een overzicht van de leningen die zijn verstrekt aan het betreffende bedrijf en die zijn geregistreerd bij het Zakelijke Kredietregister (ZKR)."
+								data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Geregistreerde kredieten</span>
+							<div class="home">
+								<hr>
+							</div>
+							<div class="box-content" ng-show="nrOfCredit(report.credit) > 0">
+								<div ng-repeat="credit in report.credit">
+									<h4 class="openstaandfactuur"> Krediet registratie #{{$index + 1}}</h4>
+									<div class="box-content border2">
+										<form id="form-meldinggegevens-krediets" class="box-content form-horizontal">
+											<fieldset>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Referentienummer</label>
+													<span class="col-xs-12 col-sm-7 col-lg-8">
+														{{credit.referentieIntern}} </span></div>
+												<div class="form-group" ng-show="hideCompanyInfo(credits.bedrijfId)">
+													<label class="col-xs-12 col-sm-5 col-lg-4 control-label">Opname in
+														register</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{credit.toegevoegd}} </span></div>
+												<div ng-show="hideCompanyInfo(credit.bedrijfId) && credit.sbiOmschrijving"
+													class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Bedrijfssector
+														crediteur</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{credit.sbiOmschrijving}} </span></div>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Datum verloop
+														krediet</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{credit.verloopdatumFactuur}} </span></div>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Oorspronkelijk
+														krediet bedrag</label> <span
+														class="col-xs-12 col-sm-7 col-lg-8">
+														{{credit.oorspronkelijkBedrag|currency}} </span></div>
+												<div class="form-group"> <label
+														class="col-xs-12 col-sm-5 col-lg-4 control-label">Krediet
+														bedrag</label> <span class="col-xs-12 col-sm-7 col-lg-8">
+														{{getBedragText(credits.bedrag)}} </span></div>
+											</fieldset>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div ng-hide="nrOfCredit(report.credit) > 0">
+								<div class="box-content">
+									<div class="mars">Op dit moment zijn er geen actieve kredietregistraties (meer)
+										bekend.</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab5" style="display:block;height:0;overflow:hidden">
+			<div ng-show="page === 'Bedrijfsmonitor'">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row">
+						<div class="box border-report no">
+							<div class="box-content clearfix"> <a href="" class="infoi rechts paddingb5"
+									data-text="<h4><b>Bedrijfsmonitor</b></h4><br/>In dit scherm wordt u de mogelijkheid geboden om het bedrijf toe te voegen aan de Bedrijfsmonitor. Wilt u later het bedrijf alsnog aan de Bedrijfsmonitor toevoegen? Dan is het noodzakelijk opnieuw een rapport van dit bedrijf op te vragen">
+									<span class="mylivicon"
+										data-options="name: info-alt.svg; size: 30px; style: lines-alt;strokeColorAlt:#0a212f; strokeColor:#0a212f; tryToSharpen: true"></span>
+								</a> <report-download url="/download/a.pdf" filename="my-awesome.pdf"></report-download>
+								<div class="col-xs-12 col-sm-12 col-md-7 col-lg-6 ">
+									<div class="row box-content clearfix">
+										<h4>Voorkomen is beter dan genezen</h4> <span>De Bedrijfsmonitor helpt uw
+											bedrijf bij het vroegtijdig opsporen van betalingsproblematiek. Door dit
+											bedrijf aan de Bedrijfsmonitor toe te voegen bent u altijd als eerste op de
+											hoogte van nieuwe achterstanden die worden geregistreerd. Met behulp van
+											deze kennis kunt u bijtijds anticiperen door bijvoorbeeld om zekerheden te
+											vragen, het kredietbedrag te verlagen of voortaan om vooruitbetaling te
+											verzoeken. Zo wordt voorkomen dat uw geleverde goederen en/of diensten
+											uiteindelijk onbetaald blijven.</span>
+									</div>
+								</div>
+								<div class="col-lg-5"><input style="display:none" class="rang-number" id="show"
+										type="text" value="0%" disabled="disabled" /><svg class="meter">
+										<circle class="meter-left" r="96" cx="135" cy="142"></circle>
+										<circle class="meter-center" r="96" cx="136" cy="142"></circle>
+										<circle class="meter-right" r="96" cx="138" cy="142"></circle>
+										<polygon class="meter-clock" points="129,145 137,90 145,145"></polygon>
+										<circle class="meter-circle" r="10" cx="137" cy="145"></circle>
+									</svg></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<div class="row box boxr no">
+						<div class="box-content border clearfix fixit5"> <span class="mylivicon"
+								data-options="name: desktop.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Bedrijfsmonitor</span>
+							<div class="home">
+								<hr>
+							</div>
+							<div ng-show="showMonitoring()">
+								<div class="col-sm-12">
+									<h4>Ook in de toekomst op de hoogte van achterstanden?</h4> <span>U heeft zojuist
+										een rapport opgevraagd van {{report.bedrijf.bedrijfsNaam}}. Hierdoor bent u op
+										de hoogte van de financiële status van dit bedrijf op dit moment. Wilt u in de
+										toekomst direct op de hoogte zijn van wijzigingen in de financiële situatie?
+										Voeg dit bedrijf dan toe aan de Bedrijfsmonitor.</span> <br /> <br />
+									<span><b>Met monitoring krijgt u meldingen bij:</b></span>
+									<ul>
+										<li>Betalingsachterstanden</li>
+										<li>Betalingsachterstanden bij nevenvestigingen</li>
+										<li>Betalingsachterstanden bij gerelateerde handelsnamen</li>
+										<li>Faillissementen</li>
+										<li>Surseance</li>
+									</ul><button ng-show="showMonitoring()" type="button"
+										class="btn btn-primary btnlgw2 btn-lg-mob w100mob margb30"
+										ng-click="monitoring()">Toevoegen aan Bedrijfsmonitor</button>
+								</div>
+							</div>
+							<div ng-hide="showMonitoring()">
+								<div class="col-sm-12">
+									<h4><b>U heeft dit bedrijf toegevoegd aan de Bedrijfsmonitor</b></h4> <span>Zodra er
+										nieuwe achterstanden worden aangemeld bij het register wordt u hier onmiddellijk
+										van op de hoogte gebracht.</span> <br /> <br /> <span><b>Wilt u dit bedijf uit
+											de Bedrijfsmonitor verwijderen?</b><br /> </span>
+									<ul>
+										<li>1. Ga dan naar uw dashboard en kies voor het tabblad Monitoring.</li>
+										<li>2. Kies het bedrijf dat u uit de Bedrijfsmonitor wilt verwijderen of gebruik
+											de zoekfunctie.</li>
+										<li>3. Klik tot slot op het verwijder-icoon <i class="fa fa-trash-o"
+												aria-hidden="true"></i> om het bedrijf uit de Bedrijfsmonitor te
+											verwijderen.</li>
+									</ul>
+									<div> <img src="img/icons/bedrijfsmonitoring-aan.png" width="100" height="100">
+									</div>
+									<div><span>De Bedrijfsmonitor is maandelijks opzegbaar</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<div class="row box no ">
+						<div class="box-content border fixit5 clearfix"> <span class="mylivicon"
+								data-options="name: file-export.svg; size: 35px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
+							<span class="legend">Rapportaanvragen afgelopen 14 dagen</span> <span
+								id="reportslasttwoweeks" style="display:none;">{{report.reportsLastTwoWeeks}}</span>
+							<div class="home">
+								<hr>
+							</div>
+							<div class="row clearfix">
+								<form id="form-vermeldingenalgemeen" class="form-horizontal paddingb30">
+									<fieldset>
+										<nvd3 options="optionsReportRequests" data="exampleDataRapportAanvragen"
+											class="with-3d-shadow with-transitions"></nvd3>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="info-box2" class="informatieinfo">
+		<div class="modal-content2"> <span class="close">&times;</span>
+			<p id="textinfo2">####</p>
+		</div>
+	</div>
+	<div class="row" data-ng-show="error">
+		<div class=" box-content fout-smal text-center"> <img class="fixt-attention-icon"
+				src="img/icons/svg/attention-sign.svg" width="35" height="35"> <span id="alert"
+				class="fouttext">{{error}}</span></div>
+	</div>
+	<div class="row" data-ng-show="monitorCreated">
+		<div class="box-content prima text-center"> <i class="fa fix-icon-fa2 fa-database fa-2x" aria-hidden="true"></i>
+			<span class="primatext">{{report.bedrijf.bedrijfsNaam}} toegevoegd aan bedrijfsmonitor.</span></div>
+	</div>
+	<script type="text/ng-template" id="nomonitoring.html"
+		class="reveal-modal"><div class="modal-header"><i class="modal-icon-fix fa fa-desktop"aria-hidden="true"></i><h4 class="modal-title legend">Dit bedrijf staat niet in monitoring!</h4></div><div class="modal-body"><p>Let op!Als u dit rapport afsluit,sluit u ook de mogelijkheid dit bedrijf in monitoring te zetten af.Mocht u in een later stadium toch dit bedrijf in monitoring willen zetten zult u weer een rapport moeten opvragen.</p><p>Weet u zeker dat u dit bedrijf niet in monitoring wilt zetten?</p></div><div class="modal-footer"><button class="btn btn-primary btnlgw2 w100mob btn-lg-mob"ng-click="noMonitoringOk()">Ja</button><button class="btn btn-primary btnlgw2 w100mob btn-lg-mob"ng-click="closeAndMonitoringOk()">Monitoring</button><button class="btn btn-primary btnlgw2 bluebtn11 w100mob btn-lg-mob"ng-click="closeNoMonitoringModal()">Annuleren</button></div></script>
+	<div ng-include="'templates/modals/reportPopup.html'"></div>
+	<div ng-include="'templates/modals/reportNoPaymentInfo.html'"></div>
+	<div ng-include="'templates/modals/monitorPopup.html'"></div>
+	<div ng-include="'templates/modals/monitorNoPaymentInfo.html'"></div>
+</div>
+<script> var _0x9fd6 = ["\x47\x65\x6F\x63\x6F\x64\x65\x72", "\x6D\x61\x70\x73", "\x6D\x61\x70\x5F\x63\x61\x6E\x76\x61\x73", "\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64", "\x76\x61\x6C\x75\x65", "\x61\x64\x64\x72\x65\x73\x73", "\x4F\x4B", "\x53\x74\x72\x65\x65\x74\x56\x69\x65\x77\x53\x74\x61\x74\x75\x73", "\x6C\x61\x74\x4C\x6E\x67", "\x6C\x6F\x63\x61\x74\x69\x6F\x6E", "\x64\x65\x73\x63\x72\x69\x70\x74\x69\x6F\x6E", "\x70\x61\x6E\x6F", "\x73\x65\x74\x50\x61\x6E\x6F", "\x73\x65\x74\x50\x6F\x76", "\x73\x65\x74\x56\x69\x73\x69\x62\x6C\x65", "\x63\x6C\x69\x63\x6B", "\x61\x64\x64\x4C\x69\x73\x74\x65\x6E\x65\x72", "\x68\x69\x64\x65", "\x23\x70\x61\x6E\x6F", "\x73\x68\x6F\x77", "\x23\x6D\x61\x70\x5F\x63\x61\x6E\x76\x61\x73", "\x68\x65\x69\x67\x68\x74", "\x47\x65\x6F\x63\x6F\x64\x65\x72\x53\x74\x61\x74\x75\x73", "\x67\x65\x6F\x6D\x65\x74\x72\x79", "\x73\x65\x74\x43\x65\x6E\x74\x65\x72", "\x73\x65\x74\x4D\x61\x70", "\x64\x72\x61\x67\x65\x6E\x64", "\x6C\x61\x74", "\x67\x65\x74\x50\x6F\x73\x69\x74\x69\x6F\x6E", "\x6C\x6E\x67", "\x65\x76\x65\x6E\x74", "\x53\x74\x72\x65\x65\x74\x56\x69\x65\x77\x53\x65\x72\x76\x69\x63\x65", "\x4F\x55\x54\x44\x4F\x4F\x52", "\x53\x74\x72\x65\x65\x74\x56\x69\x65\x77\x53\x6F\x75\x72\x63\x65", "\x67\x65\x74\x50\x61\x6E\x6F\x72\x61\x6D\x61", "\x47\x65\x6F\x63\x6F\x64\x65\x20\x77\x61\x73\x20\x6E\x6F\x74\x20\x73\x75\x63\x63\x65\x73\x73\x66\x75\x6C\x20\x66\x6F\x72\x20\x74\x68\x65\x20\x66\x6F\x6C\x6C\x6F\x77\x69\x6E\x67\x20\x72\x65\x61\x73\x6F\x6E\x3A\x20", "\x6C\x6F\x67", "\x67\x65\x6F\x63\x6F\x64\x65", "\x47\x65\x65\x6E\x20\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E", "\x68\x74\x6D\x6C", "\x23\x63\x72\x65\x64\x69\x74\x2D\x63\x6C\x61\x73\x73\x65\x20\x68\x35", "\x74\x72\x61\x6E\x73\x66\x6F\x72\x6D", "\x73\x74\x79\x6C\x65", "\x72\x6F\x74\x61\x74\x65\x28", "\x64\x65\x67\x29", "\x25", "\x23\x72\x65\x70\x6F\x72\x74\x73\x6C\x61\x73\x74\x74\x77\x6F\x77\x65\x65\x6B\x73", "\x70\x61\x72\x73\x65", "\x6C\x65\x6E\x67\x74\x68", "\x61\x61\x6E\x74\x61\x6C", "\x23\x73\x68\x6F\x77", "\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72", "\x2E\x6D\x65\x74\x65\x72\x2D\x63\x6C\x6F\x63\x6B", "\x63\x6C\x65\x61\x72\x52\x65\x63\x74", "\x62\x65\x67\x69\x6E\x50\x61\x74\x68", "\x73\x74\x72\x6F\x6B\x65\x53\x74\x79\x6C\x65", "\x6C\x69\x6E\x65\x57\x69\x64\x74\x68", "\x50\x49", "\x61\x72\x63", "\x73\x74\x72\x6F\x6B\x65", "\x66\x69\x6C\x6C\x53\x74\x79\x6C\x65", "\x66\x6F\x6E\x74", "\x35\x30\x70\x78\x20\x41\x72\x69\x61\x6C", "\x77\x69\x64\x74\x68", "\x6D\x65\x61\x73\x75\x72\x65\x54\x65\x78\x74", "\x66\x69\x6C\x6C\x54\x65\x78\x74", "\x63\x65\x69\x6C", "\x67\x72\x61\x70\x68\x31", "\x32\x64", "\x67\x65\x74\x43\x6F\x6E\x74\x65\x78\x74", "\x23\x31\x38\x34\x38\x36\x35", "\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C", "\x72\x61\x74\x69\x6E\x67", "", "\x23\x66\x62\x65\x34\x34\x36", "\x65\x78\x70\x6C\x61\x69\x6E\x31", "\x67\x65\x65\x6E\x20\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E", "\x23\x4B\x2D\x57\x61\x61\x72\x64\x65\x72\x69\x6E\x67", "\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x6F\x72\x61\x6E\x67\x65\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x2D\x3A\x20\x44\x65\x20\x77\x61\x61\x72\x64\x65\x20\x76\x61\x6E\x20\x64\x69\x74\x20\x62\x65\x64\x72\x69\x6A\x66\x20\x69\x73\x20\x6E\x69\x65\x74\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E\x3C\x2F\x73\x70\x61\x6E\x3E", "\x61\x66\x74\x65\x72", "\x2E\x72\x61\x70\x70\x6F\x72\x74\x2D\x68", "\x2D", "\x41\x63\x74\x69\x65\x76\x65\x20\x62\x65\x74\x61\x6C\x69\x6E\x67\x73\x61\x63\x68\x74\x65\x72\x73\x74\x61\x6E\x64\x65\x6E\x20\x62\x65\x6B\x65\x6E\x64", "\x61\x63\x74\x69\x65\x76\x65\x20\x62\x65\x74\x61\x6C\x69\x6E\x67\x73\x61\x63\x68\x74\x65\x72\x73\x74\x61\x6E\x64\x65\x6E\x20\x62\x65\x6B\x65\x6E\x64", "\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x6F\x72\x61\x6E\x67\x65\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x2D\x3A\x20\x41\x63\x74\x69\x65\x76\x65\x20\x62\x65\x74\x61\x6C\x69\x6E\x67\x73\x61\x63\x68\x74\x65\x72\x73\x74\x61\x6E\x64\x65\x6E\x20\x62\x65\x6B\x65\x6E\x64\x3C\x2F\x73\x70\x61\x6E\x3E", "\x23\x65\x63\x34\x62\x33\x31", "\x53\x6C\x65\x63\x68\x74\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67", "\x73\x6C\x65\x63\x68\x74\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67", "\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x72\x65\x64\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x43\x3A\x20\x44\x69\x74\x20\x62\x65\x64\x72\x69\x6A\x66\x20\x68\x65\x65\x66\x74\x20\x65\x65\x6E\x20\x73\x6C\x65\x63\x68\x74\x65\x20\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x3C\x2F\x73\x70\x61\x6E\x3E", "\x43", "\x23\x66\x31\x37\x64\x34\x34", "\x4B\x72\x65\x64\x69\x65\x74\x76\x65\x72\x6C\x65\x6E\x69\x6E\x67\x20\x6F\x2E\x62\x2E\x76\x2E\x20\x6F\x6E\x64\x65\x72\x70\x61\x6E\x64", "\x6B\x72\x65\x64\x69\x65\x74\x76\x65\x72\x6C\x65\x6E\x69\x6E\x67\x20\x6F\x2E\x62\x2E\x76\x2E\x20\x6F\x6E\x64\x65\x72\x70\x61\x6E\x64", "\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x6F\x72\x61\x6E\x67\x65\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x42\x3A\x20\x4B\x72\x65\x64\x69\x65\x74\x76\x65\x72\x6C\x65\x6E\x69\x6E\x67\x20\x6F\x2E\x62\x2E\x76\x2E\x20\x6F\x6E\x64\x65\x72\x70\x61\x6E\x64\x3C\x2F\x73\x70\x61\x6E\x3E", "\x42", "\x23\x34\x62\x63\x65\x39\x34", "\x47\x6F\x65\x64\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67", "\x67\x6F\x65\x64\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67", "\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x77\x61\x72\x6E\x69\x6E\x67\x2D\x74\x69\x74\x6C\x65\x20\x67\x72\x65\x65\x6E\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x64\x69\x73\x70\x6C\x61\x79\x3A\x20\x62\x6C\x6F\x63\x6B\x3B\x22\x3E\x43\x61\x74\x65\x67\x6F\x72\x69\x65\x20\x41\x3A\x20\x47\x6F\x65\x64\x65\x20\x6B\x72\x65\x64\x69\x65\x74\x77\x61\x61\x72\x64\x65\x72\x69\x6E\x67\x3C\x2F\x73\x70\x61\x6E\x3E", "\x41", "\x23\x63\x72\x65\x64\x69\x74\x2D\x63\x6C\x61\x73\x73\x65\x20\x68\x33", "\x63\x73\x73", "\x23\x63\x72\x65\x64\x69\x74\x2D\x63\x6C\x61\x73\x73\x65\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x2D\x62\x61\x72", "\x23\x64\x64\x64", "\x65\x78\x70\x6C\x61\x69\x6E\x32", "\x47\x65\x65\x6E\x20\x73\x63\x6F\x72\x65\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E", "\x23\x62\x61\x72\x73\x63\x6F\x72\x65\x20\x68\x35", "\x6E\x69\x65\x74\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E", "\x23\x42\x2D\x53\x63\x6F\x72\x65", "\x4E\x65\x67\x61\x74\x69\x65\x76\x65\x20\x73\x63\x6F\x72\x65", "\x6E\x65\x67\x61\x74\x69\x65\x66", "\x47\x65\x6D\x69\x64\x64\x65\x6C\x64\x65\x20\x73\x63\x6F\x72\x65", "\x67\x65\x6D\x69\x64\x64\x65\x6C\x64", "\x47\x6F\x65\x64\x65\x20\x73\x63\x6F\x72\x65", "\x67\x6F\x65\x64", "\x5A\x65\x65\x72\x20\x67\x6F\x65\x64\x65\x20\x73\x63\x6F\x72\x65", "\x7A\x65\x65\x72\x20\x67\x6F\x65\x64", "\x23\x62\x61\x72\x73\x63\x6F\x72\x65\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x2D\x62\x61\x72", "\x34\x30\x33", "\x23\x68\x6F\x69", "\x72\x65\x70\x6C\x61\x63\x65", "\x72\x6F\x75\x6E\x64", "\x66\x6C\x6F\x6F\x72", "\x23\x62\x61\x72\x73\x63\x6F\x72\x65\x20\x68\x33", "\x67\x72\x61\x70\x68\x32", "\x65\x78\x70\x6C\x61\x69\x6E\x33", "\x47\x65\x65\x6E\x20\x77\x61\x61\x72\x64\x65\x20\x74\x65\x20\x62\x65\x70\x61\x6C\x65\x6E", "\x23\x6B\x6F\x6C\x62\x20\x68\x35", "\x23\x4C\x2D\x42\x65\x74\x61\x6C\x69\x6E\x67", "\x5A\x65\x65\x72\x20\x6C\x61\x61\x67", "\x7A\x65\x65\x72\x20\x6C\x61\x61\x67", "\x4C\x61\x61\x67", "\x6C\x61\x61\x67", "\x41\x61\x6E\x77\x65\x7A\x69\x67", "\x61\x61\x6E\x77\x65\x7A\x69\x67", "\x48\x6F\x6F\x67", "\x68\x6F\x6F\x67", "\x5A\x65\x65\x72\x20\x68\x6F\x6F\x67", "\x7A\x65\x65\x72\x20\x68\x6F\x6F\x67", "\x23\x6B\x6F\x6C\x62\x20\x68\x33", "\x23\x6B\x6F\x6C\x62\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x2D\x62\x61\x72", "\x2C", "\x2E", "\u20AC\x26\x6E\x62\x73\x70\x3B", "\x23\x6F\x75\x74\x73\x74\x61\x6E\x64\x69\x6E\x67\x41\x6D\x6F\x75\x6E\x74", "\x67\x72\x61\x70\x68\x33", "\x69\x6E\x66\x6F\x2D\x62\x6F\x78\x32", "\x69\x6E\x66\x6F\x69", "\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x73\x42\x79\x43\x6C\x61\x73\x73\x4E\x61\x6D\x65", "\x63\x6C\x6F\x73\x65", "\x6F\x6E\x63\x6C\x69\x63\x6B", "\x64\x69\x73\x70\x6C\x61\x79", "\x62\x6C\x6F\x63\x6B", "\x64\x61\x74\x61\x2D\x74\x65\x78\x74", "\x61\x74\x74\x72", "\x23\x74\x65\x78\x74\x69\x6E\x66\x6F\x32", "\x6E\x6F\x6E\x65", "\x74\x61\x72\x67\x65\x74", "\x61\x64\x64\x4C\x69\x76\x69\x63\x6F\x6E\x45\x76\x6F", "\x2E\x6D\x79\x6C\x69\x76\x69\x63\x6F\x6E", "\x72\x65\x61\x64\x79", "\x65\x6C\x65\x6D\x65\x6E\x74", "\x6D\x61\x74\x63\x68\x48\x65\x69\x67\x68\x74", "\x2E\x66\x69\x78\x69\x74\x32", "\x2E\x66\x69\x78\x69\x74", "\x2E\x66\x69\x78\x69\x74\x35", "\x72\x65\x6D\x6F\x76\x65\x41\x74\x74\x72", "\x2E\x74\x61\x62\x35", "\x2E\x74\x61\x62\x34", "\x2E\x74\x61\x62\x36", "\x55\x49\x45\x76\x65\x6E\x74\x73", "\x63\x72\x65\x61\x74\x65\x45\x76\x65\x6E\x74", "\x64\x6F\x63\x75\x6D\x65\x6E\x74", "\x72\x65\x73\x69\x7A\x65", "\x69\x6E\x69\x74\x55\x49\x45\x76\x65\x6E\x74", "\x64\x69\x73\x70\x61\x74\x63\x68\x45\x76\x65\x6E\x74", "\x74\x72\x69\x67\x67\x65\x72", "\x62\x75\x74\x74\x6F\x6E", "\x74\x77\x65\x6E\x74\x79", "\x72\x65\x6D\x6F\x76\x65\x43\x6C\x61\x73\x73", "\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x31\x30", "\x6E\x69\x6E\x74\x79", "\x61\x64\x64\x43\x6C\x61\x73\x73"]; function initialize() {geocoder = new google[_0x9fd6[1]][_0x9fd6[0]], map = new google[_0x9fd6[1]].Map(document[_0x9fd6[3]](_0x9fd6[2]), mapOptions), codeAddress()} function codeAddress() {var _0xd43ex3 = document[_0x9fd6[3]](_0x9fd6[5])[_0x9fd6[4]]; geocoder[_0x9fd6[37]]({address: _0xd43ex3}, function (_0xd43ex3, _0xd43ex4) {function _0xd43ex5(_0xd43ex3, _0xd43ex4) {if (_0xd43ex4 === google[_0x9fd6[1]][_0x9fd6[7]][_0x9fd6[6]]) {var _0xd43ex5 = new google[_0x9fd6[1]].Marker({position: _0xd43ex3[_0x9fd6[9]][_0x9fd6[8]], map: map, title: _0xd43ex3[_0x9fd6[9]][_0x9fd6[10]]}); _0xd43ex6[_0x9fd6[12]](_0xd43ex3[_0x9fd6[9]][_0x9fd6[11]]), _0xd43ex6[_0x9fd6[13]]({heading: 270, pitch: 0}), _0xd43ex6[_0x9fd6[14]](!0), _0xd43ex5[_0x9fd6[16]](_0x9fd6[15], function () {var _0xd43ex4 = _0xd43ex3[_0x9fd6[9]][_0x9fd6[11]]; _0xd43ex6[_0x9fd6[12]](_0xd43ex4), _0xd43ex6[_0x9fd6[13]]({heading: 270, pitch: 0}), _0xd43ex6[_0x9fd6[14]](!0)})} else {$(_0x9fd6[18])[_0x9fd6[17]](), $(_0x9fd6[20])[_0x9fd6[19]](), $(_0x9fd6[20])[_0x9fd6[21]](430)} } if (_0xd43ex4 == google[_0x9fd6[1]][_0x9fd6[22]][_0x9fd6[6]]) {map[_0x9fd6[24]](_0xd43ex3[0][_0x9fd6[23]][_0x9fd6[9]]), marker && marker[_0x9fd6[25]](null), marker = new google[_0x9fd6[1]].Marker({map: map, position: _0xd43ex3[0][_0x9fd6[23]][_0x9fd6[9]], draggable: !0}), google[_0x9fd6[1]][_0x9fd6[30]][_0x9fd6[16]](marker, _0x9fd6[26], function () {document[_0x9fd6[3]](_0x9fd6[27])[_0x9fd6[4]] = marker[_0x9fd6[28]]()[_0x9fd6[27]](), document[_0x9fd6[3]](_0x9fd6[29])[_0x9fd6[4]] = marker[_0x9fd6[28]]()[_0x9fd6[29]]()}), document[_0x9fd6[3]](_0x9fd6[27])[_0x9fd6[4]] = marker[_0x9fd6[28]]()[_0x9fd6[27]](), document[_0x9fd6[3]](_0x9fd6[29])[_0x9fd6[4]] = marker[_0x9fd6[28]]()[_0x9fd6[29]](); var _0xd43ex6 = new google[_0x9fd6[1]].StreetViewPanorama(document[_0x9fd6[3]](_0x9fd6[11])), _0xd43ex7 = new google[_0x9fd6[1]][_0x9fd6[31]]; map = new google[_0x9fd6[1]].Map(document[_0x9fd6[3]](_0x9fd6[2]), {center: {lat: marker[_0x9fd6[28]]()[_0x9fd6[27]](), lng: marker[_0x9fd6[28]]()[_0x9fd6[29]]()}, zoom: 16, streetViewControl: !1}), _0xd43ex7[_0x9fd6[34]]({location: {lat: marker[_0x9fd6[28]]()[_0x9fd6[27]](), lng: marker[_0x9fd6[28]]()[_0x9fd6[29]]()}, radius: 50, source: google[_0x9fd6[1]][_0x9fd6[33]][_0x9fd6[32]]}, _0xd43ex5)} else {console[_0x9fd6[36]](_0x9fd6[35] + _0xd43ex4)} })} setTimeout(function () {function _0xd43ex3() {var _0xd43ex3 = _0xd43ex4 + 13; _0xd43ex3 = _0xd43ex3 > 100 ? 100 : _0xd43ex3, _0x9fd6[38] == $(_0x9fd6[40])[_0x9fd6[39]]() && (_0xd43ex3 -= 13), _0xd43ex8[_0x9fd6[42]][_0x9fd6[41]] = _0x9fd6[43] + (-90 + 180 * _0xd43ex3 / 100) + _0x9fd6[44], _0xd43ex7[_0x9fd6[4]] = _0xd43ex3 + _0x9fd6[45]} for (var _0xd43ex4 = 0, _0xd43ex5 = JSON[_0x9fd6[47]]($(_0x9fd6[46])[_0x9fd6[39]]()), _0xd43ex6 = 0; _0xd43ex6 < _0xd43ex5[_0x9fd6[48]]; _0xd43ex6++) {_0xd43ex4 += _0xd43ex5[_0xd43ex6][_0x9fd6[49]]}; var _0xd43ex7 = document[_0x9fd6[51]](_0x9fd6[50]), _0xd43ex8 = document[_0x9fd6[51]](_0x9fd6[52]); _0xd43ex3()}, 3e3), setTimeout(function () {function _0xd43ex3() {_0xd43ex7[_0x9fd6[53]](0, 0, _0xd43ex8, i), _0xd43ex7[_0x9fd6[54]](), _0xd43ex7[_0x9fd6[55]] = _0xd43ex12, _0xd43ex7[_0x9fd6[56]] = 30, _0xd43ex7[_0x9fd6[58]](_0xd43ex8 / 2, i / 2, 100, 0, 2 * Math[_0x9fd6[57]], !1), _0xd43ex7[_0x9fd6[59]](); var _0xd43ex3 = _0xd43exa * Math[_0x9fd6[57]] / 180; _0xd43ex7[_0x9fd6[54]](), _0xd43ex7[_0x9fd6[55]] = _0xd43exd, _0xd43ex7[_0x9fd6[56]] = 30, _0xd43ex7[_0x9fd6[58]](_0xd43ex8 / 2, i / 2, 100, 0 - 90 * Math[_0x9fd6[57]] / 180, _0xd43ex3 - 90 * Math[_0x9fd6[57]] / 180, !1), _0xd43ex7[_0x9fd6[59]](), _0xd43ex7[_0x9fd6[60]] = _0xd43exd, _0xd43ex7[_0x9fd6[61]] = _0x9fd6[62], _0xd43ex10 = _0xd43exf, text_width = _0xd43ex7[_0x9fd6[64]](_0xd43ex10)[_0x9fd6[63]], _0xd43ex7[_0x9fd6[65]](_0xd43ex10, _0xd43ex8 / 2 - text_width / 2, i / 2 + 15)} function _0xd43ex4() {void (0) != typeof _0xd43ex11 && clearInterval(_0xd43ex11), _0xd43exb = Math[_0x9fd6[66]](3.6 * _0xd43exe), _0xd43exc = _0xd43exb - _0xd43exa, _0xd43ex11 = setInterval(_0xd43ex5, 1e3 / _0xd43exc)} function _0xd43ex5() {_0xd43exa == _0xd43exb && clearInterval(_0xd43ex11), _0xd43exb > _0xd43exa ? _0xd43exa++ : _0xd43exa--, _0xd43ex3()} var _0xd43ex6 = document[_0x9fd6[3]](_0x9fd6[67]), _0xd43ex7 = _0xd43ex6[_0x9fd6[69]](_0x9fd6[68]), _0xd43ex8 = _0xd43ex6[_0x9fd6[63]], i = _0xd43ex6[_0x9fd6[21]], _0xd43exa = 0, _0xd43exb = 0, _0xd43exc = 0, _0xd43exd = _0x9fd6[70], _0xd43exe = 0.97 * document[_0x9fd6[3]](_0x9fd6[72])[_0x9fd6[71]]; _0xd43exe = _0xd43exe > 100 ? 100 : _0xd43exe; var _0xd43exf = _0x9fd6[73]; 0 > _0xd43exe ? (_0xd43exd = _0x9fd6[74], document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]] = _0x9fd6[38], $(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[38]), $(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[76]), $(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[78]), _0xd43exe = 100, _0xd43exf = _0x9fd6[81]) : 2 > _0xd43exe ? (_0xd43exd = _0x9fd6[74], document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]] = _0x9fd6[82], $(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[82]), $(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[83]), $(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[84]), _0xd43exe = 100, _0xd43exf = _0x9fd6[81]) : 30 > _0xd43exe ? (_0xd43exd = _0x9fd6[85], document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]] = _0x9fd6[86], $(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[86]), $(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[87]), $(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[88]), _0xd43exe = 33.33, _0xd43exf = _0x9fd6[89]) : _0xd43exe >= 30 && 35 > _0xd43exe ? (_0xd43exd = _0x9fd6[90], document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]] = _0x9fd6[91], $(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[91]), $(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[92]), $(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[93]), _0xd43exe = 66.67, _0xd43exf = _0x9fd6[94]) : _0xd43exe >= 35 && (_0xd43exd = _0x9fd6[95], document[_0x9fd6[3]](_0x9fd6[75])[_0x9fd6[71]] = _0x9fd6[96], $(_0x9fd6[40])[_0x9fd6[39]](_0x9fd6[96]), $(_0x9fd6[77])[_0x9fd6[39]](_0x9fd6[97]), $(_0x9fd6[80])[_0x9fd6[79]](_0x9fd6[98]), _0xd43exe = 100, _0xd43exf = _0x9fd6[99]), $(_0x9fd6[100])[_0x9fd6[39]](_0xd43exf), $(_0x9fd6[102])[_0x9fd6[101]]({width: _0xd43exe + _0x9fd6[45], "\x62\x61\x63\x6B\x67\x72\x6F\x75\x6E\x64\x2D\x63\x6F\x6C\x6F\x72": _0xd43exd}); var _0xd43ex10, _0xd43ex11, _0xd43ex12 = _0x9fd6[103]; _0xd43ex4()}, 100), setTimeout(function () {function _0xd43ex3() {r2 <= 0 ? (_0xd43exf = _0x9fd6[74], document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]] = _0x9fd6[105], $(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[105]), $(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[107]), t2 = _0x9fd6[81]) : r2 < 30 ? (_0xd43exf = _0x9fd6[85], document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]] = _0x9fd6[109], $(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[109]), $(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[110]), t2 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r2 >= 30 && r2 < 45 ? (_0xd43exf = _0x9fd6[90], document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]] = _0x9fd6[111], $(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[111]), $(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[112]), t2 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r2 >= 45 && r2 < 80 ? (_0xd43exf = _0x9fd6[95], document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]] = _0x9fd6[113], $(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[113]), $(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[114]), t2 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r2 >= 80 && r2 < 90 ? (_0xd43exf = _0x9fd6[95], document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]] = _0x9fd6[113], $(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[113]), $(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[114]), t2 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r2 >= 90 && (_0xd43exf = _0x9fd6[95], document[_0x9fd6[3]](_0x9fd6[104])[_0x9fd6[71]] = _0x9fd6[115], $(_0x9fd6[106])[_0x9fd6[39]](_0x9fd6[115]), $(_0x9fd6[108])[_0x9fd6[39]](_0x9fd6[116]), t2 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]), $(_0x9fd6[117])[_0x9fd6[101]]({width: (r2 > 0 ? r2 : 100) + _0x9fd6[45], "\x62\x61\x63\x6B\x67\x72\x6F\x75\x6E\x64\x2D\x63\x6F\x6C\x6F\x72": _0xd43exf}), r2 == -0.96 && $(_0x9fd6[119])[_0x9fd6[39]](_0x9fd6[118]), i[_0x9fd6[53]](0, 0, _0xd43exa, _0xd43exb), i[_0x9fd6[54]](), i[_0x9fd6[55]] = _0xd43ex10, i[_0x9fd6[56]] = 30, i[_0x9fd6[58]](_0xd43exa / 2, _0xd43exb / 2, 100, 0, 2 * Math[_0x9fd6[57]], !1), i[_0x9fd6[59]](); var _0xd43ex3 = _0xd43exc * Math[_0x9fd6[57]] / 180; i[_0x9fd6[54]](), i[_0x9fd6[55]] = _0xd43exf, i[_0x9fd6[56]] = 30, i[_0x9fd6[58]](_0xd43exa / 2, _0xd43exb / 2, 100, 0 - 90 * Math[_0x9fd6[57]] / 180, _0xd43ex3 - 90 * Math[_0x9fd6[57]] / 180, !1), i[_0x9fd6[59]](), i[_0x9fd6[60]] = _0xd43exf, i[_0x9fd6[61]] = _0x9fd6[62], _0xd43ex6 = _0x9fd6[81] == t2 ? _0x9fd6[81] : Math[_0x9fd6[121]](parseInt(0.96 * parseInt(t2[_0x9fd6[120]](_0x9fd6[45], _0x9fd6[73]))) / 10), _0xd43ex6 = parseInt(Math[_0x9fd6[122]](parseInt(0.96 * parseInt(t2[_0x9fd6[120]](_0x9fd6[45], _0x9fd6[73]))) / 10)) > 8 ? 8 : _0xd43ex6, text_width = i[_0x9fd6[64]](_0xd43ex6)[_0x9fd6[63]], i[_0x9fd6[65]](_0xd43ex6, _0xd43exa / 2 - text_width / 2, _0xd43exb / 2 + 15), $(_0x9fd6[123])[_0x9fd6[39]](_0xd43ex6)} function _0xd43ex4() {void (0) != typeof _0xd43ex7 && clearInterval(_0xd43ex7), _0xd43exd = Math[_0x9fd6[66]](3.6 * r2), _0xd43exe = _0xd43exd - _0xd43exc, _0xd43ex7 = setInterval(_0xd43ex5, 1e3 / _0xd43exe)} function _0xd43ex5() {_0xd43exc == _0xd43exd && clearInterval(_0xd43ex7), _0xd43exd > _0xd43exc ? _0xd43exc++ : _0xd43exc--, _0xd43ex3()} var _0xd43ex6, _0xd43ex7, _0xd43ex8 = document[_0x9fd6[3]](_0x9fd6[124]), i = _0xd43ex8[_0x9fd6[69]](_0x9fd6[68]), _0xd43exa = _0xd43ex8[_0x9fd6[63]], _0xd43exb = _0xd43ex8[_0x9fd6[21]], _0xd43exc = 0, _0xd43exd = 0, _0xd43exe = 0, _0xd43exf = _0x9fd6[70], _0xd43ex10 = _0x9fd6[103]; r2 = 0.96 * document[_0x9fd6[3]](_0x9fd6[72])[_0x9fd6[71]], r2 = r2 > 80 ? 80 : r2, t2 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45], _0xd43ex4()}, 200), setTimeout(function () {function _0xd43ex3() {r3 >= 100 ? (_0xd43exf = _0x9fd6[74], document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[126], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[126]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[126]), r3 = 100, t3 = _0x9fd6[81]) : r3 < 30 ? (_0xd43exf = _0x9fd6[95], document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[129], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[129]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[130]), t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r3 >= 30 && r3 < 45 ? (_0xd43exf = _0x9fd6[95], document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[131], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[131]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[132]), t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r3 >= 45 && r3 < 50 ? (_0xd43exf = _0x9fd6[90], document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[133], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[133]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[134]), t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r3 >= 50 && r3 < 80 ? (_0xd43exf = _0x9fd6[90], document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[135], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[135]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[136]), t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r3 >= 80 && r3 < 85 ? (_0xd43exf = _0x9fd6[85], document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[137], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[137]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[138]), t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r3 >= 85 ? (_0xd43exf = _0x9fd6[85], document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[137], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[137]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[138]), t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]) : r3 < 0 && (_0xd43exf = _0x9fd6[85], r3 = 0, document[_0x9fd6[3]](_0x9fd6[125])[_0x9fd6[71]] = _0x9fd6[137], $(_0x9fd6[127])[_0x9fd6[39]](_0x9fd6[137]), $(_0x9fd6[128])[_0x9fd6[39]](_0x9fd6[138]), t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45]), $(_0x9fd6[139])[_0x9fd6[39]](t3), $(_0x9fd6[140])[_0x9fd6[101]]({width: r3 + _0x9fd6[45], "\x62\x61\x63\x6B\x67\x72\x6F\x75\x6E\x64\x2D\x63\x6F\x6C\x6F\x72": _0xd43exf}), i[_0x9fd6[53]](0, 0, _0xd43exa, _0xd43exb), i[_0x9fd6[54]](), i[_0x9fd6[55]] = _0xd43ex10, i[_0x9fd6[56]] = 30, i[_0x9fd6[58]](_0xd43exa / 2, _0xd43exb / 2, 100, 0, 2 * Math[_0x9fd6[57]], !1), i[_0x9fd6[59]](); var _0xd43ex3 = _0xd43exc * Math[_0x9fd6[57]] / 180; i[_0x9fd6[54]](), i[_0x9fd6[55]] = _0xd43exf, i[_0x9fd6[56]] = 30, i[_0x9fd6[58]](_0xd43exa / 2, _0xd43exb / 2, 100, 0 - 90 * Math[_0x9fd6[57]] / 180, _0xd43ex3 - 90 * Math[_0x9fd6[57]] / 180, !1), i[_0x9fd6[59]](), i[_0x9fd6[60]] = _0xd43exf, i[_0x9fd6[61]] = _0x9fd6[62], _0xd43ex6 = t3, text_width = i[_0x9fd6[64]](_0xd43ex6)[_0x9fd6[63]], i[_0x9fd6[65]](_0xd43ex6, _0xd43exa / 2 - text_width / 2, _0xd43exb / 2 + 15)} function _0xd43ex4() {var _0xd43ex3 = parseInt($(_0x9fd6[144])[_0x9fd6[39]]()[_0x9fd6[120]](_0x9fd6[143], _0x9fd6[73])[_0x9fd6[120]](_0x9fd6[142], _0x9fd6[73])[_0x9fd6[120]](_0x9fd6[142], _0x9fd6[73])[_0x9fd6[120]](_0x9fd6[141], _0x9fd6[142])); 500 > _0xd43ex3 ? r3 = 0.7 * r3 : 1e3 > _0xd43ex3 ? r3 = 0.8 * r3 : 2500 > _0xd43ex3 ? r3 = 0.9 * r3 : _0xd43ex3 > 5e3 && (r3 = 1 * r3), void (0) != typeof _0xd43ex7 && clearInterval(_0xd43ex7), _0xd43exd = Math[_0x9fd6[66]](3.6 * r3), _0xd43exe = _0xd43exd - _0xd43exc, _0xd43ex7 = setInterval(_0xd43ex5, 1e3 / _0xd43exe)} function _0xd43ex5() {_0xd43exc == _0xd43exd && clearInterval(_0xd43ex7), _0xd43exd > _0xd43exc ? _0xd43exc++ : _0xd43exc--, _0xd43ex3()} var _0xd43ex6, _0xd43ex7, _0xd43ex8 = document[_0x9fd6[3]](_0x9fd6[145]), i = _0xd43ex8[_0x9fd6[69]](_0x9fd6[68]), _0xd43exa = _0xd43ex8[_0x9fd6[63]], _0xd43exb = _0xd43ex8[_0x9fd6[21]], _0xd43exc = 0, _0xd43exd = 0, _0xd43exe = 0, _0xd43exf = _0x9fd6[70], _0xd43ex10 = _0x9fd6[103]; r3 = 100 - 1.1 * document[_0x9fd6[3]](_0x9fd6[72])[_0x9fd6[71]], r3 = r3 > 90 && r3 < 100 ? 90 : r3, r3 = r3 < 15 && r3 < 100 ? 15 : r3, t3 = Math[_0x9fd6[66]](_0xd43exc / 360 * 100) + _0x9fd6[45], _0xd43ex4()}, 300); for (var geocoder, map, mapOptions = {zoom: 17}, marker, modal = document[_0x9fd6[3]](_0x9fd6[146]), btns = document[_0x9fd6[148]](_0x9fd6[147]), span = document[_0x9fd6[148]](_0x9fd6[149])[0], i = 0; i < btns[_0x9fd6[48]]; i++) {btns[i][_0x9fd6[150]] = function () {modal[_0x9fd6[42]][_0x9fd6[151]] = _0x9fd6[152], $(_0x9fd6[155])[_0x9fd6[39]]($(this)[_0x9fd6[154]](_0x9fd6[153]))}}; span[_0x9fd6[150]] = function () {modal[_0x9fd6[42]][_0x9fd6[151]] = _0x9fd6[156]}, window[_0x9fd6[150]] = function (_0xd43ex3) {_0xd43ex3[_0x9fd6[157]] == modal && (modal[_0x9fd6[42]][_0x9fd6[151]] = _0x9fd6[156])}, $(function () {setTimeout(function () {initialize()}, 1200)}), angular[_0x9fd6[161]](document)[_0x9fd6[160]](function () {setTimeout(function () {$(function () {jQuery(_0x9fd6[159])[_0x9fd6[158]]()})}, 900)}), setTimeout(function () {$(_0x9fd6[163])[_0x9fd6[162]](), $(_0x9fd6[164])[_0x9fd6[162]](), $(_0x9fd6[177])[_0x9fd6[15]](function () {$(_0x9fd6[163])[_0x9fd6[162]](), $(_0x9fd6[164])[_0x9fd6[162]](), $(_0x9fd6[165])[_0x9fd6[162]](), $(_0x9fd6[167])[_0x9fd6[166]](_0x9fd6[42]), $(_0x9fd6[168])[_0x9fd6[166]](_0x9fd6[42]), $(_0x9fd6[169])[_0x9fd6[166]](_0x9fd6[42]); var _0xd43ex3 = window[_0x9fd6[172]][_0x9fd6[171]](_0x9fd6[170]); _0xd43ex3[_0x9fd6[174]](_0x9fd6[173], !0, !1, window, 0), window[_0x9fd6[175]](_0xd43ex3), $(window)[_0x9fd6[176]](_0x9fd6[173])})}, 800), $(function () {setTimeout(function (_0xd43ex3) {$(_0x9fd6[180])[_0x9fd6[179]](_0x9fd6[178]), $(_0x9fd6[180])[_0x9fd6[182]](_0x9fd6[181])}, 1e3)})</script>

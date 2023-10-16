@@ -4,9 +4,11 @@
     <groupId>nl.devoorkant.sbdr.multi</groupId>
     <artifactId>sbdr-parent</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-  </parent>
-  <groupId>nl.devoorkant.sbdr.multi</groupId>
+  </parent>  
   <artifactId>dvk-util</artifactId>
+  <name>dvk-util</name>
+  <description>dvk-util</description>
+  <packaging>jar</packaging>
    <dependencies>
   	<!-- https://mvnrepository.com/artifact/xerces/xerces -->
 	<dependency>

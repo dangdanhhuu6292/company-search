@@ -38,12 +38,13 @@ public class BedrijfReportTransfer {
 	String referentieNummer;
 	ChartDataTransfer[] reportsLastTwoWeeks;
 	CompanyInfoEntityTransfer ultimateParent;
+	List<CompanyInfo> vestigings;
 
 	public BedrijfReportTransfer() {
 
 	}
 
-	public BedrijfReportTransfer(Bedrijf bedrijfaanvrager, Bedrijf bedrijf, Bedrijf bedrijfHoofd, KvkDossierTransfer kvkDossierTransfer, KvkDossierTransfer kvkDossierTransferHoofd, List<MeldingOverviewTransfer> meldingen, List<OpmerkingenTransfer> opmerkingen, List<HistorieTransfer> historie, String referentieNummer, int aantalMeldingenActief, int aantalMeldingenResolved, int aantalMonitoringActief, int aantalCrediteuren, BigDecimal bedragOpenstaand, BigDecimal bedragResolved, List<ChartDataTransfer> reportsLastTwoWeeks, List<ChartDataTransfer> meldingenLastYear, Integer ratingScore, String ratingIndicatorMessage, CompanyInfo parent, CompanyInfo ultimateParent) {
+	public BedrijfReportTransfer(Bedrijf bedrijfaanvrager, Bedrijf bedrijf, Bedrijf bedrijfHoofd, KvkDossierTransfer kvkDossierTransfer, KvkDossierTransfer kvkDossierTransferHoofd, List<MeldingOverviewTransfer> meldingen, List<OpmerkingenTransfer> opmerkingen, List<HistorieTransfer> historie, String referentieNummer, int aantalMeldingenActief, int aantalMeldingenResolved, int aantalMonitoringActief, int aantalCrediteuren, BigDecimal bedragOpenstaand, BigDecimal bedragResolved, List<ChartDataTransfer> reportsLastTwoWeeks, List<ChartDataTransfer> meldingenLastYear, Integer ratingScore, String ratingIndicatorMessage, CompanyInfo parent, CompanyInfo ultimateParent, List<CompanyInfo> vestigings) {
 		this.bedrijfaanvrager = bedrijfaanvrager != null ? new BedrijfEntityTransfer(bedrijfaanvrager) : null;
 		this.bedrijf = bedrijf != null ? new BedrijfEntityTransfer(bedrijf) : null;
 		this.bedrijfHoofd = bedrijfHoofd != null ? new BedrijfEntityTransfer(bedrijfHoofd) : null;
@@ -76,6 +77,7 @@ public class BedrijfReportTransfer {
 		} catch (Exception e) {
 			LOGGER.error("Cannot create UltimateParent for BedrijfReportTransfer");
 		}
+		this.vestigings = vestigings;
 	}
 
 	@XmlElement
@@ -269,6 +271,14 @@ public class BedrijfReportTransfer {
 
 	public void setUltimateParent(CompanyInfo ultimateParent) {
 		this.ultimateParent = ultimateParent != null ? new CompanyInfoEntityTransfer(ultimateParent) : null;
+	}
+	@XmlElement
+	public List<CompanyInfo> getVestigings() {
+		return vestigings;
+	}
+
+	public void setVestigings(List<CompanyInfo> vestigings) {
+		this.vestigings = vestigings;
 	}
 
 

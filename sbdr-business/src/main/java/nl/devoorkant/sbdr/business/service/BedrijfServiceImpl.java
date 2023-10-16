@@ -1536,19 +1536,19 @@ public class BedrijfServiceImpl implements BedrijfService {
 
 				// sbi omschrijvingen
 				if(kvkDossierTransfer.getHoofdactiviteitSbi() != null) {
-					Sbi sbi = bedrijfDataService.findByCode(kvkDossierTransfer.getHoofdactiviteitSbi());
-
-					if(sbi != null) kvkDossierTransfer.setHoofdactiviteit(sbi.getOmschrijving());
+					//Sbi sbi = bedrijfDataService.findByCode(kvkDossierTransfer.getHoofdactiviteitSbi());
+					kvkDossierTransfer.setHoofdactiviteit(kvkDossierTransfer.getHoofdactiviteitSbi());
+					//if(sbi != null) kvkDossierTransfer.setHoofdactiviteit(sbi.getOmschrijving());
 				}
 				if(kvkDossierTransfer.getNevenactiviteit1Sbi() != null) {
-					Sbi sbi = bedrijfDataService.findByCode(kvkDossierTransfer.getNevenactiviteit1Sbi());
-
-					if(sbi != null) kvkDossierTransfer.setNevenactiviteit1(sbi.getOmschrijving());
+					//Sbi sbi = bedrijfDataService.findByCode(kvkDossierTransfer.getNevenactiviteit1Sbi());
+					kvkDossierTransfer.setNevenactiviteit1(kvkDossierTransfer.getNevenactiviteit1Sbi());
+					//if(sbi != null) kvkDossierTransfer.setNevenactiviteit1(sbi.getOmschrijving());
 				}
 				if(kvkDossierTransfer.getNevenactiviteit2Sbi() != null) {
-					Sbi sbi = bedrijfDataService.findByCode(kvkDossierTransfer.getNevenactiviteit2Sbi());
-
-					if(sbi != null) kvkDossierTransfer.setNevenactiviteit2(sbi.getOmschrijving());
+					//Sbi sbi = bedrijfDataService.findByCode(kvkDossierTransfer.getNevenactiviteit2Sbi());
+					 kvkDossierTransfer.setNevenactiviteit2(kvkDossierTransfer.getNevenactiviteit2Sbi());
+					//if(sbi != null) kvkDossierTransfer.setNevenactiviteit2(sbi.getOmschrijving());
 				}
 
 				// RSIN nvt in case of 'eenmanszaken'
@@ -1694,8 +1694,9 @@ public class BedrijfServiceImpl implements BedrijfService {
 
 				CompanyInfo parent = null;
 				CompanyInfo ultParent = null;
+				List<CompanyInfo> vestigings = new ArrayList<CompanyInfo>();
 
-				if(kvkDossierTransfer.getParentKvKNummer() != null) {
+				/*if(kvkDossierTransfer.getParentKvKNummer() != null) {
 					List<CompanyInfo> parentResults = companyInfoService.retrieveFromCompanyInfo(kvkDossierTransfer.getParentKvKNummer(), null, 1);
 					if(parentResults != null && parentResults.size() > 0) {
 						parent = parentResults.get(0);
@@ -1707,8 +1708,16 @@ public class BedrijfServiceImpl implements BedrijfService {
 					if(ultParentResults != null && ultParentResults.size() > 0) {
 						ultParent = ultParentResults.get(0);
 					}
+				}*/
+				List<CompanyInfo> parentResults = companyInfoService.retrieveFromCompanyInfo(kvkDossierTransfer.getParentKvKNummer(), null, 1);
+				for (CompanyInfo companyInfo : parentResults) {
+					if (companyInfo.getCreditSafeHeadQuarters().equals("H")) {
+						parent = companyInfo;
+					}else {
+						vestigings.add(companyInfo);
+					}
 				}
-
+				
 				//iterate resolved meldingen and get nrs + amounts
 				//for (Melding melding: meldingenResolved) {
 				//	aantalMeldingenResolved++;
@@ -1793,7 +1802,7 @@ public class BedrijfServiceImpl implements BedrijfService {
 
 				
 				// Report data
-				result = new BedrijfReportTransfer(bedrijfAanvrager, bedrijf, bedrijfHoofdvestiging, kvkDossierTransfer, kvkDossierTransferHoofd, meldingenoverview, opmerkingen, historie, referentieNummer, aantalMeldingenActief, aantalMeldingenResolved, kvkDossierTransfer.getNrOfActiveMonitorings(), countCrediteuren, bedragOpen, bedragResolved, reportsLastTwoWeeks, meldingenLastYear, ratingScore, ratingScoreIndicatorMessage, parent, ultParent);
+				result = new BedrijfReportTransfer(bedrijfAanvrager, bedrijf, bedrijfHoofdvestiging, kvkDossierTransfer, kvkDossierTransferHoofd, meldingenoverview, opmerkingen, historie, referentieNummer, aantalMeldingenActief, aantalMeldingenResolved, kvkDossierTransfer.getNrOfActiveMonitorings(), countCrediteuren, bedragOpen, bedragResolved, reportsLastTwoWeeks, meldingenLastYear, ratingScore, ratingScoreIndicatorMessage, parent, ultParent, vestigings);
 			}
 
 			return result;
