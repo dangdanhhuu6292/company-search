@@ -74,6 +74,7 @@ public class KvkDossierTransfer {
 	private String ultimateParentKvKNummer;
 	private String vennootschapsNaam;
 	private String voornaam;
+	private String vestigingsNummer;
 
 	public KvkDossierTransfer() {
 
@@ -691,6 +692,14 @@ public class KvkDossierTransfer {
 
 	public void setCuratorTransfer(CuratorTransfer curatorTransfer) {
 		this.curatorTransfer = curatorTransfer;
+	}
+
+	public String getVestigingsNummer() {
+		return vestigingsNummer;
+	}
+
+	public void setVestigingsNummer(String vestigingsNummer) {
+		this.vestigingsNummer = vestigingsNummer;
 	}
 
 

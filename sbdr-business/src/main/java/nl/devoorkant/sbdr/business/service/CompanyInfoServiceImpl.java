@@ -474,4 +474,45 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 		} else throw new ServiceException("Cannot save CIKvKDossier as null");
 
 	}
+
+	@Override
+	public List<CIKvKDossier> retrieveCIKvKDossierInfos(String searchValue) {
+
+		LOGGER.debug("Method retrieveCIKvKDossierInfos.");
+		List<CIKvKDossier> result = null;
+
+		try {
+			/**
+			 *	is leeg?
+			 *	nee:
+			 *		is een nummer?
+			 *		ja:
+			 *			is een geldig nummer?
+			 *			ja:
+			 *
+			 *		nee:
+			 *
+			 *	ja:
+			 *
+			 */
+			if(StringUtil.isNotEmptyOrNull(searchValue)) {
+				result = restKVK.searchVestigingByKvKNummers(searchValue);					
+					//}
+			} 
+		} catch(Exception e) {
+			throw new ServiceException(e);
+		}
+		//} catch(JAXBException e) {
+		//	throw new ServiceException(e);
+		//} catch(CSCommunicationException e) {
+		//	throw new ThirdPartyServiceException(e);
+		//} catch(CSSOAPFaultException e) {
+		//	throw new ServiceException(e);
+		//} catch (DVKException e) {
+		//	throw new ServiceException(e);
+		//}
+
+		return result;
+	
+	}
 }

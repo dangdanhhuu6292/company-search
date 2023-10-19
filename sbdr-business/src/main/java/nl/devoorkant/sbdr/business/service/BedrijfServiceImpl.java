@@ -1694,7 +1694,8 @@ public class BedrijfServiceImpl implements BedrijfService {
 
 				CompanyInfo parent = null;
 				CompanyInfo ultParent = null;
-				List<CompanyInfo> vestigings = new ArrayList<CompanyInfo>();
+				List<KvkVestigingTransfer> vestigings = new ArrayList<>();
+				KvkVestigingTransfer hoofvestiging = null;
 
 				/*if(kvkDossierTransfer.getParentKvKNummer() != null) {
 					List<CompanyInfo> parentResults = companyInfoService.retrieveFromCompanyInfo(kvkDossierTransfer.getParentKvKNummer(), null, 1);
@@ -1709,12 +1710,26 @@ public class BedrijfServiceImpl implements BedrijfService {
 						ultParent = ultParentResults.get(0);
 					}
 				}*/
-				List<CompanyInfo> parentResults = companyInfoService.retrieveFromCompanyInfo(kvkDossierTransfer.getParentKvKNummer(), null, 1);
-				for (CompanyInfo companyInfo : parentResults) {
-					if (companyInfo.getCreditSafeHeadQuarters().equals("H")) {
-						parent = companyInfo;
+				List<CIKvKDossier> parentResults = companyInfoService.retrieveCIKvKDossierInfos(kvkDossierTransfer.getKvkNummer());
+				for (CIKvKDossier ciKvKDossier : parentResults) {
+					if (ciKvKDossier.getHoofdNeven().equals("H")) {
+						hoofvestiging = ConvertUtil.convertCiKvkDossierToKvkDossierVestiging(ciKvKDossier);
+						if(hoofvestiging.getVestigingsNummer().trim().equals(kvkDossierTransfer.getVestigingsNummer().trim())){
+							hoofvestiging.setSameVestiging(true);
+							kvkDossierTransfer.setHoofdNeven("H");
+						}else {
+							hoofvestiging.setSameVestiging(false);
+						}
 					}else {
-						vestigings.add(companyInfo);
+						KvkVestigingTransfer kvkVestigingTransfer = ConvertUtil.convertCiKvkDossierToKvkDossierVestiging(ciKvKDossier);
+						if(kvkVestigingTransfer.getVestigingsNummer().trim().equals(kvkDossierTransfer.getVestigingsNummer().trim())){
+							kvkVestigingTransfer.setSameVestiging(true);
+							kvkDossierTransfer.setHoofdNeven("N");
+						}else {
+							kvkVestigingTransfer.setSameVestiging(false);
+						}
+						vestigings.add(kvkVestigingTransfer);
+						
 					}
 				}
 				
@@ -1802,7 +1817,7 @@ public class BedrijfServiceImpl implements BedrijfService {
 
 				
 				// Report data
-				result = new BedrijfReportTransfer(bedrijfAanvrager, bedrijf, bedrijfHoofdvestiging, kvkDossierTransfer, kvkDossierTransferHoofd, meldingenoverview, opmerkingen, historie, referentieNummer, aantalMeldingenActief, aantalMeldingenResolved, kvkDossierTransfer.getNrOfActiveMonitorings(), countCrediteuren, bedragOpen, bedragResolved, reportsLastTwoWeeks, meldingenLastYear, ratingScore, ratingScoreIndicatorMessage, parent, ultParent, vestigings);
+				result = new BedrijfReportTransfer(bedrijfAanvrager, bedrijf, bedrijfHoofdvestiging, kvkDossierTransfer, kvkDossierTransferHoofd, meldingenoverview, opmerkingen, historie, referentieNummer, aantalMeldingenActief, aantalMeldingenResolved, kvkDossierTransfer.getNrOfActiveMonitorings(), countCrediteuren, bedragOpen, bedragResolved, reportsLastTwoWeeks, meldingenLastYear, ratingScore, ratingScoreIndicatorMessage, parent, ultParent, vestigings, hoofvestiging);
 			}
 
 			return result;

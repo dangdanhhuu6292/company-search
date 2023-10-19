@@ -306,5 +306,56 @@ public class RestKVKImpl implements RestKVK {
 		return companyInfos;
 	
 	}
+	@Override
+	public List<CIKvKDossier> searchVestigingByKvKNummers(String kvKNummer) {
+		LOGGER.info("searchVestigingByKvKNummers begin");
+		List<CIKvKDossier> ciKvKDossiers = new ArrayList<>();
+		CSConverter csConverter = new CSConverter();
+		try {		
+			URL url;
+			StringBuilder requestUrl = new StringBuilder("https://api.kvk.nl/api/v1/basisprofielen/");
+			requestUrl.append(kvKNummer);
+			requestUrl.append("/vestigingen");
+			
+			url = new URL(requestUrl.toString());
+			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+			connection.setDoOutput(true);
+			connection.setRequestMethod("GET");			
+			connection.setRequestProperty("apikey", "l7xxe43f87c4bbd9451db35fa4923480143e");
+			
+			//OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());			
+			connection.connect();			
+			//out.close();		
+			int status = connection.getResponseCode();
+			 switch (status) {
+	            case 200:
+	            case 201:
+	                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	                StringBuilder sb = new StringBuilder();
+	                String line;
+				while ((line = br.readLine()) != null) {
+					sb.append(line + " ");				
+				}
+				LOGGER.info(sb.toString());	
+				
+				connection.disconnect();
+				JSONObject response = new JSONObject(sb.toString());				
+				ciKvKDossiers = csConverter.transformVestToCIKvKDossInfoList(response);			
+				
+			 
+			 }
+			
+	} catch (Exception e) {
+		LOGGER.error("Error searchVestigingByKvKNummers ", e);
+	} finally {
+		LOGGER.info("End searchVestigingByKvKNummers : ");
+		
+		
+	}
+
+	return ciKvKDossiers;
+	
+	
+	}
 
 }

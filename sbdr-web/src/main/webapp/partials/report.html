@@ -532,7 +532,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<div class="box no clearfix" ng-show="report.parent">
+				<div class="box no clearfix" ng-show="report.hoofvestiging != null">
 					<div class="row border clearfix">
 						<div class="box-content"> <span class="mylivicon"
 								data-options="name: diagram.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span>
@@ -546,22 +546,17 @@
 										<fieldset>
 											<div class="form-group"> <label
 													class="col-xs-12 col-sm-5 control-label">Hoofdvestiging</label>
-												<div class="col-xs-12 col-sm-7"> {{report.parent.bedrijfsNaam}}</div>
+												<div class="col-xs-12 col-sm-7"> {{report.hoofvestiging.eersteHandelsnaam}}</div>
 											</div>
 											<div class="form-group"> <label
 													class="col-xs-12 col-sm-5 control-label">Adres</label>
-												<div class="col-xs-12 col-sm-7"> {{report.parent.straat}}
-													{{report.parent.huisNummer}} {{report.parent.huisnummerToevoeging}}
-												</div>
-											</div>
-											<div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">
-												</label> <span class="col-xs-12 col-sm-7"> {{report.parent.postcode}}
-													{{report.parent.plaats}} </span></div>
+												<div class="col-xs-12 col-sm-7"> {{report.hoofvestiging.straat}}</div>
+											</div>											
 											<div class="form-group"> <label
 													class="col-xs-12 col-sm-5 control-label">Vestigingsnummer</label> <span
-													class="col-xs-12 col-sm-7"> {{report.parent.vestiging}} </span>
-												<button type="button" class="btn btn-primary btn-report-small "
-													ng-click="createReport(report.parent, report.parent.kvKnummer)">
+													class="col-xs-12 col-sm-7"> {{report.hoofvestiging.vestigingsNummer}} </span>
+												<button  type="button" class="btn btn-primary btn-report-small " ng-show="!report.hoofvestiging.sameVestiging"
+													ng-click="createReport(report.hoofvestiging,report.hoofvestiging.kvkNumber + report.hoofvestiging.vestigingsNummer)">
 													Rapport opvragen </button></div>
 										</fieldset>
 									</form>
@@ -576,7 +571,7 @@
 				<div class="box no clearfix">
 					<div class="row border clearfix">
 						<div class="box-content"><span class="mylivicon"
-								data-options="name: box-add.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span><span
+								data-options="name: diagram.svg; size: 25px; style: lines-alt; strokeColor:#0a212f; tryToSharpen: true"></span><span
 								class="legend">Nevenvestiging</span>
 							<div class="home2">
 								<hr>
@@ -587,22 +582,17 @@
 										<fieldset>
 											<div class="form-group"><label
 													class="col-xs-12 col-sm-5 control-label">Nevenvestiging</label>
-												<div class="col-xs-12 col-sm-7"> {{vestiging.bedrijfsNaam}}</div>
+												<div class="col-xs-12 col-sm-7"> {{vestiging.eersteHandelsnaam}}</div>
 											</div>
 											<div class="form-group"> <label
 													class="col-xs-12 col-sm-5 control-label">Adres</label>
-												<div class="col-xs-12 col-sm-7"> {{vestiging.straat}}
-													{{vestiging.huisNummer}} {{vestiging.huisnummerToevoeging}}
-												</div>
+												<div class="col-xs-12 col-sm-7"> {{vestiging.straat}}</div>
 											</div>
-											<div class="form-group"> <label class="col-xs-12 col-sm-5 control-label">
-												</label> <span class="col-xs-12 col-sm-7"> {{vestiging.postcode}}
-													{{vestiging.plaats}} </span></div>
 											<div class="form-group"> <label
 													class="col-xs-12 col-sm-5 control-label">Vestigingsnummer</label> <span
-													class="col-xs-12 col-sm-7"> {{vestiging.vestiging}} </span>
-												<button type="button" class="btn btn-primary btn-report-small "
-													ng-click="createReport(report.parent, report.parent.kvKnummer)">
+													class="col-xs-12 col-sm-7"> {{vestiging.vestigingsNummer}} </span>
+												<button type="button" class="btn btn-primary btn-report-small " ng-show="!vestiging.sameVestiging"
+													ng-click="createReport(vestiging, vestiging.kvkNumber + vestiging.vestigingsNummer)">
 													Rapport opvragen </button></div>
 										</fieldset>
 									</form>

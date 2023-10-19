@@ -386,6 +386,32 @@ public class CSConverter {
 		
 	}
 	
+	public static List<CIKvKDossier> transformVestToCIKvKDossInfoList(JSONObject searchResults) {		
+		List<CIKvKDossier> ciKvKDossiers = new ArrayList<>();		
+		if(searchResults.has("vestigingen")) {
+			JSONArray vestigingens = new JSONArray(searchResults.get("vestigingen").toString());
+			for (int i = 0; i < vestigingens.length(); i++) {
+				CIKvKDossier ciKvKDossier = new CIKvKDossier();
+				ciKvKDossier.setKvKnummer(searchResults.has("kvkNummer") ? searchResults.get("kvkNummer").toString().trim(): "");
+				JSONObject vestigingen = new JSONObject(vestigingens.get(i).toString());						
+				ciKvKDossier.setVestigingsNummer(vestigingen.has("vestigingsnummer") ? vestigingen.get("vestigingsnummer").toString().trim(): "");
+				ciKvKDossier.setVenNaam(vestigingen.has("eersteHandelsnaam") ? vestigingen.get("eersteHandelsnaam").toString().trim(): "");	
+				if(vestigingen.has("indHoofdvestiging") && vestigingen.get("indHoofdvestiging").toString().trim().equalsIgnoreCase("Ja")) {
+					ciKvKDossier.setHoofdNeven("H");
+				}else {
+					ciKvKDossier.setHoofdNeven("N");
+				}
+				ciKvKDossier.setStraat(vestigingen.has("volledigAdres") ? vestigingen.get("volledigAdres").toString().trim(): "");
+				ciKvKDossier.setKvKnummer(searchResults.has("kvkNummer") ? searchResults.get("kvkNummer").toString().trim(): "");
+				ciKvKDossiers.add(ciKvKDossier);
+			}
+			
+		}
+				
+		return ciKvKDossiers;
+		
+	}
+	
 	public static CIKvKDossier transformToHoofdNeven(JSONObject searchResults) {		
 		CIKvKDossier ciKvKDossier = new CIKvKDossier();
 		

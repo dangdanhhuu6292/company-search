@@ -971,7 +971,7 @@ public class ConvertUtil {
 		// data ok?
 		if(bedrijf != null && ciKvkDossier != null) {
 			result = new KvkDossierTransfer();
-
+			result.setVestigingsNummer(ciKvkDossier.getVestigingsNummer());
 			result.setGestortKapitaal(ciKvkDossier.getGestortKapitaal());
 			result.setNominaalAandelenKapitaal(ciKvkDossier.getNominaalAandelenKapitaal());
 
@@ -1234,6 +1234,22 @@ public class ConvertUtil {
 		}
 
 		return result;
+	}
+	public static KvkVestigingTransfer convertCiKvkDossierToKvkDossierVestiging( CIKvKDossier ciKvkDossier) {
+		KvkVestigingTransfer kvkVestigingTransfer = new KvkVestigingTransfer();
+		kvkVestigingTransfer.setKvkNumber(ciKvkDossier.getKvKnummer() != null ? ciKvkDossier.getKvKnummer().trim():"");
+		kvkVestigingTransfer.setEersteHandelsnaam(ciKvkDossier.getVenNaam() != null ? ciKvkDossier.getVenNaam().trim():"");
+		if (ciKvkDossier.getHoofdNeven() != null
+				&& ciKvkDossier.getHoofdNeven().trim().equals("H")) {
+			kvkVestigingTransfer.setHoofneven(true);
+		}else {
+			kvkVestigingTransfer.setHoofneven(false);
+		}
+		kvkVestigingTransfer.setStraat(ciKvkDossier.getStraat() != null ? ciKvkDossier.getStraat().trim():"");
+		kvkVestigingTransfer.setVestigingsNummer(ciKvkDossier.getVestigingsNummer() != null ? ciKvkDossier.getVestigingsNummer().trim():"");
+		
+		return kvkVestigingTransfer;
+		
 	}
 
 	// used for creating report data of notifications

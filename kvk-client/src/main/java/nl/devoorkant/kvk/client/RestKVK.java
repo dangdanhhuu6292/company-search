@@ -10,4 +10,5 @@ public interface RestKVK {
 	public List<CompanyInfo> searchByKvKNummers(String kvKNummer, boolean geoData);
 	public CIKvKDossier getDossier(String kvKNummer, String vestigingsnummer, boolean hoofdNeven);
 	public List<CompanyInfo> searchCompany(String kvKNummer, boolean iskvkNumber, boolean isCompanyName);
+	public List<CIKvKDossier> searchVestigingByKvKNummers(String kvKNummer);
 }

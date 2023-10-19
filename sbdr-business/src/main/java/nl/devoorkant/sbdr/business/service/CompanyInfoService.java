@@ -77,4 +77,5 @@ public interface CompanyInfoService {
 	CIKvKDossier saveCIKvkDossier(CIKvKDossier ciKvkDossier)
 			throws ServiceException;
 
+    List<CIKvKDossier> retrieveCIKvKDossierInfos(String searchValue);
 }
